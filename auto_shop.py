@@ -10,44 +10,76 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 BASE_DIR = Path(__file__).parent
 
-SHOP_NAME = "UniqloShop"
+SHOP_NAME = "UniqLow"
 AVATAR_URL = "https://avatars.shafastatic.net/691711_new_avatar_type1648494975"
 
+# --- ПОСИЛАННЯ ---
 SHAFA_PROFILE_URL = "https://shafa.ua/uk/member/uniqlo-shop?sort=4"
 OLX_PROFILE_URL = "https://www.olx.ua/uk/list/user/1735R/"
+TELEGRAM_BOT_LINK = "https://t.me/ТВІЙ_БОТ"  # Встав сюди посилання на свого бота
 
 SHAFA_CATEGORIES = [
-    {"title": "Спідниці", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=yubki&sort=4", "slug": "spidnytsi", "group": "Жіночий одяг"},
-    {"title": "Плаття", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=platya&sort=4", "slug": "plattya", "group": "Жіночий одяг"},
-    {"title": "Верхній одяг", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=verhnyaya-odezhda&sort=4", "slug": "verhniy-odyag", "group": "Жіночий одяг"},
-    {"title": "Майки й футболки", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=mayki-i-futbolki&sort=4", "slug": "maiky-futbolky", "group": "Жіночий одяг"},
-    {"title": "Сорочки та блузи", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=rubashki-i-bluzy&sort=4", "slug": "sorochky-bluzy", "group": "Жіночий одяг"},
-    {"title": "Кофти", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=kofty&sort=4", "slug": "kofty", "group": "Жіночий одяг"},
-    {"title": "Спідня білизна", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=nizhnee-bele-i-kupalniki&sort=4", "slug": "spidnya-bilyzna", "group": "Жіночий одяг"},
-    {"title": "Спортивний одяг", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=sport-otdyh&sort=4", "slug": "sportyvnyy-odyag", "group": "Жіночий одяг"},
-    {"title": "Костюми", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=zhenskie-kostyumy&sort=4", "slug": "kostyumy", "group": "Жіночий одяг"},
-    {"title": "Комбінезони", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=zhenskie-kombinezony&sort=4", "slug": "kombinezony", "group": "Жіночий одяг"},
-    {"title": "Одяг для дому та сну", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=odezhda-dlya-doma-i-sna&sort=4", "slug": "odyag-dlya-domu", "group": "Жіночий одяг"},
-    {"title": "Взуття", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=zhenskaya-obuv&sort=4", "slug": "vzuttya", "group": "Жіночий одяг"},
-    {"title": "Штани та шорти", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=shtany&sort=4", "slug": "shtany-shorty", "group": "Жіночий одяг"},
+    {"title": "Спідниці", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=yubki&sort=4", "slug": "spidnytsi",
+     "group": "Жіночий одяг"},
+    {"title": "Плаття", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=platya&sort=4", "slug": "plattya",
+     "group": "Жіночий одяг"},
+    {"title": "Верхній одяг", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=verhnyaya-odezhda&sort=4",
+     "slug": "verhniy-odyag", "group": "Жіночий одяг"},
+    {"title": "Майки й футболки", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=mayki-i-futbolki&sort=4",
+     "slug": "maiky-futbolky", "group": "Жіночий одяг"},
+    {"title": "Сорочки та блузи", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=rubashki-i-bluzy&sort=4",
+     "slug": "sorochky-bluzy", "group": "Жіночий одяг"},
+    {"title": "Кофти", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=kofty&sort=4", "slug": "kofty",
+     "group": "Жіночий одяг"},
+    {"title": "Спідня білизна", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=nizhnee-bele-i-kupalniki&sort=4",
+     "slug": "spidnya-bilyzna", "group": "Жіночий одяг"},
+    {"title": "Спортивний одяг", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=sport-otdyh&sort=4",
+     "slug": "sportyvnyy-odyag", "group": "Жіночий одяг"},
+    {"title": "Костюми", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=zhenskie-kostyumy&sort=4",
+     "slug": "kostyumy", "group": "Жіночий одяг"},
+    {"title": "Комбінезони", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=zhenskie-kombinezony&sort=4",
+     "slug": "kombinezony", "group": "Жіночий одяг"},
+    {"title": "Одяг для дому та сну",
+     "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=odezhda-dlya-doma-i-sna&sort=4", "slug": "odyag-dlya-domu",
+     "group": "Жіночий одяг"},
+    {"title": "Взуття", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=zhenskaya-obuv&sort=4",
+     "slug": "vzuttya", "group": "Жіночий одяг"},
+    {"title": "Штани та шорти", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=shtany&sort=4",
+     "slug": "shtany-shorty", "group": "Жіночий одяг"},
 
-    {"title": "Для дівчаток", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=dlya-devochek&sort=4", "slug": "dlya-divchatok", "group": "Дитячий одяг"},
-    {"title": "Для хлопчиків", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=dlya-malchikov&sort=4", "slug": "dlya-hlopchykiv", "group": "Дитячий одяг"},
-    {"title": "Для малюків", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=dlya-malyshey&sort=4", "slug": "dlya-malyukiv", "group": "Дитячий одяг"},
+    {"title": "Для дівчаток", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=dlya-devochek&sort=4",
+     "slug": "dlya-divchatok", "group": "Дитячий одяг"},
+    {"title": "Для хлопчиків", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=dlya-malchikov&sort=4",
+     "slug": "dlya-hlopchykiv", "group": "Дитячий одяг"},
+    {"title": "Для малюків", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=dlya-malyshey&sort=4",
+     "slug": "dlya-malyukiv", "group": "Дитячий одяг"},
 
-    {"title": "Верхній одяг", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=verkhniaia-odezhda&sort=4", "slug": "cholovichyy-verhniy-odyag", "group": "Чоловічий одяг"},
-    {"title": "Кофти та светри", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=kofti&sort=4", "slug": "kofty-svetry", "group": "Чоловічий одяг"},
-    {"title": "Сорочки та теніски", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=rubashki&sort=4", "slug": "sorochky-tenisky", "group": "Чоловічий одяг"},
-    {"title": "Футболки та майки", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=futbolki-i-maiki&sort=4", "slug": "futbolky-mayky-men", "group": "Чоловічий одяг"},
-    {"title": "Спідня білизна", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=nizhnee-bele&sort=4", "slug": "spidnya-bilyzna-men", "group": "Чоловічий одяг"},
-    {"title": "Взуття", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=obuv&sort=4", "slug": "vzuttya-men", "group": "Чоловічий одяг"},
-    {"title": "Спортивний одяг", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=sport-i-otdyh&sort=4", "slug": "sportyvnyy-odyag-men", "group": "Чоловічий одяг"},
-    {"title": "Одяг для дому та сну", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=odezhda-dlia-doma-i-sna&sort=4", "slug": "odyag-dlya-domu-men", "group": "Чоловічий одяг"},
-    {"title": "Штани та шорти", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=shtany-i-shorty&sort=4", "slug": "shtany-shorty-men", "group": "Чоловічий одяг"},
+    {"title": "Верхній одяг", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=verkhniaia-odezhda&sort=4",
+     "slug": "cholovichyy-verhniy-odyag", "group": "Чоловічий одяг"},
+    {"title": "Кофти та светри", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=kofti&sort=4",
+     "slug": "kofty-svetry", "group": "Чоловічий одяг"},
+    {"title": "Сорочки та теніски", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=rubashki&sort=4",
+     "slug": "sorochky-tenisky", "group": "Чоловічий одяг"},
+    {"title": "Футболки та майки", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=futbolki-i-maiki&sort=4",
+     "slug": "futbolky-mayky-men", "group": "Чоловічий одяг"},
+    {"title": "Спідня білизна", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=nizhnee-bele&sort=4",
+     "slug": "spidnya-bilyzna-men", "group": "Чоловічий одяг"},
+    {"title": "Взуття", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=obuv&sort=4", "slug": "vzuttya-men",
+     "group": "Чоловічий одяг"},
+    {"title": "Спортивний одяг", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=sport-i-otdyh&sort=4",
+     "slug": "sportyvnyy-odyag-men", "group": "Чоловічий одяг"},
+    {"title": "Одяг для дому та сну",
+     "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=odezhda-dlia-doma-i-sna&sort=4",
+     "slug": "odyag-dlya-domu-men", "group": "Чоловічий одяг"},
+    {"title": "Штани та шорти", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=shtany-i-shorty&sort=4",
+     "slug": "shtany-shorty-men", "group": "Чоловічий одяг"},
 
-    {"title": "Сумки та рюкзаки", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=vsi-sumky&sort=4", "slug": "sumky-ryukzaky", "group": "Аксесуари"},
-    {"title": "Головні убори", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=holovni-ubory&sort=4", "slug": "golovni-ubory", "group": "Аксесуари"},
-    {"title": "Ремені та пояси", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=remeni-poyasy&sort=4", "slug": "remeni-poyasy", "group": "Аксесуари"},
+    {"title": "Сумки та рюкзаки", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=vsi-sumky&sort=4",
+     "slug": "sumky-ryukzaky", "group": "Аксесуари"},
+    {"title": "Головні убори", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=holovni-ubory&sort=4",
+     "slug": "golovni-ubory", "group": "Аксесуари"},
+    {"title": "Ремені та пояси", "url": "https://shafa.ua/uk/member/uniqlo-shop?catalog=remeni-poyasy&sort=4",
+     "slug": "remeni-poyasy", "group": "Аксесуари"},
 ]
 
 MENU_GROUPS = {
@@ -133,7 +165,7 @@ def build_menu(current_path: str) -> str:
     return "\n".join(html)
 
 
-def product_card(item: dict) -> str:
+def product_card(item: dict, hidden=False) -> str:
     meta_parts = []
     if item.get("brand"):
         meta_parts.append(item["brand"])
@@ -141,9 +173,10 @@ def product_card(item: dict) -> str:
         meta_parts.append(item["size"])
 
     meta_html = f"<div class='product-meta'>{' • '.join(meta_parts)}</div>" if meta_parts else ""
+    hidden_class = " hidden-card" if hidden else ""
 
     return f"""
-    <a class="product-card" href="{item['url']}" target="_blank" rel="noopener">
+    <a class="product-card{hidden_class}" href="{item['url']}" target="_blank" rel="noopener">
         <div class="product-image-wrap">
             <img class="product-image" src="{item['image']}" alt="{item['name']}">
         </div>
@@ -158,7 +191,24 @@ def product_card(item: dict) -> str:
 
 def render_page(title: str, current_path: str, products: list, page_type: str = "category") -> str:
     menu_html = build_menu(current_path)
-    products_html = "".join(product_card(p) for p in products) if products else "<div class='empty-box'>У цьому розділі поки немає товарів.</div>"
+
+    # Логіка 12 товарів і "Показати ще"
+    visible_products = products[:12]
+    hidden_products = products[12:]
+
+    if products:
+        products_html = "".join(product_card(p, hidden=False) for p in visible_products)
+        products_html += "".join(product_card(p, hidden=True) for p in hidden_products)
+    else:
+        products_html = "<div class='empty-box'>У цьому розділі поки немає товарів.</div>"
+
+    show_more_btn = ""
+    if len(products) > 12:
+        show_more_btn = """
+        <div class="show-more-wrap">
+            <button class="show-more-btn" onclick="showMoreProducts(this)">Показати ще</button>
+        </div>
+        """
 
     hero_text = {
         "home": "Стильний та зручний каталог товарів магазину UniqloShop. Обирайте потрібний розділ, переглядайте популярні пропозиції та переходьте до оголошення в один клік.",
@@ -166,6 +216,9 @@ def render_page(title: str, current_path: str, products: list, page_type: str = 
     }.get(page_type, "Добірка товарів розділу з переходом до оригінального оголошення.")
 
     quick_tiles = ""
+    review_section = ""
+    promo_section = ""
+
     if page_type == "home":
         quick_tiles = """
         <section class="quick-section">
@@ -182,6 +235,48 @@ def render_page(title: str, current_path: str, products: list, page_type: str = 
                 <a class="quick-tile" href="/vzuttya/">Взуття</a>
                 <a class="quick-tile" href="/cholovichyy-verhniy-odyag/">Чоловічий одяг</a>
                 <a class="quick-tile" href="/olx/">OLX</a>
+            </div>
+        </section>
+        """
+
+        promo_section = f"""
+        <section class="promo-section">
+            <div class="promo-card">
+                <div class="promo-badge">-10%</div>
+                <div class="promo-content">
+                    <h2>Оформлюйте через Telegram зі знижкою 10%</h2>
+                    <p>
+                        При оформленні замовлення через нашого Telegram-бота, ви гарантовано отримуєте знижку 10%.
+                        Також там можна швидко отримати підтримку та залишити відгук.
+                    </p>
+                    <a class="telegram-btn" href="{TELEGRAM_BOT_LINK}" target="_blank" rel="noopener">Відкрити Telegram</a>
+                </div>
+            </div>
+        </section>
+        """
+
+        review_section = """
+        <section class="reviews-section">
+            <div class="section-top">
+                <h2>Відгуки покупців</h2>
+                <p>Останні відгуки, залишені через нашого Telegram-бота.</p>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-name">Олена</div>
+                    <div class="review-text">Дуже якісні речі, замовляю вже не перший раз. Швидка доставка!</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-name">Михайло</div>
+                    <div class="review-text">Купив пуховик, розмір підійшов ідеально. Оформив через бота зі знижкою, все супер.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-name">Катерина</div>
+                    <div class="review-text">Класний магазин, приємні ціни і швидко відповідають на запитання.</div>
+                </div>
             </div>
         </section>
         """
@@ -206,6 +301,8 @@ def render_page(title: str, current_path: str, products: list, page_type: str = 
             --border: rgba(16,24,40,0.08);
             --shadow: 0 18px 45px rgba(16,24,40,0.08);
             --hero: linear-gradient(135deg, #fff1f2 0%, #ffffff 38%, #eef4ff 100%);
+            --green: #16a34a;
+            --orange: #f59e0b;
         }}
 
         body.dark {{
@@ -220,11 +317,11 @@ def render_page(title: str, current_path: str, products: list, page_type: str = 
             --border: rgba(255,255,255,0.08);
             --shadow: 0 18px 45px rgba(0,0,0,0.35);
             --hero: linear-gradient(135deg, #1f2937 0%, #111827 38%, #0b1220 100%);
+            --green: #22c55e;
+            --orange: #fb923c;
         }}
 
-        * {{
-            box-sizing: border-box;
-        }}
+        * {{ box-sizing: border-box; }}
 
         body {{
             margin: 0;
@@ -236,361 +333,115 @@ def render_page(title: str, current_path: str, products: list, page_type: str = 
                 var(--bg);
         }}
 
-        .layout {{
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            min-height: 100vh;
-        }}
+        .layout {{ display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }}
 
         .sidebar {{
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-            padding: 20px;
-            border-right: 1px solid var(--border);
-            background: var(--panel);
-            backdrop-filter: blur(18px);
+            position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px;
+            border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px);
         }}
 
         .brand {{
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            text-decoration: none;
-            margin-bottom: 18px;
-            padding: 12px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.04);
+            display: flex; align-items: center; gap: 14px; text-decoration: none;
+            margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04);
         }}
 
         .brand-avatar {{
-            width: 66px;
-            height: 66px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(225,29,72,0.18);
-            flex-shrink: 0;
+            width: 66px; height: 66px; border-radius: 50%; object-fit: cover;
+            border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0;
         }}
 
-        .brand-name {{
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--accent);
-            line-height: 1;
-        }}
+        .brand-name {{ font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }}
+        .brand-sub {{ margin-top: 6px; font-size: 13px; color: var(--muted); }}
 
-        .brand-sub {{
-            margin-top: 6px;
-            font-size: 13px;
-            color: var(--muted);
-        }}
-
-        .top-links {{
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 12px;
-        }}
+        .top-links {{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }}
 
         .top-btn {{
-            text-decoration: none;
-            color: white;
-            font-size: 14px;
-            font-weight: 700;
-            text-align: center;
-            padding: 11px 12px;
-            border-radius: 14px;
+            text-decoration: none; color: white; font-size: 14px; font-weight: 700;
+            text-align: center; padding: 11px 12px; border-radius: 14px;
             transition: transform .18s ease, box-shadow .18s ease;
         }}
 
-        .top-btn:hover {{
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }}
+        .top-btn:hover {{ transform: translateY(-2px); box-shadow: var(--shadow); }}
 
-        .btn-shafa {{
-            background: linear-gradient(135deg, #f59e0b, #ea580c);
-        }}
-
-        .btn-olx {{
-            background: linear-gradient(135deg, #16a34a, #15803d);
-        }}
+        .btn-telegram {{ background: linear-gradient(135deg, #229ED9, #1d4ed8); }}
+        .btn-olx {{ background: linear-gradient(135deg, #16a34a, #15803d); }}
 
         .theme-toggle {{
-            width: 100%;
-            border: 1px solid var(--border);
-            background: var(--panel-solid);
-            color: var(--text);
-            border-radius: 14px;
-            padding: 11px 12px;
-            cursor: pointer;
-            font-size: 18px;
-            margin-bottom: 18px;
+            width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text);
+            border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px;
         }}
 
-        .theme-toggle:hover {{
-            border-color: rgba(225,29,72,0.18);
-        }}
+        .theme-toggle:hover {{ border-color: rgba(225,29,72,0.18); }}
 
-        .menu-block {{
-            margin-bottom: 18px;
-        }}
+        .menu-block {{ margin-bottom: 18px; }}
+        .menu-title {{ font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); margin-bottom: 8px; padding: 0 6px; }}
+        .menu-block ul {{ list-style: none; margin: 0; padding: 0; }}
+        .menu-block li {{ margin-bottom: 4px; }}
+        .menu-block a {{ display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; transition: .18s ease; }}
+        .menu-block a:hover {{ background: var(--accent-soft); color: var(--accent); transform: translateX(2px); }}
+        .active-link {{ background: var(--accent-soft); color: var(--accent) !important; font-weight: 700; }}
 
-        .menu-title {{
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: .08em;
-            font-weight: 800;
-            color: var(--muted);
-            margin-bottom: 8px;
-            padding: 0 6px;
-        }}
+        .content {{ padding: 28px; }}
 
-        .menu-block ul {{
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }}
+        .hero {{ position: relative; overflow: hidden; border-radius: 30px; border: 1px solid var(--border); background: var(--hero); box-shadow: var(--shadow); padding: 28px; margin-bottom: 28px; }}
+        .hero::after {{ content: ""; position: absolute; right: -80px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(225,29,72,0.18), transparent 68%); }}
+        .hero-inner {{ position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; flex-wrap: wrap; }}
+        .hero h1 {{ margin: 0 0 10px; font-size: 38px; line-height: 1.05; }}
+        .hero p {{ margin: 0; max-width: 800px; color: var(--muted); font-size: 16px; line-height: 1.7; }}
+        .hero-badges {{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }}
+        .hero-badge {{ padding: 10px 14px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.45); font-size: 13px; }}
 
-        .menu-block li {{
-            margin-bottom: 4px;
-        }}
+        .section-top {{ margin-bottom: 14px; }}
+        .section-top h2 {{ margin: 0 0 6px; font-size: 24px; }}
+        .section-top p {{ margin: 0; color: var(--muted); line-height: 1.6; }}
 
-        .menu-block a {{
-            display: block;
-            text-decoration: none;
-            color: var(--text);
-            padding: 10px 12px;
-            border-radius: 12px;
-            font-size: 14px;
-            transition: .18s ease;
-        }}
+        .quick-section, .promo-section, .reviews-section {{ margin-bottom: 28px; }}
+        .quick-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }}
+        .quick-tile {{ min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(225,29,72,0.08), rgba(255,255,255,0.35)); box-shadow: var(--shadow); transition: transform .18s ease, border-color .18s ease; }}
+        .quick-tile:hover {{ transform: translateY(-3px); border-color: rgba(225,29,72,0.22); }}
 
-        .menu-block a:hover {{
-            background: var(--accent-soft);
-            color: var(--accent);
-            transform: translateX(2px);
-        }}
+        /* PROMO BLOCK */
+        .promo-card {{ display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow); }}
+        .promo-badge {{ width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #0f766e); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 30px; margin: 0 auto; }}
+        .promo-content h2 {{ margin: 0 0 10px; font-size: 28px; }}
+        .promo-content p {{ margin: 0 0 16px; color: var(--muted); line-height: 1.7; }}
+        .telegram-btn {{ display: inline-block; text-decoration: none; color: white; background: linear-gradient(135deg, #229ED9, #1d4ed8); padding: 12px 18px; border-radius: 14px; font-weight: 700; transition: transform .2s ease; }}
+        .telegram-btn:hover {{ transform: translateY(-2px); }}
 
-        .active-link {{
-            background: var(--accent-soft);
-            color: var(--accent) !important;
-            font-weight: 700;
-        }}
+        /* REVIEWS BLOCK */
+        .reviews-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }}
+        .review-card {{ background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; padding: 18px; box-shadow: var(--shadow); }}
+        .review-stars {{ color: var(--orange); font-size: 20px; margin-bottom: 8px; }}
+        .review-name {{ font-weight: 800; margin-bottom: 8px; }}
+        .review-text {{ color: var(--muted); line-height: 1.6; }}
 
-        .content {{
-            padding: 28px;
-        }}
+        .products-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }}
+        .product-card {{ display: block; text-decoration: none; color: inherit; border-radius: 22px; overflow: hidden; background: var(--panel-solid); border: 1px solid var(--border); box-shadow: var(--shadow); transition: .2s ease; }}
+        .product-card:hover {{ transform: translateY(-5px); box-shadow: 0 25px 48px rgba(16,24,40,0.14); border-color: rgba(225,29,72,0.18); }}
+        .product-image-wrap {{ background: var(--bg-soft); overflow: hidden; }}
+        .product-image {{ width: 100%; height: 330px; object-fit: cover; display: block; transition: transform .35s ease; }}
+        .product-card:hover .product-image {{ transform: scale(1.04); }}
+        .product-info {{ padding: 16px; }}
+        .product-price {{ font-size: 24px; font-weight: 800; margin-bottom: 8px; }}
+        .product-title {{ font-size: 15px; line-height: 1.5; min-height: 46px; margin-bottom: 8px; }}
+        .product-meta {{ font-size: 13px; color: var(--muted); }}
 
-        .hero {{
-            position: relative;
-            overflow: hidden;
-            border-radius: 30px;
-            border: 1px solid var(--border);
-            background: var(--hero);
-            box-shadow: var(--shadow);
-            padding: 28px;
-            margin-bottom: 28px;
-        }}
+        /* ПРИХОВАНІ ТОВАРИ */
+        .hidden-card {{ display: none; }}
+        .show-more-wrap {{ margin-top: 30px; text-align: center; }}
+        .show-more-btn {{ border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; }}
+        .show-more-btn:hover {{ transform: translateY(-2px); box-shadow: var(--shadow); }}
 
-        .hero::after {{
-            content: "";
-            position: absolute;
-            right: -80px;
-            top: -80px;
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(225,29,72,0.18), transparent 68%);
-        }}
-
-        .hero-inner {{
-            position: relative;
-            z-index: 1;
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            align-items: flex-start;
-            flex-wrap: wrap;
-        }}
-
-        .hero h1 {{
-            margin: 0 0 10px;
-            font-size: 38px;
-            line-height: 1.05;
-        }}
-
-        .hero p {{
-            margin: 0;
-            max-width: 800px;
-            color: var(--muted);
-            font-size: 16px;
-            line-height: 1.7;
-        }}
-
-        .hero-badges {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 18px;
-        }}
-
-        .hero-badge {{
-            padding: 10px 14px;
-            border-radius: 999px;
-            border: 1px solid var(--border);
-            background: rgba(255,255,255,0.45);
-            font-size: 13px;
-        }}
-
-        .section-top {{
-            margin-bottom: 14px;
-        }}
-
-        .section-top h2 {{
-            margin: 0 0 6px;
-            font-size: 24px;
-        }}
-
-        .section-top p {{
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.6;
-        }}
-
-        .quick-section {{
-            margin-bottom: 28px;
-        }}
-
-        .quick-grid {{
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 14px;
-        }}
-
-        .quick-tile {{
-            min-height: 102px;
-            display: flex;
-            align-items: flex-end;
-            padding: 18px;
-            text-decoration: none;
-            color: var(--text);
-            font-size: 18px;
-            font-weight: 800;
-            border-radius: 22px;
-            border: 1px solid var(--border);
-            background: linear-gradient(135deg, rgba(225,29,72,0.08), rgba(255,255,255,0.35));
-            box-shadow: var(--shadow);
-            transition: transform .18s ease, border-color .18s ease;
-        }}
-
-        .quick-tile:hover {{
-            transform: translateY(-3px);
-            border-color: rgba(225,29,72,0.22);
-        }}
-
-        .products-grid {{
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
-        }}
-
-        .product-card {{
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            border-radius: 22px;
-            overflow: hidden;
-            background: var(--panel-solid);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            transition: .2s ease;
-        }}
-
-        .product-card:hover {{
-            transform: translateY(-5px);
-            box-shadow: 0 25px 48px rgba(16,24,40,0.14);
-            border-color: rgba(225,29,72,0.18);
-        }}
-
-        .product-image-wrap {{
-            background: var(--bg-soft);
-            overflow: hidden;
-        }}
-
-        .product-image {{
-            width: 100%;
-            height: 330px;
-            object-fit: cover;
-            display: block;
-            transition: transform .35s ease;
-        }}
-
-        .product-card:hover .product-image {{
-            transform: scale(1.04);
-        }}
-
-        .product-info {{
-            padding: 16px;
-        }}
-
-        .product-price {{
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }}
-
-        .product-title {{
-            font-size: 15px;
-            line-height: 1.5;
-            min-height: 46px;
-            margin-bottom: 8px;
-        }}
-
-        .product-meta {{
-            font-size: 13px;
-            color: var(--muted);
-        }}
-
-        .empty-box {{
-            padding: 30px;
-            border-radius: 22px;
-            border: 1px dashed var(--border);
-            background: var(--panel-solid);
-            color: var(--muted);
-        }}
-
-        .footer-note {{
-            margin-top: 26px;
-            text-align: center;
-            color: var(--muted);
-            font-size: 13px;
-        }}
+        .empty-box {{ padding: 30px; border-radius: 22px; border: 1px dashed var(--border); background: var(--panel-solid); color: var(--muted); }}
+        .footer-note {{ margin-top: 26px; text-align: center; color: var(--muted); font-size: 13px; }}
 
         @media (max-width: 1080px) {{
-            .layout {{
-                grid-template-columns: 1fr;
-            }}
-
-            .sidebar {{
-                position: static;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-            }}
-
-            .content {{
-                padding: 18px;
-            }}
-
-            .hero {{
-                padding: 22px;
-            }}
-
-            .hero h1 {{
-                font-size: 30px;
-            }}
+            .layout {{ grid-template-columns: 1fr; }}
+            .sidebar {{ position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }}
+            .content {{ padding: 18px; }}
+            .hero {{ padding: 22px; }}
+            .hero h1 {{ font-size: 30px; }}
+            .promo-card {{ grid-template-columns: 1fr; text-align: center; }}
         }}
     </style>
 </head>
@@ -606,7 +457,7 @@ def render_page(title: str, current_path: str, products: list, page_type: str = 
             </a>
 
             <div class="top-links">
-                <a class="top-btn btn-shafa" href="{SHAFA_PROFILE_URL}" target="_blank" rel="noopener">Shafa</a>
+                <a class="top-btn btn-telegram" href="{TELEGRAM_BOT_LINK}" target="_blank" rel="noopener">Telegram</a>
                 <a class="top-btn btn-olx" href="/olx/">OLX</a>
             </div>
 
@@ -623,24 +474,28 @@ def render_page(title: str, current_path: str, products: list, page_type: str = 
                         <p>{hero_text}</p>
                         <div class="hero-badges">
                             <div class="hero-badge">Українська мова</div>
-                            <div class="hero-badge">Зручна навігація</div>
+                            <div class="hero-badge">Замовлення через Telegram</div>
                             <div class="hero-badge">Швидкий перехід у товар</div>
                         </div>
                     </div>
                 </div>
             </section>
 
+            {promo_section}
             {quick_tiles}
+            {review_section}
 
             <section>
                 <div class="section-top">
                     <h2>{"Популярні пропозиції" if page_type == "home" else "Товари розділу"}</h2>
-                    <p>{"Оберіть розділ або відкрийте конкретний товар для детального перегляду." if page_type != "olx" else "Переглядайте товари OLX у тому самому стилі сайту."}</p>
+                    <p>{"Спочатку показуються перші 12 позицій. Натисніть 'Показати ще', щоб побачити інші."}</p>
                 </div>
 
                 <div class="products-grid">
                     {products_html}
                 </div>
+
+                {show_more_btn}
             </section>
 
             <div class="footer-note">
@@ -658,12 +513,17 @@ def render_page(title: str, current_path: str, products: list, page_type: str = 
         if (localStorage.getItem('uniqlo_theme') === 'dark') {{
             document.body.classList.add('dark');
         }}
+
+        function showMoreProducts(button) {{
+            document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'block');
+            button.style.display = 'none';
+        }}
     </script>
 </body>
 </html>"""
 
 
-def collect_shafa_products(driver, url: str, limit: int = 24):
+def collect_shafa_products(driver, url: str, limit: int = 40):  # Збільшив ліміт, щоб було що ховати під кнопку
     driver.get(url)
     time.sleep(5)
 
@@ -712,7 +572,7 @@ def collect_shafa_products(driver, url: str, limit: int = 24):
     return result
 
 
-def collect_olx_products(driver, url: str, limit: int = 24):
+def collect_olx_products(driver, url: str, limit: int = 40):
     driver.get(url)
     time.sleep(6)
 
@@ -794,7 +654,7 @@ def collect_olx_products(driver, url: str, limit: int = 24):
 
 def run_git():
     subprocess.run(["git", "add", "."], cwd=BASE_DIR)
-    subprocess.run(["git", "commit", "-m", "Auto update full site"], cwd=BASE_DIR)
+    subprocess.run(["git", "commit", "-m", "Auto update full site with new UI features"], cwd=BASE_DIR)
     subprocess.run(["git", "push", "origin", "main"], cwd=BASE_DIR)
 
 
@@ -805,19 +665,20 @@ def main():
 
     try:
         print("Збір головної сторінки Shafa...")
-        home_products = collect_shafa_products(driver, SHAFA_PROFILE_URL, limit=12)
+        home_products = collect_shafa_products(driver, SHAFA_PROFILE_URL, limit=30)
         save_root_index(render_page("Головна", "/", home_products, page_type="home"))
         print(f"Головна: {len(home_products)} товарів")
 
         print("Збір категорій Shafa...")
         for category in SHAFA_CATEGORIES:
             print(f"  {category['title']} -> /{category['slug']}/")
-            products = collect_shafa_products(driver, category["url"], limit=24)
-            save_folder_page(category["slug"], render_page(category["title"], f"/{category['slug']}/", products, page_type="category"))
+            products = collect_shafa_products(driver, category["url"], limit=40)
+            save_folder_page(category["slug"],
+                             render_page(category["title"], f"/{category['slug']}/", products, page_type="category"))
             print(f"    готово: {len(products)} товарів")
 
         print("Збір OLX...")
-        olx_products = collect_olx_products(driver, OLX_PROFILE_URL, limit=24)
+        olx_products = collect_olx_products(driver, OLX_PROFILE_URL, limit=40)
         save_folder_page("olx", render_page("OLX", "/olx/", olx_products, page_type="olx"))
         print(f"OLX: {len(olx_products)} товарів")
 
