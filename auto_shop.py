@@ -523,9 +523,30 @@ def render_page(title: str, current_path: str, products: list, page_type: str = 
 </html>"""
 
 
-def collect_shafa_products(driver, url: str, limit: int = 40):  # Збільшив ліміт, щоб було що ховати під кнопку
+def collect_shafa_products(driver, url: str, limit: int = 150):
     driver.get(url)
     time.sleep(5)
+
+    print(f"    Готуюсь гортати сторінку, щоб зібрати до {limit} товарів...")
+    last_count = 0
+    attempts = 0
+
+    # Агресивна прокрутка вниз
+    while attempts < 8:
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(3)  # Даємо час підвантажити нові товари
+
+        current_cards = driver.find_elements(By.CSS_SELECTOR, "div.z0N6W7")
+        current_count = len(current_cards)
+
+        if current_count >= limit:
+            break
+
+        if current_count == last_count:
+            attempts += 1  # Нічого нового не з'явилося, збільшуємо лічильник спроб
+        else:
+            last_count = current_count
+            attempts = 0  # Скидаємо, бо товари продовжують завантажуватися
 
     cards = driver.find_elements(By.CSS_SELECTOR, "div.z0N6W7")
     result = []
@@ -572,9 +593,27 @@ def collect_shafa_products(driver, url: str, limit: int = 40):  # Збільши
     return result
 
 
-def collect_olx_products(driver, url: str, limit: int = 40):
+def collect_olx_products(driver, url: str, limit: int = 150):
     driver.get(url)
     time.sleep(6)
+
+    print(f"    Гортаю сторінку OLX (до {limit} товарів)...")
+    last_count = 0
+    attempts = 0
+
+    while attempts < 8:
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(3)
+
+        current_links = driver.find_elements(By.CSS_SELECTOR, "a.css-1tqlkj0")
+        if len(current_links) >= limit:
+            break
+
+        if len(current_links) == last_count:
+            attempts += 1
+        else:
+            last_count = len(current_links)
+            attempts = 0
 
     result = []
     used = set()
@@ -654,7 +693,7 @@ def collect_olx_products(driver, url: str, limit: int = 40):
 
 def run_git():
     subprocess.run(["git", "add", "."], cwd=BASE_DIR)
-    subprocess.run(["git", "commit", "-m", "Auto update full site with new UI features"], cwd=BASE_DIR)
+    subprocess.run(["git", "commit", "-m", "Auto update with full scroll and UI features"], cwd=BASE_DIR)
     subprocess.run(["git", "push", "origin", "main"], cwd=BASE_DIR)
 
 
@@ -665,20 +704,20 @@ def main():
 
     try:
         print("Збір головної сторінки Shafa...")
-        home_products = collect_shafa_products(driver, SHAFA_PROFILE_URL, limit=30)
+        home_products = collect_shafa_products(driver, SHAFA_PROFILE_URL, limit=12)  # На головну достатньо 12
         save_root_index(render_page("Головна", "/", home_products, page_type="home"))
         print(f"Головна: {len(home_products)} товарів")
 
         print("Збір категорій Shafa...")
         for category in SHAFA_CATEGORIES:
             print(f"  {category['title']} -> /{category['slug']}/")
-            products = collect_shafa_products(driver, category["url"], limit=40)
+            products = collect_shafa_products(driver, category["url"], limit=150)  # Ліміт 150 для категорій!
             save_folder_page(category["slug"],
                              render_page(category["title"], f"/{category['slug']}/", products, page_type="category"))
             print(f"    готово: {len(products)} товарів")
 
         print("Збір OLX...")
-        olx_products = collect_olx_products(driver, OLX_PROFILE_URL, limit=40)
+        olx_products = collect_olx_products(driver, OLX_PROFILE_URL, limit=150)  # Ліміт 150 для OLX
         save_folder_page("olx", render_page("OLX", "/olx/", olx_products, page_type="olx"))
         print(f"OLX: {len(olx_products)} товарів")
 
