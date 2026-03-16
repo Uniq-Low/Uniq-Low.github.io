@@ -1,10 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniqloShop</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; display: flex; }
+        aside { width: 250px; background: white; padding: 20px; height: 100vh; overflow-y: auto; position: fixed; border-right: 1px solid #ddd; }
+        main { margin-left: 270px; padding: 20px; flex-grow: 1; }
+
+        h1 { color: #e02020; }
+        h3 { margin-top: 20px; color: #333; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 5px 0; cursor: pointer; color: #555; transition: 0.2s; }
+        li:hover { color: #e02020; padding-left: 5px; font-weight: bold; }
+
+        .header-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
+        .btn { padding: 10px 20px; text-decoration: none; color: white; border-radius: 5px; font-weight: bold; }
+        .shafa { background: #e67e22; }
+        .olx { background: #2ecc71; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-decoration: none; color: inherit; display: block; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .card img { width: 100%; height: 250px; object-fit: cover; border-radius: 5px; }
+        .price { font-size: 18px; font-weight: bold; margin-top: 10px; color: #333; }
+        .title { font-size: 14px; color: #666; margin-top: 5px; }
+    </style>
 </head>
 <body>
-$END$
+
+<aside>
+    <h1>UniqloShop</h1>
+
+    <h3>Жіночий одяг</h3>
+    <ul>
+        <li onclick="filter('Спідниці')">Спідниці</li>
+        <li onclick="filter('Плаття')">Плаття</li>
+        <li onclick="filter('Верхній одяг')">Верхній одяг</li>
+        <li onclick="filter('Майки')">Майки й футболки</li>
+        <li onclick="filter('Взуття')">Взуття</li>
+    </ul>
+
+    <h3>Чоловічий одяг</h3>
+    <ul>
+        <li onclick="filter('Верхній одяг')">Верхній одяг</li>
+        <li onclick="filter('Кофти')">Кофти та Светри</li>
+        <li onclick="filter('Футболки')">Футболки</li>
+        <li onclick="filter('Взуття')">Взуття</li>
+    </ul>
+
+    <h3>Дитячий одяг</h3>
+    <ul>
+        <li onclick="filter('Дитячий')">Для дітей</li>
+    </ul>
+</aside>
+
+<main>
+    <div class="header-buttons">
+        <a href="https://shafa.ua/uk/member/uniqlo-shop?sort=4" target="_blank" class="btn shafa">Відкрити Shafa</a>
+        <a href="https://www.olx.ua/uk/list/user/1735R/" target="_blank" class="btn olx">Відкрити OLX</a>
+    </div>
+
+    <h2 id="cat-title">Усі товари</h2>
+    <div class="grid" id="container"></div>
+</main>
+
+<script>
+    // --- PYTHON UPDATE AREA START ---
+    
+    const products = [
+    {
+        "name": "Товар",
+        "image": "https://shafa.c.prom.st/build/src/components/AnimatedAppsPromotionBannerDesktop/images/googlePlay..png",
+        "price": "Договірна",
+        "url": "https://play.google.com/store/apps/details?id=shafa.odejda.obuv.aksessuary",
+        "category": "Інше"
+    },
+    {
+        "name": "Товар",
+        "image": "https://shafa.c.prom.st/build/src/components/AnimatedAppsPromotionBannerDesktop/images/appStore..png",
+        "price": "Договірна",
+        "url": "https://apple.co/2pE66cJ",
+        "category": "Інше"
+    },
+    {
+        "name": "App Store",
+        "image": "https://shafa.c.prom.st/build/src/components/Footer/images/app-store-2x-min..jpg",
+        "price": "Договірна",
+        "url": "https://apple.co/2pE66cJ",
+        "category": "Інше"
+    },
+    {
+        "name": "Google Play",
+        "image": "https://shafa.c.prom.st/build/src/components/Footer/images/google-play-2x-min..jpg",
+        "price": "Договірна",
+        "url": "https://play.google.com/store/apps/details?id=shafa.odejda.obuv.aksessuary",
+        "category": "Інше"
+    }
+];
+    
+    // --- PYTHON UPDATE AREA END ---
+
+    function render(list) {
+        const cont = document.getElementById('container');
+        cont.innerHTML = list.length ? '' : '<p>Завантаження товарів або товарів немає...</p>';
+        list.forEach(item => {
+            cont.innerHTML += `
+                <a href="${item.url}" target="_blank" class="card">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="price">${item.price}</div>
+                    <div class="title">${item.name}</div>
+                </a>
+            `;
+        });
+    }
+
+    function filter(cat) {
+        document.getElementById('cat-title').innerText = cat;
+        if (products.length === 0) return;
+
+        const filtered = products.filter(p =>
+            p.category.toLowerCase().includes(cat.toLowerCase()) ||
+            p.name.toLowerCase().includes(cat.toLowerCase())
+        );
+        render(filtered);
+    }
+
+    render(products);
+</script>
+
 </body>
 </html>
