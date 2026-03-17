@@ -4,150 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniqLow — Кофти</title>
-    <meta name="description" content="Каталог товарів магазину UniqLow. Українська мова, зручна навігація, товари Shafa та OLX.">
     <style>
         :root {
-            --bg: #f6f8fc;
-            --bg-soft: #eef2ff;
-            --panel: rgba(255,255,255,0.92);
-            --panel-solid: #ffffff;
-            --text: #101828;
-            --muted: #667085;
-            --accent: #e11d48;
-            --accent-soft: rgba(225, 29, 72, 0.12);
-            --border: rgba(16,24,40,0.08);
-            --shadow: 0 18px 45px rgba(16,24,40,0.08);
+            --bg: #f6f8fc; --bg-soft: #eef2ff; --panel: rgba(255,255,255,0.92); --panel-solid: #ffffff;
+            --text: #101828; --muted: #667085; --accent: #e11d48; --accent-soft: rgba(225, 29, 72, 0.12);
+            --border: rgba(16,24,40,0.08); --shadow: 0 18px 45px rgba(16,24,40,0.08);
             --hero: linear-gradient(135deg, #fff1f2 0%, #ffffff 38%, #eef4ff 100%);
-            --green: #16a34a;
-            --orange: #f59e0b;
+            --green: #16a34a; --orange: #f59e0b;
         }
-
         body.dark {
-            --bg: #0b1220;
-            --bg-soft: #111827;
-            --panel: rgba(17,24,39,0.88);
-            --panel-solid: #111827;
-            --text: #f8fafc;
-            --muted: #98a2b3;
-            --accent: #ff4d6d;
-            --accent-soft: rgba(255,77,109,0.12);
-            --border: rgba(255,255,255,0.08);
-            --shadow: 0 18px 45px rgba(0,0,0,0.35);
+            --bg: #0b1220; --bg-soft: #111827; --panel: rgba(17,24,39,0.88); --panel-solid: #111827;
+            --text: #f8fafc; --muted: #98a2b3; --accent: #ff4d6d; --accent-soft: rgba(255,77,109,0.12);
+            --border: rgba(255,255,255,0.08); --shadow: 0 18px 45px rgba(0,0,0,0.35);
             --hero: linear-gradient(135deg, #1f2937 0%, #111827 38%, #0b1220 100%);
-            --green: #22c55e;
-            --orange: #fb923c;
         }
-
         * { box-sizing: border-box; }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at left top, rgba(225,29,72,0.09), transparent 24%),
-                radial-gradient(circle at right top, rgba(59,130,246,0.08), transparent 22%),
-                var(--bg);
-        }
-
+        body { margin: 0; font-family: Arial, sans-serif; color: var(--text); background: var(--bg); }
         .layout { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
+        .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px; border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px); }
 
-        .sidebar {
-            position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px;
-            border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px);
-        }
-
-        .brand {
-            display: flex; align-items: center; gap: 14px; text-decoration: none;
-            margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04);
-        }
-
-        .brand-avatar {
-            width: 66px; height: 66px; border-radius: 50%; object-fit: cover;
-            border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0;
-        }
-
+        .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04); }
+        .brand-avatar { width: 66px; height: 66px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0; background: white; }
         .brand-name { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
         .brand-sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
 
-        .top-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-
-        .top-btn {
-            text-decoration: none; color: white; font-size: 14px; font-weight: 700;
-            text-align: center; padding: 11px 12px; border-radius: 14px;
-            transition: transform .18s ease, box-shadow .18s ease;
-        }
-
-        .top-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-
-        .btn-telegram { background: linear-gradient(135deg, #229ED9, #1d4ed8); }
-        .btn-olx { background: linear-gradient(135deg, #16a34a, #15803d); }
-
-        .theme-toggle {
-            width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text);
-            border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px;
-        }
-
-        .theme-toggle:hover { border-color: rgba(225,29,72,0.18); }
+        .theme-toggle { width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text); border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px; }
 
         .menu-block { margin-bottom: 18px; }
         .menu-title { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); margin-bottom: 8px; padding: 0 6px; }
         .menu-block ul { list-style: none; margin: 0; padding: 0; }
-        .menu-block li { margin-bottom: 4px; }
-        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; transition: .18s ease; }
+        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; margin-bottom: 4px; transition: .18s ease; }
         .menu-block a:hover { background: var(--accent-soft); color: var(--accent); transform: translateX(2px); }
         .active-link { background: var(--accent-soft); color: var(--accent) !important; font-weight: 700; }
 
         .content { padding: 28px; }
-
-        .hero { position: relative; overflow: hidden; border-radius: 30px; border: 1px solid var(--border); background: var(--hero); box-shadow: var(--shadow); padding: 28px; margin-bottom: 28px; }
-        .hero::after { content: ""; position: absolute; right: -80px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(225,29,72,0.18), transparent 68%); }
-        .hero-inner { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
-        .hero h1 { margin: 0 0 10px; font-size: 38px; line-height: 1.05; }
-        .hero p { margin: 0; max-width: 800px; color: var(--muted); font-size: 16px; line-height: 1.7; }
-        .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-        .hero-badge { padding: 10px 14px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.45); font-size: 13px; }
-
         .section-top { margin-bottom: 14px; }
         .section-top h2 { margin: 0 0 6px; font-size: 24px; }
         .section-top p { margin: 0; color: var(--muted); line-height: 1.6; }
 
-        .quick-section, .promo-section, .reviews-section { margin-bottom: 28px; }
+        .quick-section, .promo-section { margin-bottom: 28px; }
         .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
-        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(225,29,72,0.08), rgba(255,255,255,0.35)); box-shadow: var(--shadow); transition: transform .18s ease, border-color .18s ease; }
-        .quick-tile:hover { transform: translateY(-3px); border-color: rgba(225,29,72,0.22); }
+        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: var(--panel-solid); box-shadow: var(--shadow); transition: transform .18s ease; }
+        .quick-tile:hover { transform: translateY(-3px); border-color: var(--accent); }
 
-        /* PROMO BLOCK */
-        .promo-card { display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow); }
-        .promo-badge { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #0f766e); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 30px; margin: 0 auto; }
-        .promo-content h2 { margin: 0 0 10px; font-size: 28px; }
-        .promo-content p { margin: 0 0 16px; color: var(--muted); line-height: 1.7; }
-        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: linear-gradient(135deg, #229ED9, #1d4ed8); padding: 12px 18px; border-radius: 14px; font-weight: 700; transition: transform .2s ease; }
-        .telegram-btn:hover { transform: translateY(-2px); }
-
-        /* REVIEWS BLOCK */
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; padding: 18px; box-shadow: var(--shadow); }
-        .review-stars { color: var(--orange); font-size: 20px; margin-bottom: 8px; }
-        .review-name { font-weight: 800; margin-bottom: 8px; }
-        .review-text { color: var(--muted); line-height: 1.6; }
+        .promo-card { display: flex; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow);}
+        .promo-badge { width: 100px; height: 100px; border-radius: 50%; background: var(--green); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 24px; flex-shrink:0; }
+        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: #229ED9; padding: 12px 18px; border-radius: 14px; font-weight: 700; margin-top: 10px; }
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .product-card { display: block; text-decoration: none; color: inherit; border-radius: 22px; overflow: hidden; background: var(--panel-solid); border: 1px solid var(--border); box-shadow: var(--shadow); transition: .2s ease; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 25px 48px rgba(16,24,40,0.14); border-color: rgba(225,29,72,0.18); }
+        .product-card { display: flex; flex-direction: column; background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); transition: .2s ease; }
+        .product-card:hover { transform: translateY(-5px); border-color: rgba(225,29,72,0.18); box-shadow: 0 25px 48px rgba(16,24,40,0.14); }
+        .card-main-link { text-decoration: none; color: inherit; flex-grow: 1; display: flex; flex-direction: column; }
         .product-image-wrap { background: var(--bg-soft); overflow: hidden; }
         .product-image { width: 100%; height: 330px; object-fit: cover; display: block; transition: transform .35s ease; }
         .product-card:hover .product-image { transform: scale(1.04); }
-        .product-info { padding: 16px; }
+        .product-info { padding: 16px; flex-grow: 1; }
         .product-price { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
         .product-title { font-size: 15px; line-height: 1.5; min-height: 46px; margin-bottom: 8px; }
         .product-meta { font-size: 13px; color: var(--muted); }
 
-        /* ПРИХОВАНІ ТОВАРИ */
+        .card-tg-btn { display: block; margin: 0 16px 16px 16px; background: linear-gradient(135deg, #2AABEE, #229ED9); color: white; text-align: center; padding: 12px; border-radius: 14px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s; }
+        .card-tg-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(34, 158, 217, 0.3); }
+
         .hidden-card { display: none; }
         .show-more-wrap { margin-top: 30px; text-align: center; }
-        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; }
-        .show-more-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
+
+        .reviews-page-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 800px; }
+        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .review-name { font-weight: 800; font-size: 16px; display: flex; align-items: center; gap: 10px; }
+        .review-stars { color: var(--orange); font-size: 18px; }
+        .review-text { color: var(--text); line-height: 1.6; font-size: 15px; }
+        .src-badge { font-size: 11px; padding: 3px 8px; border-radius: 8px; font-weight: bold; color: white; text-transform: uppercase; }
+        .src-shafa { background: #f59e0b; }
+        .src-telegram { background: #2AABEE; }
 
         .empty-box { padding: 30px; border-radius: 22px; border: 1px dashed var(--border); background: var(--panel-solid); color: var(--muted); }
         .footer-note { margin-top: 26px; text-align: center; color: var(--muted); font-size: 13px; }
@@ -155,32 +86,27 @@
         @media (max-width: 1080px) {
             .layout { grid-template-columns: 1fr; }
             .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
-            .content { padding: 18px; }
-            .hero { padding: 22px; }
-            .hero h1 { font-size: 30px; }
-            .promo-card { grid-template-columns: 1fr; text-align: center; }
+            .promo-card { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <a class="brand" href="/">
-                <img class="brand-avatar" src="https://avatars.shafastatic.net/691711_new_avatar_type1648494975" alt="uniqlo-shop">
+            <a class="brand" href="../">
+                <img class="brand-avatar" src="../icon.png" alt="UniqLow">
                 <div>
                     <div class="brand-name">UniqLow</div>
                     <div class="brand-sub">Одяг та аксесуари</div>
                 </div>
             </a>
-
-            <div class="top-links">
-                <a class="top-btn btn-telegram" href="https://t.me/ТВІЙ_БОТ" target="_blank" rel="noopener">Telegram</a>
-                <a class="top-btn btn-olx" href="/olx/">OLX</a>
-            </div>
-
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">🌗</button>
-
-            <div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
+            <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+            <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
+<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
+<li><a class='' href='/olx/'>🌐 OLX</a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
 <li><a class='' href='/spidnytsi/'>Спідниці</a></li>
 <li><a class='' href='/plattya/'>Плаття</a></li>
 <li><a class='' href='/verhniy-odyag/'>Верхній одяг</a></li>
@@ -216,1278 +142,1789 @@
 <li><a class='' href='/golovni-ubory/'>Головні убори</a></li>
 <li><a class='' href='/remeni-poyasy/'>Ремені та пояси</a></li>
 </ul></div>
-<div class='menu-block'><div class='menu-title'>Майданчики</div><ul>
-<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>Shafa</a></li>
-<li><a class='' href='/olx/'>OLX</a></li>
-</ul></div>
         </aside>
 
         <main class="content">
-            <section class="hero">
-                <div class="hero-inner">
-                    <div>
-                        <h1>Кофти</h1>
-                        <p>Добірка товарів розділу з переходом до оригінального оголошення.</p>
-                        <div class="hero-badges">
-                            <div class="hero-badge">Українська мова</div>
-                            <div class="hero-badge">Замовлення через Telegram</div>
-                            <div class="hero-badge">Швидкий перехід у товар</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             
             
             
-
-            <section>
-                <div class="section-top">
-                    <h2>Товари розділу</h2>
-                    <p>Спочатку показуються перші 12 позицій. Натисніть 'Показати ще', щоб побачити інші.</p>
-                </div>
-
-                <div class="products-grid">
-                    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/vodolazki/200729998-flisoviy-golf-heattech-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2263118526_310_430" alt="Флісовий гольф heattech uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">950 грн</div>
-            <div class="product-title">Флісовий гольф heattech uniqlo</div>
-            <div class='product-meta'>Uniqlo • Sі ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/svitery/193932965-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2230068197_310_430" alt="Cветр з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1350 грн</div>
-            <div class="product-title">Cветр з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/kardigany/194414226-puhnastiy-flisoviy-kardigan-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2232938190_310_430" alt="Пухнастий флісовий кардиган uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1650 грн</div>
-            <div class="product-title">Пухнастий флісовий кардиган uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/svitery/199258912-svetr-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2255118399_310_430" alt="Светр uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Светр uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/svitery/199258825-svetr-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2255117931_310_430" alt="Светр uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Светр uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/kardigany/198921457-kardigan-z-vovni-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2253391277_310_430" alt="Кардиган з вовни uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Кардиган з вовни uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/svitery/198921080-dzhemper-polo-z-vovnyanoyi-sumishi-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2253388926_310_430" alt="Джемпер-поло з вовняної суміші uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1600 грн</div>
-            <div class="product-title">Джемпер-поло з вовняної суміші uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/pulovery/197668506-pulover-z-merinosovoyi-vovni-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2247452690_310_430" alt="Пуловер з мериносової вовни uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">900 грн</div>
-            <div class="product-title">Пуловер з мериносової вовни uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/svitery/191651178-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216112300_310_430" alt="Cветр з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Cветр з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/svitery/191651476-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216114440_310_430" alt="Cветр з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Cветр з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/svitery/191651364-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216113492_310_430" alt="Cветр з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Cветр з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • Mі ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/kofty/svitery/191651616-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216115265_310_430" alt="Cветр з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1250 грн</div>
-            <div class="product-title">Cветр з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/191651735-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216115843_310_430" alt="Cветр з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Cветр з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/191652448-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216120342_310_430" alt="Cветр з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1250 грн</div>
-            <div class="product-title">Cветр з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/191652929-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216123116_310_430" alt="Cветр з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Cветр з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/191654607-svetr-iz-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216133265_310_430" alt="Светр із вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1100 грн</div>
-            <div class="product-title">Светр із вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/191656535-3d-vyazaniy-svetr-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216145992_310_430" alt="3d-в'язаний светр uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">3d-в'язаний светр uniqlo</div>
-            <div class='product-meta'>38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/191656637-3d-vyazaniy-svetr-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216146501_310_430" alt="3d-в'язаний светр uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">3d-в'язаний светр uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/197213854-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2244919832_310_430" alt="Светр з пряжі soufflé uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1700 грн</div>
-            <div class="product-title">Светр з пряжі soufflé uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/197213432-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2244917805_310_430" alt="Светр з пряжі soufflé uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1700 грн</div>
-            <div class="product-title">Светр з пряжі soufflé uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/197213237-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2244919880_310_430" alt="Светр з пряжі soufflé uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1700 грн</div>
-            <div class="product-title">Светр з пряжі soufflé uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/197212594-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2244914592_310_430" alt="Светр з пряжі soufflé uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1700 грн</div>
-            <div class="product-title">Светр з пряжі soufflé uniqlo</div>
-            <div class='product-meta'>36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/197211864-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2244912509_310_430" alt="Светр з пряжі soufflé uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1700 грн</div>
-            <div class="product-title">Светр з пряжі soufflé uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/197025662-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2243679856_310_430" alt="Cветр з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Cветр з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/196659788-svetr-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2241853709_310_430" alt="Светр uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1700 грн</div>
-            <div class="product-title">Светр uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/196638744-svetr-uniqlo-z-vizerunkom-argyle" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2241721993_310_430" alt="Светр uniqlo з візерунком argyle">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1700 грн</div>
-            <div class="product-title">Светр uniqlo з візерунком argyle</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/196249611-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2239839469_310_430" alt="Cветр з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Cветр з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/zhilety/196247323-zhilet-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2239829363_310_430" alt="Жилет uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Жилет uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/196246125-svetr-uniqlo-z-vizerunkom-argyle" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2239824744_310_430" alt="Светр uniqlo з візерунком argyle">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1700 грн</div>
-            <div class="product-title">Светр uniqlo з візерунком argyle</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/194911849-svetr-fair-isle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2235417765_310_430" alt="Светр fair isle uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1700 грн</div>
-            <div class="product-title">Светр fair isle uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/194910863-svetr-fair-isle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2235413824_310_430" alt="Светр fair isle uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1700 грн</div>
-            <div class="product-title">Светр fair isle uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 4</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/194415075-myakiy-flisoviy-longsliv-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2232943531_310_430" alt="М'який флісовий лонгслів uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">850 грн</div>
-            <div class="product-title">М'який флісовий лонгслів uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/193329604-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2226400490_310_430" alt="Термолонгслів uniqlo heattech extra warm">
-        </div>
-        <div class="product-info">
-            <div class="product-price">875 грн</div>
-            <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/193329311-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2226398639_310_430" alt="Термолонгслів uniqlo heattech extra warm">
-        </div>
-        <div class="product-info">
-            <div class="product-price">875 грн</div>
-            <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
-            <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/193329242-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2226398241_310_430" alt="Термолонгслів uniqlo heattech extra warm">
-        </div>
-        <div class="product-info">
-            <div class="product-price">875 грн</div>
-            <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 4</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/193329168-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2226397764_310_430" alt="Термолонгслів uniqlo heattech extra warm">
-        </div>
-        <div class="product-info">
-            <div class="product-price">875 грн</div>
-            <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/193329101-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2226397332_310_430" alt="Термолонгслів uniqlo heattech extra warm">
-        </div>
-        <div class="product-info">
-            <div class="product-price">875 грн</div>
-            <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/193270164-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2226057571_310_430" alt="Термолонгслів uniqlo heattech extra warm">
-        </div>
-        <div class="product-info">
-            <div class="product-price">875 грн</div>
-            <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/193269735-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2226054735_310_430" alt="Термолонгслів uniqlo heattech extra warm">
-        </div>
-        <div class="product-info">
-            <div class="product-price">875 грн</div>
-            <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/193267629-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2226041790_310_430" alt="Термолонгслів uniqlo heattech extra warm">
-        </div>
-        <div class="product-info">
-            <div class="product-price">875 грн</div>
-            <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/193264830-longsliv-airism-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2226024057_310_430" alt="Лонгслів airism uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">650 грн</div>
-            <div class="product-title">Лонгслів airism uniqlo</div>
-            <div class='product-meta'>Uniqlo • ХS</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/vodolazki/193257952-golf-svetr-uniqlo-100-vovna-merinosa" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2225979454_310_430" alt="Гольф светр uniqlo 100% вовна мериноса">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1600 грн</div>
-            <div class="product-title">Гольф светр uniqlo 100% вовна мериноса</div>
-            <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/190238426-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2207367994_310_430" alt="Светр з пряжі soufflé uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Светр з пряжі soufflé uniqlo</div>
-            <div class='product-meta'>Uniqlo • Sі ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/pulovery/192165043-flisoviy-pulover-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2219383245_310_430" alt="Флісовий пуловер uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1300 грн</div>
-            <div class="product-title">Флісовий пуловер uniqlo</div>
-            <div class='product-meta'>XL</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/kardigany/192111898-kardigan-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2219047511_310_430" alt="Кардиган uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1450 грн</div>
-            <div class="product-title">Кардиган uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/192114444-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2219062188_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
-            <div class='product-meta'>Uniqlo • M</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/192113767-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2219057995_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
-            <div class='product-meta'>Uniqlo • M</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/192113258-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2219054981_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
-            <div class='product-meta'>Uniqlo • XL</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/192113092-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2219054031_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
-            <div class='product-meta'>Uniqlo • Lі ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/192112511-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2219050776_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
-            <div class='product-meta'>Uniqlo • L</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/192112290-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2219049642_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/191895532-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2217693895_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/191706264-3d-vyazaniy-bavovnyaniy-svetr-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216447731_310_430" alt="3d в'язаний бавовняний светр uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1050 грн</div>
-            <div class="product-title">3d в'язаний бавовняний светр uniqlo</div>
-            <div class='product-meta'>34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/kardigany/191705263-kardigan-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216442059_310_430" alt="Кардиган uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1300 грн</div>
-            <div class="product-title">Кардиган uniqlo</div>
-            <div class='product-meta'>Uniqlo • M</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/kardigany/191660482-kardigan-souffle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216170837_310_430" alt="Кардиган souffle uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1300 грн</div>
-            <div class="product-title">Кардиган souffle uniqlo</div>
-            <div class='product-meta'>M</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/191657266-svetr-fair-isle-iz-pryazhi-sufle-jw-anderson-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216150428_310_430" alt="Светр fair isle із пряжі суфле (jw anderson) uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Светр fair isle із пряжі суфле (jw anderson) uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/tolstovky/191654304-tolstovka-zara-rozmir-l" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216131420_310_430" alt="Толстовка zara, розмір л">
-        </div>
-        <div class="product-info">
-            <div class="product-price">750 грн</div>
-            <div class="product-title">Толстовка zara, розмір л</div>
-            <div class='product-meta'>ZARA • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/191654163-svetr-z-vizerunkom-aran-vid-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216130801_310_430" alt="Светр з візерунком aran від uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Светр з візерунком aran від uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/191650979-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2216111569_310_430" alt="Cветр з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Cветр з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/kardigany/190311066-kardigan-polo-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2207819552_310_430" alt="Кардиган-поло uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Кардиган-поло uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/kardigany/190311022-kardigan-polo-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2207819236_310_430" alt="Кардиган-поло uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Кардиган-поло uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/kardigany/190310868-kardigan-polo-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2207818216_310_430" alt="Кардиган-поло uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Кардиган-поло uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/190309288-3d-vyazaniy-svetr-zi-zmishanoyi-vovni-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2207808360_310_430" alt="3d-в'язаний светр зі змішаної вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1300 грн</div>
-            <div class="product-title">3d-в'язаний светр зі змішаної вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/vodolazki/190021623-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2206058055_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
-            <div class='product-meta'>Uniqlo • XL</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/kardigany/189083758-kardigan-z-sumishi-vovni-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2200688547_310_430" alt="Кардиган з суміші вовни uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1750 грн</div>
-            <div class="product-title">Кардиган з суміші вовни uniqlo</div>
-            <div class='product-meta'>38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/kardigany/179497385-flisova-kofta-uniseks-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/-854571570_310_430" alt="Флісова кофта унісекс uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Флісова кофта унісекс uniqlo</div>
-            <div class='product-meta'>40 / L / 48і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/hudi/174027809-hudi-the-message-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/-486394105_310_430" alt="Худі the message uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Худі the message uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/hudi/184957466-hudi-uniqlo-z-kolekciyi-ut-archive" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2175984860_310_430" alt="Худі uniqlo з колекції ut archive">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1050 грн</div>
-            <div class="product-title">Худі uniqlo з колекції ut archive</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/vodolazki/186133181-vodolazka-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2183421227_310_430" alt="Водолазка uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">799 грн</div>
-            <div class="product-title">Водолазка uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/186133043-longsliv-oversayz-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2183420613_310_430" alt="Лонгслів оверсайз uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Лонгслів оверсайз uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/longslivy/186055657-longsliv-smooth-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2182934037_310_430" alt="Лонгслів smooth uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">799 грн</div>
-            <div class="product-title">Лонгслів smooth uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitshoty/184957866-svitshot-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2175987167_310_430" alt="Світшот uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">850 грн</div>
-            <div class="product-title">Світшот uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/184924030-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2175778515_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
-            <div class='product-meta'>Uniqlo • ХS</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/184923891-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2175777627_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
-            <div class='product-meta'>L</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/kardigany/184654602-kardigan-zara" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2174053239_310_430" alt="Кардиган zara">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Кардиган zara</div>
-            <div class='product-meta'>ZARA • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/vodolazki/182848689-vodolazka-z-flisu-heattech-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2162882538_310_430" alt="Водолазка з флісу heattech uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">880 грн</div>
-            <div class="product-title">Водолазка з флісу heattech uniqlo</div>
-            <div class='product-meta'>Uniqlo • S</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitshoty/166767197-zhenskie-povsednevnye-topy-women-in-movies" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/-220903392_310_430" alt="Женские повседневные топы women in movies">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Женские повседневные топы women in movies</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitshoty/166764104-svitshot-s-grafikom-zhenshin-rise-again-ot-verdy-ut" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/-220824506_310_430" alt="Свитшот с графиком женщин rise again от verdy ut">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Свитшот с графиком женщин rise again от verdy ut</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/143571907-zhinochiy-svetr-u-smuzhku-z-merinosa" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1620831288_310_430" alt="Жіночий  светр у смужку з мериноса">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Жіночий  светр у смужку з мериноса</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/143571266-noviy-sviter-uniqlo14-sherst-10-alpaka" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1620788041_310_430" alt="Новий свитер uniqlo14% шерсть, 10% альпака">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1300 грн</div>
-            <div class="product-title">Новий свитер uniqlo14% шерсть, 10% альпака</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/143109072-svetr-melanzh-vovna" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1598909800_310_430" alt="Светр меланж вовна">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1100 грн</div>
-            <div class="product-title">Светр меланж вовна</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/143107749-zhinochiy-puhnastiy-svetr-z-shirokimi-rukavami-sherst-alpaki" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1598847032_310_430" alt="Жіночий пухнастий светр з широкими рукавами шерсть альпаки">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Жіночий пухнастий светр з широкими рукавами шерсть альпаки</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/143107304-zhinochiy-svetr-iz-v-podibnim-virizom-iz-merinosa" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1598834327_310_430" alt="Жіночий светр із v-подібним вирізом із мериноса">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Жіночий светр із v-подібним вирізом із мериноса</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/142993110-3d-svetr-z-povitryanimi-rukavami" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1591159039_310_430" alt="3d светр з повітряними рукавами">
-        </div>
-        <div class="product-info">
-            <div class="product-price">800 грн</div>
-            <div class="product-title">3d светр з повітряними рукавами</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/142986900-sviter-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1590898045_310_430" alt="Свитер uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">950 грн</div>
-            <div class="product-title">Свитер uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/hudi/140823381-zhinocha-hudi-heattech-na-sherpi-vid-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1497093058_310_430" alt="Жіноча худі heattech на шерпі від uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Жіноча худі heattech на шерпі від uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitshoty/124337675-obyemniy-svitshot-vid-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1094600864_310_430" alt="Об'ємний світшот від uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1149 грн</div>
-            <div class="product-title">Об'ємний світшот від uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitshoty/105872061-pulover-ca-memories-z-dovgim-rukavom" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653561202_310_430" alt="Пуловер ca memories (з довгим рукавом)">
-        </div>
-        <div class="product-info">
-            <div class="product-price">990 грн</div>
-            <div class="product-title">Пуловер ca memories (з довгим рукавом)</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/dzhempery/105870401-zhinocha-shiroka-futbolka-v-smuzhku" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653534763_310_430" alt="Жіноча широка футболка в смужку">
-        </div>
-        <div class="product-info">
-            <div class="product-price">899 грн</div>
-            <div class="product-title">Жіноча широка футболка в смужку</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitshoty/105869205-zhinochiy-pulover-hoodie-sprz-ny" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653518462_310_430" alt="Жіночий пуловер hoodie sprz ny">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1166 грн</div>
-            <div class="product-title">Жіночий пуловер hoodie sprz ny</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/105431779-svetr-uniqlo-3d-100-merinosovoyi-vovni-extra-fine-merino-wool" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/642746347_310_430" alt="Светр uniqlo 3d 100 мериносової вовни extra fine merino wool">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Светр uniqlo 3d 100 мериносової вовни extra fine merino wool</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/105427011-zhinochiy-vyazaniy-svetr-uniqlo-401088-z-merinosovoyi-vovni-z" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/642652884_310_430" alt="Жіночий в'язаний светр uniqlo 401088 з мериносової вовни з піврукавом">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1000 грн</div>
-            <div class="product-title">Жіночий в'язаний светр uniqlo 401088 з мериносової вовни з піврукавом</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/kardigany/105403488-zhinochiy-kardigan-z-kruglim-virizom-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/641801918_310_430" alt="Жіночий кардиган з круглим вирізом uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1100 грн</div>
-            <div class="product-title">Жіночий кардиган з круглим вирізом uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/105402861-zhinochiy-vovnyaniy-svetr-z-velikim-lackanom" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/641789013_310_430" alt="Жіночий  вовняний светр з великим лацканом">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1100 грн</div>
-            <div class="product-title">Жіночий  вовняний светр з великим лацканом</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/105402741-zhinochiy-vovnyaniy-svetr-z-velikim-lackanom" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/641782861_310_430" alt="Жіночий вовняний светр з великим лацканом">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1100 грн</div>
-            <div class="product-title">Жіночий вовняний светр з великим лацканом</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/105402107-melanzheva-vovnyana-tunika-uniqlo-xs" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/641761518_310_430" alt="Меланжева вовняна туніка uniqlo xs">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Меланжева вовняна туніка uniqlo xs</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/105401979-svetr-z-aktivnim-v-podibnim-virizomu-skladi-vovna" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/641760146_310_430" alt="Светр з активним v-подібним вирізом(у складі вовна)">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1000 грн</div>
-            <div class="product-title">Светр з активним v-подібним вирізом(у складі вовна)</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/105401790-zhinochiy-svetr-z-kruglim-virizom-z-merinosa" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/641757449_310_430" alt="Жіночий светр з круглим вирізом з мериноса">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Жіночий светр з круглим вирізом з мериноса</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/vodolazki/105401484-zhinocha-vodolazka-z-vorsom-heattech-z-dovgim-rukavom" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/641754377_310_430" alt="Жіноча водолазка з ворсом heattech (з довгим рукавом)">
-        </div>
-        <div class="product-info">
-            <div class="product-price">800 грн</div>
-            <div class="product-title">Жіноча водолазка з ворсом heattech (з довгим рукавом)</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/105257378-zhinochiy-zhakkardoviy-svetr-ines" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/638521310_310_430" alt="Жіночий жаккардовий светр інес">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Жіночий жаккардовий светр інес</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitshoty/105257010-tolstovka-vid-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/638509910_310_430" alt="Толстовка від uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">890 грн</div>
-            <div class="product-title">Толстовка від uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/105256307-zhinochiy-vovnyaniy-svetr-z-velikim-lackanom" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/638494227_310_430" alt="Жіночий  вовняний светр з великим лацканом">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1300 грн</div>
-            <div class="product-title">Жіночий  вовняний светр з великим лацканом</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/105255635-vovnyana-tunika-_lamb-blend-mock-neck-tunic" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/638481105_310_430" alt="Вовняна туніка «lamb blend mock neck tunic»">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1600 грн</div>
-            <div class="product-title">Вовняна туніка «lamb blend mock neck tunic»</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/105255525-sherstyana-tunika-_lamb-blend-mock-neck-tunic" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/638479092_310_430" alt="Шерстяна туніка «lamb blend mock neck tunic»">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Шерстяна туніка «lamb blend mock neck tunic»</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/tolstovky/101176044-zhenskaya-povsednevnaya-tolstovka-s-kapyushonom" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568760138_310_430" alt="Жіноча повсякденна толстовка з капюшоном">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Жіноча повсякденна толстовка з капюшоном</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/tolstovky/101174563-zhenskoe-hudi-v-stile-kezhual-verdy" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568750803_310_430" alt="Жіноче худі в стилі кежуал verdy">
-        </div>
-        <div class="product-info">
-            <div class="product-price">920 грн</div>
-            <div class="product-title">Жіноче худі в стилі кежуал verdy</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/tolstovky/101174083-zhenskaya-elastichnaya-povsednevnaya-kurtka-dry-s-kapyushonom" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568749746_310_430" alt="Жіноча еластична куртка повсякденна dry з капюшоном">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1610 грн</div>
-            <div class="product-title">Жіноча еластична куртка повсякденна dry з капюшоном</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/kardigany/100843017-zhenskiy-kardigan-iz-shersti-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/564021564_310_430" alt="Жіночий кардиган з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1249 грн</div>
-            <div class="product-title">Жіночий кардиган з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/svitery/93859965-zhenskiy-sviter-s-kruglym-vyrezom-iz-shersti-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/490210294_310_430" alt="Жіночий светр з круглим вирізом з вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1300 грн</div>
-            <div class="product-title">Жіночий светр з круглим вирізом з вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/kofty/vodolazki/93850328-zhenskaya-vodolazka-iz-kamvolnoy-shersti-merinosa-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/490120087_310_430" alt="Жіноча водолазка з камвольної вовни мериноса uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Жіноча водолазка з камвольної вовни мериноса uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-                </div>
-
-                
-        <div class="show-more-wrap">
-            <button class="show-more-btn" onclick="showMoreProducts(this)">Показати ще</button>
-        </div>
-        
-            </section>
-
-            <div class="footer-note">
-                UniqLow • Створено для зручного перегляду товарів
+        <div class="section-top">
+            <h2>Товари розділу</h2>
+        </div>
+        <div class="products-grid">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/vodolazki/200729998-flisoviy-golf-heattech-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2263118526_310_430" alt="Флісовий гольф heattech uniqlo">
             </div>
+            <div class="product-info">
+                <div class="product-price">950 грн</div>
+                <div class="product-title">Флісовий гольф heattech uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/193932965-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230068197_310_430" alt="Cветр з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1350 грн</div>
+                <div class="product-title">Cветр з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/194414226-puhnastiy-flisoviy-kardigan-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2232938190_310_430" alt="Пухнастий флісовий кардиган uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1650 грн</div>
+                <div class="product-title">Пухнастий флісовий кардиган uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/199258912-svetr-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2255118399_310_430" alt="Светр uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Светр uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/199258825-svetr-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2255117931_310_430" alt="Светр uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Светр uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/198921457-kardigan-z-vovni-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2253391277_310_430" alt="Кардиган з вовни uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Кардиган з вовни uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/198921080-dzhemper-polo-z-vovnyanoyi-sumishi-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2253388926_310_430" alt="Джемпер-поло з вовняної суміші uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1600 грн</div>
+                <div class="product-title">Джемпер-поло з вовняної суміші uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/pulovery/197668506-pulover-z-merinosovoyi-vovni-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2247452690_310_430" alt="Пуловер з мериносової вовни uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">900 грн</div>
+                <div class="product-title">Пуловер з мериносової вовни uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191651178-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216112300_310_430" alt="Cветр з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Cветр з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191651476-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216114440_310_430" alt="Cветр з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Cветр з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191651364-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216113492_310_430" alt="Cветр з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Cветр з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • Mі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191651616-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216115265_310_430" alt="Cветр з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1250 грн</div>
+                <div class="product-title">Cветр з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191651735-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216115843_310_430" alt="Cветр з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Cветр з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191652448-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216120342_310_430" alt="Cветр з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1250 грн</div>
+                <div class="product-title">Cветр з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191652929-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216123116_310_430" alt="Cветр з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Cветр з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191654607-svetr-iz-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216133265_310_430" alt="Светр із вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Светр із вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191656535-3d-vyazaniy-svetr-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216145992_310_430" alt="3d-в'язаний светр uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">3d-в'язаний светр uniqlo</div>
+                <div class='product-meta'>38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191656637-3d-vyazaniy-svetr-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216146501_310_430" alt="3d-в'язаний светр uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">3d-в'язаний светр uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/197213854-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2244919832_310_430" alt="Светр з пряжі soufflé uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1700 грн</div>
+                <div class="product-title">Светр з пряжі soufflé uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/197213432-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2244917805_310_430" alt="Светр з пряжі soufflé uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1700 грн</div>
+                <div class="product-title">Светр з пряжі soufflé uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/197213237-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2244919880_310_430" alt="Светр з пряжі soufflé uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1700 грн</div>
+                <div class="product-title">Светр з пряжі soufflé uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/197212594-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2244914592_310_430" alt="Светр з пряжі soufflé uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1700 грн</div>
+                <div class="product-title">Светр з пряжі soufflé uniqlo</div>
+                <div class='product-meta'>36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/197211864-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2244912509_310_430" alt="Светр з пряжі soufflé uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1700 грн</div>
+                <div class="product-title">Светр з пряжі soufflé uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/197025662-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2243679856_310_430" alt="Cветр з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Cветр з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/196659788-svetr-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2241853709_310_430" alt="Светр uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1700 грн</div>
+                <div class="product-title">Светр uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/196638744-svetr-uniqlo-z-vizerunkom-argyle" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2241721993_310_430" alt="Светр uniqlo з візерунком argyle">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1700 грн</div>
+                <div class="product-title">Светр uniqlo з візерунком argyle</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/196249611-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2239839469_310_430" alt="Cветр з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Cветр з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/zhilety/196247323-zhilet-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2239829363_310_430" alt="Жилет uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Жилет uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/196246125-svetr-uniqlo-z-vizerunkom-argyle" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2239824744_310_430" alt="Светр uniqlo з візерунком argyle">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1700 грн</div>
+                <div class="product-title">Светр uniqlo з візерунком argyle</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/194911849-svetr-fair-isle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2235417765_310_430" alt="Светр fair isle uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1700 грн</div>
+                <div class="product-title">Светр fair isle uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/194910863-svetr-fair-isle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2235413824_310_430" alt="Светр fair isle uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1700 грн</div>
+                <div class="product-title">Светр fair isle uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 4</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/194415075-myakiy-flisoviy-longsliv-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2232943531_310_430" alt="М'який флісовий лонгслів uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">850 грн</div>
+                <div class="product-title">М'який флісовий лонгслів uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/193329604-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226400490_310_430" alt="Термолонгслів uniqlo heattech extra warm">
+            </div>
+            <div class="product-info">
+                <div class="product-price">875 грн</div>
+                <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/193329311-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226398639_310_430" alt="Термолонгслів uniqlo heattech extra warm">
+            </div>
+            <div class="product-info">
+                <div class="product-price">875 грн</div>
+                <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
+                <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/193329242-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226398241_310_430" alt="Термолонгслів uniqlo heattech extra warm">
+            </div>
+            <div class="product-info">
+                <div class="product-price">875 грн</div>
+                <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 4</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/193329168-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226397764_310_430" alt="Термолонгслів uniqlo heattech extra warm">
+            </div>
+            <div class="product-info">
+                <div class="product-price">875 грн</div>
+                <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/193329101-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226397332_310_430" alt="Термолонгслів uniqlo heattech extra warm">
+            </div>
+            <div class="product-info">
+                <div class="product-price">875 грн</div>
+                <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/193270164-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226057571_310_430" alt="Термолонгслів uniqlo heattech extra warm">
+            </div>
+            <div class="product-info">
+                <div class="product-price">875 грн</div>
+                <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/193269735-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226054735_310_430" alt="Термолонгслів uniqlo heattech extra warm">
+            </div>
+            <div class="product-info">
+                <div class="product-price">875 грн</div>
+                <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/193267629-termolongsliv-uniqlo-heattech-extra-warm" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226041790_310_430" alt="Термолонгслів uniqlo heattech extra warm">
+            </div>
+            <div class="product-info">
+                <div class="product-price">875 грн</div>
+                <div class="product-title">Термолонгслів uniqlo heattech extra warm</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/193264830-longsliv-airism-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226024057_310_430" alt="Лонгслів airism uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">650 грн</div>
+                <div class="product-title">Лонгслів airism uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХS</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/vodolazki/193257952-golf-svetr-uniqlo-100-vovna-merinosa" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2225979454_310_430" alt="Гольф светр uniqlo 100% вовна мериноса">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1600 грн</div>
+                <div class="product-title">Гольф светр uniqlo 100% вовна мериноса</div>
+                <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/190238426-svetr-z-pryazhi-souffle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207367994_310_430" alt="Светр з пряжі soufflé uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Светр з пряжі soufflé uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/pulovery/192165043-flisoviy-pulover-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219383245_310_430" alt="Флісовий пуловер uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1300 грн</div>
+                <div class="product-title">Флісовий пуловер uniqlo</div>
+                <div class='product-meta'>XL</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/192111898-kardigan-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219047511_310_430" alt="Кардиган uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1450 грн</div>
+                <div class="product-title">Кардиган uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/192114444-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219062188_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/192113767-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219057995_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/192113258-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219054981_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
+                <div class='product-meta'>Uniqlo • XL</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/192113092-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219054031_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
+                <div class='product-meta'>Uniqlo • Lі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/192112511-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219050776_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/192112290-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219049642_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191895532-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2217693895_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191706264-3d-vyazaniy-bavovnyaniy-svetr-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216447731_310_430" alt="3d в'язаний бавовняний светр uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">3d в'язаний бавовняний светр uniqlo</div>
+                <div class='product-meta'>34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/191705263-kardigan-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216442059_310_430" alt="Кардиган uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1300 грн</div>
+                <div class="product-title">Кардиган uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/191660482-kardigan-souffle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216170837_310_430" alt="Кардиган souffle uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1300 грн</div>
+                <div class="product-title">Кардиган souffle uniqlo</div>
+                <div class='product-meta'>M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191657266-svetr-fair-isle-iz-pryazhi-sufle-jw-anderson-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216150428_310_430" alt="Светр fair isle із пряжі суфле (jw anderson) uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Светр fair isle із пряжі суфле (jw anderson) uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/tolstovky/191654304-tolstovka-zara-rozmir-l" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216131420_310_430" alt="Толстовка zara, розмір л">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
+                <div class="product-title">Толстовка zara, розмір л</div>
+                <div class='product-meta'>ZARA • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191654163-svetr-z-vizerunkom-aran-vid-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216130801_310_430" alt="Светр з візерунком aran від uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Светр з візерунком aran від uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/191650979-cvetr-z-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216111569_310_430" alt="Cветр з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Cветр з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/190311066-kardigan-polo-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207819552_310_430" alt="Кардиган-поло uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Кардиган-поло uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/190311022-kardigan-polo-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207819236_310_430" alt="Кардиган-поло uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Кардиган-поло uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/190310868-kardigan-polo-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207818216_310_430" alt="Кардиган-поло uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Кардиган-поло uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/190309288-3d-vyazaniy-svetr-zi-zmishanoyi-vovni-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207808360_310_430" alt="3d-в'язаний светр зі змішаної вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1300 грн</div>
+                <div class="product-title">3d-в'язаний светр зі змішаної вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/vodolazki/190021623-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2206058055_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
+                <div class='product-meta'>Uniqlo • XL</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/189083758-kardigan-z-sumishi-vovni-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2200688547_310_430" alt="Кардиган з суміші вовни uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1750 грн</div>
+                <div class="product-title">Кардиган з суміші вовни uniqlo</div>
+                <div class='product-meta'>38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/179497385-flisova-kofta-uniseks-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/-854571570_310_430" alt="Флісова кофта унісекс uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Флісова кофта унісекс uniqlo</div>
+                <div class='product-meta'>40 / L / 48і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/hudi/174027809-hudi-the-message-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/-486394105_310_430" alt="Худі the message uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Худі the message uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/hudi/184957466-hudi-uniqlo-z-kolekciyi-ut-archive" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2175984860_310_430" alt="Худі uniqlo з колекції ut archive">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Худі uniqlo з колекції ut archive</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/vodolazki/186133181-vodolazka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183421227_310_430" alt="Водолазка uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">799 грн</div>
+                <div class="product-title">Водолазка uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/186133043-longsliv-oversayz-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183420613_310_430" alt="Лонгслів оверсайз uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Лонгслів оверсайз uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/longslivy/186055657-longsliv-smooth-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2182934037_310_430" alt="Лонгслів smooth uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">799 грн</div>
+                <div class="product-title">Лонгслів smooth uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitshoty/184957866-svitshot-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2175987167_310_430" alt="Світшот uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">850 грн</div>
+                <div class="product-title">Світшот uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/184924030-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2175778515_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
+                <div class='product-meta'>Uniqlo • ХS</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/184923891-golf-uniqlo-iz-100-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2175777627_310_430" alt="Гольф uniqlo із 100% мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Гольф uniqlo із 100% мериносової вовни</div>
+                <div class='product-meta'>L</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/184654602-kardigan-zara" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2174053239_310_430" alt="Кардиган zara">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Кардиган zara</div>
+                <div class='product-meta'>ZARA • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/vodolazki/182848689-vodolazka-z-flisu-heattech-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2162882538_310_430" alt="Водолазка з флісу heattech uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">880 грн</div>
+                <div class="product-title">Водолазка з флісу heattech uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitshoty/166767197-zhenskie-povsednevnye-topy-women-in-movies" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220903392_310_430" alt="Женские повседневные топы women in movies">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Женские повседневные топы women in movies</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitshoty/166764104-svitshot-s-grafikom-zhenshin-rise-again-ot-verdy-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220824506_310_430" alt="Свитшот с графиком женщин rise again от verdy ut">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Свитшот с графиком женщин rise again от verdy ut</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/143571907-zhinochiy-svetr-u-smuzhku-z-merinosa" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1620831288_310_430" alt="Жіночий  светр у смужку з мериноса">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Жіночий  светр у смужку з мериноса</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/143571266-noviy-sviter-uniqlo14-sherst-10-alpaka" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1620788041_310_430" alt="Новий свитер uniqlo14% шерсть, 10% альпака">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1300 грн</div>
+                <div class="product-title">Новий свитер uniqlo14% шерсть, 10% альпака</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/143109072-svetr-melanzh-vovna" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1598909800_310_430" alt="Светр меланж вовна">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Светр меланж вовна</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/143107749-zhinochiy-puhnastiy-svetr-z-shirokimi-rukavami-sherst-alpaki" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1598847032_310_430" alt="Жіночий пухнастий светр з широкими рукавами шерсть альпаки">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Жіночий пухнастий светр з широкими рукавами шерсть альпаки</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/143107304-zhinochiy-svetr-iz-v-podibnim-virizom-iz-merinosa" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1598834327_310_430" alt="Жіночий светр із v-подібним вирізом із мериноса">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Жіночий светр із v-подібним вирізом із мериноса</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/142993110-3d-svetr-z-povitryanimi-rukavami" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1591159039_310_430" alt="3d светр з повітряними рукавами">
+            </div>
+            <div class="product-info">
+                <div class="product-price">800 грн</div>
+                <div class="product-title">3d светр з повітряними рукавами</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/142986900-sviter-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1590898045_310_430" alt="Свитер uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">950 грн</div>
+                <div class="product-title">Свитер uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/hudi/140823381-zhinocha-hudi-heattech-na-sherpi-vid-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1497093058_310_430" alt="Жіноча худі heattech на шерпі від uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Жіноча худі heattech на шерпі від uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitshoty/124337675-obyemniy-svitshot-vid-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1094600864_310_430" alt="Об'ємний світшот від uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1149 грн</div>
+                <div class="product-title">Об'ємний світшот від uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitshoty/105872061-pulover-ca-memories-z-dovgim-rukavom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653561202_310_430" alt="Пуловер ca memories (з довгим рукавом)">
+            </div>
+            <div class="product-info">
+                <div class="product-price">990 грн</div>
+                <div class="product-title">Пуловер ca memories (з довгим рукавом)</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/dzhempery/105870401-zhinocha-shiroka-futbolka-v-smuzhku" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653534763_310_430" alt="Жіноча широка футболка в смужку">
+            </div>
+            <div class="product-info">
+                <div class="product-price">899 грн</div>
+                <div class="product-title">Жіноча широка футболка в смужку</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitshoty/105869205-zhinochiy-pulover-hoodie-sprz-ny" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653518462_310_430" alt="Жіночий пуловер hoodie sprz ny">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1166 грн</div>
+                <div class="product-title">Жіночий пуловер hoodie sprz ny</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/105431779-svetr-uniqlo-3d-100-merinosovoyi-vovni-extra-fine-merino-wool" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/642746347_310_430" alt="Светр uniqlo 3d 100 мериносової вовни extra fine merino wool">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Светр uniqlo 3d 100 мериносової вовни extra fine merino wool</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/105427011-zhinochiy-vyazaniy-svetr-uniqlo-401088-z-merinosovoyi-vovni-z" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/642652884_310_430" alt="Жіночий в'язаний светр uniqlo 401088 з мериносової вовни з піврукавом">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1000 грн</div>
+                <div class="product-title">Жіночий в'язаний светр uniqlo 401088 з мериносової вовни з піврукавом</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/105403488-zhinochiy-kardigan-z-kruglim-virizom-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/641801918_310_430" alt="Жіночий кардиган з круглим вирізом uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Жіночий кардиган з круглим вирізом uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/105402861-zhinochiy-vovnyaniy-svetr-z-velikim-lackanom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/641789013_310_430" alt="Жіночий  вовняний светр з великим лацканом">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Жіночий  вовняний светр з великим лацканом</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/105402741-zhinochiy-vovnyaniy-svetr-z-velikim-lackanom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/641782861_310_430" alt="Жіночий вовняний светр з великим лацканом">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Жіночий вовняний светр з великим лацканом</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/105402107-melanzheva-vovnyana-tunika-uniqlo-xs" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/641761518_310_430" alt="Меланжева вовняна туніка uniqlo xs">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Меланжева вовняна туніка uniqlo xs</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/105401979-svetr-z-aktivnim-v-podibnim-virizomu-skladi-vovna" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/641760146_310_430" alt="Светр з активним v-подібним вирізом(у складі вовна)">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1000 грн</div>
+                <div class="product-title">Светр з активним v-подібним вирізом(у складі вовна)</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/105401790-zhinochiy-svetr-z-kruglim-virizom-z-merinosa" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/641757449_310_430" alt="Жіночий светр з круглим вирізом з мериноса">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Жіночий светр з круглим вирізом з мериноса</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/vodolazki/105401484-zhinocha-vodolazka-z-vorsom-heattech-z-dovgim-rukavom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/641754377_310_430" alt="Жіноча водолазка з ворсом heattech (з довгим рукавом)">
+            </div>
+            <div class="product-info">
+                <div class="product-price">800 грн</div>
+                <div class="product-title">Жіноча водолазка з ворсом heattech (з довгим рукавом)</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/105257378-zhinochiy-zhakkardoviy-svetr-ines" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/638521310_310_430" alt="Жіночий жаккардовий светр інес">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Жіночий жаккардовий светр інес</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitshoty/105257010-tolstovka-vid-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/638509910_310_430" alt="Толстовка від uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">890 грн</div>
+                <div class="product-title">Толстовка від uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/105256307-zhinochiy-vovnyaniy-svetr-z-velikim-lackanom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/638494227_310_430" alt="Жіночий  вовняний светр з великим лацканом">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1300 грн</div>
+                <div class="product-title">Жіночий  вовняний светр з великим лацканом</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/105255635-vovnyana-tunika-_lamb-blend-mock-neck-tunic" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/638481105_310_430" alt="Вовняна туніка «lamb blend mock neck tunic»">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1600 грн</div>
+                <div class="product-title">Вовняна туніка «lamb blend mock neck tunic»</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/105255525-sherstyana-tunika-_lamb-blend-mock-neck-tunic" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/638479092_310_430" alt="Шерстяна туніка «lamb blend mock neck tunic»">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Шерстяна туніка «lamb blend mock neck tunic»</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/tolstovky/101176044-zhenskaya-povsednevnaya-tolstovka-s-kapyushonom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568760138_310_430" alt="Жіноча повсякденна толстовка з капюшоном">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Жіноча повсякденна толстовка з капюшоном</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/tolstovky/101174563-zhenskoe-hudi-v-stile-kezhual-verdy" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568750803_310_430" alt="Жіноче худі в стилі кежуал verdy">
+            </div>
+            <div class="product-info">
+                <div class="product-price">920 грн</div>
+                <div class="product-title">Жіноче худі в стилі кежуал verdy</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/tolstovky/101174083-zhenskaya-elastichnaya-povsednevnaya-kurtka-dry-s-kapyushonom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568749746_310_430" alt="Жіноча еластична куртка повсякденна dry з капюшоном">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1610 грн</div>
+                <div class="product-title">Жіноча еластична куртка повсякденна dry з капюшоном</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/kardigany/100843017-zhenskiy-kardigan-iz-shersti-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/564021564_310_430" alt="Жіночий кардиган з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1249 грн</div>
+                <div class="product-title">Жіночий кардиган з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/svitery/93859965-zhenskiy-sviter-s-kruglym-vyrezom-iz-shersti-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/490210294_310_430" alt="Жіночий светр з круглим вирізом з вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1300 грн</div>
+                <div class="product-title">Жіночий светр з круглим вирізом з вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/kofty/vodolazki/93850328-zhenskaya-vodolazka-iz-kamvolnoy-shersti-merinosa-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/490120087_310_430" alt="Жіноча водолазка з камвольної вовни мериноса uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Жіноча водолазка з камвольної вовни мериноса uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    </div>
+        
+            <div class="show-more-wrap">
+                <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
+            </div>
+            
+        
+            <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
         </main>
     </div>
-
     <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark');
-            localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-        }
-
-        if (localStorage.getItem('uniqlo_theme') === 'dark') {
-            document.body.classList.add('dark');
-        }
-
-        function showMoreProducts(button) {
-            document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'block');
-            button.style.display = 'none';
-        }
+        function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); }
+        if (localStorage.getItem('uniqlo_theme') === 'dark') { document.body.classList.add('dark'); }
+        function showMoreProducts(button) { document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'flex'); button.style.display = 'none'; }
     </script>
 </body>
 </html>

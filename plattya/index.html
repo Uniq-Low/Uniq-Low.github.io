@@ -4,150 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniqLow — Плаття</title>
-    <meta name="description" content="Каталог товарів магазину UniqLow. Українська мова, зручна навігація, товари Shafa та OLX.">
     <style>
         :root {
-            --bg: #f6f8fc;
-            --bg-soft: #eef2ff;
-            --panel: rgba(255,255,255,0.92);
-            --panel-solid: #ffffff;
-            --text: #101828;
-            --muted: #667085;
-            --accent: #e11d48;
-            --accent-soft: rgba(225, 29, 72, 0.12);
-            --border: rgba(16,24,40,0.08);
-            --shadow: 0 18px 45px rgba(16,24,40,0.08);
+            --bg: #f6f8fc; --bg-soft: #eef2ff; --panel: rgba(255,255,255,0.92); --panel-solid: #ffffff;
+            --text: #101828; --muted: #667085; --accent: #e11d48; --accent-soft: rgba(225, 29, 72, 0.12);
+            --border: rgba(16,24,40,0.08); --shadow: 0 18px 45px rgba(16,24,40,0.08);
             --hero: linear-gradient(135deg, #fff1f2 0%, #ffffff 38%, #eef4ff 100%);
-            --green: #16a34a;
-            --orange: #f59e0b;
+            --green: #16a34a; --orange: #f59e0b;
         }
-
         body.dark {
-            --bg: #0b1220;
-            --bg-soft: #111827;
-            --panel: rgba(17,24,39,0.88);
-            --panel-solid: #111827;
-            --text: #f8fafc;
-            --muted: #98a2b3;
-            --accent: #ff4d6d;
-            --accent-soft: rgba(255,77,109,0.12);
-            --border: rgba(255,255,255,0.08);
-            --shadow: 0 18px 45px rgba(0,0,0,0.35);
+            --bg: #0b1220; --bg-soft: #111827; --panel: rgba(17,24,39,0.88); --panel-solid: #111827;
+            --text: #f8fafc; --muted: #98a2b3; --accent: #ff4d6d; --accent-soft: rgba(255,77,109,0.12);
+            --border: rgba(255,255,255,0.08); --shadow: 0 18px 45px rgba(0,0,0,0.35);
             --hero: linear-gradient(135deg, #1f2937 0%, #111827 38%, #0b1220 100%);
-            --green: #22c55e;
-            --orange: #fb923c;
         }
-
         * { box-sizing: border-box; }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at left top, rgba(225,29,72,0.09), transparent 24%),
-                radial-gradient(circle at right top, rgba(59,130,246,0.08), transparent 22%),
-                var(--bg);
-        }
-
+        body { margin: 0; font-family: Arial, sans-serif; color: var(--text); background: var(--bg); }
         .layout { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
+        .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px; border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px); }
 
-        .sidebar {
-            position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px;
-            border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px);
-        }
-
-        .brand {
-            display: flex; align-items: center; gap: 14px; text-decoration: none;
-            margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04);
-        }
-
-        .brand-avatar {
-            width: 66px; height: 66px; border-radius: 50%; object-fit: cover;
-            border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0;
-        }
-
+        .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04); }
+        .brand-avatar { width: 66px; height: 66px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0; background: white; }
         .brand-name { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
         .brand-sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
 
-        .top-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-
-        .top-btn {
-            text-decoration: none; color: white; font-size: 14px; font-weight: 700;
-            text-align: center; padding: 11px 12px; border-radius: 14px;
-            transition: transform .18s ease, box-shadow .18s ease;
-        }
-
-        .top-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-
-        .btn-telegram { background: linear-gradient(135deg, #229ED9, #1d4ed8); }
-        .btn-olx { background: linear-gradient(135deg, #16a34a, #15803d); }
-
-        .theme-toggle {
-            width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text);
-            border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px;
-        }
-
-        .theme-toggle:hover { border-color: rgba(225,29,72,0.18); }
+        .theme-toggle { width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text); border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px; }
 
         .menu-block { margin-bottom: 18px; }
         .menu-title { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); margin-bottom: 8px; padding: 0 6px; }
         .menu-block ul { list-style: none; margin: 0; padding: 0; }
-        .menu-block li { margin-bottom: 4px; }
-        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; transition: .18s ease; }
+        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; margin-bottom: 4px; transition: .18s ease; }
         .menu-block a:hover { background: var(--accent-soft); color: var(--accent); transform: translateX(2px); }
         .active-link { background: var(--accent-soft); color: var(--accent) !important; font-weight: 700; }
 
         .content { padding: 28px; }
-
-        .hero { position: relative; overflow: hidden; border-radius: 30px; border: 1px solid var(--border); background: var(--hero); box-shadow: var(--shadow); padding: 28px; margin-bottom: 28px; }
-        .hero::after { content: ""; position: absolute; right: -80px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(225,29,72,0.18), transparent 68%); }
-        .hero-inner { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
-        .hero h1 { margin: 0 0 10px; font-size: 38px; line-height: 1.05; }
-        .hero p { margin: 0; max-width: 800px; color: var(--muted); font-size: 16px; line-height: 1.7; }
-        .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-        .hero-badge { padding: 10px 14px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.45); font-size: 13px; }
-
         .section-top { margin-bottom: 14px; }
         .section-top h2 { margin: 0 0 6px; font-size: 24px; }
         .section-top p { margin: 0; color: var(--muted); line-height: 1.6; }
 
-        .quick-section, .promo-section, .reviews-section { margin-bottom: 28px; }
+        .quick-section, .promo-section { margin-bottom: 28px; }
         .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
-        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(225,29,72,0.08), rgba(255,255,255,0.35)); box-shadow: var(--shadow); transition: transform .18s ease, border-color .18s ease; }
-        .quick-tile:hover { transform: translateY(-3px); border-color: rgba(225,29,72,0.22); }
+        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: var(--panel-solid); box-shadow: var(--shadow); transition: transform .18s ease; }
+        .quick-tile:hover { transform: translateY(-3px); border-color: var(--accent); }
 
-        /* PROMO BLOCK */
-        .promo-card { display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow); }
-        .promo-badge { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #0f766e); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 30px; margin: 0 auto; }
-        .promo-content h2 { margin: 0 0 10px; font-size: 28px; }
-        .promo-content p { margin: 0 0 16px; color: var(--muted); line-height: 1.7; }
-        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: linear-gradient(135deg, #229ED9, #1d4ed8); padding: 12px 18px; border-radius: 14px; font-weight: 700; transition: transform .2s ease; }
-        .telegram-btn:hover { transform: translateY(-2px); }
-
-        /* REVIEWS BLOCK */
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; padding: 18px; box-shadow: var(--shadow); }
-        .review-stars { color: var(--orange); font-size: 20px; margin-bottom: 8px; }
-        .review-name { font-weight: 800; margin-bottom: 8px; }
-        .review-text { color: var(--muted); line-height: 1.6; }
+        .promo-card { display: flex; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow);}
+        .promo-badge { width: 100px; height: 100px; border-radius: 50%; background: var(--green); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 24px; flex-shrink:0; }
+        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: #229ED9; padding: 12px 18px; border-radius: 14px; font-weight: 700; margin-top: 10px; }
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .product-card { display: block; text-decoration: none; color: inherit; border-radius: 22px; overflow: hidden; background: var(--panel-solid); border: 1px solid var(--border); box-shadow: var(--shadow); transition: .2s ease; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 25px 48px rgba(16,24,40,0.14); border-color: rgba(225,29,72,0.18); }
+        .product-card { display: flex; flex-direction: column; background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); transition: .2s ease; }
+        .product-card:hover { transform: translateY(-5px); border-color: rgba(225,29,72,0.18); box-shadow: 0 25px 48px rgba(16,24,40,0.14); }
+        .card-main-link { text-decoration: none; color: inherit; flex-grow: 1; display: flex; flex-direction: column; }
         .product-image-wrap { background: var(--bg-soft); overflow: hidden; }
         .product-image { width: 100%; height: 330px; object-fit: cover; display: block; transition: transform .35s ease; }
         .product-card:hover .product-image { transform: scale(1.04); }
-        .product-info { padding: 16px; }
+        .product-info { padding: 16px; flex-grow: 1; }
         .product-price { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
         .product-title { font-size: 15px; line-height: 1.5; min-height: 46px; margin-bottom: 8px; }
         .product-meta { font-size: 13px; color: var(--muted); }
 
-        /* ПРИХОВАНІ ТОВАРИ */
+        .card-tg-btn { display: block; margin: 0 16px 16px 16px; background: linear-gradient(135deg, #2AABEE, #229ED9); color: white; text-align: center; padding: 12px; border-radius: 14px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s; }
+        .card-tg-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(34, 158, 217, 0.3); }
+
         .hidden-card { display: none; }
         .show-more-wrap { margin-top: 30px; text-align: center; }
-        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; }
-        .show-more-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
+
+        .reviews-page-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 800px; }
+        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .review-name { font-weight: 800; font-size: 16px; display: flex; align-items: center; gap: 10px; }
+        .review-stars { color: var(--orange); font-size: 18px; }
+        .review-text { color: var(--text); line-height: 1.6; font-size: 15px; }
+        .src-badge { font-size: 11px; padding: 3px 8px; border-radius: 8px; font-weight: bold; color: white; text-transform: uppercase; }
+        .src-shafa { background: #f59e0b; }
+        .src-telegram { background: #2AABEE; }
 
         .empty-box { padding: 30px; border-radius: 22px; border: 1px dashed var(--border); background: var(--panel-solid); color: var(--muted); }
         .footer-note { margin-top: 26px; text-align: center; color: var(--muted); font-size: 13px; }
@@ -155,32 +86,27 @@
         @media (max-width: 1080px) {
             .layout { grid-template-columns: 1fr; }
             .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
-            .content { padding: 18px; }
-            .hero { padding: 22px; }
-            .hero h1 { font-size: 30px; }
-            .promo-card { grid-template-columns: 1fr; text-align: center; }
+            .promo-card { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <a class="brand" href="/">
-                <img class="brand-avatar" src="https://avatars.shafastatic.net/691711_new_avatar_type1648494975" alt="uniqlo-shop">
+            <a class="brand" href="../">
+                <img class="brand-avatar" src="../icon.png" alt="UniqLow">
                 <div>
                     <div class="brand-name">UniqLow</div>
                     <div class="brand-sub">Одяг та аксесуари</div>
                 </div>
             </a>
-
-            <div class="top-links">
-                <a class="top-btn btn-telegram" href="https://t.me/ТВІЙ_БОТ" target="_blank" rel="noopener">Telegram</a>
-                <a class="top-btn btn-olx" href="/olx/">OLX</a>
-            </div>
-
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">🌗</button>
-
-            <div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
+            <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+            <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
+<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
+<li><a class='' href='/olx/'>🌐 OLX</a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
 <li><a class='' href='/spidnytsi/'>Спідниці</a></li>
 <li><a class='active-link' href='/plattya/'>Плаття</a></li>
 <li><a class='' href='/verhniy-odyag/'>Верхній одяг</a></li>
@@ -216,1234 +142,1725 @@
 <li><a class='' href='/golovni-ubory/'>Головні убори</a></li>
 <li><a class='' href='/remeni-poyasy/'>Ремені та пояси</a></li>
 </ul></div>
-<div class='menu-block'><div class='menu-title'>Майданчики</div><ul>
-<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>Shafa</a></li>
-<li><a class='' href='/olx/'>OLX</a></li>
-</ul></div>
         </aside>
 
         <main class="content">
-            <section class="hero">
-                <div class="hero-inner">
-                    <div>
-                        <h1>Плаття</h1>
-                        <p>Добірка товарів розділу з переходом до оригінального оголошення.</p>
-                        <div class="hero-badges">
-                            <div class="hero-badge">Українська мова</div>
-                            <div class="hero-badge">Замовлення через Telegram</div>
-                            <div class="hero-badge">Швидкий перехід у товар</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             
             
             
-
-            <section>
-                <div class="section-top">
-                    <h2>Товари розділу</h2>
-                    <p>Спочатку показуються перші 12 позицій. Натисніть 'Показати ще', щоб побачити інші.</p>
-                </div>
-
-                <div class="products-grid">
-                    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/midi/199259655-suknya-uniqlo-z-pryazhi-sufle" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2255123070_310_430" alt="Сукня uniqlo з пряжі суфле">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1650 грн</div>
-            <div class="product-title">Сукня uniqlo з пряжі суфле</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/midi/199259544-suknya-uniqlo-z-pryazhi-sufle" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2255122427_310_430" alt="Сукня uniqlo з пряжі суфле">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1650 грн</div>
-            <div class="product-title">Сукня uniqlo з пряжі суфле</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/midi/199259457-suknya-uniqlo-z-pryazhi-sufle" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2255121841_310_430" alt="Сукня uniqlo з пряжі суфле">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1650 грн</div>
-            <div class="product-title">Сукня uniqlo з пряжі суфле</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/midi/199259368-suknya-uniqlo-z-pryazhi-sufle" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2255121302_310_430" alt="Сукня uniqlo з пряжі суфле">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1650 грн</div>
-            <div class="product-title">Сукня uniqlo з пряжі суфле</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/midi/191879331-suknya-polo-z-vovni-merinosu-vid-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2217577908_310_430" alt="Сукня-поло з вовни мериносу від uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Сукня-поло з вовни мериносу від uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/midi/191893431-suknya-souffle-yarn-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2217679040_310_430" alt="Сукня souffle yarn uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Сукня souffle yarn uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/midi/191893483-suknya-souffle-yarn-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2217679406_310_430" alt="Сукня souffle yarn uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Сукня souffle yarn uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/midi/191894720-suknya-z-dzhersi-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2217688016_310_430" alt="Сукня з джерсі uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Сукня з джерсі uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/maksi/191894380-suknya-klosh-iz-sufle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2217685588_310_430" alt="Сукня-кльош із суфле uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Сукня-кльош із суфле uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/midi/193258229-suknya-z-dovgimi-rukavami-z-ovechoyi-vovni-premium-klasu-z-kruglim" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2225981233_310_430" alt="Сукня з довгими рукавами з овечої вовни преміум-класу з круглим вирізом(u premium lambswool crew neck long-sleeve dress)">
-        </div>
-        <div class="product-info">
-            <div class="product-price">2100 грн</div>
-            <div class="product-title">Сукня з довгими рукавами з овечої вовни преміум-класу з круглим вирізом(u premium lambswool crew neck long-sleeve dress)</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/midi/193257453-zhinocha-sportivna-suknya-z-vovnyanoyi-sumishi-rukav-34-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2225976446_310_430" alt="Жіноча спортивна сукня з вовняної суміші (рукав 3/4) uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1900 грн</div>
-            <div class="product-title">Жіноча спортивна сукня з вовняної суміші (рукав 3/4) uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/platya/midi/193243845-suknya-uniqlo-z-vovnyanoyi-sumishi70-ovechoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2225888914_310_430" alt="Сукня uniqlo з вовняної суміші(70% овечої вовни)">
-        </div>
-        <div class="product-info">
-            <div class="product-price">2400 грн</div>
-            <div class="product-title">Сукня uniqlo з вовняної суміші(70% овечої вовни)</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/192111150-suknya-uniqlo-z-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2219043272_310_430" alt="Сукня uniqlo з мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Сукня uniqlo з мериносової вовни</div>
-            <div class='product-meta'>S</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/191894166-suknya-souffle-yarn-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2217684338_310_430" alt="Сукня souffle yarn uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Сукня souffle yarn uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/191894008-suknya-uniqlo-z-merinosovoyi-vovni" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2217683355_310_430" alt="Сукня uniqlo з мериносової вовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Сукня uniqlo з мериносової вовни</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/191893639-suknya-z-merinosovoyi-sumishi-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2217680523_310_430" alt="Сукня з мериносової суміші uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Сукня з мериносової суміші uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/191893214-sherstyana-suknya-transformer-vid-zara-rozmir-s" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2217677504_310_430" alt="Шерстяна сукня-трансформер від zara, розмір с">
-        </div>
-        <div class="product-info">
-            <div class="product-price">850 грн</div>
-            <div class="product-title">Шерстяна сукня-трансформер від zara, розмір с</div>
-            <div class='product-meta'>ZARA • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/190238853-suknya-z-dzhersi-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2207370925_310_430" alt="Сукня з джерсі uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1300 грн</div>
-            <div class="product-title">Сукня з джерсі uniqlo</div>
-            <div class='product-meta'>Uniqlo • L</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/188738172-suknya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2198814539_310_430" alt="Сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Сукня uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/188737790-suknya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2198813133_310_430" alt="Сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Сукня uniqlo</div>
-            <div class='product-meta'>42 / XL / 50</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/188075923-suknya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2195372097_310_430" alt="Сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Сукня uniqlo</div>
-            <div class='product-meta'>Uniqlo • Sі ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/187736276-suknya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2193406507_310_430" alt="Сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Сукня uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/186347611-suknya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2184765112_310_430" alt="Сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Сукня uniqlo</div>
-            <div class='product-meta'>Uniqlo • ХS</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/184641208-suknya-sorochka-z-poyasom-uniqlo-rozmir-l" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2173967324_310_430" alt="Сукня-сорочка з поясом uniqlo, розмір л">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Сукня-сорочка з поясом uniqlo, розмір л</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/167616435-plate-iz-merinosa-s-vyrezom-lodochkoy" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/-240820344_310_430" alt="Платье из мериноса с вырезом лодочкой">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1599 грн</div>
-            <div class="product-title">Платье из мериноса с вырезом лодочкой</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/167616190-dlinnoe-platekorotkiy-rukav-ot-uniqlo-yuniklo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/-240811257_310_430" alt="Длинное платье(короткий рукав) от uniqlo юникло">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1199 грн</div>
-            <div class="product-title">Длинное платье(короткий рукав) от uniqlo юникло</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/166962831-uniqlo-plate-iz-merinosovoy-smesi-s-vorotnikom-lodochkoy-i-dlinnymi" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/-225510754_310_430" alt="Uniqlo платье из мериносовой смеси с воротником-лодочкой и длинными рукавами">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1900 грн</div>
-            <div class="product-title">Uniqlo платье из мериносовой смеси с воротником-лодочкой и длинными рукавами</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/166721812-plate-uniqlonovoe-s-birkami" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/-220380537_310_430" alt="Платье uniqlo,новое с бирками!">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1399 грн</div>
-            <div class="product-title">Платье uniqlo,новое с бирками!</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/143540898-suknya-klosh-3d-premium-klasu-novaya-s-birkami100-procentnaya-sherst" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1618988799_310_430" alt="Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!">
-        </div>
-        <div class="product-info">
-            <div class="product-price">2600 грн</div>
-            <div class="product-title">Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/143540677-suknya-klosh-3d-premium-klasu-novaya-s-birkami100-procentnaya-sherst" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1618975454_310_430" alt="Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!">
-        </div>
-        <div class="product-info">
-            <div class="product-price">2600 грн</div>
-            <div class="product-title">Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/143540255-suknya-klosh-3d-premium-klasu-novaya-s-birkami100-procentnaya-sherst" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1618954585_310_430" alt="Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!">
-        </div>
-        <div class="product-info">
-            <div class="product-price">2600 грн</div>
-            <div class="product-title">Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143223299-shifonova-suknya-uniqlo-s-sanderson" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1604548225_310_430" alt="Шифонова сукня uniqlo s sanderson">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1399 грн</div>
-            <div class="product-title">Шифонова сукня uniqlo s sanderson</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143221066-suknya-uniqlo-idlf-z-vishivkoyunova-z-birkami" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1604520962_310_430" alt="Сукня uniqlo idlf з вишивкою,нова з бірками!">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1299 грн</div>
-            <div class="product-title">Сукня uniqlo idlf з вишивкою,нова з бірками!</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143207647-suknya-uniqlonova-z-birkami" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1604071570_310_430" alt="Сукня uniqlo,нова з бірками!">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1299 грн</div>
-            <div class="product-title">Сукня uniqlo,нова з бірками!</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143206248-t-plattya-oversayznova-z-birkamiuniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1604021821_310_430" alt="Т-плаття оверсайз!нова з бірками!uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1299 грн</div>
-            <div class="product-title">Т-плаття оверсайз!нова з бірками!uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143205721-suknya-smugasta-futbolka-z-korotkimi-rukavami-i-korotkimi-rukavami" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1603998616_310_430" alt="Сукня-смугаста футболка з короткими рукавами і короткими рукавами u!нова з бірками!">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1299 грн</div>
-            <div class="product-title">Сукня-смугаста футболка з короткими рукавами і короткими рукавами u!нова з бірками!</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143204361-super-plate-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2190823074_310_430" alt="Супер платье uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1599 грн</div>
-            <div class="product-title">Супер платье uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143127935-zhinocha-suknya-z-perehresnim-virizomnova-z-birkamiuniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1599540882_310_430" alt="Жіноча сукня з перехресним вирізом!нова з бірками!uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">999 грн</div>
-            <div class="product-title">Жіноча сукня з перехресним вирізом!нова з бірками!uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143127590-nova-z-birkami-suknya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1599530194_310_430" alt="Нова з бірками сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1099 грн</div>
-            <div class="product-title">Нова з бірками сукня uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143127234-dizaynerske-plattya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1599524097_310_430" alt="Дизайнерське плаття uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1050 грн</div>
-            <div class="product-title">Дизайнерське плаття uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143125874-dovga-zhinocha-suknya-v-stili-sorochki-z-v-podibnim-virizom" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1599479629_310_430" alt="Довга жіноча сукня в стилі сорочки з v-подібним вирізом">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1299 грн</div>
-            <div class="product-title">Довга жіноча сукня в стилі сорочки з v-подібним вирізом</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143124841-zhinocha-suknya-na-bretelyah-z-zhorzhetu" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1599456010_310_430" alt="Жіноча сукня на бретелях з жоржету">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1499 грн</div>
-            <div class="product-title">Жіноча сукня на бретелях з жоржету</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/mini/143123757-suknya-zhakardova-bez-rukaviv-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1599423430_310_430" alt="Сукня жакардова (без рукавів) uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">684 грн</div>
-            <div class="product-title">Сукня жакардова (без рукавів) uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/143112277-shikarna-tepla-suknya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1599029501_310_430" alt="Шикарна тепла сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1499 грн</div>
-            <div class="product-title">Шикарна тепла сукня uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/143111269-zhinocha-suknya-sorochka-z-viskozi" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1598995517_310_430" alt="Жіноча сукня-сорочка з віскози">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Жіноча сукня-сорочка з віскози</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/vechernie/142988305-duzhe-krasiva-suknya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1590943518_310_430" alt="Дуже красива сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">950 грн</div>
-            <div class="product-title">Дуже красива сукня uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/142969898-zhinocha-suknya-z-printom-z-rukavom-34" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1590539624_310_430" alt="Жіноча сукня з принтом з рукавом 3/4">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1299 грн</div>
-            <div class="product-title">Жіноча сукня з принтом з рукавом 3/4</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/142969607-shikarna-tepla-suknya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1590533281_310_430" alt="Шикарна тепла сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1499 грн</div>
-            <div class="product-title">Шикарна тепла сукня uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/142968728-dovga-velvetova-suknya-sorochka-uniqlo-yuniklo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1590510465_310_430" alt="Довга вельветова сукня-сорочка uniqlo юнікло">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1700 грн</div>
-            <div class="product-title">Довга вельветова сукня-сорочка uniqlo юнікло</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/142968336-plate-hudi-oversayz-ot-yaponskogo-brenda-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1590496212_310_430" alt="Платье - худи оверсайз от японского бренда uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1300 грн</div>
-            <div class="product-title">Платье - худи оверсайз от японского бренда uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/142924667-suknya-svitshot-uniqlo-rozmir-xs-s-i-m" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1586996812_310_430" alt="Сукня-світшот uniqlo! розмір xs s і m!">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1100 грн</div>
-            <div class="product-title">Сукня-світшот uniqlo! розмір xs s і m!</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/105869617-zhinocha-suknya-bluza" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653524041_310_430" alt="Жіноча сукня-блуза">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1100 грн</div>
-            <div class="product-title">Жіноча сукня-блуза</div>
-            <div class='product-meta'>38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/105869500-zhinocha-suknya-na-shnurkah" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653523113_310_430" alt="Жіноча сукня на шнурках">
-        </div>
-        <div class="product-info">
-            <div class="product-price">949 грн</div>
-            <div class="product-title">Жіноча сукня на шнурках</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/105868785-zhinocha-suknya-z-printom-na-shnurkah" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653508640_310_430" alt="Жіноча сукня з принтом на шнурках">
-        </div>
-        <div class="product-info">
-            <div class="product-price">949 грн</div>
-            <div class="product-title">Жіноча сукня з принтом на шнурках</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/mini/105868584-suknya" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653505008_310_430" alt="Сукня">
-        </div>
-        <div class="product-info">
-            <div class="product-price">668 грн</div>
-            <div class="product-title">Сукня</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/105402376-zhinocha-suknya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/641772073_310_430" alt="Жіноча сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">849 грн</div>
-            <div class="product-title">Жіноча сукня uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101267015-vishita-sportivna-suknya-uniqlo-mickey-stans" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569244575_310_430" alt="Вишита спортивна сукня uniqlo mickey stans">
-        </div>
-        <div class="product-info">
-            <div class="product-price">955 грн</div>
-            <div class="product-title">Вишита спортивна сукня uniqlo mickey stans</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101257044-suknya-z-krepu-nwt-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569207927_310_430" alt="Сукня з крепу nwt uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">650 грн</div>
-            <div class="product-title">Сукня з крепу nwt uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101356907-shovkove-plattya-marks-spencer-autograph" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569763365_310_430" alt="Шовкове плаття marks & spencer autograph">
-        </div>
-        <div class="product-info">
-            <div class="product-price">995 грн</div>
-            <div class="product-title">Шовкове плаття marks & spencer autograph</div>
-            <div class='product-meta'>Marks & Spencer • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101171901-zhenskoe-supermyagkoe-hlopkovoe-plate-trapecievidnoy-formy" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568738382_310_430" alt="Жіноче супермягкое бавовняне плаття трапецієподібної форми">
-        </div>
-        <div class="product-info">
-            <div class="product-price">955 грн</div>
-            <div class="product-title">Жіноче супермягкое бавовняне плаття трапецієподібної форми</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101170595-uniqlo-zhenskoe-plate-so-vstroennym-bra" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568731152_310_430" alt="Uniqlo жіноче плаття з вбудованим бра">
-        </div>
-        <div class="product-info">
-            <div class="product-price">950 грн</div>
-            <div class="product-title">Uniqlo жіноче плаття з вбудованим бра</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101170060-zhenskoe-plate-bluzka" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568728406_310_430" alt="Жіноче плаття-блузка">
-        </div>
-        <div class="product-info">
-            <div class="product-price">955 грн</div>
-            <div class="product-title">Жіноче плаття-блузка</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101168792-zhenskoe-plate-rubashka-u" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568721014_310_430" alt="Жіноча сукня-сорочка u">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1199 грн</div>
-            <div class="product-title">Жіноча сукня-сорочка u</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101168329-zhenskoe-supermyagkoe-hlopkovoe-plate-trapecievidnoy-formy" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568719142_310_430" alt="Жіноче супермягкое бавовняне плаття трапецієподібної форми">
-        </div>
-        <div class="product-info">
-            <div class="product-price">900 грн</div>
-            <div class="product-title">Жіноче супермягкое бавовняне плаття трапецієподібної форми</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101168152-plate-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568707058_310_430" alt="Сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">580 грн</div>
-            <div class="product-title">Сукня uniqlo</div>
-            <div class='product-meta'>38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101146837-zhenskoe-plate-rubashka-v-kletku" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568602633_310_430" alt="Жіноча сукня-сорочка в клітку">
-        </div>
-        <div class="product-info">
-            <div class="product-price">955 грн</div>
-            <div class="product-title">Жіноча сукня-сорочка в клітку</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101146755-zhenskoe-plate-rubashka" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568602043_310_430" alt="Жіноча сукня-сорочка">
-        </div>
-        <div class="product-info">
-            <div class="product-price">955 грн</div>
-            <div class="product-title">Жіноча сукня-сорочка</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101146568-zhenskoe-hlopkovoe-atlasnoe-plate-rubashka" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568601213_310_430" alt="Жіноча бавовняна атласна сукня-сорочка">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1299 грн</div>
-            <div class="product-title">Жіноча бавовняна атласна сукня-сорочка</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101123055-zhenskoe-plate-rubashka" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568470636_310_430" alt="Жіноча сукня-сорочка">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1399 грн</div>
-            <div class="product-title">Жіноча сукня-сорочка</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/mini/101122495-zhenskoe-plate" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568467583_310_430" alt="Жіноче плаття">
-        </div>
-        <div class="product-info">
-            <div class="product-price">699 грн</div>
-            <div class="product-title">Жіноче плаття</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101121904-zhenskoe-plate-s-drapirovkoy-bez-rukavov" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568464680_310_430" alt="Жіноче плаття з драпіруванням (без рукавів)">
-        </div>
-        <div class="product-info">
-            <div class="product-price">755 грн</div>
-            <div class="product-title">Жіноче плаття з драпіруванням (без рукавів)</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101121447-uniqlo-zhenskoe-plate-s-printom" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568461913_310_430" alt="Uniqlo жіноче плаття з принтом">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1199 грн</div>
-            <div class="product-title">Uniqlo жіноче плаття з принтом</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101076287-zhenskoe-plate-iz-zhorzheta-s-perekrestnym-vyrezom" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568174925_310_430" alt="Жіноче плаття з жоржету з перехресним вирізом">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1299 грн</div>
-            <div class="product-title">Жіноче плаття з жоржету з перехресним вирізом</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/sarafany/101075850-zhenskoe-plate-princessa-tamtam" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568169417_310_430" alt="Жіноче плаття принцеса там.там">
-        </div>
-        <div class="product-info">
-            <div class="product-price">600 грн</div>
-            <div class="product-title">Жіноче плаття принцеса там.там</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101075524-plate-uniqlo-ines-de-la-fressange" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568166326_310_430" alt="Сукня uniqlo ines de la fressange">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1350 грн</div>
-            <div class="product-title">Сукня uniqlo ines de la fressange</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101075056-plate-uniqlo-ines-de-la-fressange" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568162417_310_430" alt="Сукня uniqlo ines de la fressange">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Сукня uniqlo ines de la fressange</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101074397-zhenskoe-plate-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568156771_310_430" alt="Жіноче плаття uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">955 грн</div>
-            <div class="product-title">Жіноче плаття uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101074236-dlinnoe-plate-uniqlo-s-nachesom-heattech" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568155460_310_430" alt="Довге плаття uniqlo з начосом heattech">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1100 грн</div>
-            <div class="product-title">Довге плаття uniqlo з начосом heattech</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101073796-plate-uniqlo-ines-de-la-fressange" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568151953_310_430" alt="Сукня uniqlo ines de la fressange">
-        </div>
-        <div class="product-info">
-            <div class="product-price">955 грн</div>
-            <div class="product-title">Сукня uniqlo ines de la fressange</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101067095-plate-futbolka-oversayz" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568093894_310_430" alt="Сукня-футболка оверсайз">
-        </div>
-        <div class="product-info">
-            <div class="product-price">955 грн</div>
-            <div class="product-title">Сукня-футболка оверсайз</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101061561-plate-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/568011396_310_430" alt="Сукня uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1100 грн</div>
-            <div class="product-title">Сукня uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/101058149-uniqlo-plate-women-u-a-line-long-sleeve-dress" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/567989191_310_430" alt="Uniqlo плаття women u a-line long-sleeve dress">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1100 грн</div>
-            <div class="product-title">Uniqlo плаття women u a-line long-sleeve dress</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/100685780-kollekciya-hana-tajima-dlya-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/561003507_310_430" alt="Колекція hana tajima для uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">950 грн</div>
-            <div class="product-title">Колекція hana tajima для uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101031928-idealnoe-besshovnoe-zhenskoe-plate-uniqlo-u-3d" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/567750024_310_430" alt="Ідеальне безшовне жіноче плаття uniqlo u 3d">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1400 грн</div>
-            <div class="product-title">Ідеальне безшовне жіноче плаття uniqlo u 3d</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/vechernie/101014745-shikarnoe-plate-mango" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/567113196_310_430" alt="Шикарне плаття mango">
-        </div>
-        <div class="product-info">
-            <div class="product-price">949 грн</div>
-            <div class="product-title">Шикарне плаття mango</div>
-            <div class='product-meta'>Mango • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/vechernie/101011267-vechernee-plate-mango-limited-edition" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/567071290_310_430" alt="Вечірнє плаття mango limited edition">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1099 грн</div>
-            <div class="product-title">Вечірнє плаття mango limited edition</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/101010987-suknya-mango" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/567067264_310_430" alt="Сукня mango">
-        </div>
-        <div class="product-info">
-            <div class="product-price">650 грн</div>
-            <div class="product-title">Сукня mango</div>
-            <div class='product-meta'>Mango • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/100873907-zhenskoe-plate-rubashka-iz-hlopka-i-lna" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/564517643_310_430" alt="Жіноча сукня-сорочка з бавовни і льону">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1249 грн</div>
-            <div class="product-title">Жіноча сукня-сорочка з бавовни і льону</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/100694977-stilnoe-plate-uniqlo-ines-de-la-fressange" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/561162640_310_430" alt="Стильне плаття uniqlo ines de la fressange">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1149 грн</div>
-            <div class="product-title">Стильне плаття uniqlo ines de la fressange</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/100694820-zhenskoe-dlinnoe-plate-iz-merserizovannogo-hlopka" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/561161059_310_430" alt="Жіноче довге плаття з бавовни мерсеризованного">
-        </div>
-        <div class="product-info">
-            <div class="product-price">950 грн</div>
-            <div class="product-title">Жіноче довге плаття з бавовни мерсеризованного</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/100692050-zhenskoe-superizyashnoe-hlopkovoe-plate" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/561090043_310_430" alt="Жіноче суперизящное бавовняне плаття">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1249 грн</div>
-            <div class="product-title">Жіноче суперизящное бавовняне плаття</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/100691185-zhenskoe-dlinnoe-plate-bratop" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/561080989_310_430" alt="Жіноче довге плаття bratop">
-        </div>
-        <div class="product-info">
-            <div class="product-price">850 грн</div>
-            <div class="product-title">Жіноче довге плаття bratop</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/100687506-plate-ot-parizhskogo-dizaynera-kristofa-lemera" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/561031227_310_430" alt="Сукня від паризького дизайнера крістофа лемера">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1490 грн</div>
-            <div class="product-title">Сукня від паризького дизайнера крістофа лемера</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/100684537-ochen-krasivoe-plate-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/560977998_310_430" alt="Дуже гарне плаття uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">955 грн</div>
-            <div class="product-title">Дуже гарне плаття uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/95025280-uniqlo-u-idealnoe-povsednevnoe-plate" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/501099993_310_430" alt="Uniqlo u ідеальне повсякденне плаття">
-        </div>
-        <div class="product-info">
-            <div class="product-price">895 грн</div>
-            <div class="product-title">Uniqlo u ідеальне повсякденне плаття</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/94216749-zhenskoe-shirokoe-sherstyanoe-plate-3d-premium" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/494042712_310_430" alt="Жіноче широке вовняне плаття 3d premium">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1499 грн</div>
-            <div class="product-title">Жіноче широке вовняне плаття 3d premium</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/93863091-zhenskoe-shifonovoe-plate-joy-of-print-ot-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/490252420_310_430" alt="Жіноче шифонова сукня joy of print від uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1349 грн</div>
-            <div class="product-title">Жіноче шифонова сукня joy of print від uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/93862683-zhenskoe-plate-joy-of-print-fine-line-cross" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/490249323_310_430" alt="Жіноче плаття joy of fine print line cross">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1249 грн</div>
-            <div class="product-title">Жіноче плаття joy of fine print line cross</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/93364667-plate-rubashka-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/484202706_310_430" alt="Сукня-сорочка uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1499 грн</div>
-            <div class="product-title">Сукня-сорочка uniqlo</div>
-            <div class='product-meta'>36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/93356993-plissirovannoe-plate-bez-rukavov-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/484100208_310_430" alt="Плісироване сукню без рукавів) uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1399 грн</div>
-            <div class="product-title">Плісироване сукню без рукавів) uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/maksi/93354931-zhenskoe-plate-s-vyshivkoy-bez-rukavov-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/484085963_310_430" alt="Жіноче плаття з вишивкою (без рукавів) uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1499 грн</div>
-            <div class="product-title">Жіноче плаття з вишивкою (без рукавів) uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/93354344-zhenskoe-supermyagkoe-hlopkovoe-plate-trapecievidnoy-formy-iz" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/484080476_310_430" alt="Жіноче супермягкое бавовняне плаття трапецієподібної форми з экстратонкого бавовни">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1050 грн</div>
-            <div class="product-title">Жіноче супермягкое бавовняне плаття трапецієподібної форми з экстратонкого бавовни</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/93352815-plate-kombinaciya-iz-zhorzheta-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/484063363_310_430" alt="Сукня-комбінація з жоржету uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">750 грн</div>
-            <div class="product-title">Сукня-комбінація з жоржету uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/93352230-uniqlo-zhenskoe-plate" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/484057806_310_430" alt="Uniqlo жіноче плаття">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1450 грн</div>
-            <div class="product-title">Uniqlo жіноче плаття</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/93119041-svobodnoe-plate-ot-modelera-kristof-lemer-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/499050994_310_430" alt="Вільний сукню від модельєра крістоф лемер uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1499 грн</div>
-            <div class="product-title">Вільний сукню від модельєра крістоф лемер uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/platya/midi/93118397-plate-s-myagkoy-fakturoysovmestnyy-brend-ines-fasanzhuniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/480336097_310_430" alt="Сукня з м'якою фактурою.спільний бренд інес фасанж.uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1450 грн</div>
-            <div class="product-title">Сукня з м'якою фактурою.спільний бренд інес фасанж.uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-                </div>
-
-                
-        <div class="show-more-wrap">
-            <button class="show-more-btn" onclick="showMoreProducts(this)">Показати ще</button>
-        </div>
-        
-            </section>
-
-            <div class="footer-note">
-                UniqLow • Створено для зручного перегляду товарів
+        <div class="section-top">
+            <h2>Товари розділу</h2>
+        </div>
+        <div class="products-grid">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/199259655-suknya-uniqlo-z-pryazhi-sufle" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2255123070_310_430" alt="Сукня uniqlo з пряжі суфле">
             </div>
+            <div class="product-info">
+                <div class="product-price">1650 грн</div>
+                <div class="product-title">Сукня uniqlo з пряжі суфле</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/199259544-suknya-uniqlo-z-pryazhi-sufle" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2255122427_310_430" alt="Сукня uniqlo з пряжі суфле">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1650 грн</div>
+                <div class="product-title">Сукня uniqlo з пряжі суфле</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/199259457-suknya-uniqlo-z-pryazhi-sufle" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2255121841_310_430" alt="Сукня uniqlo з пряжі суфле">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1650 грн</div>
+                <div class="product-title">Сукня uniqlo з пряжі суфле</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/199259368-suknya-uniqlo-z-pryazhi-sufle" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2255121302_310_430" alt="Сукня uniqlo з пряжі суфле">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1650 грн</div>
+                <div class="product-title">Сукня uniqlo з пряжі суфле</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/191879331-suknya-polo-z-vovni-merinosu-vid-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2217577908_310_430" alt="Сукня-поло з вовни мериносу від uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Сукня-поло з вовни мериносу від uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/191893431-suknya-souffle-yarn-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2217679040_310_430" alt="Сукня souffle yarn uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Сукня souffle yarn uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/191893483-suknya-souffle-yarn-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2217679406_310_430" alt="Сукня souffle yarn uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Сукня souffle yarn uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/191894720-suknya-z-dzhersi-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2217688016_310_430" alt="Сукня з джерсі uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Сукня з джерсі uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/191894380-suknya-klosh-iz-sufle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2217685588_310_430" alt="Сукня-кльош із суфле uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Сукня-кльош із суфле uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/193258229-suknya-z-dovgimi-rukavami-z-ovechoyi-vovni-premium-klasu-z-kruglim" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2225981233_310_430" alt="Сукня з довгими рукавами з овечої вовни преміум-класу з круглим вирізом(u premium lambswool crew neck long-sleeve dress)">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2100 грн</div>
+                <div class="product-title">Сукня з довгими рукавами з овечої вовни преміум-класу з круглим вирізом(u premium lambswool crew neck long-sleeve dress)</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/193257453-zhinocha-sportivna-suknya-z-vovnyanoyi-sumishi-rukav-34-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2225976446_310_430" alt="Жіноча спортивна сукня з вовняної суміші (рукав 3/4) uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1900 грн</div>
+                <div class="product-title">Жіноча спортивна сукня з вовняної суміші (рукав 3/4) uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/193243845-suknya-uniqlo-z-vovnyanoyi-sumishi70-ovechoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2225888914_310_430" alt="Сукня uniqlo з вовняної суміші(70% овечої вовни)">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2400 грн</div>
+                <div class="product-title">Сукня uniqlo з вовняної суміші(70% овечої вовни)</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/192111150-suknya-uniqlo-z-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219043272_310_430" alt="Сукня uniqlo з мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Сукня uniqlo з мериносової вовни</div>
+                <div class='product-meta'>S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/191894166-suknya-souffle-yarn-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2217684338_310_430" alt="Сукня souffle yarn uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Сукня souffle yarn uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/191894008-suknya-uniqlo-z-merinosovoyi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2217683355_310_430" alt="Сукня uniqlo з мериносової вовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Сукня uniqlo з мериносової вовни</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/191893639-suknya-z-merinosovoyi-sumishi-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2217680523_310_430" alt="Сукня з мериносової суміші uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Сукня з мериносової суміші uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/191893214-sherstyana-suknya-transformer-vid-zara-rozmir-s" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2217677504_310_430" alt="Шерстяна сукня-трансформер від zara, розмір с">
+            </div>
+            <div class="product-info">
+                <div class="product-price">850 грн</div>
+                <div class="product-title">Шерстяна сукня-трансформер від zara, розмір с</div>
+                <div class='product-meta'>ZARA • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/190238853-suknya-z-dzhersi-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207370925_310_430" alt="Сукня з джерсі uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1300 грн</div>
+                <div class="product-title">Сукня з джерсі uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/188738172-suknya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2198814539_310_430" alt="Сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Сукня uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/188737790-suknya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2198813133_310_430" alt="Сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Сукня uniqlo</div>
+                <div class='product-meta'>42 / XL / 50</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/188075923-suknya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2195372097_310_430" alt="Сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Сукня uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/187736276-suknya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2193406507_310_430" alt="Сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Сукня uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/186347611-suknya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2184765112_310_430" alt="Сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Сукня uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХS</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/184641208-suknya-sorochka-z-poyasom-uniqlo-rozmir-l" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2173967324_310_430" alt="Сукня-сорочка з поясом uniqlo, розмір л">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Сукня-сорочка з поясом uniqlo, розмір л</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/167616435-plate-iz-merinosa-s-vyrezom-lodochkoy" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/-240820344_310_430" alt="Платье из мериноса с вырезом лодочкой">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1599 грн</div>
+                <div class="product-title">Платье из мериноса с вырезом лодочкой</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/167616190-dlinnoe-platekorotkiy-rukav-ot-uniqlo-yuniklo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/-240811257_310_430" alt="Длинное платье(короткий рукав) от uniqlo юникло">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1199 грн</div>
+                <div class="product-title">Длинное платье(короткий рукав) от uniqlo юникло</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/166962831-uniqlo-plate-iz-merinosovoy-smesi-s-vorotnikom-lodochkoy-i-dlinnymi" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/-225510754_310_430" alt="Uniqlo платье из мериносовой смеси с воротником-лодочкой и длинными рукавами">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1900 грн</div>
+                <div class="product-title">Uniqlo платье из мериносовой смеси с воротником-лодочкой и длинными рукавами</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/166721812-plate-uniqlonovoe-s-birkami" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220380537_310_430" alt="Платье uniqlo,новое с бирками!">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1399 грн</div>
+                <div class="product-title">Платье uniqlo,новое с бирками!</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/143540898-suknya-klosh-3d-premium-klasu-novaya-s-birkami100-procentnaya-sherst" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1618988799_310_430" alt="Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2600 грн</div>
+                <div class="product-title">Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/143540677-suknya-klosh-3d-premium-klasu-novaya-s-birkami100-procentnaya-sherst" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1618975454_310_430" alt="Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2600 грн</div>
+                <div class="product-title">Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/143540255-suknya-klosh-3d-premium-klasu-novaya-s-birkami100-procentnaya-sherst" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1618954585_310_430" alt="Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2600 грн</div>
+                <div class="product-title">Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143223299-shifonova-suknya-uniqlo-s-sanderson" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1604548225_310_430" alt="Шифонова сукня uniqlo s sanderson">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1399 грн</div>
+                <div class="product-title">Шифонова сукня uniqlo s sanderson</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143221066-suknya-uniqlo-idlf-z-vishivkoyunova-z-birkami" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1604520962_310_430" alt="Сукня uniqlo idlf з вишивкою,нова з бірками!">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1299 грн</div>
+                <div class="product-title">Сукня uniqlo idlf з вишивкою,нова з бірками!</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143207647-suknya-uniqlonova-z-birkami" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1604071570_310_430" alt="Сукня uniqlo,нова з бірками!">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1299 грн</div>
+                <div class="product-title">Сукня uniqlo,нова з бірками!</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143206248-t-plattya-oversayznova-z-birkamiuniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1604021821_310_430" alt="Т-плаття оверсайз!нова з бірками!uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1299 грн</div>
+                <div class="product-title">Т-плаття оверсайз!нова з бірками!uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143205721-suknya-smugasta-futbolka-z-korotkimi-rukavami-i-korotkimi-rukavami" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1603998616_310_430" alt="Сукня-смугаста футболка з короткими рукавами і короткими рукавами u!нова з бірками!">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1299 грн</div>
+                <div class="product-title">Сукня-смугаста футболка з короткими рукавами і короткими рукавами u!нова з бірками!</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143204361-super-plate-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2190823074_310_430" alt="Супер платье uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1599 грн</div>
+                <div class="product-title">Супер платье uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143127935-zhinocha-suknya-z-perehresnim-virizomnova-z-birkamiuniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1599540882_310_430" alt="Жіноча сукня з перехресним вирізом!нова з бірками!uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">999 грн</div>
+                <div class="product-title">Жіноча сукня з перехресним вирізом!нова з бірками!uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143127590-nova-z-birkami-suknya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1599530194_310_430" alt="Нова з бірками сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1099 грн</div>
+                <div class="product-title">Нова з бірками сукня uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143127234-dizaynerske-plattya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1599524097_310_430" alt="Дизайнерське плаття uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Дизайнерське плаття uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143125874-dovga-zhinocha-suknya-v-stili-sorochki-z-v-podibnim-virizom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1599479629_310_430" alt="Довга жіноча сукня в стилі сорочки з v-подібним вирізом">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1299 грн</div>
+                <div class="product-title">Довга жіноча сукня в стилі сорочки з v-подібним вирізом</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143124841-zhinocha-suknya-na-bretelyah-z-zhorzhetu" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1599456010_310_430" alt="Жіноча сукня на бретелях з жоржету">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1499 грн</div>
+                <div class="product-title">Жіноча сукня на бретелях з жоржету</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/mini/143123757-suknya-zhakardova-bez-rukaviv-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1599423430_310_430" alt="Сукня жакардова (без рукавів) uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">684 грн</div>
+                <div class="product-title">Сукня жакардова (без рукавів) uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/143112277-shikarna-tepla-suknya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1599029501_310_430" alt="Шикарна тепла сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1499 грн</div>
+                <div class="product-title">Шикарна тепла сукня uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/143111269-zhinocha-suknya-sorochka-z-viskozi" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1598995517_310_430" alt="Жіноча сукня-сорочка з віскози">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Жіноча сукня-сорочка з віскози</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/vechernie/142988305-duzhe-krasiva-suknya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1590943518_310_430" alt="Дуже красива сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">950 грн</div>
+                <div class="product-title">Дуже красива сукня uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/142969898-zhinocha-suknya-z-printom-z-rukavom-34" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1590539624_310_430" alt="Жіноча сукня з принтом з рукавом 3/4">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1299 грн</div>
+                <div class="product-title">Жіноча сукня з принтом з рукавом 3/4</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/142969607-shikarna-tepla-suknya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1590533281_310_430" alt="Шикарна тепла сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1499 грн</div>
+                <div class="product-title">Шикарна тепла сукня uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/142968728-dovga-velvetova-suknya-sorochka-uniqlo-yuniklo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1590510465_310_430" alt="Довга вельветова сукня-сорочка uniqlo юнікло">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1700 грн</div>
+                <div class="product-title">Довга вельветова сукня-сорочка uniqlo юнікло</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/142968336-plate-hudi-oversayz-ot-yaponskogo-brenda-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1590496212_310_430" alt="Платье - худи оверсайз от японского бренда uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1300 грн</div>
+                <div class="product-title">Платье - худи оверсайз от японского бренда uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/142924667-suknya-svitshot-uniqlo-rozmir-xs-s-i-m" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1586996812_310_430" alt="Сукня-світшот uniqlo! розмір xs s і m!">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Сукня-світшот uniqlo! розмір xs s і m!</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/105869617-zhinocha-suknya-bluza" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653524041_310_430" alt="Жіноча сукня-блуза">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Жіноча сукня-блуза</div>
+                <div class='product-meta'>38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/105869500-zhinocha-suknya-na-shnurkah" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653523113_310_430" alt="Жіноча сукня на шнурках">
+            </div>
+            <div class="product-info">
+                <div class="product-price">949 грн</div>
+                <div class="product-title">Жіноча сукня на шнурках</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/105868785-zhinocha-suknya-z-printom-na-shnurkah" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653508640_310_430" alt="Жіноча сукня з принтом на шнурках">
+            </div>
+            <div class="product-info">
+                <div class="product-price">949 грн</div>
+                <div class="product-title">Жіноча сукня з принтом на шнурках</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/mini/105868584-suknya" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653505008_310_430" alt="Сукня">
+            </div>
+            <div class="product-info">
+                <div class="product-price">668 грн</div>
+                <div class="product-title">Сукня</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/105402376-zhinocha-suknya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/641772073_310_430" alt="Жіноча сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">849 грн</div>
+                <div class="product-title">Жіноча сукня uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101267015-vishita-sportivna-suknya-uniqlo-mickey-stans" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569244575_310_430" alt="Вишита спортивна сукня uniqlo mickey stans">
+            </div>
+            <div class="product-info">
+                <div class="product-price">955 грн</div>
+                <div class="product-title">Вишита спортивна сукня uniqlo mickey stans</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101257044-suknya-z-krepu-nwt-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569207927_310_430" alt="Сукня з крепу nwt uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">650 грн</div>
+                <div class="product-title">Сукня з крепу nwt uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101356907-shovkove-plattya-marks-spencer-autograph" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569763365_310_430" alt="Шовкове плаття marks & spencer autograph">
+            </div>
+            <div class="product-info">
+                <div class="product-price">995 грн</div>
+                <div class="product-title">Шовкове плаття marks & spencer autograph</div>
+                <div class='product-meta'>Marks & Spencer • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101171901-zhenskoe-supermyagkoe-hlopkovoe-plate-trapecievidnoy-formy" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568738382_310_430" alt="Жіноче супермягкое бавовняне плаття трапецієподібної форми">
+            </div>
+            <div class="product-info">
+                <div class="product-price">955 грн</div>
+                <div class="product-title">Жіноче супермягкое бавовняне плаття трапецієподібної форми</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101170595-uniqlo-zhenskoe-plate-so-vstroennym-bra" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568731152_310_430" alt="Uniqlo жіноче плаття з вбудованим бра">
+            </div>
+            <div class="product-info">
+                <div class="product-price">950 грн</div>
+                <div class="product-title">Uniqlo жіноче плаття з вбудованим бра</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101170060-zhenskoe-plate-bluzka" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568728406_310_430" alt="Жіноче плаття-блузка">
+            </div>
+            <div class="product-info">
+                <div class="product-price">955 грн</div>
+                <div class="product-title">Жіноче плаття-блузка</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101168792-zhenskoe-plate-rubashka-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568721014_310_430" alt="Жіноча сукня-сорочка u">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1199 грн</div>
+                <div class="product-title">Жіноча сукня-сорочка u</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101168329-zhenskoe-supermyagkoe-hlopkovoe-plate-trapecievidnoy-formy" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568719142_310_430" alt="Жіноче супермягкое бавовняне плаття трапецієподібної форми">
+            </div>
+            <div class="product-info">
+                <div class="product-price">900 грн</div>
+                <div class="product-title">Жіноче супермягкое бавовняне плаття трапецієподібної форми</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101168152-plate-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568707058_310_430" alt="Сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">580 грн</div>
+                <div class="product-title">Сукня uniqlo</div>
+                <div class='product-meta'>38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101146837-zhenskoe-plate-rubashka-v-kletku" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568602633_310_430" alt="Жіноча сукня-сорочка в клітку">
+            </div>
+            <div class="product-info">
+                <div class="product-price">955 грн</div>
+                <div class="product-title">Жіноча сукня-сорочка в клітку</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101146755-zhenskoe-plate-rubashka" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568602043_310_430" alt="Жіноча сукня-сорочка">
+            </div>
+            <div class="product-info">
+                <div class="product-price">955 грн</div>
+                <div class="product-title">Жіноча сукня-сорочка</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101146568-zhenskoe-hlopkovoe-atlasnoe-plate-rubashka" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568601213_310_430" alt="Жіноча бавовняна атласна сукня-сорочка">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1299 грн</div>
+                <div class="product-title">Жіноча бавовняна атласна сукня-сорочка</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101123055-zhenskoe-plate-rubashka" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568470636_310_430" alt="Жіноча сукня-сорочка">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1399 грн</div>
+                <div class="product-title">Жіноча сукня-сорочка</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/mini/101122495-zhenskoe-plate" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568467583_310_430" alt="Жіноче плаття">
+            </div>
+            <div class="product-info">
+                <div class="product-price">699 грн</div>
+                <div class="product-title">Жіноче плаття</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101121904-zhenskoe-plate-s-drapirovkoy-bez-rukavov" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568464680_310_430" alt="Жіноче плаття з драпіруванням (без рукавів)">
+            </div>
+            <div class="product-info">
+                <div class="product-price">755 грн</div>
+                <div class="product-title">Жіноче плаття з драпіруванням (без рукавів)</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101121447-uniqlo-zhenskoe-plate-s-printom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568461913_310_430" alt="Uniqlo жіноче плаття з принтом">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1199 грн</div>
+                <div class="product-title">Uniqlo жіноче плаття з принтом</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101076287-zhenskoe-plate-iz-zhorzheta-s-perekrestnym-vyrezom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568174925_310_430" alt="Жіноче плаття з жоржету з перехресним вирізом">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1299 грн</div>
+                <div class="product-title">Жіноче плаття з жоржету з перехресним вирізом</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/sarafany/101075850-zhenskoe-plate-princessa-tamtam" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568169417_310_430" alt="Жіноче плаття принцеса там.там">
+            </div>
+            <div class="product-info">
+                <div class="product-price">600 грн</div>
+                <div class="product-title">Жіноче плаття принцеса там.там</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101075524-plate-uniqlo-ines-de-la-fressange" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568166326_310_430" alt="Сукня uniqlo ines de la fressange">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1350 грн</div>
+                <div class="product-title">Сукня uniqlo ines de la fressange</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101075056-plate-uniqlo-ines-de-la-fressange" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568162417_310_430" alt="Сукня uniqlo ines de la fressange">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Сукня uniqlo ines de la fressange</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101074397-zhenskoe-plate-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568156771_310_430" alt="Жіноче плаття uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">955 грн</div>
+                <div class="product-title">Жіноче плаття uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101074236-dlinnoe-plate-uniqlo-s-nachesom-heattech" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568155460_310_430" alt="Довге плаття uniqlo з начосом heattech">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Довге плаття uniqlo з начосом heattech</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101073796-plate-uniqlo-ines-de-la-fressange" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568151953_310_430" alt="Сукня uniqlo ines de la fressange">
+            </div>
+            <div class="product-info">
+                <div class="product-price">955 грн</div>
+                <div class="product-title">Сукня uniqlo ines de la fressange</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101067095-plate-futbolka-oversayz" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568093894_310_430" alt="Сукня-футболка оверсайз">
+            </div>
+            <div class="product-info">
+                <div class="product-price">955 грн</div>
+                <div class="product-title">Сукня-футболка оверсайз</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101061561-plate-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/568011396_310_430" alt="Сукня uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Сукня uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/101058149-uniqlo-plate-women-u-a-line-long-sleeve-dress" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/567989191_310_430" alt="Uniqlo плаття women u a-line long-sleeve dress">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Uniqlo плаття women u a-line long-sleeve dress</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/100685780-kollekciya-hana-tajima-dlya-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/561003507_310_430" alt="Колекція hana tajima для uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">950 грн</div>
+                <div class="product-title">Колекція hana tajima для uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101031928-idealnoe-besshovnoe-zhenskoe-plate-uniqlo-u-3d" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/567750024_310_430" alt="Ідеальне безшовне жіноче плаття uniqlo u 3d">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Ідеальне безшовне жіноче плаття uniqlo u 3d</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/vechernie/101014745-shikarnoe-plate-mango" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/567113196_310_430" alt="Шикарне плаття mango">
+            </div>
+            <div class="product-info">
+                <div class="product-price">949 грн</div>
+                <div class="product-title">Шикарне плаття mango</div>
+                <div class='product-meta'>Mango • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/vechernie/101011267-vechernee-plate-mango-limited-edition" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/567071290_310_430" alt="Вечірнє плаття mango limited edition">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1099 грн</div>
+                <div class="product-title">Вечірнє плаття mango limited edition</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/101010987-suknya-mango" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/567067264_310_430" alt="Сукня mango">
+            </div>
+            <div class="product-info">
+                <div class="product-price">650 грн</div>
+                <div class="product-title">Сукня mango</div>
+                <div class='product-meta'>Mango • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/100873907-zhenskoe-plate-rubashka-iz-hlopka-i-lna" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/564517643_310_430" alt="Жіноча сукня-сорочка з бавовни і льону">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1249 грн</div>
+                <div class="product-title">Жіноча сукня-сорочка з бавовни і льону</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/100694977-stilnoe-plate-uniqlo-ines-de-la-fressange" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/561162640_310_430" alt="Стильне плаття uniqlo ines de la fressange">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1149 грн</div>
+                <div class="product-title">Стильне плаття uniqlo ines de la fressange</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/100694820-zhenskoe-dlinnoe-plate-iz-merserizovannogo-hlopka" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/561161059_310_430" alt="Жіноче довге плаття з бавовни мерсеризованного">
+            </div>
+            <div class="product-info">
+                <div class="product-price">950 грн</div>
+                <div class="product-title">Жіноче довге плаття з бавовни мерсеризованного</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/100692050-zhenskoe-superizyashnoe-hlopkovoe-plate" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/561090043_310_430" alt="Жіноче суперизящное бавовняне плаття">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1249 грн</div>
+                <div class="product-title">Жіноче суперизящное бавовняне плаття</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/100691185-zhenskoe-dlinnoe-plate-bratop" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/561080989_310_430" alt="Жіноче довге плаття bratop">
+            </div>
+            <div class="product-info">
+                <div class="product-price">850 грн</div>
+                <div class="product-title">Жіноче довге плаття bratop</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/100687506-plate-ot-parizhskogo-dizaynera-kristofa-lemera" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/561031227_310_430" alt="Сукня від паризького дизайнера крістофа лемера">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1490 грн</div>
+                <div class="product-title">Сукня від паризького дизайнера крістофа лемера</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/100684537-ochen-krasivoe-plate-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/560977998_310_430" alt="Дуже гарне плаття uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">955 грн</div>
+                <div class="product-title">Дуже гарне плаття uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/95025280-uniqlo-u-idealnoe-povsednevnoe-plate" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/501099993_310_430" alt="Uniqlo u ідеальне повсякденне плаття">
+            </div>
+            <div class="product-info">
+                <div class="product-price">895 грн</div>
+                <div class="product-title">Uniqlo u ідеальне повсякденне плаття</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/94216749-zhenskoe-shirokoe-sherstyanoe-plate-3d-premium" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/494042712_310_430" alt="Жіноче широке вовняне плаття 3d premium">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1499 грн</div>
+                <div class="product-title">Жіноче широке вовняне плаття 3d premium</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/93863091-zhenskoe-shifonovoe-plate-joy-of-print-ot-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/490252420_310_430" alt="Жіноче шифонова сукня joy of print від uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1349 грн</div>
+                <div class="product-title">Жіноче шифонова сукня joy of print від uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/93862683-zhenskoe-plate-joy-of-print-fine-line-cross" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/490249323_310_430" alt="Жіноче плаття joy of fine print line cross">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1249 грн</div>
+                <div class="product-title">Жіноче плаття joy of fine print line cross</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/93364667-plate-rubashka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/484202706_310_430" alt="Сукня-сорочка uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1499 грн</div>
+                <div class="product-title">Сукня-сорочка uniqlo</div>
+                <div class='product-meta'>36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/93356993-plissirovannoe-plate-bez-rukavov-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/484100208_310_430" alt="Плісироване сукню без рукавів) uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1399 грн</div>
+                <div class="product-title">Плісироване сукню без рукавів) uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/maksi/93354931-zhenskoe-plate-s-vyshivkoy-bez-rukavov-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/484085963_310_430" alt="Жіноче плаття з вишивкою (без рукавів) uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1499 грн</div>
+                <div class="product-title">Жіноче плаття з вишивкою (без рукавів) uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/93354344-zhenskoe-supermyagkoe-hlopkovoe-plate-trapecievidnoy-formy-iz" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/484080476_310_430" alt="Жіноче супермягкое бавовняне плаття трапецієподібної форми з экстратонкого бавовни">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Жіноче супермягкое бавовняне плаття трапецієподібної форми з экстратонкого бавовни</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/93352815-plate-kombinaciya-iz-zhorzheta-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/484063363_310_430" alt="Сукня-комбінація з жоржету uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
+                <div class="product-title">Сукня-комбінація з жоржету uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/93352230-uniqlo-zhenskoe-plate" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/484057806_310_430" alt="Uniqlo жіноче плаття">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1450 грн</div>
+                <div class="product-title">Uniqlo жіноче плаття</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/93119041-svobodnoe-plate-ot-modelera-kristof-lemer-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/499050994_310_430" alt="Вільний сукню від модельєра крістоф лемер uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1499 грн</div>
+                <div class="product-title">Вільний сукню від модельєра крістоф лемер uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/platya/midi/93118397-plate-s-myagkoy-fakturoysovmestnyy-brend-ines-fasanzhuniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/480336097_310_430" alt="Сукня з м'якою фактурою.спільний бренд інес фасанж.uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1450 грн</div>
+                <div class="product-title">Сукня з м'якою фактурою.спільний бренд інес фасанж.uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    </div>
+        
+            <div class="show-more-wrap">
+                <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
+            </div>
+            
+        
+            <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
         </main>
     </div>
-
     <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark');
-            localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-        }
-
-        if (localStorage.getItem('uniqlo_theme') === 'dark') {
-            document.body.classList.add('dark');
-        }
-
-        function showMoreProducts(button) {
-            document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'block');
-            button.style.display = 'none';
-        }
+        function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); }
+        if (localStorage.getItem('uniqlo_theme') === 'dark') { document.body.classList.add('dark'); }
+        function showMoreProducts(button) { document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'flex'); button.style.display = 'none'; }
     </script>
 </body>
 </html>

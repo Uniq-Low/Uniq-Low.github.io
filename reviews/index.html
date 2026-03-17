@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniqLow — Відгуки покупців</title>
+    <style>
+        :root {
+            --bg: #f6f8fc; --bg-soft: #eef2ff; --panel: rgba(255,255,255,0.92); --panel-solid: #ffffff;
+            --text: #101828; --muted: #667085; --accent: #e11d48; --accent-soft: rgba(225, 29, 72, 0.12);
+            --border: rgba(16,24,40,0.08); --shadow: 0 18px 45px rgba(16,24,40,0.08);
+            --hero: linear-gradient(135deg, #fff1f2 0%, #ffffff 38%, #eef4ff 100%);
+            --green: #16a34a; --orange: #f59e0b;
+        }
+        body.dark {
+            --bg: #0b1220; --bg-soft: #111827; --panel: rgba(17,24,39,0.88); --panel-solid: #111827;
+            --text: #f8fafc; --muted: #98a2b3; --accent: #ff4d6d; --accent-soft: rgba(255,77,109,0.12);
+            --border: rgba(255,255,255,0.08); --shadow: 0 18px 45px rgba(0,0,0,0.35);
+            --hero: linear-gradient(135deg, #1f2937 0%, #111827 38%, #0b1220 100%);
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; color: var(--text); background: var(--bg); }
+        .layout { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
+        .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px; border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px); }
+
+        .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04); }
+        .brand-avatar { width: 66px; height: 66px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0; background: white; }
+        .brand-name { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
+        .brand-sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
+
+        .theme-toggle { width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text); border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px; }
+
+        .menu-block { margin-bottom: 18px; }
+        .menu-title { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); margin-bottom: 8px; padding: 0 6px; }
+        .menu-block ul { list-style: none; margin: 0; padding: 0; }
+        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; margin-bottom: 4px; transition: .18s ease; }
+        .menu-block a:hover { background: var(--accent-soft); color: var(--accent); transform: translateX(2px); }
+        .active-link { background: var(--accent-soft); color: var(--accent) !important; font-weight: 700; }
+
+        .content { padding: 28px; }
+        .section-top { margin-bottom: 14px; }
+        .section-top h2 { margin: 0 0 6px; font-size: 24px; }
+        .section-top p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+        .quick-section, .promo-section { margin-bottom: 28px; }
+        .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
+        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: var(--panel-solid); box-shadow: var(--shadow); transition: transform .18s ease; }
+        .quick-tile:hover { transform: translateY(-3px); border-color: var(--accent); }
+
+        .promo-card { display: flex; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow);}
+        .promo-badge { width: 100px; height: 100px; border-radius: 50%; background: var(--green); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 24px; flex-shrink:0; }
+        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: #229ED9; padding: 12px 18px; border-radius: 14px; font-weight: 700; margin-top: 10px; }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .product-card { display: flex; flex-direction: column; background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); transition: .2s ease; }
+        .product-card:hover { transform: translateY(-5px); border-color: rgba(225,29,72,0.18); box-shadow: 0 25px 48px rgba(16,24,40,0.14); }
+        .card-main-link { text-decoration: none; color: inherit; flex-grow: 1; display: flex; flex-direction: column; }
+        .product-image-wrap { background: var(--bg-soft); overflow: hidden; }
+        .product-image { width: 100%; height: 330px; object-fit: cover; display: block; transition: transform .35s ease; }
+        .product-card:hover .product-image { transform: scale(1.04); }
+        .product-info { padding: 16px; flex-grow: 1; }
+        .product-price { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+        .product-title { font-size: 15px; line-height: 1.5; min-height: 46px; margin-bottom: 8px; }
+        .product-meta { font-size: 13px; color: var(--muted); }
+
+        .card-tg-btn { display: block; margin: 0 16px 16px 16px; background: linear-gradient(135deg, #2AABEE, #229ED9); color: white; text-align: center; padding: 12px; border-radius: 14px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s; }
+        .card-tg-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(34, 158, 217, 0.3); }
+
+        .hidden-card { display: none; }
+        .show-more-wrap { margin-top: 30px; text-align: center; }
+        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
+
+        .reviews-page-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 800px; }
+        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .review-name { font-weight: 800; font-size: 16px; display: flex; align-items: center; gap: 10px; }
+        .review-stars { color: var(--orange); font-size: 18px; }
+        .review-text { color: var(--text); line-height: 1.6; font-size: 15px; }
+        .src-badge { font-size: 11px; padding: 3px 8px; border-radius: 8px; font-weight: bold; color: white; text-transform: uppercase; }
+        .src-shafa { background: #f59e0b; }
+        .src-telegram { background: #2AABEE; }
+
+        .empty-box { padding: 30px; border-radius: 22px; border: 1px dashed var(--border); background: var(--panel-solid); color: var(--muted); }
+        .footer-note { margin-top: 26px; text-align: center; color: var(--muted); font-size: 13px; }
+
+        @media (max-width: 1080px) {
+            .layout { grid-template-columns: 1fr; }
+            .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+            .promo-card { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <a class="brand" href="../">
+                <img class="brand-avatar" src="../icon.png" alt="UniqLow">
+                <div>
+                    <div class="brand-name">UniqLow</div>
+                    <div class="brand-sub">Одяг та аксесуари</div>
+                </div>
+            </a>
+            <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+            <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='active-link' href='/reviews/'>⭐ Відгуки покупців</a></li>
+<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
+<li><a class='' href='/olx/'>🌐 OLX</a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
+<li><a class='' href='/spidnytsi/'>Спідниці</a></li>
+<li><a class='' href='/plattya/'>Плаття</a></li>
+<li><a class='' href='/verhniy-odyag/'>Верхній одяг</a></li>
+<li><a class='' href='/maiky-futbolky/'>Майки й футболки</a></li>
+<li><a class='' href='/sorochky-bluzy/'>Сорочки та блузи</a></li>
+<li><a class='' href='/kofty/'>Кофти</a></li>
+<li><a class='' href='/spidnya-bilyzna/'>Спідня білизна</a></li>
+<li><a class='' href='/sportyvnyy-odyag/'>Спортивний одяг</a></li>
+<li><a class='' href='/kostyumy/'>Костюми</a></li>
+<li><a class='' href='/kombinezony/'>Комбінезони</a></li>
+<li><a class='' href='/odyag-dlya-domu/'>Одяг для дому та сну</a></li>
+<li><a class='' href='/vzuttya/'>Взуття</a></li>
+<li><a class='' href='/shtany-shorty/'>Штани та шорти</a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Дитячий одяг</div><ul>
+<li><a class='' href='/dlya-divchatok/'>Для дівчаток</a></li>
+<li><a class='' href='/dlya-hlopchykiv/'>Для хлопчиків</a></li>
+<li><a class='' href='/dlya-malyukiv/'>Для малюків</a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Чоловічий одяг</div><ul>
+<li><a class='' href='/cholovichyy-verhniy-odyag/'>Верхній одяг</a></li>
+<li><a class='' href='/kofty-svetry/'>Кофти та светри</a></li>
+<li><a class='' href='/sorochky-tenisky/'>Сорочки та теніски</a></li>
+<li><a class='' href='/futbolky-mayky-men/'>Футболки та майки</a></li>
+<li><a class='' href='/spidnya-bilyzna-men/'>Спідня білизна</a></li>
+<li><a class='' href='/vzuttya-men/'>Взуття</a></li>
+<li><a class='' href='/sportyvnyy-odyag-men/'>Спортивний одяг</a></li>
+<li><a class='' href='/odyag-dlya-domu-men/'>Одяг для дому та сну</a></li>
+<li><a class='' href='/shtany-shorty-men/'>Штани та шорти</a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Аксесуари</div><ul>
+<li><a class='' href='/sumky-ryukzaky/'>Сумки та рюкзаки</a></li>
+<li><a class='' href='/golovni-ubory/'>Головні убори</a></li>
+<li><a class='' href='/remeni-poyasy/'>Ремені та пояси</a></li>
+</ul></div>
+        </aside>
+
+        <main class="content">
+            
+            
+            
+        <div class="section-top">
+            <h2>Відгуки покупців</h2>
+            <p>Тут зібрані відгуки з нашого Telegram-бота та платформи Shafa.</p>
+        </div>
+        <div class="reviews-page-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">carapuz201 <span class='src-badge src-telegram'>Telegram</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Привіт</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">arizona99 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Не перший раз купую товаром задоволена.Мої найкращі рекомендації!🤗👌</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">lyudmilas13 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">tanya150679 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">tasyaua <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">natakivi777 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">irinajn <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">kuznyecova.olena <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">ox-laz-xo <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Рекомендую до співпраці</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">user-362112503 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">MyrkaFMstudio <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">Bellemaroc <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">chuparus <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Дякую ❤️❤️❤️</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">katiaas <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">dia-lg <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">user-484519237 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">user1476987082 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">barcik <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Благодарю за покупку и полностью рекомендую ответственного и порядочного продавца,только позитив от покупок,быстрая отправка, отличный товар.</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">user-484519237 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Рекомендую!</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">natala_morozova <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Рекомендую</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">jpm24 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">ddy666 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">illiaalja <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">lubavaa <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">sonya_bon <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Класний товар, приємний продавець. Все швидко, відповідає опису</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">juli_bat <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Дякую</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">sss07 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">monchik <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">oksam <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">11031974tkv <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">user-1050421214 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">user1134594146 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">olchik_b <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">nikola19763 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">feska <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">👍</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">an_matveeva <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">lizaveta_g <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Все чудово.</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">orleanska <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">agnik <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">terraplaneblues <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">na_ta_li_5 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Дуже швидко відповіли, допомогли розібратися з розміром і швидко вислали. Рекомендую продавця</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">sonya_bon <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Дуже гарний товар, все відповідає опису. Швидка відправка</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">pro555 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Відверто рекомедую цей лонг - гарно сідає та зберігає тепло. Підійде навіть на розмір С - добре тягнеться.</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">dolmatik <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">targashka <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">siyanaistor <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">shekula_olga <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">lubovadamski <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Рекомендую до співпраці</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">Только бренд <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">oksana1243 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">olgavoblikova <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">Bellemaroc <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">mircella <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">irinad77 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">oksana1243 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">marynadp <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">bond0785 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">tatyana.timoshenko <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">oksanas1209 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">tzapkova <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Дякую, з найкращими рекомендаціями!</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">elena-35096302 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">aabesedina <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Річ повністю відповідає фото та опису, швидко відправлена, оперативна комунікація. Дякую!</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">aabesedina <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Річ повністю відповідає фото та опису, швидко відправлена. Дякую!</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">tasya_77 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">prostomaria23 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">milanna1979 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">irina777mail <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">anastasiia_-94 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">tzapkova <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Дякую за якісний сервіс!!!</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">koksana <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Дякую! Все супер!</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">ddy666 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">yashchuko <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">kapustinadarina <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Все супер. Дякую ❤️</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">annetcami <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">alonatiurina <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">koksana <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Дякую за чудовий светер!</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">yararycman <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">ksmile <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Дякую! Найкращі рекомендації</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">niknika111 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">1q5w8e3r <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">nata_gov <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">zigzag <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Дуже чемний і відповідальний продавець Миттєва відправка. Рекомендую!!!!!</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">natali_ivn <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">an_matveeva <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">nataliiatatarnikova <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Мої найщиріші рекомендації! Миттєва відправка, оригінальний товар. ❤️</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">an_matveeva <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">user-719603476 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">julilitoma <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Дякую!</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">snusnumriken <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">25056 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Все як завжди на висоті. Рекомендую.</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">elina_sl <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">72698812g <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">iryka777 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Все чудово! Рекомендую</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">shumturum <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">an_matveeva <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">ilona_47 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Шикарний продавець, моя щира рекомендація 🫶🏼🫶🏼🫶🏼</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">lenagavrilyuk313 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">kytskain <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">fellini86 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">25056 <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">Продавець супер. Швидко.</div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-name">solomya <span class='src-badge src-shafa'>Shafa</span></div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text"></div>
+                </div>
+                </div>
+        
+            <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+        </main>
+    </div>
+    <script>
+        function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); }
+        if (localStorage.getItem('uniqlo_theme') === 'dark') { document.body.classList.add('dark'); }
+        function showMoreProducts(button) { document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'flex'); button.style.display = 'none'; }
+    </script>
+</body>
+</html>

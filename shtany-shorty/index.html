@@ -3,151 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniqLow — Штани та шорти</title>
-    <meta name="description" content="Каталог товарів магазину UniqLow. Українська мова, зручна навігація, товари Shafa та OLX.">
+    <title>UniqLow — Штани та шорти (Ж)</title>
     <style>
         :root {
-            --bg: #f6f8fc;
-            --bg-soft: #eef2ff;
-            --panel: rgba(255,255,255,0.92);
-            --panel-solid: #ffffff;
-            --text: #101828;
-            --muted: #667085;
-            --accent: #e11d48;
-            --accent-soft: rgba(225, 29, 72, 0.12);
-            --border: rgba(16,24,40,0.08);
-            --shadow: 0 18px 45px rgba(16,24,40,0.08);
+            --bg: #f6f8fc; --bg-soft: #eef2ff; --panel: rgba(255,255,255,0.92); --panel-solid: #ffffff;
+            --text: #101828; --muted: #667085; --accent: #e11d48; --accent-soft: rgba(225, 29, 72, 0.12);
+            --border: rgba(16,24,40,0.08); --shadow: 0 18px 45px rgba(16,24,40,0.08);
             --hero: linear-gradient(135deg, #fff1f2 0%, #ffffff 38%, #eef4ff 100%);
-            --green: #16a34a;
-            --orange: #f59e0b;
+            --green: #16a34a; --orange: #f59e0b;
         }
-
         body.dark {
-            --bg: #0b1220;
-            --bg-soft: #111827;
-            --panel: rgba(17,24,39,0.88);
-            --panel-solid: #111827;
-            --text: #f8fafc;
-            --muted: #98a2b3;
-            --accent: #ff4d6d;
-            --accent-soft: rgba(255,77,109,0.12);
-            --border: rgba(255,255,255,0.08);
-            --shadow: 0 18px 45px rgba(0,0,0,0.35);
+            --bg: #0b1220; --bg-soft: #111827; --panel: rgba(17,24,39,0.88); --panel-solid: #111827;
+            --text: #f8fafc; --muted: #98a2b3; --accent: #ff4d6d; --accent-soft: rgba(255,77,109,0.12);
+            --border: rgba(255,255,255,0.08); --shadow: 0 18px 45px rgba(0,0,0,0.35);
             --hero: linear-gradient(135deg, #1f2937 0%, #111827 38%, #0b1220 100%);
-            --green: #22c55e;
-            --orange: #fb923c;
         }
-
         * { box-sizing: border-box; }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at left top, rgba(225,29,72,0.09), transparent 24%),
-                radial-gradient(circle at right top, rgba(59,130,246,0.08), transparent 22%),
-                var(--bg);
-        }
-
+        body { margin: 0; font-family: Arial, sans-serif; color: var(--text); background: var(--bg); }
         .layout { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
+        .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px; border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px); }
 
-        .sidebar {
-            position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px;
-            border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px);
-        }
-
-        .brand {
-            display: flex; align-items: center; gap: 14px; text-decoration: none;
-            margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04);
-        }
-
-        .brand-avatar {
-            width: 66px; height: 66px; border-radius: 50%; object-fit: cover;
-            border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0;
-        }
-
+        .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04); }
+        .brand-avatar { width: 66px; height: 66px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0; background: white; }
         .brand-name { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
         .brand-sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
 
-        .top-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-
-        .top-btn {
-            text-decoration: none; color: white; font-size: 14px; font-weight: 700;
-            text-align: center; padding: 11px 12px; border-radius: 14px;
-            transition: transform .18s ease, box-shadow .18s ease;
-        }
-
-        .top-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-
-        .btn-telegram { background: linear-gradient(135deg, #229ED9, #1d4ed8); }
-        .btn-olx { background: linear-gradient(135deg, #16a34a, #15803d); }
-
-        .theme-toggle {
-            width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text);
-            border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px;
-        }
-
-        .theme-toggle:hover { border-color: rgba(225,29,72,0.18); }
+        .theme-toggle { width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text); border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px; }
 
         .menu-block { margin-bottom: 18px; }
         .menu-title { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); margin-bottom: 8px; padding: 0 6px; }
         .menu-block ul { list-style: none; margin: 0; padding: 0; }
-        .menu-block li { margin-bottom: 4px; }
-        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; transition: .18s ease; }
+        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; margin-bottom: 4px; transition: .18s ease; }
         .menu-block a:hover { background: var(--accent-soft); color: var(--accent); transform: translateX(2px); }
         .active-link { background: var(--accent-soft); color: var(--accent) !important; font-weight: 700; }
 
         .content { padding: 28px; }
-
-        .hero { position: relative; overflow: hidden; border-radius: 30px; border: 1px solid var(--border); background: var(--hero); box-shadow: var(--shadow); padding: 28px; margin-bottom: 28px; }
-        .hero::after { content: ""; position: absolute; right: -80px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(225,29,72,0.18), transparent 68%); }
-        .hero-inner { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
-        .hero h1 { margin: 0 0 10px; font-size: 38px; line-height: 1.05; }
-        .hero p { margin: 0; max-width: 800px; color: var(--muted); font-size: 16px; line-height: 1.7; }
-        .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-        .hero-badge { padding: 10px 14px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.45); font-size: 13px; }
-
         .section-top { margin-bottom: 14px; }
         .section-top h2 { margin: 0 0 6px; font-size: 24px; }
         .section-top p { margin: 0; color: var(--muted); line-height: 1.6; }
 
-        .quick-section, .promo-section, .reviews-section { margin-bottom: 28px; }
+        .quick-section, .promo-section { margin-bottom: 28px; }
         .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
-        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(225,29,72,0.08), rgba(255,255,255,0.35)); box-shadow: var(--shadow); transition: transform .18s ease, border-color .18s ease; }
-        .quick-tile:hover { transform: translateY(-3px); border-color: rgba(225,29,72,0.22); }
+        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: var(--panel-solid); box-shadow: var(--shadow); transition: transform .18s ease; }
+        .quick-tile:hover { transform: translateY(-3px); border-color: var(--accent); }
 
-        /* PROMO BLOCK */
-        .promo-card { display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow); }
-        .promo-badge { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #0f766e); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 30px; margin: 0 auto; }
-        .promo-content h2 { margin: 0 0 10px; font-size: 28px; }
-        .promo-content p { margin: 0 0 16px; color: var(--muted); line-height: 1.7; }
-        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: linear-gradient(135deg, #229ED9, #1d4ed8); padding: 12px 18px; border-radius: 14px; font-weight: 700; transition: transform .2s ease; }
-        .telegram-btn:hover { transform: translateY(-2px); }
-
-        /* REVIEWS BLOCK */
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; padding: 18px; box-shadow: var(--shadow); }
-        .review-stars { color: var(--orange); font-size: 20px; margin-bottom: 8px; }
-        .review-name { font-weight: 800; margin-bottom: 8px; }
-        .review-text { color: var(--muted); line-height: 1.6; }
+        .promo-card { display: flex; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow);}
+        .promo-badge { width: 100px; height: 100px; border-radius: 50%; background: var(--green); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 24px; flex-shrink:0; }
+        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: #229ED9; padding: 12px 18px; border-radius: 14px; font-weight: 700; margin-top: 10px; }
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .product-card { display: block; text-decoration: none; color: inherit; border-radius: 22px; overflow: hidden; background: var(--panel-solid); border: 1px solid var(--border); box-shadow: var(--shadow); transition: .2s ease; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 25px 48px rgba(16,24,40,0.14); border-color: rgba(225,29,72,0.18); }
+        .product-card { display: flex; flex-direction: column; background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); transition: .2s ease; }
+        .product-card:hover { transform: translateY(-5px); border-color: rgba(225,29,72,0.18); box-shadow: 0 25px 48px rgba(16,24,40,0.14); }
+        .card-main-link { text-decoration: none; color: inherit; flex-grow: 1; display: flex; flex-direction: column; }
         .product-image-wrap { background: var(--bg-soft); overflow: hidden; }
         .product-image { width: 100%; height: 330px; object-fit: cover; display: block; transition: transform .35s ease; }
         .product-card:hover .product-image { transform: scale(1.04); }
-        .product-info { padding: 16px; }
+        .product-info { padding: 16px; flex-grow: 1; }
         .product-price { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
         .product-title { font-size: 15px; line-height: 1.5; min-height: 46px; margin-bottom: 8px; }
         .product-meta { font-size: 13px; color: var(--muted); }
 
-        /* ПРИХОВАНІ ТОВАРИ */
+        .card-tg-btn { display: block; margin: 0 16px 16px 16px; background: linear-gradient(135deg, #2AABEE, #229ED9); color: white; text-align: center; padding: 12px; border-radius: 14px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s; }
+        .card-tg-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(34, 158, 217, 0.3); }
+
         .hidden-card { display: none; }
         .show-more-wrap { margin-top: 30px; text-align: center; }
-        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; }
-        .show-more-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
+
+        .reviews-page-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 800px; }
+        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .review-name { font-weight: 800; font-size: 16px; display: flex; align-items: center; gap: 10px; }
+        .review-stars { color: var(--orange); font-size: 18px; }
+        .review-text { color: var(--text); line-height: 1.6; font-size: 15px; }
+        .src-badge { font-size: 11px; padding: 3px 8px; border-radius: 8px; font-weight: bold; color: white; text-transform: uppercase; }
+        .src-shafa { background: #f59e0b; }
+        .src-telegram { background: #2AABEE; }
 
         .empty-box { padding: 30px; border-radius: 22px; border: 1px dashed var(--border); background: var(--panel-solid); color: var(--muted); }
         .footer-note { margin-top: 26px; text-align: center; color: var(--muted); font-size: 13px; }
@@ -155,32 +86,27 @@
         @media (max-width: 1080px) {
             .layout { grid-template-columns: 1fr; }
             .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
-            .content { padding: 18px; }
-            .hero { padding: 22px; }
-            .hero h1 { font-size: 30px; }
-            .promo-card { grid-template-columns: 1fr; text-align: center; }
+            .promo-card { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <a class="brand" href="/">
-                <img class="brand-avatar" src="https://avatars.shafastatic.net/691711_new_avatar_type1648494975" alt="uniqlo-shop">
+            <a class="brand" href="../">
+                <img class="brand-avatar" src="../icon.png" alt="UniqLow">
                 <div>
                     <div class="brand-name">UniqLow</div>
                     <div class="brand-sub">Одяг та аксесуари</div>
                 </div>
             </a>
-
-            <div class="top-links">
-                <a class="top-btn btn-telegram" href="https://t.me/ТВІЙ_БОТ" target="_blank" rel="noopener">Telegram</a>
-                <a class="top-btn btn-olx" href="/olx/">OLX</a>
-            </div>
-
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">🌗</button>
-
-            <div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
+            <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+            <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
+<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
+<li><a class='' href='/olx/'>🌐 OLX</a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
 <li><a class='' href='/spidnytsi/'>Спідниці</a></li>
 <li><a class='' href='/plattya/'>Плаття</a></li>
 <li><a class='' href='/verhniy-odyag/'>Верхній одяг</a></li>
@@ -216,904 +142,1245 @@
 <li><a class='' href='/golovni-ubory/'>Головні убори</a></li>
 <li><a class='' href='/remeni-poyasy/'>Ремені та пояси</a></li>
 </ul></div>
-<div class='menu-block'><div class='menu-title'>Майданчики</div><ul>
-<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>Shafa</a></li>
-<li><a class='' href='/olx/'>OLX</a></li>
-</ul></div>
         </aside>
 
         <main class="content">
-            <section class="hero">
-                <div class="hero-inner">
-                    <div>
-                        <h1>Штани та шорти</h1>
-                        <p>Добірка товарів розділу з переходом до оригінального оголошення.</p>
-                        <div class="hero-badges">
-                            <div class="hero-badge">Українська мова</div>
-                            <div class="hero-badge">Замовлення через Telegram</div>
-                            <div class="hero-badge">Швидкий перехід у товар</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             
             
             
-
-            <section>
-                <div class="section-top">
-                    <h2>Товари розділу</h2>
-                    <p>Спочатку показуються перші 12 позицій. Натисніть 'Показати ще', щоб побачити інші.</p>
-                </div>
-
-                <div class="products-grid">
-                    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/bryuki/199781714-flanelevi-shtani-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2257846452_310_430" alt="Фланелеві штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Фланелеві штани uniqlo</div>
-            <div class='product-meta'>Uniqlo • ХSі ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/bryuki/199781627-flanelevi-shtani-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2257845844_310_430" alt="Фланелеві штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Фланелеві штани uniqlo</div>
-            <div class='product-meta'>Uniqlo • ХSі ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/196251099-leginsi-uv-protection-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2239845499_310_430" alt="Легінси uv protection uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1100 грн</div>
-            <div class="product-title">Легінси uv protection uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/196250384-leginsi-uv-protection-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2239842150_310_430" alt="Легінси uv protection uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1060 грн</div>
-            <div class="product-title">Легінси uv protection uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/bryuki/194059878-vovnyani-zhinochi-bryuki-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2230844377_310_430" alt="Вовняні жіночі брюки uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1350 грн</div>
-            <div class="product-title">Вовняні жіночі брюки uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/bryuki/194059822-vovnyani-zhinochi-bryuki-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2230843948_310_430" alt="Вовняні жіночі брюки uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1350 грн</div>
-            <div class="product-title">Вовняні жіночі брюки uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/193257532-dzhinsi-leginsi-uniqlo-ultra-stretch-denim" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2225976983_310_430" alt="Джинси легінси uniqlo ultra stretch denim">
-        </div>
-        <div class="product-info">
-            <div class="product-price">890 грн</div>
-            <div class="product-title">Джинси легінси uniqlo ultra stretch denim</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/bryuki/190996023-shiroki-shtani-airsense-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2211989873_310_430" alt="Широкі штани airsense uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Широкі штани airsense uniqlo</div>
-            <div class='product-meta'>Uniqlo • XLі ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/shorty/190311797-shorti-uniqlo-disney-in-blue-easy" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2207824081_310_430" alt="Шорти uniqlo disney in blue easy">
-        </div>
-        <div class="product-info">
-            <div class="product-price">690 грн</div>
-            <div class="product-title">Шорти uniqlo disney in blue easy</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/189948231-shiroki-dzhinsi-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2205581830_310_430" alt="Широкі джинси uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Широкі джинси uniqlo</div>
-            <div class='product-meta'>Uniqlo • S</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/bryuki/189873146-legki-shiroki-shtani-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2205624573_310_430" alt="Легкі широкі штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Легкі широкі штани uniqlo</div>
-            <div class='product-meta'>36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card" href="https://shafa.ua/uk/women/shtany/bryuki/189660208-shtani-smart-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2203947080_310_430" alt="Штани smart uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Штани smart uniqlo</div>
-            <div class='product-meta'>Uniqlo • L</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/189243539-bryuki-shiroki-uniqlo-rozmir-hl" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2201616041_310_430" alt="Брюки широкі uniqlo, розмір хл">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Брюки широкі uniqlo, розмір хл</div>
-            <div class='product-meta'>42 / XL / 50</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/shorty/189244683-shorti-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2201624035_310_430" alt="Шорти uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">699 грн</div>
-            <div class="product-title">Шорти uniqlo</div>
-            <div class='product-meta'>38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/189244216-lnyani-bavovnyani-shtani-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2201620922_310_430" alt="Льняні бавовняні штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Льняні бавовняні штани uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/189243793-dzhinsovi-shtani-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2201617979_310_430" alt="Джинсові штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1650 грн</div>
-            <div class="product-title">Джинсові штани uniqlo</div>
-            <div class='product-meta'>Uniqlo • 29 / M</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/shorty/189243626-spidnicya-shorti-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2201616940_310_430" alt="Спідниця-шорти uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">800 грн</div>
-            <div class="product-title">Спідниця-шорти uniqlo</div>
-            <div class='product-meta'>40 / L / 48і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/shorty/189235844-akciya-shorti-high-rise-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2201567009_310_430" alt="Акція! шорти high rise uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">650 грн</div>
-            <div class="product-title">Акція! шорти high rise uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/189082736-dzhinsi-wide-straight-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2200682166_310_430" alt="Джинси wide straight uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1050 грн</div>
-            <div class="product-title">Джинси wide straight uniqlo</div>
-            <div class='product-meta'>25</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/188075761-flanelevi-shtani-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2195370950_310_430" alt="Фланелеві штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Фланелеві штани uniqlo</div>
-            <div class='product-meta'>34 / XS / 42і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/188075596-shiroki-pryami-dzhinsi-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2195369787_310_430" alt="Широкі прямі джинси uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Широкі прямі джинси uniqlo</div>
-            <div class='product-meta'>25 / XSі ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/187204079-flanelevi-shtani-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2190134781_310_430" alt="Фланелеві штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Фланелеві штани uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186756321-elegantni-bryuki-uniqlo-rozmir-s-m-ta-l" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2187324260_310_430" alt="Елегантні брюки uniqlo, розмір с, м та л">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Елегантні брюки uniqlo, розмір с, м та л</div>
-            <div class='product-meta'>Sі ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186416554-shtani-z-llyanoyi-sumishi-easy-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2185191307_310_430" alt="Штани з лляної суміші easy uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Штани з лляної суміші easy uniqlo</div>
-            <div class='product-meta'>Uniqlo • Lі ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186416368-shtani-z-llyanoyi-sumishi-easy-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2185190000_310_430" alt="Штани з лляної суміші easy uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Штани з лляної суміші easy uniqlo</div>
-            <div class='product-meta'>Uniqlo • L</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186416084-shtani-z-llyanoyi-sumishi-easy-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2185188179_310_430" alt="Штани з лляної суміші easy uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Штани з лляної суміші easy uniqlo</div>
-            <div class='product-meta'>Uniqlo • Sі ще 2</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186415656-shtani-smart-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2185186151_310_430" alt="Штани smart uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Штани smart uniqlo</div>
-            <div class='product-meta'>S</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/186415536-leginsi-airism-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2185185321_310_430" alt="Легінси airism uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">850 грн</div>
-            <div class="product-title">Легінси airism uniqlo</div>
-            <div class='product-meta'>Uniqlo • M</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186410116-atlasovi-pryami-shtani-z-drapirovannyam-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2185151157_310_430" alt="Атласові прямі штани з драпірованням uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">650 грн</div>
-            <div class="product-title">Атласові прямі штани з драпірованням uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186409865-elegantni-shtani-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2185149613_310_430" alt="Елегантні штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Елегантні штани uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186409758-shtani-smart-ankle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2185148916_310_430" alt="Штани smart ankle uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1010 грн</div>
-            <div class="product-title">Штани smart ankle uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186409557-shtani-smart-ankle-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2185147718_310_430" alt="Штани smart ankle uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Штани smart ankle uniqlo</div>
-            <div class='product-meta'>Uniqlo • L</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/186409334-leginsi-extra-stretch-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2185146422_310_430" alt="Легінси extra stretch uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">500 грн</div>
-            <div class="product-title">Легінси extra stretch uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186408408-shtani-zi-skladkami-shiroki-uniqlo-na-visokiy-zrist" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2185140976_310_430" alt="Штани зі складками широкі uniqlo (на високий зріст)">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Штани зі складками широкі uniqlo (на високий зріст)</div>
-            <div class='product-meta'>Uniqlo • S</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186368738-shiroki-plisirovani-shtani-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2184894169_310_430" alt="Широкі плісировані штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Широкі плісировані штани uniqlo</div>
-            <div class='product-meta'>Uniqlo • S</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/186368580-shiroki-plisirovani-shtani-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2184893292_310_430" alt="Широкі плісировані штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1500 грн</div>
-            <div class="product-title">Широкі плісировані штани uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/186366941-dzhinsovi-shtani-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2184883584_310_430" alt="Джинсові штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1650 грн</div>
-            <div class="product-title">Джинсові штани uniqlo</div>
-            <div class='product-meta'>Uniqlo • 28 / M</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/181550975-tepli-shtani-na-pidkladci-heattech-uniqlo-rozmir-hhl" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2155026233_310_430" alt="Теплі штани на підкладці heattech uniqlo, розмір ххл">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1600 грн</div>
-            <div class="product-title">Теплі штани на підкладці heattech uniqlo, розмір ххл</div>
-            <div class='product-meta'>Uniqlo • 44 / XXL / 52</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/174002455-myaki-leginsi-airism-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/-485594034_310_430" alt="М'які легінси airism uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">850 грн</div>
-            <div class="product-title">М'які легінси airism uniqlo</div>
-            <div class='product-meta'>Uniqlo • S</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/170110158-elastichni-ukorocheni-leginsi-z-visokoyu-posadkoyu-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/-310525953_310_430" alt="Еластичні укорочені легінси з високою посадкою uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">550 грн</div>
-            <div class="product-title">Еластичні укорочені легінси з високою посадкою uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/150385855-levis_-premium-zhinochi-dzhinsi-501_-rozmir-2828" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1924622733_310_430" alt="Levi's® premium жіночі джинси 501®, розмір 28*28">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1650 грн</div>
-            <div class="product-title">Levi's® premium жіночі джинси 501®, розмір 28*28</div>
-            <div class='product-meta'>Levi's • 28 / M</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/142973302-zhinochi-vovnyani-shtani-ezy" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/1590621329_310_430" alt="Жіночі вовняні штани ezy">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1350 грн</div>
-            <div class="product-title">Жіночі вовняні штани ezy</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/105872658-zhinochi-plisirovani-shtani-z-visokoyu-taliyeyu" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653578177_310_430" alt="Жіночі плісировані штани з високою талією">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1349 грн</div>
-            <div class="product-title">Жіночі плісировані штани з високою талією</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/105872519-shtani-leginsi" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653571417_310_430" alt="Штани легінси">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1049 грн</div>
-            <div class="product-title">Штани легінси</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/105872169-zhinochi-bavovnyani-pryami-shtani" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653559520_310_430" alt="Жіночі бавовняні прямі штани">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1049 грн</div>
-            <div class="product-title">Жіночі бавовняні прямі штани</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/105868869-zhinochi-stryaych-povsyakdenni-shtani-dry" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653510671_310_430" alt="Жіночі стрейч повсякденні штани dry">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1049 грн</div>
-            <div class="product-title">Жіночі стрейч повсякденні штани dry</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/105868281-zhinochi-povsyakdenni-shtani" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/653498166_310_430" alt="Жіночі повсякденні штани">
-        </div>
-        <div class="product-info">
-            <div class="product-price">950 грн</div>
-            <div class="product-title">Жіночі повсякденні штани</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/105433975-zhinochi-leginsi-shtani-uniqlo-smart" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/642774963_310_430" alt="Жіночі легінси-штани uniqlo smart">
-        </div>
-        <div class="product-info">
-            <div class="product-price">700 грн</div>
-            <div class="product-title">Жіночі легінси-штани uniqlo smart</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101249263-ukorochennye-raskleshennye-dzhinsy" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569165060_310_430" alt="Укорочені розкльошені джинси 24 розмір">
-        </div>
-        <div class="product-info">
-            <div class="product-price">550 грн</div>
-            <div class="product-title">Укорочені розкльошені джинси 24 розмір</div>
-            <div class='product-meta'>Uniqlo • One size</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101248388-zhenskie-bryuki" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569160109_310_430" alt="Жіночі брюки">
-        </div>
-        <div class="product-info">
-            <div class="product-price">800 грн</div>
-            <div class="product-title">Жіночі брюки</div>
-            <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101248276-zhenskie-bryuki" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569159321_310_430" alt="Жіночі брюки">
-        </div>
-        <div class="product-info">
-            <div class="product-price">790 грн</div>
-            <div class="product-title">Жіночі брюки</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101248591-modni-zhinochi-bryuki-bandzhi-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569161114_310_430" alt="Модні жіночі брюки-банджі uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">900 грн</div>
-            <div class="product-title">Модні жіночі брюки-банджі uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101248894-zhinochi-bryuki" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569162761_310_430" alt="Жіночі брюки">
-        </div>
-        <div class="product-info">
-            <div class="product-price">800 грн</div>
-            <div class="product-title">Жіночі брюки</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101244693-ukorochennye-zhenskie-atlasnye-bryuki" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569139646_310_430" alt="Укорочені жіночі атласні штани">
-        </div>
-        <div class="product-info">
-            <div class="product-price">800 грн</div>
-            <div class="product-title">Укорочені жіночі атласні штани</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101244306-ukorocheni-zhinochi-atlasni-shtani" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569137070_310_430" alt="Укорочені жіночі атласні штани">
-        </div>
-        <div class="product-info">
-            <div class="product-price">800 грн</div>
-            <div class="product-title">Укорочені жіночі атласні штани</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101244492-zhenskie-ukorochennye-bryuki-smart-style" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569138147_310_430" alt="Жіночі укорочені брюки smart style">
-        </div>
-        <div class="product-info">
-            <div class="product-price">800 грн</div>
-            <div class="product-title">Жіночі укорочені брюки smart style</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101238319-uniklo-zhenskie-atlasnye-bryuki" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569103715_310_430" alt="Уникло жіночі атласні штани">
-        </div>
-        <div class="product-info">
-            <div class="product-price">700 грн</div>
-            <div class="product-title">Уникло жіночі атласні штани</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101243291-ukorocheni-zhinochi-atlasni-shtani" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569131437_310_430" alt="Укорочені жіночі атласні штани">
-        </div>
-        <div class="product-info">
-            <div class="product-price">700 грн</div>
-            <div class="product-title">Укорочені жіночі атласні штани</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101239535-ukorochennye-zhenskie-atlasnye-bryuki" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569110316_310_430" alt="Укорочені жіночі атласні штани">
-        </div>
-        <div class="product-info">
-            <div class="product-price">900 грн</div>
-            <div class="product-title">Укорочені жіночі атласні штани</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101239208-ukorochennye-zhenskie-atlasnye-bryuki" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569108715_310_430" alt="Укорочені жіночі атласні штани">
-        </div>
-        <div class="product-info">
-            <div class="product-price">800 грн</div>
-            <div class="product-title">Укорочені жіночі атласні штани</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101237916-uniklo-zhenskie-atlasnye-bryuki-do-shitka" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569101897_310_430" alt="Уникло жіночі атласні штани до щитка">
-        </div>
-        <div class="product-info">
-            <div class="product-price">800 грн</div>
-            <div class="product-title">Уникло жіночі атласні штани до щитка</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101235950-zhenskie-ukorochennye-atlasnye-bryuki-ezy" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569091177_310_430" alt="Жіночі укорочені атласні штани ezy">
-        </div>
-        <div class="product-info">
-            <div class="product-price">790 грн</div>
-            <div class="product-title">Жіночі укорочені атласні штани ezy</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101237740-modnye-zhenskie-bryuki-bandzhi-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569100496_310_430" alt="Модні жіночі брюки-банджі uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">800 грн</div>
-            <div class="product-title">Модні жіночі брюки-банджі uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/101236366-zhenskie-ukorochennye-shirokie-bryuki-v-stile-drap" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/569093281_310_430" alt="Жіночі укорочені широкі брюки в стилі драп">
-        </div>
-        <div class="product-info">
-            <div class="product-price">750 грн</div>
-            <div class="product-title">Жіночі укорочені широкі брюки в стилі драп</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/shorty/101012312-dzhinsovi-shorti-zara-34-rozmir" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/567087534_310_430" alt="Джинсові шорти zara 34 розмір">
-        </div>
-        <div class="product-info">
-            <div class="product-price">650 грн</div>
-            <div class="product-title">Джинсові шорти zara 34 розмір</div>
-            <div class='product-meta'>ZARA • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/93847664-uniqlo-zhenskie-shirokie-kyuloty" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/490017459_310_430" alt="Uniqlo жіночі широкі кюлоти">
-        </div>
-        <div class="product-info">
-            <div class="product-price">650 грн</div>
-            <div class="product-title">Uniqlo жіночі широкі кюлоти</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/93672445-bryuki-dzhoggery-s-drapirovkoy-i-printom-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/487950162_310_430" alt="Штани-джоггеры з драпіруванням і принтом uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">900 грн</div>
-            <div class="product-title">Штани-джоггеры з драпіруванням і принтом uniqlo</div>
-            <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/93518352-seriya-kollaboraciy-s-ines-fasanzhzhenskie-hlopkovye-bryuki-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/486289905_310_430" alt="Серія колаборацій з інес фасанж,жіночі бавовняні штани uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">750 грн</div>
-            <div class="product-title">Серія колаборацій з інес фасанж,жіночі бавовняні штани uniqlo</div>
-            <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/bryuki/92655654-zhenskie-sherstyanye-bryuki-ezy-v-polosku-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/474352686_310_430" alt="Жіночі вовняні штани ezy (в смужку) uniqlo">
-        </div>
-        <div class="product-info">
-            <div class="product-price">980 грн</div>
-            <div class="product-title">Жіночі вовняні штани ezy (в смужку) uniqlo</div>
-            <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/73471721-dzhinsy-levis-ct-w26l36-cropped" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/327596032_310_430" alt="Джинси levis ct w26l36 cropped">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1900 грн</div>
-            <div class="product-title">Джинси levis ct w26l36 cropped</div>
-            <div class='product-meta'>Levi's • 26 / S</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/73464660-710-super-skinny-womens-jeans-w25l28" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/327558466_310_430" alt="710 super skinny women's jeans w25l28">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1000 грн</div>
-            <div class="product-title">710 super skinny women's jeans w25l28</div>
-            <div class='product-meta'>Levi's • 25 / XS</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/73464381-dzhinsy-levis-311-razmer-27-34" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/327557058_310_430" alt="Джинси levis 311 розмір 27-34">
-        </div>
-        <div class="product-info">
-            <div class="product-price">2100 грн</div>
-            <div class="product-title">Джинси levis 311 розмір 27-34</div>
-            <div class='product-meta'>Levi's • 27 / S</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/73464064-dzhinsy-levis-711-skinny-188810219-cheap-thrill-25w-x-30l" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/327554499_310_430" alt="Джинси levis 711 skinny 188810219 cheap thrill 25w x 30l">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1200 грн</div>
-            <div class="product-title">Джинси levis 711 skinny 188810219 cheap thrill 25w x 30l</div>
-            <div class='product-meta'>Levi's • 25 / XS</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/73442325-dzhinsy-levis-501ct-w26l32-novye" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/327442610_310_430" alt="Джинси levis 501ct w26l32 нові">
-        </div>
-        <div class="product-info">
-            <div class="product-price">2500 грн</div>
-            <div class="product-title">Джинси levis 501ct w26l32 нові</div>
-            <div class='product-meta'>Levi's • 26 / S</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/73441840-dzhinsy-vintazh-levis-501-ct-selvidzh" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/327440937_310_430" alt="Джинси вінтаж levis 501 ct селвидж">
-        </div>
-        <div class="product-info">
-            <div class="product-price">1900 грн</div>
-            <div class="product-title">Джинси вінтаж levis 501 ct селвидж</div>
-            <div class='product-meta'>25 / XS</div>
-        </div>
-    </a>
-    
-    <a class="product-card hidden-card" href="https://shafa.ua/uk/women/shtany/dzhinsy/73441559-zhenskie-dzhinsy-710-super-skinny" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/327439064_310_430" alt="Жіночі джинси 710 super skinny">
-        </div>
-        <div class="product-info">
-            <div class="product-price">850 грн</div>
-            <div class="product-title">Жіночі джинси 710 super skinny</div>
-            <div class='product-meta'>Levi's • 28 / M</div>
-        </div>
-    </a>
-    
-                </div>
-
-                
-        <div class="show-more-wrap">
-            <button class="show-more-btn" onclick="showMoreProducts(this)">Показати ще</button>
-        </div>
-        
-            </section>
-
-            <div class="footer-note">
-                UniqLow • Створено для зручного перегляду товарів
+        <div class="section-top">
+            <h2>Товари розділу</h2>
+        </div>
+        <div class="products-grid">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/199781714-flanelevi-shtani-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2257846452_310_430" alt="Фланелеві штани uniqlo">
             </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Фланелеві штани uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХSі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/199781627-flanelevi-shtani-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2257845844_310_430" alt="Фланелеві штани uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Фланелеві штани uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХSі ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/196251099-leginsi-uv-protection-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2239845499_310_430" alt="Легінси uv protection uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Легінси uv protection uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/196250384-leginsi-uv-protection-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2239842150_310_430" alt="Легінси uv protection uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1060 грн</div>
+                <div class="product-title">Легінси uv protection uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/194059878-vovnyani-zhinochi-bryuki-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230844377_310_430" alt="Вовняні жіночі брюки uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1350 грн</div>
+                <div class="product-title">Вовняні жіночі брюки uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/194059822-vovnyani-zhinochi-bryuki-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230843948_310_430" alt="Вовняні жіночі брюки uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1350 грн</div>
+                <div class="product-title">Вовняні жіночі брюки uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/193257532-dzhinsi-leginsi-uniqlo-ultra-stretch-denim" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2225976983_310_430" alt="Джинси легінси uniqlo ultra stretch denim">
+            </div>
+            <div class="product-info">
+                <div class="product-price">890 грн</div>
+                <div class="product-title">Джинси легінси uniqlo ultra stretch denim</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/190996023-shiroki-shtani-airsense-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211989873_310_430" alt="Широкі штани airsense uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Широкі штани airsense uniqlo</div>
+                <div class='product-meta'>Uniqlo • XLі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/shorty/190311797-shorti-uniqlo-disney-in-blue-easy" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207824081_310_430" alt="Шорти uniqlo disney in blue easy">
+            </div>
+            <div class="product-info">
+                <div class="product-price">690 грн</div>
+                <div class="product-title">Шорти uniqlo disney in blue easy</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/189948231-shiroki-dzhinsi-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2205581830_310_430" alt="Широкі джинси uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Широкі джинси uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/189873146-legki-shiroki-shtani-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2205624573_310_430" alt="Легкі широкі штани uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Легкі широкі штани uniqlo</div>
+                <div class='product-meta'>36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/189660208-shtani-smart-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2203947080_310_430" alt="Штани smart uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Штани smart uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/189243539-bryuki-shiroki-uniqlo-rozmir-hl" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2201616041_310_430" alt="Брюки широкі uniqlo, розмір хл">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Брюки широкі uniqlo, розмір хл</div>
+                <div class='product-meta'>42 / XL / 50</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/shorty/189244683-shorti-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2201624035_310_430" alt="Шорти uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">699 грн</div>
+                <div class="product-title">Шорти uniqlo</div>
+                <div class='product-meta'>38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/189244216-lnyani-bavovnyani-shtani-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2201620922_310_430" alt="Льняні бавовняні штани uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Льняні бавовняні штани uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/189243793-dzhinsovi-shtani-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2201617979_310_430" alt="Джинсові штани uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1650 грн</div>
+                <div class="product-title">Джинсові штани uniqlo</div>
+                <div class='product-meta'>Uniqlo • 29 / M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/shorty/189243626-spidnicya-shorti-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2201616940_310_430" alt="Спідниця-шорти uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">800 грн</div>
+                <div class="product-title">Спідниця-шорти uniqlo</div>
+                <div class='product-meta'>40 / L / 48і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/shorty/189235844-akciya-shorti-high-rise-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2201567009_310_430" alt="Акція! шорти high rise uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">650 грн</div>
+                <div class="product-title">Акція! шорти high rise uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/189082736-dzhinsi-wide-straight-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2200682166_310_430" alt="Джинси wide straight uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Джинси wide straight uniqlo</div>
+                <div class='product-meta'>25</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/188075761-flanelevi-shtani-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2195370950_310_430" alt="Фланелеві штани uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Фланелеві штани uniqlo</div>
+                <div class='product-meta'>34 / XS / 42і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/188075596-shiroki-pryami-dzhinsi-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2195369787_310_430" alt="Широкі прямі джинси uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Широкі прямі джинси uniqlo</div>
+                <div class='product-meta'>25 / XSі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/187204079-flanelevi-shtani-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2190134781_310_430" alt="Фланелеві штани uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Фланелеві штани uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186756321-elegantni-bryuki-uniqlo-rozmir-s-m-ta-l" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2187324260_310_430" alt="Елегантні брюки uniqlo, розмір с, м та л">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Елегантні брюки uniqlo, розмір с, м та л</div>
+                <div class='product-meta'>Sі ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186416554-shtani-z-llyanoyi-sumishi-easy-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185191307_310_430" alt="Штани з лляної суміші easy uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Штани з лляної суміші easy uniqlo</div>
+                <div class='product-meta'>Uniqlo • Lі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186416368-shtani-z-llyanoyi-sumishi-easy-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185190000_310_430" alt="Штани з лляної суміші easy uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Штани з лляної суміші easy uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186416084-shtani-z-llyanoyi-sumishi-easy-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185188179_310_430" alt="Штани з лляної суміші easy uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Штани з лляної суміші easy uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186415656-shtani-smart-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185186151_310_430" alt="Штани smart uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Штани smart uniqlo</div>
+                <div class='product-meta'>S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/186415536-leginsi-airism-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185185321_310_430" alt="Легінси airism uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">850 грн</div>
+                <div class="product-title">Легінси airism uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186410116-atlasovi-pryami-shtani-z-drapirovannyam-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185151157_310_430" alt="Атласові прямі штани з драпірованням uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">650 грн</div>
+                <div class="product-title">Атласові прямі штани з драпірованням uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186409865-elegantni-shtani-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185149613_310_430" alt="Елегантні штани uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Елегантні штани uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186409758-shtani-smart-ankle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185148916_310_430" alt="Штани smart ankle uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Штани smart ankle uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186409557-shtani-smart-ankle-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185147718_310_430" alt="Штани smart ankle uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Штани smart ankle uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/186409334-leginsi-extra-stretch-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185146422_310_430" alt="Легінси extra stretch uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">500 грн</div>
+                <div class="product-title">Легінси extra stretch uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186408408-shtani-zi-skladkami-shiroki-uniqlo-na-visokiy-zrist" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185140976_310_430" alt="Штани зі складками широкі uniqlo (на високий зріст)">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Штани зі складками широкі uniqlo (на високий зріст)</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186368738-shiroki-plisirovani-shtani-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2184894169_310_430" alt="Широкі плісировані штани uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Широкі плісировані штани uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/186368580-shiroki-plisirovani-shtani-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2184893292_310_430" alt="Широкі плісировані штани uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1500 грн</div>
+                <div class="product-title">Широкі плісировані штани uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/186366941-dzhinsovi-shtani-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2184883584_310_430" alt="Джинсові штани uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1650 грн</div>
+                <div class="product-title">Джинсові штани uniqlo</div>
+                <div class='product-meta'>Uniqlo • 28 / M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/181550975-tepli-shtani-na-pidkladci-heattech-uniqlo-rozmir-hhl" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2155026233_310_430" alt="Теплі штани на підкладці heattech uniqlo, розмір ххл">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1600 грн</div>
+                <div class="product-title">Теплі штани на підкладці heattech uniqlo, розмір ххл</div>
+                <div class='product-meta'>Uniqlo • 44 / XXL / 52</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/losiny-i-legginsy/174002455-myaki-leginsi-airism-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/-485594034_310_430" alt="М'які легінси airism uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">850 грн</div>
+                <div class="product-title">М'які легінси airism uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/170110158-elastichni-ukorocheni-leginsi-z-visokoyu-posadkoyu-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/-310525953_310_430" alt="Еластичні укорочені легінси з високою посадкою uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">550 грн</div>
+                <div class="product-title">Еластичні укорочені легінси з високою посадкою uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/150385855-levis_-premium-zhinochi-dzhinsi-501_-rozmir-2828" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1924622733_310_430" alt="Levi's® premium жіночі джинси 501®, розмір 28*28">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1650 грн</div>
+                <div class="product-title">Levi's® premium жіночі джинси 501®, розмір 28*28</div>
+                <div class='product-meta'>Levi's • 28 / M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/142973302-zhinochi-vovnyani-shtani-ezy" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1590621329_310_430" alt="Жіночі вовняні штани ezy">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1350 грн</div>
+                <div class="product-title">Жіночі вовняні штани ezy</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/105872658-zhinochi-plisirovani-shtani-z-visokoyu-taliyeyu" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653578177_310_430" alt="Жіночі плісировані штани з високою талією">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1349 грн</div>
+                <div class="product-title">Жіночі плісировані штани з високою талією</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/105872519-shtani-leginsi" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653571417_310_430" alt="Штани легінси">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1049 грн</div>
+                <div class="product-title">Штани легінси</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/105872169-zhinochi-bavovnyani-pryami-shtani" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653559520_310_430" alt="Жіночі бавовняні прямі штани">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1049 грн</div>
+                <div class="product-title">Жіночі бавовняні прямі штани</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/105868869-zhinochi-stryaych-povsyakdenni-shtani-dry" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653510671_310_430" alt="Жіночі стрейч повсякденні штани dry">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1049 грн</div>
+                <div class="product-title">Жіночі стрейч повсякденні штани dry</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/105868281-zhinochi-povsyakdenni-shtani" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653498166_310_430" alt="Жіночі повсякденні штани">
+            </div>
+            <div class="product-info">
+                <div class="product-price">950 грн</div>
+                <div class="product-title">Жіночі повсякденні штани</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/105433975-zhinochi-leginsi-shtani-uniqlo-smart" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/642774963_310_430" alt="Жіночі легінси-штани uniqlo smart">
+            </div>
+            <div class="product-info">
+                <div class="product-price">700 грн</div>
+                <div class="product-title">Жіночі легінси-штани uniqlo smart</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101249263-ukorochennye-raskleshennye-dzhinsy" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569165060_310_430" alt="Укорочені розкльошені джинси 24 розмір">
+            </div>
+            <div class="product-info">
+                <div class="product-price">550 грн</div>
+                <div class="product-title">Укорочені розкльошені джинси 24 розмір</div>
+                <div class='product-meta'>Uniqlo • One size</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101248388-zhenskie-bryuki" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569160109_310_430" alt="Жіночі брюки">
+            </div>
+            <div class="product-info">
+                <div class="product-price">800 грн</div>
+                <div class="product-title">Жіночі брюки</div>
+                <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101248276-zhenskie-bryuki" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569159321_310_430" alt="Жіночі брюки">
+            </div>
+            <div class="product-info">
+                <div class="product-price">790 грн</div>
+                <div class="product-title">Жіночі брюки</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101248591-modni-zhinochi-bryuki-bandzhi-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569161114_310_430" alt="Модні жіночі брюки-банджі uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">900 грн</div>
+                <div class="product-title">Модні жіночі брюки-банджі uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101248894-zhinochi-bryuki" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569162761_310_430" alt="Жіночі брюки">
+            </div>
+            <div class="product-info">
+                <div class="product-price">800 грн</div>
+                <div class="product-title">Жіночі брюки</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101244693-ukorochennye-zhenskie-atlasnye-bryuki" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569139646_310_430" alt="Укорочені жіночі атласні штани">
+            </div>
+            <div class="product-info">
+                <div class="product-price">800 грн</div>
+                <div class="product-title">Укорочені жіночі атласні штани</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101244306-ukorocheni-zhinochi-atlasni-shtani" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569137070_310_430" alt="Укорочені жіночі атласні штани">
+            </div>
+            <div class="product-info">
+                <div class="product-price">800 грн</div>
+                <div class="product-title">Укорочені жіночі атласні штани</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101244492-zhenskie-ukorochennye-bryuki-smart-style" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569138147_310_430" alt="Жіночі укорочені брюки smart style">
+            </div>
+            <div class="product-info">
+                <div class="product-price">800 грн</div>
+                <div class="product-title">Жіночі укорочені брюки smart style</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101238319-uniklo-zhenskie-atlasnye-bryuki" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569103715_310_430" alt="Уникло жіночі атласні штани">
+            </div>
+            <div class="product-info">
+                <div class="product-price">700 грн</div>
+                <div class="product-title">Уникло жіночі атласні штани</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101243291-ukorocheni-zhinochi-atlasni-shtani" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569131437_310_430" alt="Укорочені жіночі атласні штани">
+            </div>
+            <div class="product-info">
+                <div class="product-price">700 грн</div>
+                <div class="product-title">Укорочені жіночі атласні штани</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101239535-ukorochennye-zhenskie-atlasnye-bryuki" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569110316_310_430" alt="Укорочені жіночі атласні штани">
+            </div>
+            <div class="product-info">
+                <div class="product-price">900 грн</div>
+                <div class="product-title">Укорочені жіночі атласні штани</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101239208-ukorochennye-zhenskie-atlasnye-bryuki" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569108715_310_430" alt="Укорочені жіночі атласні штани">
+            </div>
+            <div class="product-info">
+                <div class="product-price">800 грн</div>
+                <div class="product-title">Укорочені жіночі атласні штани</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101237916-uniklo-zhenskie-atlasnye-bryuki-do-shitka" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569101897_310_430" alt="Уникло жіночі атласні штани до щитка">
+            </div>
+            <div class="product-info">
+                <div class="product-price">800 грн</div>
+                <div class="product-title">Уникло жіночі атласні штани до щитка</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101235950-zhenskie-ukorochennye-atlasnye-bryuki-ezy" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569091177_310_430" alt="Жіночі укорочені атласні штани ezy">
+            </div>
+            <div class="product-info">
+                <div class="product-price">790 грн</div>
+                <div class="product-title">Жіночі укорочені атласні штани ezy</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101237740-modnye-zhenskie-bryuki-bandzhi-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569100496_310_430" alt="Модні жіночі брюки-банджі uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">800 грн</div>
+                <div class="product-title">Модні жіночі брюки-банджі uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/101236366-zhenskie-ukorochennye-shirokie-bryuki-v-stile-drap" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569093281_310_430" alt="Жіночі укорочені широкі брюки в стилі драп">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
+                <div class="product-title">Жіночі укорочені широкі брюки в стилі драп</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/shorty/101012312-dzhinsovi-shorti-zara-34-rozmir" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/567087534_310_430" alt="Джинсові шорти zara 34 розмір">
+            </div>
+            <div class="product-info">
+                <div class="product-price">650 грн</div>
+                <div class="product-title">Джинсові шорти zara 34 розмір</div>
+                <div class='product-meta'>ZARA • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/93847664-uniqlo-zhenskie-shirokie-kyuloty" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/490017459_310_430" alt="Uniqlo жіночі широкі кюлоти">
+            </div>
+            <div class="product-info">
+                <div class="product-price">650 грн</div>
+                <div class="product-title">Uniqlo жіночі широкі кюлоти</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/93672445-bryuki-dzhoggery-s-drapirovkoy-i-printom-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/487950162_310_430" alt="Штани-джоггеры з драпіруванням і принтом uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">900 грн</div>
+                <div class="product-title">Штани-джоггеры з драпіруванням і принтом uniqlo</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/93518352-seriya-kollaboraciy-s-ines-fasanzhzhenskie-hlopkovye-bryuki-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/486289905_310_430" alt="Серія колаборацій з інес фасанж,жіночі бавовняні штани uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
+                <div class="product-title">Серія колаборацій з інес фасанж,жіночі бавовняні штани uniqlo</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/bryuki/92655654-zhenskie-sherstyanye-bryuki-ezy-v-polosku-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/474352686_310_430" alt="Жіночі вовняні штани ezy (в смужку) uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">980 грн</div>
+                <div class="product-title">Жіночі вовняні штани ezy (в смужку) uniqlo</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/73471721-dzhinsy-levis-ct-w26l36-cropped" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/327596032_310_430" alt="Джинси levis ct w26l36 cropped">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1900 грн</div>
+                <div class="product-title">Джинси levis ct w26l36 cropped</div>
+                <div class='product-meta'>Levi's • 26 / S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/73464660-710-super-skinny-womens-jeans-w25l28" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/327558466_310_430" alt="710 super skinny women's jeans w25l28">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1000 грн</div>
+                <div class="product-title">710 super skinny women's jeans w25l28</div>
+                <div class='product-meta'>Levi's • 25 / XS</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/73464381-dzhinsy-levis-311-razmer-27-34" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/327557058_310_430" alt="Джинси levis 311 розмір 27-34">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2100 грн</div>
+                <div class="product-title">Джинси levis 311 розмір 27-34</div>
+                <div class='product-meta'>Levi's • 27 / S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/73464064-dzhinsy-levis-711-skinny-188810219-cheap-thrill-25w-x-30l" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/327554499_310_430" alt="Джинси levis 711 skinny 188810219 cheap thrill 25w x 30l">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Джинси levis 711 skinny 188810219 cheap thrill 25w x 30l</div>
+                <div class='product-meta'>Levi's • 25 / XS</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/73442325-dzhinsy-levis-501ct-w26l32-novye" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/327442610_310_430" alt="Джинси levis 501ct w26l32 нові">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2500 грн</div>
+                <div class="product-title">Джинси levis 501ct w26l32 нові</div>
+                <div class='product-meta'>Levi's • 26 / S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/73441840-dzhinsy-vintazh-levis-501-ct-selvidzh" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/327440937_310_430" alt="Джинси вінтаж levis 501 ct селвидж">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1900 грн</div>
+                <div class="product-title">Джинси вінтаж levis 501 ct селвидж</div>
+                <div class='product-meta'>25 / XS</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/shtany/dzhinsy/73441559-zhenskie-dzhinsy-710-super-skinny" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/327439064_310_430" alt="Жіночі джинси 710 super skinny">
+            </div>
+            <div class="product-info">
+                <div class="product-price">850 грн</div>
+                <div class="product-title">Жіночі джинси 710 super skinny</div>
+                <div class='product-meta'>Levi's • 28 / M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    </div>
+        
+            <div class="show-more-wrap">
+                <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
+            </div>
+            
+        
+            <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
         </main>
     </div>
-
     <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark');
-            localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-        }
-
-        if (localStorage.getItem('uniqlo_theme') === 'dark') {
-            document.body.classList.add('dark');
-        }
-
-        function showMoreProducts(button) {
-            document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'block');
-            button.style.display = 'none';
-        }
+        function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); }
+        if (localStorage.getItem('uniqlo_theme') === 'dark') { document.body.classList.add('dark'); }
+        function showMoreProducts(button) { document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'flex'); button.style.display = 'none'; }
     </script>
 </body>
 </html>

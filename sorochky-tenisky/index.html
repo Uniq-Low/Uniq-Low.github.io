@@ -4,150 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniqLow — Сорочки та теніски</title>
-    <meta name="description" content="Каталог товарів магазину UniqLow. Українська мова, зручна навігація, товари Shafa та OLX.">
     <style>
         :root {
-            --bg: #f6f8fc;
-            --bg-soft: #eef2ff;
-            --panel: rgba(255,255,255,0.92);
-            --panel-solid: #ffffff;
-            --text: #101828;
-            --muted: #667085;
-            --accent: #e11d48;
-            --accent-soft: rgba(225, 29, 72, 0.12);
-            --border: rgba(16,24,40,0.08);
-            --shadow: 0 18px 45px rgba(16,24,40,0.08);
+            --bg: #f6f8fc; --bg-soft: #eef2ff; --panel: rgba(255,255,255,0.92); --panel-solid: #ffffff;
+            --text: #101828; --muted: #667085; --accent: #e11d48; --accent-soft: rgba(225, 29, 72, 0.12);
+            --border: rgba(16,24,40,0.08); --shadow: 0 18px 45px rgba(16,24,40,0.08);
             --hero: linear-gradient(135deg, #fff1f2 0%, #ffffff 38%, #eef4ff 100%);
-            --green: #16a34a;
-            --orange: #f59e0b;
+            --green: #16a34a; --orange: #f59e0b;
         }
-
         body.dark {
-            --bg: #0b1220;
-            --bg-soft: #111827;
-            --panel: rgba(17,24,39,0.88);
-            --panel-solid: #111827;
-            --text: #f8fafc;
-            --muted: #98a2b3;
-            --accent: #ff4d6d;
-            --accent-soft: rgba(255,77,109,0.12);
-            --border: rgba(255,255,255,0.08);
-            --shadow: 0 18px 45px rgba(0,0,0,0.35);
+            --bg: #0b1220; --bg-soft: #111827; --panel: rgba(17,24,39,0.88); --panel-solid: #111827;
+            --text: #f8fafc; --muted: #98a2b3; --accent: #ff4d6d; --accent-soft: rgba(255,77,109,0.12);
+            --border: rgba(255,255,255,0.08); --shadow: 0 18px 45px rgba(0,0,0,0.35);
             --hero: linear-gradient(135deg, #1f2937 0%, #111827 38%, #0b1220 100%);
-            --green: #22c55e;
-            --orange: #fb923c;
         }
-
         * { box-sizing: border-box; }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at left top, rgba(225,29,72,0.09), transparent 24%),
-                radial-gradient(circle at right top, rgba(59,130,246,0.08), transparent 22%),
-                var(--bg);
-        }
-
+        body { margin: 0; font-family: Arial, sans-serif; color: var(--text); background: var(--bg); }
         .layout { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
+        .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px; border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px); }
 
-        .sidebar {
-            position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px;
-            border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px);
-        }
-
-        .brand {
-            display: flex; align-items: center; gap: 14px; text-decoration: none;
-            margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04);
-        }
-
-        .brand-avatar {
-            width: 66px; height: 66px; border-radius: 50%; object-fit: cover;
-            border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0;
-        }
-
+        .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04); }
+        .brand-avatar { width: 66px; height: 66px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0; background: white; }
         .brand-name { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
         .brand-sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
 
-        .top-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-
-        .top-btn {
-            text-decoration: none; color: white; font-size: 14px; font-weight: 700;
-            text-align: center; padding: 11px 12px; border-radius: 14px;
-            transition: transform .18s ease, box-shadow .18s ease;
-        }
-
-        .top-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-
-        .btn-telegram { background: linear-gradient(135deg, #229ED9, #1d4ed8); }
-        .btn-olx { background: linear-gradient(135deg, #16a34a, #15803d); }
-
-        .theme-toggle {
-            width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text);
-            border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px;
-        }
-
-        .theme-toggle:hover { border-color: rgba(225,29,72,0.18); }
+        .theme-toggle { width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text); border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px; }
 
         .menu-block { margin-bottom: 18px; }
         .menu-title { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); margin-bottom: 8px; padding: 0 6px; }
         .menu-block ul { list-style: none; margin: 0; padding: 0; }
-        .menu-block li { margin-bottom: 4px; }
-        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; transition: .18s ease; }
+        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; margin-bottom: 4px; transition: .18s ease; }
         .menu-block a:hover { background: var(--accent-soft); color: var(--accent); transform: translateX(2px); }
         .active-link { background: var(--accent-soft); color: var(--accent) !important; font-weight: 700; }
 
         .content { padding: 28px; }
-
-        .hero { position: relative; overflow: hidden; border-radius: 30px; border: 1px solid var(--border); background: var(--hero); box-shadow: var(--shadow); padding: 28px; margin-bottom: 28px; }
-        .hero::after { content: ""; position: absolute; right: -80px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(225,29,72,0.18), transparent 68%); }
-        .hero-inner { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
-        .hero h1 { margin: 0 0 10px; font-size: 38px; line-height: 1.05; }
-        .hero p { margin: 0; max-width: 800px; color: var(--muted); font-size: 16px; line-height: 1.7; }
-        .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-        .hero-badge { padding: 10px 14px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.45); font-size: 13px; }
-
         .section-top { margin-bottom: 14px; }
         .section-top h2 { margin: 0 0 6px; font-size: 24px; }
         .section-top p { margin: 0; color: var(--muted); line-height: 1.6; }
 
-        .quick-section, .promo-section, .reviews-section { margin-bottom: 28px; }
+        .quick-section, .promo-section { margin-bottom: 28px; }
         .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
-        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(225,29,72,0.08), rgba(255,255,255,0.35)); box-shadow: var(--shadow); transition: transform .18s ease, border-color .18s ease; }
-        .quick-tile:hover { transform: translateY(-3px); border-color: rgba(225,29,72,0.22); }
+        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: var(--panel-solid); box-shadow: var(--shadow); transition: transform .18s ease; }
+        .quick-tile:hover { transform: translateY(-3px); border-color: var(--accent); }
 
-        /* PROMO BLOCK */
-        .promo-card { display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow); }
-        .promo-badge { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #0f766e); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 30px; margin: 0 auto; }
-        .promo-content h2 { margin: 0 0 10px; font-size: 28px; }
-        .promo-content p { margin: 0 0 16px; color: var(--muted); line-height: 1.7; }
-        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: linear-gradient(135deg, #229ED9, #1d4ed8); padding: 12px 18px; border-radius: 14px; font-weight: 700; transition: transform .2s ease; }
-        .telegram-btn:hover { transform: translateY(-2px); }
-
-        /* REVIEWS BLOCK */
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; padding: 18px; box-shadow: var(--shadow); }
-        .review-stars { color: var(--orange); font-size: 20px; margin-bottom: 8px; }
-        .review-name { font-weight: 800; margin-bottom: 8px; }
-        .review-text { color: var(--muted); line-height: 1.6; }
+        .promo-card { display: flex; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow);}
+        .promo-badge { width: 100px; height: 100px; border-radius: 50%; background: var(--green); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 24px; flex-shrink:0; }
+        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: #229ED9; padding: 12px 18px; border-radius: 14px; font-weight: 700; margin-top: 10px; }
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .product-card { display: block; text-decoration: none; color: inherit; border-radius: 22px; overflow: hidden; background: var(--panel-solid); border: 1px solid var(--border); box-shadow: var(--shadow); transition: .2s ease; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 25px 48px rgba(16,24,40,0.14); border-color: rgba(225,29,72,0.18); }
+        .product-card { display: flex; flex-direction: column; background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); transition: .2s ease; }
+        .product-card:hover { transform: translateY(-5px); border-color: rgba(225,29,72,0.18); box-shadow: 0 25px 48px rgba(16,24,40,0.14); }
+        .card-main-link { text-decoration: none; color: inherit; flex-grow: 1; display: flex; flex-direction: column; }
         .product-image-wrap { background: var(--bg-soft); overflow: hidden; }
         .product-image { width: 100%; height: 330px; object-fit: cover; display: block; transition: transform .35s ease; }
         .product-card:hover .product-image { transform: scale(1.04); }
-        .product-info { padding: 16px; }
+        .product-info { padding: 16px; flex-grow: 1; }
         .product-price { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
         .product-title { font-size: 15px; line-height: 1.5; min-height: 46px; margin-bottom: 8px; }
         .product-meta { font-size: 13px; color: var(--muted); }
 
-        /* ПРИХОВАНІ ТОВАРИ */
+        .card-tg-btn { display: block; margin: 0 16px 16px 16px; background: linear-gradient(135deg, #2AABEE, #229ED9); color: white; text-align: center; padding: 12px; border-radius: 14px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s; }
+        .card-tg-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(34, 158, 217, 0.3); }
+
         .hidden-card { display: none; }
         .show-more-wrap { margin-top: 30px; text-align: center; }
-        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; }
-        .show-more-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
+
+        .reviews-page-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 800px; }
+        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .review-name { font-weight: 800; font-size: 16px; display: flex; align-items: center; gap: 10px; }
+        .review-stars { color: var(--orange); font-size: 18px; }
+        .review-text { color: var(--text); line-height: 1.6; font-size: 15px; }
+        .src-badge { font-size: 11px; padding: 3px 8px; border-radius: 8px; font-weight: bold; color: white; text-transform: uppercase; }
+        .src-shafa { background: #f59e0b; }
+        .src-telegram { background: #2AABEE; }
 
         .empty-box { padding: 30px; border-radius: 22px; border: 1px dashed var(--border); background: var(--panel-solid); color: var(--muted); }
         .footer-note { margin-top: 26px; text-align: center; color: var(--muted); font-size: 13px; }
@@ -155,32 +86,27 @@
         @media (max-width: 1080px) {
             .layout { grid-template-columns: 1fr; }
             .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
-            .content { padding: 18px; }
-            .hero { padding: 22px; }
-            .hero h1 { font-size: 30px; }
-            .promo-card { grid-template-columns: 1fr; text-align: center; }
+            .promo-card { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <a class="brand" href="/">
-                <img class="brand-avatar" src="https://avatars.shafastatic.net/691711_new_avatar_type1648494975" alt="uniqlo-shop">
+            <a class="brand" href="../">
+                <img class="brand-avatar" src="../icon.png" alt="UniqLow">
                 <div>
                     <div class="brand-name">UniqLow</div>
                     <div class="brand-sub">Одяг та аксесуари</div>
                 </div>
             </a>
-
-            <div class="top-links">
-                <a class="top-btn btn-telegram" href="https://t.me/ТВІЙ_БОТ" target="_blank" rel="noopener">Telegram</a>
-                <a class="top-btn btn-olx" href="/olx/">OLX</a>
-            </div>
-
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">🌗</button>
-
-            <div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
+            <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+            <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
+<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
+<li><a class='' href='/olx/'>🌐 OLX</a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
 <li><a class='' href='/spidnytsi/'>Спідниці</a></li>
 <li><a class='' href='/plattya/'>Плаття</a></li>
 <li><a class='' href='/verhniy-odyag/'>Верхній одяг</a></li>
@@ -216,75 +142,41 @@
 <li><a class='' href='/golovni-ubory/'>Головні убори</a></li>
 <li><a class='' href='/remeni-poyasy/'>Ремені та пояси</a></li>
 </ul></div>
-<div class='menu-block'><div class='menu-title'>Майданчики</div><ul>
-<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>Shafa</a></li>
-<li><a class='' href='/olx/'>OLX</a></li>
-</ul></div>
         </aside>
 
         <main class="content">
-            <section class="hero">
-                <div class="hero-inner">
-                    <div>
-                        <h1>Сорочки та теніски</h1>
-                        <p>Добірка товарів розділу з переходом до оригінального оголошення.</p>
-                        <div class="hero-badges">
-                            <div class="hero-badge">Українська мова</div>
-                            <div class="hero-badge">Замовлення через Telegram</div>
-                            <div class="hero-badge">Швидкий перехід у товар</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             
             
             
-
-            <section>
-                <div class="section-top">
-                    <h2>Товари розділу</h2>
-                    <p>Спочатку показуються перші 12 позицій. Натисніть 'Показати ще', щоб побачити інші.</p>
-                </div>
-
-                <div class="products-grid">
-                    
-    <a class="product-card" href="https://shafa.ua/uk/men/rubashki/rubashki/190994297-bavovnyana-sorochka-uniqlo" target="_blank" rel="noopener">
-        <div class="product-image-wrap">
-            <img class="product-image" src="https://image-thumbs.shafastatic.net/2211979596_310_430" alt="Бавовняна сорочка uniqlo">
+        <div class="section-top">
+            <h2>Товари розділу</h2>
         </div>
-        <div class="product-info">
-            <div class="product-price">799 грн</div>
-            <div class="product-title">Бавовняна сорочка uniqlo</div>
-            <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-        </div>
-    </a>
-    
-                </div>
-
-                
-            </section>
-
-            <div class="footer-note">
-                UniqLow • Створено для зручного перегляду товарів
+        <div class="products-grid">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/men/rubashki/rubashki/190994297-bavovnyana-sorochka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211979596_310_430" alt="Бавовняна сорочка uniqlo">
             </div>
+            <div class="product-info">
+                <div class="product-price">799 грн</div>
+                <div class="product-title">Бавовняна сорочка uniqlo</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    </div>
+        
+        
+            <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
         </main>
     </div>
-
     <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark');
-            localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-        }
-
-        if (localStorage.getItem('uniqlo_theme') === 'dark') {
-            document.body.classList.add('dark');
-        }
-
-        function showMoreProducts(button) {
-            document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'block');
-            button.style.display = 'none';
-        }
+        function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); }
+        if (localStorage.getItem('uniqlo_theme') === 'dark') { document.body.classList.add('dark'); }
+        function showMoreProducts(button) { document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'flex'); button.style.display = 'none'; }
     </script>
 </body>
 </html>
