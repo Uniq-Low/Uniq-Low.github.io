@@ -1,107 +1,107 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniqLow — Взуття (Ч)</title>
-    <style>
-        :root {
-            --bg: #f6f8fc; --bg-soft: #eef2ff; --panel: rgba(255,255,255,0.92); --panel-solid: #ffffff;
-            --text: #101828; --muted: #667085; --accent: #e11d48; --accent-soft: rgba(225, 29, 72, 0.12);
-            --border: rgba(16,24,40,0.08); --shadow: 0 18px 45px rgba(16,24,40,0.08);
-            --hero: linear-gradient(135deg, #fff1f2 0%, #ffffff 38%, #eef4ff 100%);
-            --green: #16a34a; --orange: #f59e0b;
-        }
-        body.dark {
-            --bg: #0b1220; --bg-soft: #111827; --panel: rgba(17,24,39,0.88); --panel-solid: #111827;
-            --text: #f8fafc; --muted: #98a2b3; --accent: #ff4d6d; --accent-soft: rgba(255,77,109,0.12);
-            --border: rgba(255,255,255,0.08); --shadow: 0 18px 45px rgba(0,0,0,0.35);
-            --hero: linear-gradient(135deg, #1f2937 0%, #111827 38%, #0b1220 100%);
-        }
-        * { box-sizing: border-box; }
-        body { margin: 0; font-family: Arial, sans-serif; color: var(--text); background: var(--bg); }
-        .layout { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
-        .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px; border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px); }
-
-        .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04); }
-        .brand-avatar { width: 66px; height: 66px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0; background: white; }
-        .brand-name { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
-        .brand-sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
-
-        .theme-toggle { width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text); border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px; }
-
-        .menu-block { margin-bottom: 18px; }
-        .menu-title { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); margin-bottom: 8px; padding: 0 6px; }
-        .menu-block ul { list-style: none; margin: 0; padding: 0; }
-        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; margin-bottom: 4px; transition: .18s ease; }
-        .menu-block a:hover { background: var(--accent-soft); color: var(--accent); transform: translateX(2px); }
-        .active-link { background: var(--accent-soft); color: var(--accent) !important; font-weight: 700; }
-
-        .content { padding: 28px; }
-        .section-top { margin-bottom: 14px; }
-        .section-top h2 { margin: 0 0 6px; font-size: 24px; }
-        .section-top p { margin: 0; color: var(--muted); line-height: 1.6; }
-
-        .quick-section, .promo-section { margin-bottom: 28px; }
-        .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
-        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: var(--panel-solid); box-shadow: var(--shadow); transition: transform .18s ease; }
-        .quick-tile:hover { transform: translateY(-3px); border-color: var(--accent); }
-
-        .promo-card { display: flex; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow);}
-        .promo-badge { width: 100px; height: 100px; border-radius: 50%; background: var(--green); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 24px; flex-shrink:0; }
-        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: #229ED9; padding: 12px 18px; border-radius: 14px; font-weight: 700; margin-top: 10px; }
-
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .product-card { display: flex; flex-direction: column; background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); transition: .2s ease; }
-        .product-card:hover { transform: translateY(-5px); border-color: rgba(225,29,72,0.18); box-shadow: 0 25px 48px rgba(16,24,40,0.14); }
-        .card-main-link { text-decoration: none; color: inherit; flex-grow: 1; display: flex; flex-direction: column; }
-        .product-image-wrap { background: var(--bg-soft); overflow: hidden; }
-        .product-image { width: 100%; height: 330px; object-fit: cover; display: block; transition: transform .35s ease; }
-        .product-card:hover .product-image { transform: scale(1.04); }
-        .product-info { padding: 16px; flex-grow: 1; }
-        .product-price { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-        .product-title { font-size: 15px; line-height: 1.5; min-height: 46px; margin-bottom: 8px; }
-        .product-meta { font-size: 13px; color: var(--muted); }
-
-        .card-tg-btn { display: block; margin: 0 16px 16px 16px; background: linear-gradient(135deg, #2AABEE, #229ED9); color: white; text-align: center; padding: 12px; border-radius: 14px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s; }
-        .card-tg-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(34, 158, 217, 0.3); }
-
-        .hidden-card { display: none; }
-        .show-more-wrap { margin-top: 30px; text-align: center; }
-        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
-
-        .reviews-page-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 800px; }
-        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
-        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .review-name { font-weight: 800; font-size: 16px; display: flex; align-items: center; gap: 10px; }
-        .review-stars { color: var(--orange); font-size: 18px; }
-        .review-text { color: var(--text); line-height: 1.6; font-size: 15px; }
-        .src-badge { font-size: 11px; padding: 3px 8px; border-radius: 8px; font-weight: bold; color: white; text-transform: uppercase; }
-        .src-shafa { background: #f59e0b; }
-        .src-telegram { background: #2AABEE; }
-
-        .empty-box { padding: 30px; border-radius: 22px; border: 1px dashed var(--border); background: var(--panel-solid); color: var(--muted); }
-        .footer-note { margin-top: 26px; text-align: center; color: var(--muted); font-size: 13px; }
-
-        @media (max-width: 1080px) {
-            .layout { grid-template-columns: 1fr; }
-            .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
-            .promo-card { flex-direction: column; text-align: center; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UniqLow — Взуття (Ч)</title>
+<style>
+:root{--bg:#f6f8fc;--bg-soft:#eef2ff;--panel:rgba(255,255,255,0.92);--panel-solid:#fff;
+--text:#101828;--muted:#667085;--accent:#e11d48;--accent-soft:rgba(225,29,72,.12);
+--border:rgba(16,24,40,.08);--shadow:0 18px 45px rgba(16,24,40,.08);
+--green:#16a34a;--orange:#f59e0b;}
+body.dark{--bg:#0b1220;--bg-soft:#111827;--panel:rgba(17,24,39,.88);--panel-solid:#111827;
+--text:#f8fafc;--muted:#98a2b3;--accent:#ff4d6d;--accent-soft:rgba(255,77,109,.12);
+--border:rgba(255,255,255,.08);--shadow:0 18px 45px rgba(0,0,0,.35);}
+*{box-sizing:border-box;}
+body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:var(--bg);}
+.layout{display:grid;grid-template-columns:300px 1fr;min-height:100vh;}
+.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;padding:20px;
+border-right:1px solid var(--border);background:var(--panel);backdrop-filter:blur(18px);}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;margin-bottom:18px;
+padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
+.brand-avatar{width:66px;height:66px;border-radius:50%;object-fit:cover;
+border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
+.brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
+.brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
+color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
+.menu-block{margin-bottom:18px;}
+.menu-title{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;
+color:var(--muted);margin-bottom:8px;padding:0 6px;}
+.menu-block ul{list-style:none;margin:0;padding:0;}
+.menu-block a{display:block;text-decoration:none;color:var(--text);padding:10px 12px;
+border-radius:12px;font-size:14px;margin-bottom:4px;transition:.18s ease;}
+.menu-block a:hover{background:var(--accent-soft);color:var(--accent);transform:translateX(2px);}
+.active-link{background:var(--accent-soft);color:var(--accent)!important;font-weight:700;}
+.content{padding:28px;}
+.section-top{margin-bottom:14px;}
+.section-top h2{margin:0 0 6px;font-size:24px;}
+.section-top p{margin:0;color:var(--muted);line-height:1.6;}
+.quick-section,.promo-section{margin-bottom:28px;}
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;}
+.quick-tile{min-height:102px;display:flex;align-items:flex-end;padding:18px;text-decoration:none;
+color:var(--text);font-size:18px;font-weight:800;border-radius:22px;border:1px solid var(--border);
+background:var(--panel-solid);box-shadow:var(--shadow);transition:transform .18s ease;}
+.quick-tile:hover{transform:translateY(-3px);border-color:var(--accent);}
+.promo-card{display:flex;gap:18px;align-items:center;
+background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.04));
+border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:var(--shadow);}
+.promo-badge{width:100px;height:100px;border-radius:50%;background:var(--green);color:white;
+display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
+.telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
+padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
+.product-card{display:flex;flex-direction:column;background:var(--panel-solid);
+border:1px solid var(--border);border-radius:22px;overflow:hidden;
+box-shadow:var(--shadow);transition:.2s ease;}
+.product-card:hover{transform:translateY(-5px);border-color:rgba(225,29,72,.18);
+box-shadow:0 25px 48px rgba(16,24,40,.14);}
+.card-main-link{text-decoration:none;color:inherit;flex-grow:1;display:flex;flex-direction:column;}
+.product-image-wrap{background:var(--bg-soft);overflow:hidden;}
+.product-image{width:100%;height:330px;object-fit:cover;display:block;transition:transform .35s ease;}
+.product-card:hover .product-image{transform:scale(1.04);}
+.product-info{padding:16px;flex-grow:1;}
+.product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
+.product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
+.product-meta{font-size:13px;color:var(--muted);}
+.card-tg-btn{display:block;margin:0 16px 16px;
+background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
+padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
+.card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
+.hidden-card{display:none;}
+.show-more-wrap{margin-top:30px;text-align:center;}
+.show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
+color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
+.reviews-page-grid{display:grid;grid-template-columns:1fr;gap:15px;max-width:800px;}
+.review-card{background:var(--panel-solid);border:1px solid var(--border);
+border-radius:16px;padding:20px;box-shadow:var(--shadow);}
+.review-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.review-name{font-weight:800;font-size:16px;display:flex;align-items:center;gap:10px;}
+.review-stars{color:var(--orange);font-size:18px;}
+.review-text{color:var(--text);line-height:1.6;font-size:15px;}
+.src-badge{font-size:11px;padding:3px 8px;border-radius:8px;font-weight:bold;color:white;text-transform:uppercase;}
+.src-shafa{background:#f59e0b;}.src-telegram{background:#2AABEE;}
+.empty-box{padding:30px;border-radius:22px;border:1px dashed var(--border);
+background:var(--panel-solid);color:var(--muted);}
+.footer-note{margin-top:26px;text-align:center;color:var(--muted);font-size:13px;}
+@media(max-width:1080px){
+.layout{grid-template-columns:1fr;}
+.sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
+.promo-card{flex-direction:column;text-align:center;}}
+</style>
 </head>
 <body>
-    <div class="layout">
-        <aside class="sidebar">
-            <a class="brand" href="../">
-                <img class="brand-avatar" src="../icon.png" alt="UniqLow">
-                <div>
-                    <div class="brand-name">UniqLow</div>
-                    <div class="brand-sub">Одяг та аксесуари</div>
-                </div>
-            </a>
-            <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
-            <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<div class="layout">
+<aside class="sidebar">
+    <a class="brand" href="../">
+        <img class="brand-avatar" src="../icon.png" alt="UniqLow">
+        <div>
+            <div class="brand-name">UniqLow</div>
+            <div class="brand-sub">Одяг та аксесуари</div>
+        </div>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+    <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -142,813 +142,24 @@
 <li><a class='' href='/golovni-ubory/'>Головні убори</a></li>
 <li><a class='' href='/remeni-poyasy/'>Ремені та пояси</a></li>
 </ul></div>
-        </aside>
-
-        <main class="content">
-            
-            
-            
+</aside>
+<main class="content">
+    
+    
+    
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
-        <div class="products-grid">
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/200710331-krosivki-adidas-courtquick-padel" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2262982553_310_430" alt="Кросівки adidas courtquick padel">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2350 грн</div>
-                <div class="product-title">Кросівки adidas courtquick padel</div>
-                <div class='product-meta'>Adidas • 12,5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/200545120-krosivki-saucony-omni-22" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2261989403_310_430" alt="Кросівки saucony omni 22">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2900 грн</div>
-                <div class="product-title">Кросівки saucony omni 22</div>
-                <div class='product-meta'>Saucony • 41</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/200543536-krosivki-brooks-mens-hyperion-max-2" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2261978989_310_430" alt="Кросівки  brooks mens hyperion max 2">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3100 грн</div>
-                <div class="product-title">Кросівки  brooks mens hyperion max 2</div>
-                <div class='product-meta'>Brooks • 11,5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/200447238-krosivki-skechers-max-cushioning-slip-ins" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2261411021_310_430" alt="Кросівки skechers max cushioning slip-ins">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2000 грн</div>
-                <div class="product-title">Кросівки skechers max cushioning slip-ins</div>
-                <div class='product-meta'>Skechers • 7</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/botinki/200415283-chereviki-clarks-corston-waterproof-leather" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2262214490_310_430" alt="Черевики clarks corston  waterproof  leather">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2200 грн</div>
-                <div class="product-title">Черевики clarks corston  waterproof  leather</div>
-                <div class='product-meta'>Clarks • 8</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/botinki/200414115-chereviki-dr-martens-bonny-leather" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2261203360_310_430" alt="Черевики  dr. martens bonny leather">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3600 грн</div>
-                <div class="product-title">Черевики  dr. martens bonny leather</div>
-                <div class='product-meta'>Dr. Martens • 8</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/200406451-krosivki-new-balance-237-shoes" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2261155160_310_430" alt="Кросівки new balance 237 shoes">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2380 грн</div>
-                <div class="product-title">Кросівки new balance 237 shoes</div>
-                <div class='product-meta'>New Balance • 10</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/tufli/200305082-tufli-shkiryani-keen-austin" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2260637863_310_430" alt="Туфлі шкіряні keen  austin">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3000 грн</div>
-                <div class="product-title">Туфлі шкіряні keen  austin</div>
-                <div class='product-meta'>Keen • 44.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/200304218-krosivki-keen-ks-86" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2260632414_310_430" alt="Кросівки   keen  ks 86">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2650 грн</div>
-                <div class="product-title">Кросівки   keen  ks 86</div>
-                <div class='product-meta'>Keen • 43.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/199559469-krosivki-adidas-dame-certified" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2256759527_310_430" alt="Кросівки adidas dame certified">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2000 грн</div>
-                <div class="product-title">Кросівки adidas dame certified</div>
-                <div class='product-meta'>Adidas • 42.5і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/197002360-krosivki-adidas-terrex-trailmaker-20" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2243543226_310_430" alt="Кросівки adidas terrex trailmaker 2.0">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2750 грн</div>
-                <div class="product-title">Кросівки adidas terrex trailmaker 2.0</div>
-                <div class='product-meta'>Adidas • 41.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/botinki/194513449-zimovi-chereviki-columbia-bugaboot__-celsius" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2233561993_310_430" alt="Зимові черевики columbia bugaboot™️ celsius">
-            </div>
-            <div class="product-info">
-                <div class="product-price">4300 грн</div>
-                <div class="product-title">Зимові черевики columbia bugaboot™️ celsius</div>
-                <div class='product-meta'>Columbia • 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/botinki/194512626-chereviki-the-north-face-truckee-mid" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2233557869_310_430" alt="Черевики the north face truckee mid">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2750 грн</div>
-                <div class="product-title">Черевики the north face truckee mid</div>
-                <div class='product-meta'>The North Face • 45</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/botinki/193555437-chereviki-columbia-fairbanks_-mid-boot" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227680095_310_430" alt="Черевики columbia  fairbanks™ mid boot">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2500 грн</div>
-                <div class="product-title">Черевики columbia  fairbanks™ mid boot</div>
-                <div class='product-meta'>Columbia • 41</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/botinki/193552432-chereviki-columbia-buxton-peak-mid" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227660434_310_430" alt="Черевики columbia buxton peak mid">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2200 грн</div>
-                <div class="product-title">Черевики columbia buxton peak mid</div>
-                <div class='product-meta'>Columbia • 40</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/botinki/193549886-chereviki-ecco-track-25" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227643215_310_430" alt="Черевики ecco track 25">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3500 грн</div>
-                <div class="product-title">Черевики ecco track 25</div>
-                <div class='product-meta'>Ecco • 39</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/193545816-krosivki-reebok-fluxlite" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227617054_310_430" alt="Кросівки reebok fluxlite">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1700 грн</div>
-                <div class="product-title">Кросівки reebok fluxlite</div>
-                <div class='product-meta'>Reebok • 44.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/191516359-krosivki-dlya-zalu-reebok-flexagon-energy-tr4" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2215245686_310_430" alt="Кросівки для залу reebok flexagon energy tr4">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1700 грн</div>
-                <div class="product-title">Кросівки для залу reebok flexagon energy tr4</div>
-                <div class='product-meta'>Reebok • 45.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/191293561-krosivki-puma-graviton-pro" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2213842577_310_430" alt="Кросівки puma graviton pro,">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1830 грн</div>
-                <div class="product-title">Кросівки puma graviton pro,</div>
-                <div class='product-meta'>Puma • 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/191285929-krosivki-columbia-bonehead_-pfg" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2213793806_310_430" alt="Кросівки  columbia bonehead™ pfg">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1750 грн</div>
-                <div class="product-title">Кросівки  columbia bonehead™ pfg</div>
-                <div class='product-meta'>Columbia • 41</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/botinki/191245862-zimovi-chereviki-columbia-fairbanks-rover" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2213545792_310_430" alt="Зимові черевики columbia fairbanks rover">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3770 грн</div>
-                <div class="product-title">Зимові черевики columbia fairbanks rover</div>
-                <div class='product-meta'>Columbia • 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/191047369-krosivki-adidas-terrex-agravic" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2212317118_310_430" alt="Кросівки adidas terrex agravic">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2400 грн</div>
-                <div class="product-title">Кросівки adidas terrex agravic</div>
-                <div class='product-meta'>Adidas • 47</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/191036833-krosivki-reebok-zig-dynamica-5" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2212246007_310_430" alt="Кросівки  reebok zig dynamica 5">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1900 грн</div>
-                <div class="product-title">Кросівки  reebok zig dynamica 5</div>
-                <div class='product-meta'>Reebok • 45.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190926424-krosivki-salomon-xa-pro-3d-v8-gtx-gore-tex" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211548276_310_430" alt="Кросівки salomon xa pro 3d v8 gtx gore-tex">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3100 грн</div>
-                <div class="product-title">Кросівки salomon xa pro 3d v8 gtx gore-tex</div>
-                <div class='product-meta'>Salomon • 45</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/mokasiny/190994420-mokasini-ecco-soft-60" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211976019_310_430" alt="Мокасини ecco soft 60">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3100 грн</div>
-                <div class="product-title">Мокасини ecco soft 60</div>
-                <div class='product-meta'>Ecco • 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/mokasiny/190992806-mokasini-ecco-soft-7" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211966006_310_430" alt="Мокасини ecco soft 7">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2300 грн</div>
-                <div class="product-title">Мокасини ecco soft 7</div>
-                <div class='product-meta'>Ecco • 41</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/mokasiny/190984456-mokasini-ecco-soft-7" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211914589_310_430" alt="Мокасини  ecco soft 7">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2300 грн</div>
-                <div class="product-title">Мокасини  ecco soft 7</div>
-                <div class='product-meta'>Ecco • 41</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190983707-krosivki-under-armour-charged-gemini-2020" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211911992_310_430" alt="Кросівки under armour  charged gemini 2020">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2200 грн</div>
-                <div class="product-title">Кросівки under armour  charged gemini 2020</div>
-                <div class='product-meta'>Under Armour • 42.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190874149-krosivki-reebok-mens-royal-bb4500-h2-xe" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211264842_310_430" alt="Кросівки reebok men's royal bb4500 h2 xe">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2000 грн</div>
-                <div class="product-title">Кросівки reebok men's royal bb4500 h2 xe</div>
-                <div class='product-meta'>Reebok • 43.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190746215-krosivki-adidas-duramo-10" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2210473943_310_430" alt="Кросівки adidas duramo 10">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1700 грн</div>
-                <div class="product-title">Кросівки adidas duramo 10</div>
-                <div class='product-meta'>Adidas • 44.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190737886-krosivki-new-balance-mens-847-v4" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2210421149_310_430" alt="Кросівки new balance men's 847 v4">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2300 грн</div>
-                <div class="product-title">Кросівки new balance men's 847 v4</div>
-                <div class='product-meta'>New Balance • 45</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190736815-krosivki-merrell-embark-lace" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2210412799_310_430" alt="Кросівки merrell embark lace">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2300 грн</div>
-                <div class="product-title">Кросівки merrell embark lace</div>
-                <div class='product-meta'>Merrell • 41</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190691046-krosivki-puma-caven-mid" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2210125977_310_430" alt="Кросівки  puma caven mid">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1650 грн</div>
-                <div class="product-title">Кросівки  puma caven mid</div>
-                <div class='product-meta'>Puma • 45</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190689560-krosivki-puma-tazon-6-fracture-fm" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2210120902_310_430" alt="Кросівки puma tazon 6 fracture fm">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1500 грн</div>
-                <div class="product-title">Кросівки puma tazon 6 fracture fm</div>
-                <div class='product-meta'>Puma • 40.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/botinki/190626780-chereviki-timberland-pro-mens-titan-ev-6-inch" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2209725218_310_430" alt="Черевики  timberland pro men's titan ev 6 inch">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3100 грн</div>
-                <div class="product-title">Черевики  timberland pro men's titan ev 6 inch</div>
-                <div class='product-meta'>Timberland • 43</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190559989-krosivki-reebok-club-c-bulc" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2209308295_310_430" alt="Кросівки reebok club c bulc">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1950 грн</div>
-                <div class="product-title">Кросівки reebok club c bulc</div>
-                <div class='product-meta'>Reebok • 44.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/kedy/190553224-krosivki-adidas-grand-court-20" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2209269143_310_430" alt="Кросівки adidas grand court 2.0">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1750 грн</div>
-                <div class="product-title">Кросівки adidas grand court 2.0</div>
-                <div class='product-meta'>Adidas • 45.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190534243-krosivki-adidas-racer-tr23" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2209143585_310_430" alt="Кросівки adidas racer tr23">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1799 грн</div>
-                <div class="product-title">Кросівки adidas racer tr23</div>
-                <div class='product-meta'>Adidas • 40.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190532099-krosivki-adidas-vl-court-30" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2209131008_310_430" alt="Кросівки adidas vl court 3.0">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1890 грн</div>
-                <div class="product-title">Кросівки adidas vl court 3.0</div>
-                <div class='product-meta'>Adidas • 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190531347-krosivki-reebok-nano-gym" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2209123956_310_430" alt="Кросівки reebok nano gym">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2300 грн</div>
-                <div class="product-title">Кросівки reebok nano gym</div>
-                <div class='product-meta'>Reebok • 45.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190526056-krosivki-dlya-bigu-new-balance-fresh-foam-evoz-v3" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2209090845_310_430" alt="Кросівки для бігу new balance fresh foam evoz v3">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2200 грн</div>
-                <div class="product-title">Кросівки для бігу new balance fresh foam evoz v3</div>
-                <div class='product-meta'>New Balance • 42.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190441327-krosivki-columbia-montrail_-trinity_-fkt" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2208559070_310_430" alt="Кросівки  columbia montrail™ trinity™ fkt">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2490 грн</div>
-                <div class="product-title">Кросівки  columbia montrail™ trinity™ fkt</div>
-                <div class='product-meta'>Columbia • 43</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190431591-krosivki-puma-unisex-red-scuderia-ferrari-drift" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2208495215_310_430" alt="Кросівки puma unisex red scuderia ferrari drift">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1499 грн</div>
-                <div class="product-title">Кросівки puma unisex red scuderia ferrari drift</div>
-                <div class='product-meta'>Puma • 41</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190429379-krosivki-adidas-runfalcon-30" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2208480448_310_430" alt="Кросівки adidas runfalcon 3.0">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1500 грн</div>
-                <div class="product-title">Кросівки adidas runfalcon 3.0</div>
-                <div class='product-meta'>Adidas • 41</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/190426127-krosivki-skechers-gorun-elevate" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2208467772_310_430" alt="Кросівки skechers gorun elevate">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1899 грн</div>
-                <div class="product-title">Кросівки skechers gorun elevate</div>
-                <div class='product-meta'>Skechers • 40.5і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/103491447-kozhani-kedi-skechers" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/597768320_310_430" alt="Кожані кеди! skechers!">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1600 грн</div>
-                <div class="product-title">Кожані кеди! skechers!</div>
-                <div class='product-meta'>Skechers • 39.5</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/kedy/103491323-kozhani-visoki-kedi-skechers" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/597766121_310_430" alt="Кожані високі кеди! skechers!">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1500 грн</div>
-                <div class="product-title">Кожані високі кеди! skechers!</div>
-                <div class='product-meta'>Skechers • 40</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/kedy/103491022-zara-40-rozmir-kozhani" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/597760344_310_430" alt="Zara 40 розмір, кожані!">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1500 грн</div>
-                <div class="product-title">Zara 40 розмір, кожані!</div>
-                <div class='product-meta'>ZARA • 40</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/obuv/krossovki/73483166-puma-suede-classic-debossed-40-evro" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/327653558_310_430" alt="Puma suede classic debossed 40 євро">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1250 грн</div>
-                <div class="product-title">Puma suede classic debossed 40 євро</div>
-                <div class='product-meta'>Puma • 40</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    </div>
+        <div class="products-grid"><div class='empty-box'>У цьому розділі поки немає товарів.</div></div>
         
-            <div class="show-more-wrap">
-                <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
-            </div>
-            
-        
-            <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
-        </main>
-    </div>
-    <script>
-        function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); }
-        if (localStorage.getItem('uniqlo_theme') === 'dark') { document.body.classList.add('dark'); }
-        function showMoreProducts(button) { document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'flex'); button.style.display = 'none'; }
-    </script>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+</main>
+</div>
+<script>
+function toggleTheme(){document.body.classList.toggle('dark');
+localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
+if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+</script>
 </body>
 </html>

@@ -1,107 +1,107 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniqLow — Майки й футболки</title>
-    <style>
-        :root {
-            --bg: #f6f8fc; --bg-soft: #eef2ff; --panel: rgba(255,255,255,0.92); --panel-solid: #ffffff;
-            --text: #101828; --muted: #667085; --accent: #e11d48; --accent-soft: rgba(225, 29, 72, 0.12);
-            --border: rgba(16,24,40,0.08); --shadow: 0 18px 45px rgba(16,24,40,0.08);
-            --hero: linear-gradient(135deg, #fff1f2 0%, #ffffff 38%, #eef4ff 100%);
-            --green: #16a34a; --orange: #f59e0b;
-        }
-        body.dark {
-            --bg: #0b1220; --bg-soft: #111827; --panel: rgba(17,24,39,0.88); --panel-solid: #111827;
-            --text: #f8fafc; --muted: #98a2b3; --accent: #ff4d6d; --accent-soft: rgba(255,77,109,0.12);
-            --border: rgba(255,255,255,0.08); --shadow: 0 18px 45px rgba(0,0,0,0.35);
-            --hero: linear-gradient(135deg, #1f2937 0%, #111827 38%, #0b1220 100%);
-        }
-        * { box-sizing: border-box; }
-        body { margin: 0; font-family: Arial, sans-serif; color: var(--text); background: var(--bg); }
-        .layout { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
-        .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px; border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px); }
-
-        .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04); }
-        .brand-avatar { width: 66px; height: 66px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0; background: white; }
-        .brand-name { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
-        .brand-sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
-
-        .theme-toggle { width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text); border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px; }
-
-        .menu-block { margin-bottom: 18px; }
-        .menu-title { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); margin-bottom: 8px; padding: 0 6px; }
-        .menu-block ul { list-style: none; margin: 0; padding: 0; }
-        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; margin-bottom: 4px; transition: .18s ease; }
-        .menu-block a:hover { background: var(--accent-soft); color: var(--accent); transform: translateX(2px); }
-        .active-link { background: var(--accent-soft); color: var(--accent) !important; font-weight: 700; }
-
-        .content { padding: 28px; }
-        .section-top { margin-bottom: 14px; }
-        .section-top h2 { margin: 0 0 6px; font-size: 24px; }
-        .section-top p { margin: 0; color: var(--muted); line-height: 1.6; }
-
-        .quick-section, .promo-section { margin-bottom: 28px; }
-        .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
-        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: var(--panel-solid); box-shadow: var(--shadow); transition: transform .18s ease; }
-        .quick-tile:hover { transform: translateY(-3px); border-color: var(--accent); }
-
-        .promo-card { display: flex; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow);}
-        .promo-badge { width: 100px; height: 100px; border-radius: 50%; background: var(--green); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 24px; flex-shrink:0; }
-        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: #229ED9; padding: 12px 18px; border-radius: 14px; font-weight: 700; margin-top: 10px; }
-
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .product-card { display: flex; flex-direction: column; background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); transition: .2s ease; }
-        .product-card:hover { transform: translateY(-5px); border-color: rgba(225,29,72,0.18); box-shadow: 0 25px 48px rgba(16,24,40,0.14); }
-        .card-main-link { text-decoration: none; color: inherit; flex-grow: 1; display: flex; flex-direction: column; }
-        .product-image-wrap { background: var(--bg-soft); overflow: hidden; }
-        .product-image { width: 100%; height: 330px; object-fit: cover; display: block; transition: transform .35s ease; }
-        .product-card:hover .product-image { transform: scale(1.04); }
-        .product-info { padding: 16px; flex-grow: 1; }
-        .product-price { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-        .product-title { font-size: 15px; line-height: 1.5; min-height: 46px; margin-bottom: 8px; }
-        .product-meta { font-size: 13px; color: var(--muted); }
-
-        .card-tg-btn { display: block; margin: 0 16px 16px 16px; background: linear-gradient(135deg, #2AABEE, #229ED9); color: white; text-align: center; padding: 12px; border-radius: 14px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s; }
-        .card-tg-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(34, 158, 217, 0.3); }
-
-        .hidden-card { display: none; }
-        .show-more-wrap { margin-top: 30px; text-align: center; }
-        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
-
-        .reviews-page-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 800px; }
-        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
-        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .review-name { font-weight: 800; font-size: 16px; display: flex; align-items: center; gap: 10px; }
-        .review-stars { color: var(--orange); font-size: 18px; }
-        .review-text { color: var(--text); line-height: 1.6; font-size: 15px; }
-        .src-badge { font-size: 11px; padding: 3px 8px; border-radius: 8px; font-weight: bold; color: white; text-transform: uppercase; }
-        .src-shafa { background: #f59e0b; }
-        .src-telegram { background: #2AABEE; }
-
-        .empty-box { padding: 30px; border-radius: 22px; border: 1px dashed var(--border); background: var(--panel-solid); color: var(--muted); }
-        .footer-note { margin-top: 26px; text-align: center; color: var(--muted); font-size: 13px; }
-
-        @media (max-width: 1080px) {
-            .layout { grid-template-columns: 1fr; }
-            .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
-            .promo-card { flex-direction: column; text-align: center; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UniqLow — Майки й футболки</title>
+<style>
+:root{--bg:#f6f8fc;--bg-soft:#eef2ff;--panel:rgba(255,255,255,0.92);--panel-solid:#fff;
+--text:#101828;--muted:#667085;--accent:#e11d48;--accent-soft:rgba(225,29,72,.12);
+--border:rgba(16,24,40,.08);--shadow:0 18px 45px rgba(16,24,40,.08);
+--green:#16a34a;--orange:#f59e0b;}
+body.dark{--bg:#0b1220;--bg-soft:#111827;--panel:rgba(17,24,39,.88);--panel-solid:#111827;
+--text:#f8fafc;--muted:#98a2b3;--accent:#ff4d6d;--accent-soft:rgba(255,77,109,.12);
+--border:rgba(255,255,255,.08);--shadow:0 18px 45px rgba(0,0,0,.35);}
+*{box-sizing:border-box;}
+body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:var(--bg);}
+.layout{display:grid;grid-template-columns:300px 1fr;min-height:100vh;}
+.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;padding:20px;
+border-right:1px solid var(--border);background:var(--panel);backdrop-filter:blur(18px);}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;margin-bottom:18px;
+padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
+.brand-avatar{width:66px;height:66px;border-radius:50%;object-fit:cover;
+border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
+.brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
+.brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
+color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
+.menu-block{margin-bottom:18px;}
+.menu-title{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;
+color:var(--muted);margin-bottom:8px;padding:0 6px;}
+.menu-block ul{list-style:none;margin:0;padding:0;}
+.menu-block a{display:block;text-decoration:none;color:var(--text);padding:10px 12px;
+border-radius:12px;font-size:14px;margin-bottom:4px;transition:.18s ease;}
+.menu-block a:hover{background:var(--accent-soft);color:var(--accent);transform:translateX(2px);}
+.active-link{background:var(--accent-soft);color:var(--accent)!important;font-weight:700;}
+.content{padding:28px;}
+.section-top{margin-bottom:14px;}
+.section-top h2{margin:0 0 6px;font-size:24px;}
+.section-top p{margin:0;color:var(--muted);line-height:1.6;}
+.quick-section,.promo-section{margin-bottom:28px;}
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;}
+.quick-tile{min-height:102px;display:flex;align-items:flex-end;padding:18px;text-decoration:none;
+color:var(--text);font-size:18px;font-weight:800;border-radius:22px;border:1px solid var(--border);
+background:var(--panel-solid);box-shadow:var(--shadow);transition:transform .18s ease;}
+.quick-tile:hover{transform:translateY(-3px);border-color:var(--accent);}
+.promo-card{display:flex;gap:18px;align-items:center;
+background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.04));
+border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:var(--shadow);}
+.promo-badge{width:100px;height:100px;border-radius:50%;background:var(--green);color:white;
+display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
+.telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
+padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
+.product-card{display:flex;flex-direction:column;background:var(--panel-solid);
+border:1px solid var(--border);border-radius:22px;overflow:hidden;
+box-shadow:var(--shadow);transition:.2s ease;}
+.product-card:hover{transform:translateY(-5px);border-color:rgba(225,29,72,.18);
+box-shadow:0 25px 48px rgba(16,24,40,.14);}
+.card-main-link{text-decoration:none;color:inherit;flex-grow:1;display:flex;flex-direction:column;}
+.product-image-wrap{background:var(--bg-soft);overflow:hidden;}
+.product-image{width:100%;height:330px;object-fit:cover;display:block;transition:transform .35s ease;}
+.product-card:hover .product-image{transform:scale(1.04);}
+.product-info{padding:16px;flex-grow:1;}
+.product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
+.product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
+.product-meta{font-size:13px;color:var(--muted);}
+.card-tg-btn{display:block;margin:0 16px 16px;
+background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
+padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
+.card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
+.hidden-card{display:none;}
+.show-more-wrap{margin-top:30px;text-align:center;}
+.show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
+color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
+.reviews-page-grid{display:grid;grid-template-columns:1fr;gap:15px;max-width:800px;}
+.review-card{background:var(--panel-solid);border:1px solid var(--border);
+border-radius:16px;padding:20px;box-shadow:var(--shadow);}
+.review-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.review-name{font-weight:800;font-size:16px;display:flex;align-items:center;gap:10px;}
+.review-stars{color:var(--orange);font-size:18px;}
+.review-text{color:var(--text);line-height:1.6;font-size:15px;}
+.src-badge{font-size:11px;padding:3px 8px;border-radius:8px;font-weight:bold;color:white;text-transform:uppercase;}
+.src-shafa{background:#f59e0b;}.src-telegram{background:#2AABEE;}
+.empty-box{padding:30px;border-radius:22px;border:1px dashed var(--border);
+background:var(--panel-solid);color:var(--muted);}
+.footer-note{margin-top:26px;text-align:center;color:var(--muted);font-size:13px;}
+@media(max-width:1080px){
+.layout{grid-template-columns:1fr;}
+.sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
+.promo-card{flex-direction:column;text-align:center;}}
+</style>
 </head>
 <body>
-    <div class="layout">
-        <aside class="sidebar">
-            <a class="brand" href="../">
-                <img class="brand-avatar" src="../icon.png" alt="UniqLow">
-                <div>
-                    <div class="brand-name">UniqLow</div>
-                    <div class="brand-sub">Одяг та аксесуари</div>
-                </div>
-            </a>
-            <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
-            <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<div class="layout">
+<aside class="sidebar">
+    <a class="brand" href="../">
+        <img class="brand-avatar" src="../icon.png" alt="UniqLow">
+        <div>
+            <div class="brand-name">UniqLow</div>
+            <div class="brand-sub">Одяг та аксесуари</div>
+        </div>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+    <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -142,1149 +142,461 @@
 <li><a class='' href='/golovni-ubory/'>Головні убори</a></li>
 <li><a class='' href='/remeni-poyasy/'>Ремені та пояси</a></li>
 </ul></div>
-        </aside>
-
-        <main class="content">
-            
-            
-            
+</aside>
+<main class="content">
+    
+    
+    
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
         <div class="products-grid">
     <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/200443525-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201190374-futbolka-uniqlo-iz-seriyi-u-supima_-cotton" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2261387220_310_430" alt="Найкраща базова футболка від uniqlo u">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265666690_310_430" alt="Футболка uniqlo із серії u supima® cotton">
             </div>
             <div class="product-info">
-                <div class="product-price">1050 грн</div>
+                <div class="product-price">700 грн</div>
+                <div class="product-title">Футболка uniqlo із серії u supima® cotton</div>
+                <div class='product-meta'>Uniqlo • Sі ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201190607-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265668454_310_430" alt="Найкраща базова футболка від uniqlo u">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
+                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
+                <div class='product-meta'>Uniqlo • Mі ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201190745-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265669257_310_430" alt="Найкраща базова футболка від uniqlo u">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
                 <div class="product-title">Найкраща базова футболка від uniqlo u</div>
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/200443442-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201191093-futbolka-uniqlo-iz-seriyi-u-supima_-cotton" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2261386323_310_430" alt="Найкраща базова футболка від uniqlo u">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265671508_310_430" alt="Футболка uniqlo із серії u supima® cotton">
             </div>
             <div class="product-info">
-                <div class="product-price">1050 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
+                <div class="product-price">700 грн</div>
+                <div class="product-title">Футболка uniqlo із серії u supima® cotton</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201191276-futbolka-airism-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265672610_310_430" alt="Футболка airism uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
+                <div class="product-title">Футболка airism uniqlo</div>
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/199782382-top-airism-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201191445-futbolka-airism-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2257850840_310_430" alt="Топ airism uniqlo з вбудованими чашечками">
-            </div>
-            <div class="product-info">
-                <div class="product-price">850 грн</div>
-                <div class="product-title">Топ airism uniqlo з вбудованими чашечками</div>
-                <div class='product-meta'>Uniqlo • S</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/199259129-top-airism-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2255119644_310_430" alt="Топ airism uniqlo з вбудованими чашечками">
-            </div>
-            <div class="product-info">
-                <div class="product-price">850 грн</div>
-                <div class="product-title">Топ airism uniqlo з вбудованими чашечками</div>
-                <div class='product-meta'>Uniqlo • Sі ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190996585-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211993249_310_430" alt="Найкраща базова футболка від uniqlo u">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265673751_310_430" alt="Футболка airism uniqlo">
             </div>
             <div class="product-info">
                 <div class="product-price">750 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
-                <div class='product-meta'>Uniqlo • Mі ще 1</div>
+                <div class="product-title">Футболка airism uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190996547-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201191601-futbolka-airism-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211992926_310_430" alt="Найкраща базова футболка від uniqlo u">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265674865_310_430" alt="Футболка airism uniqlo">
             </div>
             <div class="product-info">
                 <div class="product-price">750 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+                <div class="product-title">Футболка airism uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190996492-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201191758-teksturovana-futbolka-z-dzhersi-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211992689_310_430" alt="Найкраща базова футболка від uniqlo u">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265675648_310_430" alt="Текстурована футболка з джерсі uniqlo">
             </div>
             <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 2</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190323529-mayka-llyana-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207898918_310_430" alt="Майка лляна uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">899 грн</div>
-                <div class="product-title">Майка лляна uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190311311-teksturovana-futbolka-z-dzhersi-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207821134_310_430" alt="Текстурована футболка з джерсі uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Текстурована футболка з джерсі uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190311252-teksturovana-futbolka-z-dzhersi-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207820811_310_430" alt="Текстурована футболка з джерсі uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Текстурована футболка з джерсі uniqlo</div>
-                <div class='product-meta'>Uniqlo • XL</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190311150-teksturovana-futbolka-z-dzhersi-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207820010_310_430" alt="Текстурована футболка з джерсі uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
+                <div class="product-price">790 грн</div>
                 <div class="product-title">Текстурована футболка з джерсі uniqlo</div>
                 <div class='product-meta'>Uniqlo • Lі ще 1</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190310355-futbolka-uniqlo-iz-seriyi-u-supima_-cotton" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201191848-teksturovana-futbolka-z-dzhersi-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207815130_310_430" alt="Футболка uniqlo із серії u supima® cotton">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265676408_310_430" alt="Текстурована футболка з джерсі uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">790 грн</div>
+                <div class="product-title">Текстурована футболка з джерсі uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201191955-futbolka-zhinocha-uniqlo-cat-photographs-ut" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265677056_310_430" alt="Футболка жіноча uniqlo cat photographs ut">
             </div>
             <div class="product-info">
                 <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка uniqlo із серії u supima® cotton</div>
-                <div class='product-meta'>36 / S / 44і ще 2</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190310227-futbolka-uniqlo-disneys-mickey-faces-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207814510_310_430" alt="Футболка uniqlo disney's mickey faces ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка uniqlo disney's mickey faces ut</div>
-                <div class='product-meta'>36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190310144-futbolka-uniqlo-disneys-mickey-faces-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207813767_310_430" alt="Футболка uniqlo disney's mickey faces ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка uniqlo disney's mickey faces ut</div>
-                <div class='product-meta'>38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190173126-futbolka-zhinocha-uniqlo-cat-photographs-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2206977054_310_430" alt="Футболка жіноча uniqlo cat photographs ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">599 грн</div>
-                <div class="product-title">Футболка жіноча uniqlo cat photographs ut</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190171148-futbolka-zhinocha-uniqlo-cat-photographs-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2206961524_310_430" alt="Футболка жіноча uniqlo cat photographs ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">599 грн</div>
                 <div class="product-title">Футболка жіноча uniqlo cat photographs ut</div>
                 <div class='product-meta'>Uniqlo • Sі ще 1</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/190167045-futbolka-uniqlo-z-kolekciyi-cat-photographs-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201192030-futbolka-uniqlo-z-kolekciyi-cat-photographs-ut" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2206936914_310_430" alt="Футболка uniqlo з колекції cat photographs ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">599 грн</div>
-                <div class="product-title">Футболка uniqlo з колекції cat photographs ut</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/189986279-futbolka-uniqlo-magic-for-all-by-yu-nagaba" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2205827485_310_430" alt="Футболка uniqlo magic for all by yu nagaba">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265677566_310_430" alt="Футболка uniqlo з колекції cat photographs ut">
             </div>
             <div class="product-info">
                 <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка uniqlo magic for all by yu nagaba</div>
+                <div class="product-title">Футболка uniqlo з колекції cat photographs ut</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201192172-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265678369_310_430" alt="Найкраща базова футболка від uniqlo u">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
+                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201194017-futbolka-anya-hindmarchuniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265689838_310_430" alt="Футболка аnya hindmarch+uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
+                <div class="product-title">Футболка аnya hindmarch+uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201194097-futbolka-anya-hindmarchuniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265690368_310_430" alt="Футболка аnya hindmarch+uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
+                <div class="product-title">Футболка аnya hindmarch+uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/201206890-top-airism-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265767925_310_430" alt="Топ airism uniqlo з вбудованими чашечками">
+            </div>
+            <div class="product-info">
+                <div class="product-price">850 грн</div>
+                <div class="product-title">Топ airism uniqlo з вбудованими чашечками</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/mayki/201207176-mayka-airism-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265769556_310_430" alt="Майка airism uniqlo з вбудованими чашечками">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Майка airism uniqlo з вбудованими чашечками</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/201207442-futbolka-anya-hindmarchuniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265771147_310_430" alt="Футболка аnya hindmarch+uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
+                <div class="product-title">Футболка аnya hindmarch+uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/mayki/201211218-mayka-uniqlo-anya-hindmarch" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265795297_310_430" alt="Майка uniqlo + anya hindmarch">
+            </div>
+            <div class="product-info">
+                <div class="product-price">550 грн</div>
+                <div class="product-title">Майка uniqlo + anya hindmarch</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/mayki/201211344-mayka-uniqlo-anya-hindmarch" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265795968_310_430" alt="Майка uniqlo + anya hindmarch">
+            </div>
+            <div class="product-info">
+                <div class="product-price">550 грн</div>
+                <div class="product-title">Майка uniqlo + anya hindmarch</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/201211669-top-airism-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265797305_310_430" alt="Топ airism uniqlo з вбудованими чашечками">
+            </div>
+            <div class="product-info">
+                <div class="product-price">650 грн</div>
+                <div class="product-title">Топ airism uniqlo з вбудованими чашечками</div>
+                <div class='product-meta'>Uniqlo • Sі ще 4</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/201211913-top-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265799346_310_430" alt="Топ uniqlo з вбудованими чашечками">
+            </div>
+            <div class="product-info">
+                <div class="product-price">700 грн</div>
+                <div class="product-title">Топ uniqlo з вбудованими чашечками</div>
+                <div class='product-meta'>Uniqlo • Mі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/201212078-top-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265800396_310_430" alt="Топ uniqlo з вбудованими чашечками">
+            </div>
+            <div class="product-info">
+                <div class="product-price">700 грн</div>
+                <div class="product-title">Топ uniqlo з вбудованими чашечками</div>
+                <div class='product-meta'>Uniqlo • Lі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/201212189-top-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265801083_310_430" alt="Топ uniqlo з вбудованими чашечками">
+            </div>
+            <div class="product-info">
+                <div class="product-price">700 грн</div>
+                <div class="product-title">Топ uniqlo з вбудованими чашечками</div>
+                <div class='product-meta'>Uniqlo • XL</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/201213201-top-airism-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265807368_310_430" alt="Топ airism uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Топ airism uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/201213630-top-airism-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265810019_310_430" alt="Топ airism uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Топ airism uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/201214111-top-seamless-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265812989_310_430" alt="Топ seamless uniqlo з вбудованими чашечками">
+            </div>
+            <div class="product-info">
+                <div class="product-price">850 грн</div>
+                <div class="product-title">Топ seamless uniqlo з вбудованими чашечками</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/201214694-top-seamless-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265816653_310_430" alt="Топ seamless uniqlo з вбудованими чашечками">
+            </div>
+            <div class="product-info">
+                <div class="product-price">850 грн</div>
+                <div class="product-title">Топ seamless uniqlo з вбудованими чашечками</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/mayki/201211053-mayka-uniqlo-anya-hindmarch" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2265794317_310_430" alt="Майка uniqlo + anya hindmarch">
+            </div>
+            <div class="product-info">
+                <div class="product-price">550 грн</div>
+                <div class="product-title">Майка uniqlo + anya hindmarch</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/204169852-futbolka-uniqlo-iz-seriyi-supima_-cotton" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2277552640_310_430" alt="Футболка uniqlo із серії supima® cotton">
+            </div>
+            <div class="product-info">
+                <div class="product-price">700 грн</div>
+                <div class="product-title">Футболка uniqlo із серії supima® cotton</div>
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/188948112-bavovnyana-futbolka-airism-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2199965017_310_430" alt="Бавовняна футболка airism uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Бавовняна футболка airism uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/188052610-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2195245543_310_430" alt="Найкраща базова футболка від uniqlo u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186228205-futbolka-unisex-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2184020526_310_430" alt="Футболка unisex uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка unisex uniqlo</div>
-                <div class='product-meta'>Uniqlo • ХS</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186228136-futbolka-unisex-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2184020029_310_430" alt="Футболка unisex uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка unisex uniqlo</div>
-                <div class='product-meta'>Uniqlo • ХSі ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186168770-futbolka-uniqlo-z-seriyi-naruto-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183641402_310_430" alt="Футболка uniqlo з серії naruto ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка uniqlo з серії naruto ut</div>
-                <div class='product-meta'>Uniqlo • Mі ще 2</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186110751-futbolka-uniqlo-z-seriyi-sanrio-characters-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183281148_310_430" alt="Футболка uniqlo з серії sanrio characters ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка uniqlo з серії sanrio characters ut</div>
-                <div class='product-meta'>Uniqlo • S</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186110677-futbolka-uniqlo-z-seriyi-sanrio-kuromi-my-melody-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183280730_310_430" alt="Футболка uniqlo з серії sanrio: kuromi & my melody ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка uniqlo з серії sanrio: kuromi & my melody ut</div>
-                <div class='product-meta'>Uniqlo • M</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186147517-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183509815_310_430" alt="Найкраща базова футболка від uniqlo u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 44 / XXL / 52</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186145714-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183498576_310_430" alt="Найкраща базова футболка від uniqlo u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186145478-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183497136_310_430" alt="Найкраща базова футболка від uniqlo u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 44 / XXL / 52</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/186135748-top-seamless-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183437269_310_430" alt="Топ seamless uniqlo з вбудованими чашечками">
-            </div>
-            <div class="product-info">
-                <div class="product-price">850 грн</div>
-                <div class="product-title">Топ seamless uniqlo з вбудованими чашечками</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/186135364-top-airism-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183434642_310_430" alt="Топ airism uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1000 грн</div>
-                <div class="product-title">Топ airism uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/186135045-top-airism-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183432974_310_430" alt="Топ airism uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1100 грн</div>
-                <div class="product-title">Топ airism uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/186134826-top-seamless-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183431616_310_430" alt="Топ seamless uniqlo з вбудованими чашечками">
-            </div>
-            <div class="product-info">
-                <div class="product-price">950 грн</div>
-                <div class="product-title">Топ seamless uniqlo з вбудованими чашечками</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/186134679-top-seamless-uniqlo-z-vbudovanimi-chashechkami" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183430647_310_430" alt="Топ seamless uniqlo з вбудованими чашечками">
-            </div>
-            <div class="product-info">
-                <div class="product-price">850 грн</div>
-                <div class="product-title">Топ seamless uniqlo з вбудованими чашечками</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186133450-futbolka-uniqlo-zi-100-bavovni-supima-rozmir-hhs" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183422974_310_430" alt="Футболка uniqlo зі 100% бавовни supima, розмір ххс">
-            </div>
-            <div class="product-info">
-                <div class="product-price">400 грн</div>
-                <div class="product-title">Футболка uniqlo зі 100% бавовни supima, розмір ххс</div>
-                <div class='product-meta'>Uniqlo • 32 / XXS / 40</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186116911-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183318593_310_430" alt="Найкраща базова футболка від uniqlo u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186116245-futbolka-uniqlo-disney-collection-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183314387_310_430" alt="Футболка uniqlo disney collection ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">550 грн</div>
-                <div class="product-title">Футболка uniqlo disney collection ut</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186116128-futbolka-uniqlo-disney-collection-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183313634_310_430" alt="Футболка uniqlo disney collection ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">550 грн</div>
-                <div class="product-title">Футболка uniqlo disney collection ut</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186116040-futbolka-uniqlo-disney-collection-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183313212_310_430" alt="Футболка uniqlo disney collection ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">550 грн</div>
-                <div class="product-title">Футболка uniqlo disney collection ut</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186115955-futbolka-uniqlo-disney-collection-ut" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183312651_310_430" alt="Футболка uniqlo disney collection ut">
-            </div>
-            <div class="product-info">
-                <div class="product-price">550 грн</div>
-                <div class="product-title">Футболка uniqlo disney collection ut</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186115836-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183311868_310_430" alt="Найкраща базова футболка від uniqlo u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186115155-naykrasha-bazova-futbolka-vid-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183307363_310_430" alt="Найкраща базова футболка від uniqlo u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">680 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186114891-naykrasha-bazova-futbolka-vid-uniqlo-u-rozmir-s" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183305937_310_430" alt="Найкраща базова футболка від uniqlo u, розмір с">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Найкраща базова футболка від uniqlo u, розмір с</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186114080-futbolka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183300841_310_430" alt="Футболка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка uniqlo</div>
-                <div class='product-meta'>Uniqlo • M</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186113622-futbolka-z-krepovogo-trikotazhu-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183298243_310_430" alt="Футболка з крепового трикотажу uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">550 грн</div>
-                <div class="product-title">Футболка з крепового трикотажу uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186111746-futbolka-hello-kitty-50th-anniversary-ut-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183286934_310_430" alt="Футболка hello kitty 50th anniversary ut uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">680 грн</div>
-                <div class="product-title">Футболка hello kitty 50th anniversary ut uniqlo</div>
-                <div class='product-meta'>Uniqlo • M</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186074555-bavovnyana-futbolka-vilnogo-kroyu-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183054944_310_430" alt="Бавовняна футболка вільного крою uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">790 грн</div>
-                <div class="product-title">Бавовняна футболка вільного крою uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186073050-futbolka-uniqlo-zi-100-bavovni-supima" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183045670_310_430" alt="Футболка uniqlo зі 100% бавовни supima">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка uniqlo зі 100% бавовни supima</div>
-                <div class='product-meta'>Uniqlo • Mі ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186072900-futbolka-uniqlo-zi-100-bavovni-supima" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183044904_310_430" alt="Футболка uniqlo зі 100% бавовни supima">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Футболка uniqlo зі 100% бавовни supima</div>
-                <div class='product-meta'>Uniqlo • S</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186072779-legka-futbolka-linen-blend-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183044032_310_430" alt="Легка футболка linen blend uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Легка футболка linen blend uniqlo</div>
-                <div class='product-meta'>Uniqlo • Mі ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186072700-legka-futbolka-linen-blend-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183043476_310_430" alt="Легка футболка linen blend uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Легка футболка linen blend uniqlo</div>
-                <div class='product-meta'>Uniqlo • M</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/186072606-legka-futbolka-linen-blend-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183042850_310_430" alt="Легка футболка linen blend uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Легка футболка linen blend uniqlo</div>
-                <div class='product-meta'>M</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/topy/178517359-top-airism-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-781446124_310_430" alt="Топ airism uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1100 грн</div>
-                <div class="product-title">Топ airism uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/166763000-zhenskaya-futbolka-s-kruglym-vyrezom-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220808066_310_430" alt="Женская футболка с круглым вырезом u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">800 грн</div>
-                <div class="product-title">Женская футболка с круглым вырезом u</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/166762655-zhenskaya-futbolka-asimmetrichnogo-dizayna-iz-merserizovannogo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220800565_310_430" alt="Женская футболка асимметричного дизайна из мерсеризованного хлопка (с короткими рукавами)">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Женская футболка асимметричного дизайна из мерсеризованного хлопка (с короткими рукавами)</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/166762458-zhenskaya-futbolka-uniqlo-u-iz-100-hlopka-s-korotkim-rukavom-i" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220797214_310_430" alt="Женская футболка uniqlo u из 100% хлопка с коротким рукавом и вырезом лодочка">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Женская футболка uniqlo u из 100% хлопка с коротким рукавом и вырезом лодочка</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/166762283-zhenskaya-futbolka-s-kruglym-vyrezom-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220793985_310_430" alt="Женская футболка с круглым вырезом u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Женская футболка с круглым вырезом u</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/166754195-uniqlo-zhenskaya-futbolka-s-kruglym-vyrezom-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220669517_310_430" alt="Uniqlo  женская футболка с круглым вырезом u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Uniqlo  женская футболка с круглым вырезом u</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/166752371-uniqlo-u-zhenskaya-futbolka-s-kruglym-vyrezom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220636456_310_430" alt="Uniqlo u  женская футболка с круглым вырезом">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Uniqlo u  женская футболка с круглым вырезом</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/166724031-futbolka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220412895_310_430" alt="Футболка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">600 грн</div>
-                <div class="product-title">Футболка uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/166723452-zhenskaya-futbolka-iz-merserizovannogo-hlopka-rukav-chetvert" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220396193_310_430" alt="Женская  футболка из мерсеризованного хлопка (рукав четверть)">
-            </div>
-            <div class="product-info">
-                <div class="product-price">700 грн</div>
-                <div class="product-title">Женская  футболка из мерсеризованного хлопка (рукав четверть)</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/166720289-zhenskaya-super-mario-ut-futbolka-s-printomkorotkie-rukava" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220351706_310_430" alt="Женская super mario ut (футболка с принтом/короткие рукава)">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Женская super mario ut (футболка с принтом/короткие рукава)</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/166718123-futbolka-uniqlo-ut-george-sowden" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220298649_310_430" alt="Футболка uniqlo ut george sowden">
-            </div>
-            <div class="product-info">
-                <div class="product-price">699 грн</div>
-                <div class="product-title">Футболка uniqlo ut george sowden</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/166714304-futbolka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220274423_310_430" alt="Футболка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">620 грн</div>
-                <div class="product-title">Футболка uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/143207100-uniqlo-u-stilnaya-futbolka-svobodnogo-pokroya-100-hlopok" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/1604041447_310_430" alt="Uniqlo u стильная футболка свободного покроя 100% хлопок">
-            </div>
-            <div class="product-info">
-                <div class="product-price">700 грн</div>
-                <div class="product-title">Uniqlo u стильная футболка свободного покроя 100% хлопок</div>
-                <div class='product-meta'>36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/101257651-zhinocha-disney-futbolka-z-korotkim-rukavom-iz-zobrazhennyam" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/569211004_310_430" alt="Жіноча disney футболка з коротким рукавом із зображенням">
-            </div>
-            <div class="product-info">
-                <div class="product-price">400 грн</div>
-                <div class="product-title">Жіноча disney футболка з коротким рукавом із зображенням</div>
-                <div class='product-meta'>Uniqlo • 32 / XXS / 40</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/101360115-zhinocha-futbolka-z-korotkim-rukavom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/569783729_310_430" alt="Жіноча футболка з коротким рукавом">
-            </div>
-            <div class="product-info">
-                <div class="product-price">550 грн</div>
-                <div class="product-title">Жіноча футболка з коротким рукавом</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/100279066-zhinocha-futbolka-z-korotkim-rukavom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/553349616_310_430" alt="Жіноча футболка з коротким рукавом">
-            </div>
-            <div class="product-info">
-                <div class="product-price">600 грн</div>
-                <div class="product-title">Жіноча футболка з коротким рукавом</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/93857334-uniqlo-zhenskaya-futbolka-s-rukavami-v-vide-listev-lotosa" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/490182238_310_430" alt="Uniqlo жіноча футболка з рукавами у вигляді листя лотоса">
-            </div>
-            <div class="product-info">
-                <div class="product-price">549 грн</div>
-                <div class="product-title">Uniqlo жіноча футболка з рукавами у вигляді листя лотоса</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/93487828-futbolka-mango-73070135-56-s" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/485929824_310_430" alt="Футболка mango 73070135-56 s">
-            </div>
-            <div class="product-info">
-                <div class="product-price">500 грн</div>
-                <div class="product-title">Футболка mango 73070135-56 s</div>
-                <div class='product-meta'>Mango • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/mayki-i-futbolki/futbolki/93365177-zhenskaya-futbolka-iz-merserizovannogo-hlopka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/484210418_310_430" alt="Жіноча футболка з мерсеризованного бавовни uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">450 грн</div>
-                <div class="product-title">Жіноча футболка з мерсеризованного бавовни uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    </div>
-        
-            <div class="show-more-wrap">
+    </div></div>
+        <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-            
-        
-            <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
-        </main>
-    </div>
-    <script>
-        function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); }
-        if (localStorage.getItem('uniqlo_theme') === 'dark') { document.body.classList.add('dark'); }
-        function showMoreProducts(button) { document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'flex'); button.style.display = 'none'; }
-    </script>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+</main>
+</div>
+<script>
+function toggleTheme(){document.body.classList.toggle('dark');
+localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
+if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+</script>
 </body>
 </html>

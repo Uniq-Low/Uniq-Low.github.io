@@ -1,107 +1,107 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniqLow — Верхній одяг (Ж)</title>
-    <style>
-        :root {
-            --bg: #f6f8fc; --bg-soft: #eef2ff; --panel: rgba(255,255,255,0.92); --panel-solid: #ffffff;
-            --text: #101828; --muted: #667085; --accent: #e11d48; --accent-soft: rgba(225, 29, 72, 0.12);
-            --border: rgba(16,24,40,0.08); --shadow: 0 18px 45px rgba(16,24,40,0.08);
-            --hero: linear-gradient(135deg, #fff1f2 0%, #ffffff 38%, #eef4ff 100%);
-            --green: #16a34a; --orange: #f59e0b;
-        }
-        body.dark {
-            --bg: #0b1220; --bg-soft: #111827; --panel: rgba(17,24,39,0.88); --panel-solid: #111827;
-            --text: #f8fafc; --muted: #98a2b3; --accent: #ff4d6d; --accent-soft: rgba(255,77,109,0.12);
-            --border: rgba(255,255,255,0.08); --shadow: 0 18px 45px rgba(0,0,0,0.35);
-            --hero: linear-gradient(135deg, #1f2937 0%, #111827 38%, #0b1220 100%);
-        }
-        * { box-sizing: border-box; }
-        body { margin: 0; font-family: Arial, sans-serif; color: var(--text); background: var(--bg); }
-        .layout { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
-        .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 20px; border-right: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(18px); }
-
-        .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; margin-bottom: 18px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,0.04); }
-        .brand-avatar { width: 66px; height: 66px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(225,29,72,0.18); flex-shrink: 0; background: white; }
-        .brand-name { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
-        .brand-sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
-
-        .theme-toggle { width: 100%; border: 1px solid var(--border); background: var(--panel-solid); color: var(--text); border-radius: 14px; padding: 11px 12px; cursor: pointer; font-size: 18px; margin-bottom: 18px; }
-
-        .menu-block { margin-bottom: 18px; }
-        .menu-title { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); margin-bottom: 8px; padding: 0 6px; }
-        .menu-block ul { list-style: none; margin: 0; padding: 0; }
-        .menu-block a { display: block; text-decoration: none; color: var(--text); padding: 10px 12px; border-radius: 12px; font-size: 14px; margin-bottom: 4px; transition: .18s ease; }
-        .menu-block a:hover { background: var(--accent-soft); color: var(--accent); transform: translateX(2px); }
-        .active-link { background: var(--accent-soft); color: var(--accent) !important; font-weight: 700; }
-
-        .content { padding: 28px; }
-        .section-top { margin-bottom: 14px; }
-        .section-top h2 { margin: 0 0 6px; font-size: 24px; }
-        .section-top p { margin: 0; color: var(--muted); line-height: 1.6; }
-
-        .quick-section, .promo-section { margin-bottom: 28px; }
-        .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
-        .quick-tile { min-height: 102px; display: flex; align-items: flex-end; padding: 18px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: 800; border-radius: 22px; border: 1px solid var(--border); background: var(--panel-solid); box-shadow: var(--shadow); transition: transform .18s ease; }
-        .quick-tile:hover { transform: translateY(-3px); border-color: var(--accent); }
-
-        .promo-card { display: flex; gap: 18px; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.04)); border: 1px solid rgba(34,197,94,.18); border-radius: 28px; padding: 24px; box-shadow: var(--shadow);}
-        .promo-badge { width: 100px; height: 100px; border-radius: 50%; background: var(--green); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 24px; flex-shrink:0; }
-        .telegram-btn { display: inline-block; text-decoration: none; color: white; background: #229ED9; padding: 12px 18px; border-radius: 14px; font-weight: 700; margin-top: 10px; }
-
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .product-card { display: flex; flex-direction: column; background: var(--panel-solid); border: 1px solid var(--border); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); transition: .2s ease; }
-        .product-card:hover { transform: translateY(-5px); border-color: rgba(225,29,72,0.18); box-shadow: 0 25px 48px rgba(16,24,40,0.14); }
-        .card-main-link { text-decoration: none; color: inherit; flex-grow: 1; display: flex; flex-direction: column; }
-        .product-image-wrap { background: var(--bg-soft); overflow: hidden; }
-        .product-image { width: 100%; height: 330px; object-fit: cover; display: block; transition: transform .35s ease; }
-        .product-card:hover .product-image { transform: scale(1.04); }
-        .product-info { padding: 16px; flex-grow: 1; }
-        .product-price { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-        .product-title { font-size: 15px; line-height: 1.5; min-height: 46px; margin-bottom: 8px; }
-        .product-meta { font-size: 13px; color: var(--muted); }
-
-        .card-tg-btn { display: block; margin: 0 16px 16px 16px; background: linear-gradient(135deg, #2AABEE, #229ED9); color: white; text-align: center; padding: 12px; border-radius: 14px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s; }
-        .card-tg-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(34, 158, 217, 0.3); }
-
-        .hidden-card { display: none; }
-        .show-more-wrap { margin-top: 30px; text-align: center; }
-        .show-more-btn { border: none; background: linear-gradient(135deg, var(--accent), #fb7185); color: white; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; }
-
-        .reviews-page-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 800px; }
-        .review-card { background: var(--panel-solid); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
-        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .review-name { font-weight: 800; font-size: 16px; display: flex; align-items: center; gap: 10px; }
-        .review-stars { color: var(--orange); font-size: 18px; }
-        .review-text { color: var(--text); line-height: 1.6; font-size: 15px; }
-        .src-badge { font-size: 11px; padding: 3px 8px; border-radius: 8px; font-weight: bold; color: white; text-transform: uppercase; }
-        .src-shafa { background: #f59e0b; }
-        .src-telegram { background: #2AABEE; }
-
-        .empty-box { padding: 30px; border-radius: 22px; border: 1px dashed var(--border); background: var(--panel-solid); color: var(--muted); }
-        .footer-note { margin-top: 26px; text-align: center; color: var(--muted); font-size: 13px; }
-
-        @media (max-width: 1080px) {
-            .layout { grid-template-columns: 1fr; }
-            .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
-            .promo-card { flex-direction: column; text-align: center; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UniqLow — Верхній одяг (Ж)</title>
+<style>
+:root{--bg:#f6f8fc;--bg-soft:#eef2ff;--panel:rgba(255,255,255,0.92);--panel-solid:#fff;
+--text:#101828;--muted:#667085;--accent:#e11d48;--accent-soft:rgba(225,29,72,.12);
+--border:rgba(16,24,40,.08);--shadow:0 18px 45px rgba(16,24,40,.08);
+--green:#16a34a;--orange:#f59e0b;}
+body.dark{--bg:#0b1220;--bg-soft:#111827;--panel:rgba(17,24,39,.88);--panel-solid:#111827;
+--text:#f8fafc;--muted:#98a2b3;--accent:#ff4d6d;--accent-soft:rgba(255,77,109,.12);
+--border:rgba(255,255,255,.08);--shadow:0 18px 45px rgba(0,0,0,.35);}
+*{box-sizing:border-box;}
+body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:var(--bg);}
+.layout{display:grid;grid-template-columns:300px 1fr;min-height:100vh;}
+.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;padding:20px;
+border-right:1px solid var(--border);background:var(--panel);backdrop-filter:blur(18px);}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;margin-bottom:18px;
+padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
+.brand-avatar{width:66px;height:66px;border-radius:50%;object-fit:cover;
+border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
+.brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
+.brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
+color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
+.menu-block{margin-bottom:18px;}
+.menu-title{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;
+color:var(--muted);margin-bottom:8px;padding:0 6px;}
+.menu-block ul{list-style:none;margin:0;padding:0;}
+.menu-block a{display:block;text-decoration:none;color:var(--text);padding:10px 12px;
+border-radius:12px;font-size:14px;margin-bottom:4px;transition:.18s ease;}
+.menu-block a:hover{background:var(--accent-soft);color:var(--accent);transform:translateX(2px);}
+.active-link{background:var(--accent-soft);color:var(--accent)!important;font-weight:700;}
+.content{padding:28px;}
+.section-top{margin-bottom:14px;}
+.section-top h2{margin:0 0 6px;font-size:24px;}
+.section-top p{margin:0;color:var(--muted);line-height:1.6;}
+.quick-section,.promo-section{margin-bottom:28px;}
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;}
+.quick-tile{min-height:102px;display:flex;align-items:flex-end;padding:18px;text-decoration:none;
+color:var(--text);font-size:18px;font-weight:800;border-radius:22px;border:1px solid var(--border);
+background:var(--panel-solid);box-shadow:var(--shadow);transition:transform .18s ease;}
+.quick-tile:hover{transform:translateY(-3px);border-color:var(--accent);}
+.promo-card{display:flex;gap:18px;align-items:center;
+background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.04));
+border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:var(--shadow);}
+.promo-badge{width:100px;height:100px;border-radius:50%;background:var(--green);color:white;
+display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
+.telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
+padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
+.product-card{display:flex;flex-direction:column;background:var(--panel-solid);
+border:1px solid var(--border);border-radius:22px;overflow:hidden;
+box-shadow:var(--shadow);transition:.2s ease;}
+.product-card:hover{transform:translateY(-5px);border-color:rgba(225,29,72,.18);
+box-shadow:0 25px 48px rgba(16,24,40,.14);}
+.card-main-link{text-decoration:none;color:inherit;flex-grow:1;display:flex;flex-direction:column;}
+.product-image-wrap{background:var(--bg-soft);overflow:hidden;}
+.product-image{width:100%;height:330px;object-fit:cover;display:block;transition:transform .35s ease;}
+.product-card:hover .product-image{transform:scale(1.04);}
+.product-info{padding:16px;flex-grow:1;}
+.product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
+.product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
+.product-meta{font-size:13px;color:var(--muted);}
+.card-tg-btn{display:block;margin:0 16px 16px;
+background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
+padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
+.card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
+.hidden-card{display:none;}
+.show-more-wrap{margin-top:30px;text-align:center;}
+.show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
+color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
+.reviews-page-grid{display:grid;grid-template-columns:1fr;gap:15px;max-width:800px;}
+.review-card{background:var(--panel-solid);border:1px solid var(--border);
+border-radius:16px;padding:20px;box-shadow:var(--shadow);}
+.review-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.review-name{font-weight:800;font-size:16px;display:flex;align-items:center;gap:10px;}
+.review-stars{color:var(--orange);font-size:18px;}
+.review-text{color:var(--text);line-height:1.6;font-size:15px;}
+.src-badge{font-size:11px;padding:3px 8px;border-radius:8px;font-weight:bold;color:white;text-transform:uppercase;}
+.src-shafa{background:#f59e0b;}.src-telegram{background:#2AABEE;}
+.empty-box{padding:30px;border-radius:22px;border:1px dashed var(--border);
+background:var(--panel-solid);color:var(--muted);}
+.footer-note{margin-top:26px;text-align:center;color:var(--muted);font-size:13px;}
+@media(max-width:1080px){
+.layout{grid-template-columns:1fr;}
+.sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
+.promo-card{flex-direction:column;text-align:center;}}
+</style>
 </head>
 <body>
-    <div class="layout">
-        <aside class="sidebar">
-            <a class="brand" href="../">
-                <img class="brand-avatar" src="../icon.png" alt="UniqLow">
-                <div>
-                    <div class="brand-name">UniqLow</div>
-                    <div class="brand-sub">Одяг та аксесуари</div>
-                </div>
-            </a>
-            <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
-            <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<div class="layout">
+<aside class="sidebar">
+    <a class="brand" href="../">
+        <img class="brand-avatar" src="../icon.png" alt="UniqLow">
+        <div>
+            <div class="brand-name">UniqLow</div>
+            <div class="brand-sub">Одяг та аксесуари</div>
+        </div>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+    <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -142,1933 +142,851 @@
 <li><a class='' href='/golovni-ubory/'>Головні убори</a></li>
 <li><a class='' href='/remeni-poyasy/'>Ремені та пояси</a></li>
 </ul></div>
-        </aside>
-
-        <main class="content">
-            
-            
-            
+</aside>
+<main class="content">
+    
+    
+    
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
         <div class="products-grid">
     <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/200970882-kurtka-puffertech-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/201414129-zhilet-puffertech-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2264392993_310_430" alt="Куртка puffertech uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2266617002_310_430" alt="Жилет puffertech uniqlo">
             </div>
             <div class="product-info">
-                <div class="product-price">2999 грн</div>
+                <div class="product-price">1899 грн</div>
+                <div class="product-title">Жилет puffertech uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХSі ще 3</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/201415947-kurtka-puffertech-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2266627096_310_430" alt="Куртка puffertech uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2700 грн</div>
                 <div class="product-title">Куртка puffertech uniqlo</div>
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/200970704-kurtka-puffertech-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/204169457-kurtka-pufftech-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2264391954_310_430" alt="Куртка puffertech uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2999 грн</div>
-                <div class="product-title">Куртка puffertech uniqlo</div>
-                <div class='product-meta'>Uniqlo • Mі ще 2</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/200582285-zhilet-puffertech-uniqlo-rozmir-hhl" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2262187599_310_430" alt="Жилет puffertech uniqlo, розмір ххл">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2100 грн</div>
-                <div class="product-title">Жилет puffertech uniqlo, розмір ххл</div>
-                <div class='product-meta'>Uniqlo • XXL</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/200582214-zhilet-puffertech-uniqlo-rozmir-hhl" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2262187145_310_430" alt="Жилет puffertech uniqlo, розмір ххл">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2100 грн</div>
-                <div class="product-title">Жилет puffertech uniqlo, розмір ххл</div>
-                <div class='product-meta'>Uniqlo • XXL</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/200582167-zhilet-puffertech-uniqlo-rozmir-hhl" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2262186828_310_430" alt="Жилет puffertech uniqlo, розмір ххл">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2100 грн</div>
-                <div class="product-title">Жилет puffertech uniqlo, розмір ххл</div>
-                <div class='product-meta'>Uniqlo • XXL</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/200582043-zhilet-puffertech-uniqlo-rozmir-hhl" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2262186078_310_430" alt="Жилет puffertech uniqlo, розмір ххл">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2100 грн</div>
-                <div class="product-title">Жилет puffertech uniqlo, розмір ххл</div>
-                <div class='product-meta'>Uniqlo • XXL</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/195111360-ultralegkiy-puhovik-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2236146915_310_430" alt="Ультралегкий пуховик uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2850 грн</div>
-                <div class="product-title">Ультралегкий пуховик uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/199784311-flisova-kurtka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2257858023_310_430" alt="Флісова куртка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1800 грн</div>
-                <div class="product-title">Флісова куртка uniqlo</div>
-                <div class='product-meta'>Uniqlo • S</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/199782974-flisova-kurtka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2257853721_310_430" alt="Флісова куртка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1800 грн</div>
-                <div class="product-title">Флісова куртка uniqlo</div>
-                <div class='product-meta'>Uniqlo • M</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/199782840-flisova-kurtka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2257853134_310_430" alt="Флісова куртка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1800 грн</div>
-                <div class="product-title">Флісова куртка uniqlo</div>
-                <div class='product-meta'>Uniqlo • M</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/199782585-kurtka-puffertech-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2257852080_310_430" alt="Куртка puffertech uniqlo u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">4299 грн</div>
-                <div class="product-title">Куртка puffertech uniqlo u</div>
-                <div class='product-meta'>Uniqlo • S</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/199559164-kurtka-pufftech-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2256760864_310_430" alt="Куртка pufftech uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2277549823_310_430" alt="Куртка pufftech uniqlo">
             </div>
             <div class="product-info">
                 <div class="product-price">3300 грн</div>
                 <div class="product-title">Куртка pufftech uniqlo</div>
-                <div class='product-meta'>XXL</div>
+                <div class='product-meta'>Uniqlo • Lі ще 1</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/199559050-kurtka-pufftech-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/205190328-kurtka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2256760374_310_430" alt="Куртка pufftech uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3300 грн</div>
-                <div class="product-title">Куртка pufftech uniqlo</div>
-                <div class='product-meta'>Uniqlo • XLі ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/199557395-kurtka-puffertech-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2256755570_310_430" alt="Куртка puffertech uniqlo u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">4299 грн</div>
-                <div class="product-title">Куртка puffertech uniqlo u</div>
-                <div class='product-meta'>Uniqlo • S</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/199557322-kurtka-puffertech-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2256754982_310_430" alt="Куртка puffertech uniqlo u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">4299 грн</div>
-                <div class="product-title">Куртка puffertech uniqlo u</div>
-                <div class='product-meta'>Uniqlo • Sі ще 2</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/191241280-puhovik-seamless-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2213517431_310_430" alt="Пуховик seamless uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">5100 грн</div>
-                <div class="product-title">Пуховик seamless uniqlo</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/191241458-puhovik-seamless-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2213518337_310_430" alt="Пуховик seamless uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">5200 грн</div>
-                <div class="product-title">Пуховик seamless uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/191773761-puhovik-gibrid-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216861265_310_430" alt="Пуховик гібрид uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">4500 грн</div>
-                <div class="product-title">Пуховик гібрид uniqlo</div>
-                <div class='product-meta'>36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192083297-puhovik-uniqlo-oversize-marni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2218873593_310_430" alt="Пуховик uniqlo oversize marni">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3600 грн</div>
-                <div class="product-title">Пуховик uniqlo oversize marni</div>
-                <div class='product-meta'>32 / XXS / 40і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/198635994-zhilet-puffertech-compact-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2252206579_310_430" alt="Жилет puffertech compact uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2100 грн</div>
-                <div class="product-title">Жилет puffertech compact uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/197576208-zhilet-puffertech-compact-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2246937897_310_430" alt="Жилет puffertech compact uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2100 грн</div>
-                <div class="product-title">Жилет puffertech compact uniqlo</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/197293631-dovga-uteplena-kurtka-columbia-suttle-mountain-rozmir-s" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2245359392_310_430" alt="Довга утеплена куртка columbia suttle mountain, розмір с">
-            </div>
-            <div class="product-info">
-                <div class="product-price">5500 грн</div>
-                <div class="product-title">Довга утеплена куртка columbia suttle mountain, розмір с</div>
-                <div class='product-meta'>Columbia • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/193450698-puhovik-seamless-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227118596_310_430" alt="Пуховик seamless uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">5700 грн</div>
-                <div class="product-title">Пуховик seamless uniqlo</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 2</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/194001121-zhinochiy-puhovik-massimo-dutti" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230496654_310_430" alt="Жіночий пуховик massimo dutti">
-            </div>
-            <div class="product-info">
-                <div class="product-price">5500 грн</div>
-                <div class="product-title">Жіночий пуховик massimo dutti</div>
-                <div class='product-meta'>Massimo Dutti • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/191772640-puhovik-gibrid-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216853770_310_430" alt="Пуховик гібрид uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">4800 грн</div>
-                <div class="product-title">Пуховик гібрид uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/191234052-bezshovniy-zimoviy-puhovik-seamless-down-short-coat-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2213470375_310_430" alt="Безшовний зимовий пуховик seamless down short coat uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">5500 грн</div>
-                <div class="product-title">Безшовний зимовий пуховик seamless down short coat uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/186787832-ultralegkiy-puhoviy-zhilet-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2187521165_310_430" alt="Ультралегкий пуховий жилет uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1550 грн</div>
-                <div class="product-title">Ультралегкий пуховий жилет uniqlo</div>
-                <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/dozhdeviki/192605267-palto-blocktech-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2221997570_310_430" alt="Пальто-дощовик blocktech uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281275275_310_430" alt="Куртка uniqlo">
             </div>
             <div class="product-info">
                 <div class="product-price">2200 грн</div>
-                <div class="product-title">Пальто-дощовик blocktech uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+                <div class="product-title">Куртка uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/plashi/189658600-trench-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/dozhdeviki/205191229-parka-blocktech-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2203936571_310_430" alt="Тренч uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281278728_310_430" alt="Парка blocktech uniqlo">
             </div>
             <div class="product-info">
-                <div class="product-price">2250 грн</div>
-                <div class="product-title">Тренч uniqlo</div>
-                <div class='product-meta'>Uniqlo • 44 / XXL / 52</div>
+                <div class="product-price">2200 грн</div>
+                <div class="product-title">Парка blocktech uniqlo</div>
+                <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/dozhdeviki/189659560-palto-blocktech-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/205191482-zhilet-puffertech-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2203942869_310_430" alt="Пальто blocktech uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281280047_310_430" alt="Жилет puffertech uniqlo">
             </div>
             <div class="product-info">
-                <div class="product-price">2400 грн</div>
-                <div class="product-title">Пальто blocktech uniqlo</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
+                <div class="product-price">1899 грн</div>
+                <div class="product-title">Жилет puffertech uniqlo</div>
+                <div class='product-meta'>Uniqlo • XXL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/pidzhaki-i-zhakety/190166801-pidzhak-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/205191639-zhilet-puffertech-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2206935563_310_430" alt="Піджак uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281280783_310_430" alt="Жилет puffertech uniqlo">
             </div>
             <div class="product-info">
-                <div class="product-price">1700 грн</div>
-                <div class="product-title">Піджак uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+                <div class="product-price">1899 грн</div>
+                <div class="product-title">Жилет puffertech uniqlo</div>
+                <div class='product-meta'>Uniqlo • XXL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/192163400-kurtka-windproof-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/205192373-korotke-palto-vilnogo-kroyu-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219372438_310_430" alt="Куртка windproof uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1950 грн</div>
-                <div class="product-title">Куртка windproof uniqlo</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/192162770-kurtka-windproof-outer-fleece-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219367813_310_430" alt="Куртка windproof outer fleece uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1700 грн</div>
-                <div class="product-title">Куртка windproof outer fleece uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/dublenki/192161965-dublyanka-zara" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219362128_310_430" alt="Дублянка zara">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281284190_310_430" alt="Коротке пальто вільного крою uniqlo">
             </div>
             <div class="product-info">
                 <div class="product-price">2500 грн</div>
-                <div class="product-title">Дублянка zara</div>
-                <div class='product-meta'>ZARA • 38 / M / 46</div>
+                <div class="product-title">Коротке пальто вільного крою uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192156065-puhovik-bomber-uniqlo-kollaboraciya-z-white-mountaineering" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/205192863-kurtka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219324900_310_430" alt="Пуховик-бомбер uniqlo коллаборація з white mountaineering">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281287161_310_430" alt="Куртка uniqlo">
             </div>
             <div class="product-info">
-                <div class="product-price">2900 грн</div>
-                <div class="product-title">Пуховик-бомбер uniqlo коллаборація з white mountaineering</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+                <div class="product-price">2600 грн</div>
+                <div class="product-title">Куртка uniqlo</div>
+                <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192155956-puhovik-bomber-uniqlo-kollaboraciya-z-white-mountaineering" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/205232893-kurtka-uniseks-puffertech-vid-uniqlo-anya-hindmarch" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219324243_310_430" alt="Пуховик-бомбер uniqlo коллаборація з white mountaineering">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281456620_310_430" alt="Куртка унісекс puffertech від uniqlo & anya hindmarch">
             </div>
             <div class="product-info">
-                <div class="product-price">2900 грн</div>
-                <div class="product-title">Пуховик-бомбер uniqlo коллаборація з white mountaineering</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+                <div class="product-price">2700 грн</div>
+                <div class="product-title">Куртка унісекс puffertech від uniqlo & anya hindmarch</div>
+                <div class='product-meta'>Uniqlo • ХSі ще 1</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/pidzhaki-i-zhakety/192155771-zhaket-corduroy-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205232986-ultralegkiy-puhovik-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219323282_310_430" alt="Жакет corduroy uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281457157_310_430" alt="Ультралегкий пуховик uniqlo">
             </div>
             <div class="product-info">
-                <div class="product-price">1999 грн</div>
-                <div class="product-title">Жакет corduroy uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+                <div class="product-price">2700 грн</div>
+                <div class="product-title">Ультралегкий пуховик uniqlo</div>
+                <div class='product-meta'>Uniqlo • XXL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/192155328-ultralegkiy-puhoviy-zhilet-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+    <div class="product-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205233565-ultralegkiy-puhovik-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219320352_310_430" alt="Ультралегкий пуховий жилет uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281460347_310_430" alt="Ультралегкий пуховик uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2700 грн</div>
+                <div class="product-title">Ультралегкий пуховик uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205234023-ultralegkiy-puhovik-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281463288_310_430" alt="Ультралегкий пуховик uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">3300 грн</div>
+                <div class="product-title">Ультралегкий пуховик uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205234187-ultralegkiy-puhovik-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281464591_310_430" alt="Ультралегкий пуховик uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">3300 грн</div>
+                <div class="product-title">Ультралегкий пуховик uniqlo</div>
+                <div class='product-meta'>Uniqlo • Mі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205234320-ultralegkiy-puhovik-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281465330_310_430" alt="Ультралегкий пуховик uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2700 грн</div>
+                <div class="product-title">Ультралегкий пуховик uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205234382-puhovik-uniqlo-ultra-light-down" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281465772_310_430" alt="Пуховик uniqlo ultra light down">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2700 грн</div>
+                <div class="product-title">Пуховик uniqlo ultra light down</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205234471-puhovik-uniqlo-ultra-light-down" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281466351_310_430" alt="Пуховик uniqlo ultra light down">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2500 грн</div>
+                <div class="product-title">Пуховик uniqlo ultra light down</div>
+                <div class='product-meta'>Uniqlo • ХS</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205234873-puhovik-uniqlo-ultra-light-down-parka" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281468262_310_430" alt="Пуховик uniqlo ultra light down parka">
+            </div>
+            <div class="product-info">
+                <div class="product-price">3300 грн</div>
+                <div class="product-title">Пуховик uniqlo ultra light down parka</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/205236072-ultralegkiy-puhoviy-zhilet-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281471215_310_430" alt="Ультралегкий пуховий жилет uniqlo">
             </div>
             <div class="product-info">
                 <div class="product-price">1899 грн</div>
                 <div class="product-title">Ультралегкий пуховий жилет uniqlo</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+                <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/192154911-kurtka-uniseks-puffertech-vid-uniqlo-anya-hindmarch" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205237250-puhovik-uniqlo-ultra-light-down-parka" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219317987_310_430" alt="Куртка унісекс puffertech від uniqlo & anya hindmarch">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281473698_310_430" alt="Пуховик uniqlo ultra light down parka">
             </div>
             <div class="product-info">
-                <div class="product-price">2700 грн</div>
-                <div class="product-title">Куртка унісекс puffertech від uniqlo & anya hindmarch</div>
-                <div class='product-meta'>34 / XS / 42і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/192154798-kurtka-uniseks-puffertech-vid-uniqlo-anya-hindmarch" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219316994_310_430" alt="Куртка унісекс puffertech від uniqlo & anya hindmarch">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2700 грн</div>
-                <div class="product-title">Куртка унісекс puffertech від uniqlo & anya hindmarch</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192153630-puhovik-uniqlo-ultra-light-down" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219309653_310_430" alt="Пуховик uniqlo ultra light down">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2200 грн</div>
-                <div class="product-title">Пуховик uniqlo ultra light down</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192152976-puhovik-uniqlo-ultra-light-down" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219305408_310_430" alt="Пуховик uniqlo ultra light down">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2700 грн</div>
-                <div class="product-title">Пуховик uniqlo ultra light down</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192151810-ultralegkiy-puhovik-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219297345_310_430" alt="Ультралегкий пуховик uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2900 грн</div>
-                <div class="product-title">Ультралегкий пуховик uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192151543-ultralegkiy-puhovik-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219295762_310_430" alt="Ультралегкий пуховик uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3100 грн</div>
-                <div class="product-title">Ультралегкий пуховик uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192151407-ultralegkiy-puhovik-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219294692_310_430" alt="Ультралегкий пуховик uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2900 грн</div>
-                <div class="product-title">Ультралегкий пуховик uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192151215-ultralegkiy-puhovik-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219293491_310_430" alt="Ультралегкий пуховик uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2700 грн</div>
-                <div class="product-title">Ультралегкий пуховик uniqlo</div>
-                <div class='product-meta'>Uniqlo • 44 / XXL / 52</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192150739-ultralegkiy-puhovik-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219290496_310_430" alt="Ультралегкий пуховик uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3100 грн</div>
-                <div class="product-title">Ультралегкий пуховик uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 3</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/192150029-puhoviy-zhilet-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219285774_310_430" alt="Пуховий жилет uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1950 грн</div>
-                <div class="product-title">Пуховий жилет uniqlo</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/192149799-zhinochiy-puhoviy-kompaktniy-zhilet-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219284470_310_430" alt="Жіночий пуховий компактний жилет uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1600 грн</div>
-                <div class="product-title">Жіночий пуховий компактний жилет uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/192129640-ultralegkiy-dovgiy-zhilet-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219155608_310_430" alt="Ультралегкий довгий жилет uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2200 грн</div>
-                <div class="product-title">Ультралегкий довгий жилет uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192125771-demisezonniy-puhovik-uniqlo-ultra-light-down-hooded" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219131631_310_430" alt="Демісезонний пуховик uniqlo ultra light down hooded">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3500 грн</div>
-                <div class="product-title">Демісезонний пуховик uniqlo ultra light down hooded</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192125556-puhovik-uniqlo-ultra-light-down-parka" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219130223_310_430" alt="Пуховик uniqlo ultra light down parka">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3500 грн</div>
+                <div class="product-price">3300 грн</div>
                 <div class="product-title">Пуховик uniqlo ultra light down parka</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+                <div class='product-meta'>Uniqlo • Lі ще 1</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192124830-puhovik-uniqlo-ultra-light-down-parka" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205238576-puhovik-uniqlo-ultra-light-down-parka" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219125362_310_430" alt="Пуховик uniqlo ultra light down parka">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281476188_310_430" alt="Пуховик uniqlo ultra light down parka">
             </div>
             <div class="product-info">
                 <div class="product-price">2700 грн</div>
                 <div class="product-title">Пуховик uniqlo ultra light down parka</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 2</div>
+                <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/192123488-palto-oversized-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/205241953-kurtka-bomber-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219116483_310_430" alt="Пальто oversized uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2700 грн</div>
-                <div class="product-title">Пальто oversized uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192122906-ultralegka-kurtka-puhovik-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219112897_310_430" alt="Ультралегка куртка-пуховик uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2700 грн</div>
-                <div class="product-title">Ультралегка куртка-пуховик uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192122826-ultralegka-kurtka-puhovik-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219112344_310_430" alt="Ультралегка куртка-пуховик uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2700 грн</div>
-                <div class="product-title">Ультралегка куртка-пуховик uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192121524-puhovik-uniqlo-ultra-light-down" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219104432_310_430" alt="Пуховик uniqlo ultra light down">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3500 грн</div>
-                <div class="product-title">Пуховик uniqlo ultra light down</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192121311-ultralegka-kompaktna-puhova-kurtka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219103063_310_430" alt="Ультралегка компактна пухова куртка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2900 грн</div>
-                <div class="product-title">Ультралегка компактна пухова куртка uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192121267-ultralegka-kompaktna-puhova-kurtka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219102771_310_430" alt="Ультралегка компактна пухова куртка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2750 грн</div>
-                <div class="product-title">Ультралегка компактна пухова куртка uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192116836-kurtka-uniqlo-nadlegka-puhova" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219074769_310_430" alt="Куртка uniqlo надлегка пухова">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2800 грн</div>
-                <div class="product-title">Куртка uniqlo надлегка пухова</div>
-                <div class='product-meta'>40 / L / 48</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192116387-palto-ultra-light-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2219072947_310_430" alt="Пальто ultra light uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">4300 грн</div>
-                <div class="product-title">Пальто ultra light uniqlo</div>
-                <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192077504-legkoe-puhovoe-palto-s-vorotnikom-stoykoy-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2218836562_310_430" alt="Легке пухове пальто з коміром-стійкою uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">4000 грн</div>
-                <div class="product-title">Легке пухове пальто з коміром-стійкою uniqlo</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192090806-legke-puhove-palto-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2218913925_310_430" alt="Легке пухове пальто uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">4199 грн</div>
-                <div class="product-title">Легке пухове пальто uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/192083848-zhinocha-kurtka-columbia-mighty-lite-hooded-jacket-rozmir-s" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2218877545_310_430" alt="Жіноча куртка columbia mighty lite hooded jacket, розмір s">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2800 грн</div>
-                <div class="product-title">Жіноча куртка columbia mighty lite hooded jacket, розмір s</div>
-                <div class='product-meta'>Columbia • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/192076883-puhovik-uniqlo-marni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2218874856_310_430" alt="Пуховик uniqlo мarni">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3600 грн</div>
-                <div class="product-title">Пуховик uniqlo мarni</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/191774674-puhovik-hm" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216867485_310_430" alt="Пуховик h&m">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2800 грн</div>
-                <div class="product-title">Пуховик h&m</div>
-                <div class='product-meta'>H&M • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/191772442-puhovik-gibrid-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2216852452_310_430" alt="Пуховик гібрид uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">4800 грн</div>
-                <div class="product-title">Пуховик гібрид uniqlo</div>
-                <div class='product-meta'>38 / M / 46і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/pidzhaki-i-zhakety/191353598-zhaket-oversize-uniqlos" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2214228932_310_430" alt="Жакет oversize uniqlo:с">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1900 грн</div>
-                <div class="product-title">Жакет oversize uniqlo:с</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/191351378-palto-wool-blend-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2214214983_310_430" alt="Пальто wool blend uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2950 грн</div>
-                <div class="product-title">Пальто wool blend uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/191351273-palto-double-face-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2214214279_310_430" alt="Пальто double face uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2300 грн</div>
-                <div class="product-title">Пальто double face uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/191351171-palto-double-face-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2214213745_310_430" alt="Пальто double face uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2300 грн</div>
-                <div class="product-title">Пальто double face uniqlo</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/191350969-palto-double-face-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2214212402_310_430" alt="Пальто double face uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2300 грн</div>
-                <div class="product-title">Пальто double face uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/191350563-palto-wool-blend-wrap-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2214209981_310_430" alt="Пальто wool blend wrap uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2950 грн</div>
-                <div class="product-title">Пальто wool blend wrap uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/191350421-palto-wool-blend-wrap-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2214209062_310_430" alt="Пальто wool blend wrap uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2950 грн</div>
-                <div class="product-title">Пальто wool blend wrap uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/191244637-palto-z-flisu-uniqlo-rozmir-hs-ta-l" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2213539373_310_430" alt="Пальто з флісу uniqlo, розмір хс">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1900 грн</div>
-                <div class="product-title">Пальто з флісу uniqlo, розмір хс</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/plashi/184061397-klasichniy-plash-trench-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2170313952_310_430" alt="Класичний плащ тренч uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2999 грн</div>
-                <div class="product-title">Класичний плащ тренч uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/plashi/190323683-trench-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207900022_310_430" alt="Тренч uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2400 грн</div>
-                <div class="product-title">Тренч uniqlo</div>
-                <div class='product-meta'>Uniqlo • M</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/pidzhaki-i-zhakety/189948075-pidzhak-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2205580613_310_430" alt="Піджак uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1700 грн</div>
-                <div class="product-title">Піджак uniqlo</div>
-                <div class='product-meta'>Uniqlo • M</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/plashi/187154283-trench-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2189821256_310_430" alt="Тренч uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2100 грн</div>
-                <div class="product-title">Тренч uniqlo</div>
-                <div class='product-meta'>Uniqlo • 42 / XL / 50і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/186366641-ultratonkiy-puhoviy-zhilet-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2184881891_310_430" alt="Ультратонкий пуховий жилет uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1390 грн</div>
-                <div class="product-title">Ультратонкий пуховий жилет uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/181335976-ultralegkiy-puhoviy-zhilet-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2153749495_310_430" alt="Ультралегкий пуховий жилет uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1400 грн</div>
-                <div class="product-title">Ультралегкий пуховий жилет uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/plashi/176556525-zhinochiy-trench" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-627235422_310_430" alt="Жіночий тренч">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1400 грн</div>
-                <div class="product-title">Жіночий тренч</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/176556207-zhinocha-nadlegka-puhova-zhiletka" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-627223963_310_430" alt="Жіноча надлегка пухова жилетка">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1400 грн</div>
-                <div class="product-title">Жіноча надлегка пухова жилетка</div>
-                <div class='product-meta'>Uniqlo • 32 / XXS / 40</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/176547338-zhenskaya-kurtka-v-stili-militari-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-626689983_310_430" alt="Женская куртка в стилі милітарі  uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1900 грн</div>
-                <div class="product-title">Женская куртка в стилі милітарі  uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/176546650-zhinochiy-puhovik-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-626630740_310_430" alt="Жіночий пуховик uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2000 грн</div>
-                <div class="product-title">Жіночий пуховик uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/176534643-puhova-kurtka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-625890102_310_430" alt="Пухова куртка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2800 грн</div>
-                <div class="product-title">Пухова куртка uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/176533508-kurtka-na-flisoviy-pidkladci-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-625814707_310_430" alt="Куртка на флісовій підкладці uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1850 грн</div>
-                <div class="product-title">Куртка на флісовій підкладці uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/176532797-mehovushka-ot-uniqloakciya-1399-grn" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-625757219_310_430" alt="Меховушка от uniqlo!акция 1299 грн">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1299 грн</div>
-                <div class="product-title">Меховушка от uniqlo!акция 1299 грн</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/170288183-palto-zhaket-levis" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-315507215_310_430" alt="Пальто жакет levi's">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1900 грн</div>
-                <div class="product-title">Пальто жакет levi's</div>
-                <div class='product-meta'>Levi's • 34 / XS / 42і ще 2</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/170267692-bomper-levis" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-315241930_310_430" alt="Бомпер levis">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1500 грн</div>
-                <div class="product-title">Бомпер levis</div>
-                <div class='product-meta'>Levi's • 34 / XS / 42і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/166961924-zhenskiy-puhovik-ines" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-225465359_310_430" alt="Женский пуховик инес">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3400 грн</div>
-                <div class="product-title">Женский пуховик инес</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/166767607-uniqlo-zhenskaya-svobodnaya-kurtka-s-kapyushonom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/-220909770_310_430" alt="Uniqlo женская свободная куртка с капюшоном">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2100 грн</div>
-                <div class="product-title">Uniqlo женская свободная куртка с капюшоном</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/pidzhaki-i-zhakety/143224315-yakisniy-pidzhak-z-tvidu-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/1604606687_310_430" alt="Якісний піджак з твіду uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1799 грн</div>
-                <div class="product-title">Якісний піджак з твіду uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/105464785-zhinochiy-nadzvichayno-legkiy-puhovik" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/643300754_310_430" alt="Жіночий надзвичайно легкий пуховик">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2700 грн</div>
-                <div class="product-title">Жіночий надзвичайно легкий пуховик</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/105435543-zhinoche-dvostoronnye-vovnyane-teksturovane-palto-bez-komira" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/642796509_310_430" alt="Жіноче двостороннє вовняне  текстуроване пальто без коміра">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2400 грн</div>
-                <div class="product-title">Жіноче двостороннє вовняне  текстуроване пальто без коміра</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/105434191-zhinoche-vovnyane-kashemirove-palto-chester" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/642779022_310_430" alt="Жіноче вовняне кашемірове пальто честер">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3500 грн</div>
-                <div class="product-title">Жіноче вовняне кашемірове пальто честер</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/105432568-zhinoche-palto-tommy-hilfiger-zi-shtuchnim-hutrom-z-kapyushonom-i" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/642754345_310_430" alt="Жіноче пальто tommy hilfiger зі штучним хутром з капюшоном і смугастим поясом чорне">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3900 грн</div>
-                <div class="product-title">Жіноче пальто tommy hilfiger зі штучним хутром з капюшоном і смугастим поясом чорне</div>
-                <div class='product-meta'>Tommy Hilfiger • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/105432221-kurtka-mango" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/642751585_310_430" alt="Куртка mango">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1100 грн</div>
-                <div class="product-title">Куртка mango</div>
-                <div class='product-meta'>Mango • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/105432008-zhinochiy-trench" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/642748102_310_430" alt="Жіночий тренч">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1600 грн</div>
-                <div class="product-title">Жіночий тренч</div>
-                <div class='product-meta'>36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/105425704-zhinoche-korotke-plyusheve-palto" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/642624276_310_430" alt="Жіноче коротке плюшеве пальто">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1600 грн</div>
-                <div class="product-title">Жіноче коротке плюшеве пальто</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/105424216-zhinoche-kashemirove-palto-chester" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/642609703_310_430" alt="Жіноче кашемірове пальто честер">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3700 грн</div>
-                <div class="product-title">Жіноче кашемірове пальто честер</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/105423785-zhinoche-dvostoronnye-teksturovane-palto-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/642606883_310_430" alt="Жіноче двостороннє текстуроване пальто u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3200 грн</div>
-                <div class="product-title">Жіноче двостороннє текстуроване пальто u</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/105423313-zhinochiy-puhovik-uniqlo-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/642601268_310_430" alt="Жіночий пуховик uniqlo uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">3200 грн</div>
-                <div class="product-title">Жіночий пуховик uniqlo uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/105422944-zhinoche-dvobortne-palto-zi-sumishi-vovni" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/642600550_310_430" alt="Жіноче двобортне пальто зі суміші вовни">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2600 грн</div>
-                <div class="product-title">Жіноче двобортне пальто зі суміші вовни</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/dublenki/105416558-zhinoche-palto-z-kapyushonom-zi-shtuchnoyi-shkiri" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/642501222_310_430" alt="Жіноче пальто з капюшоном зі штучної шкіри">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1600 грн</div>
-                <div class="product-title">Жіноче пальто з капюшоном зі штучної шкіри</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/105402199-zhinoche-dvostoronnye-teksturovane-palto-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/641766835_310_430" alt="Жіноче двостороннє текстуроване пальто u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2900 грн</div>
-                <div class="product-title">Жіноче двостороннє текстуроване пальто u</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/101362179-rukava-mozhna-znyati-i-vikoristovuvati-yak-zhilet_puhovik-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/569795787_310_430" alt="Рукава можна зняти і використовувати як жилет★пуховик uniqlo u">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1900 грн</div>
-                <div class="product-title">Рукава можна зняти і використовувати як жилет★пуховик uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/101182831-zhenskaya-legkaya-perenosnaya-kurtka-s-kapyushonom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/568797766_310_430" alt="Жіноча легка переносна куртка з капюшоном">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1099 грн</div>
-                <div class="product-title">Жіноча легка переносна куртка з капюшоном</div>
-                <div class='product-meta'>Uniqlo • 32 / XXS / 40</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/101182528-zhenskaya-perenosnaya-kurtka-s-kapyushonom" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/568796329_310_430" alt="Жіноча переносна куртка з капюшоном">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1199 грн</div>
-                <div class="product-title">Жіноча переносна куртка з капюшоном</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/100266425-trikotazhnoe-palto-kardigan-100-sherst-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/553208363_310_430" alt="Трикотажне пальто кардиган 100% вовна uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1789 грн</div>
-                <div class="product-title">Трикотажне пальто кардиган 100% вовна uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/100222102-zhenskoe-palto-iz-smesovoy-shersti" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/552504262_310_430" alt="Жіноче пальто з вовни сумішевої">
-            </div>
-            <div class="product-info">
-                <div class="product-price">2190 грн</div>
-                <div class="product-title">Жіноче пальто з вовни сумішевої</div>
-                <div class='product-meta'>38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/100221317-luchshee-sherstyanoe-palto-uniqlo-u" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/552498263_310_430" alt="Краще вовняне пальто uniqlo u">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281481782_310_430" alt="Куртка-бомбер uniqlo">
             </div>
             <div class="product-info">
                 <div class="product-price">2850 грн</div>
-                <div class="product-title">Краще вовняне пальто uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
+                <div class="product-title">Куртка-бомбер uniqlo</div>
+                <div class='product-meta'>Uniqlo • Mі ще 2</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/100220891-zhenskoe-palto-iz-smesovoy-shersti-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/205243021-kurtka-bomber-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/552474712_310_430" alt="Пальто жіноче з сумішевої вовни uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281483688_310_430" alt="Куртка-бомбер uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2850 грн</div>
+                <div class="product-title">Куртка-бомбер uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 4</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/205244430-kurtka-bomber-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281485870_310_430" alt="Куртка-бомбер uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2850 грн</div>
+                <div class="product-title">Куртка-бомбер uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/205246321-kurtka-bomber-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281489267_310_430" alt="Куртка-бомбер uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2850 грн</div>
+                <div class="product-title">Куртка-бомбер uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205256185-puhovik-bomber-uniqlo-kollaboraciya-z-white-mountaineering" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281507652_310_430" alt="Пуховик-бомбер uniqlo коллаборація з white mountaineering">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2900 грн</div>
+                <div class="product-title">Пуховик-бомбер uniqlo коллаборація з white mountaineering</div>
+                <div class='product-meta'>Uniqlo • Sі ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205256753-puhovik-bomber-uniqlo-kollaboraciya-z-white-mountaineering" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281508994_310_430" alt="Пуховик-бомбер uniqlo коллаборація з white mountaineering">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2900 грн</div>
+                <div class="product-title">Пуховик-бомбер uniqlo коллаборація з white mountaineering</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205261732-ultralegka-kompaktna-puhova-kurtka-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281517659_310_430" alt="Ультралегка компактна пухова куртка uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2900 грн</div>
+                <div class="product-title">Ультралегка компактна пухова куртка uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205263721-ultralegka-kompaktna-puhova-kurtka-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281520887_310_430" alt="Ультралегка компактна пухова куртка uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2900 грн</div>
+                <div class="product-title">Ультралегка компактна пухова куртка uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205268030-demisezonniy-puhovik-uniqlo-ultra-light-down" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281528039_310_430" alt="Демісезонний пуховик uniqlo ultra light down">
+            </div>
+            <div class="product-info">
+                <div class="product-price">3700 грн</div>
+                <div class="product-title">Демісезонний пуховик uniqlo ultra light down</div>
+                <div class='product-meta'>Uniqlo • Mі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205268974-ultralegka-kurtka-puhovik-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281529583_310_430" alt="Ультралегка куртка-пуховик uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2700 грн</div>
+                <div class="product-title">Ультралегка куртка-пуховик uniqlo</div>
+                <div class='product-meta'>Uniqlo • Mі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205270224-ultralegka-kurtka-puhovik-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281531872_310_430" alt="Ультралегка куртка-пуховик uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2700 грн</div>
+                <div class="product-title">Ультралегка куртка-пуховик uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/205272886-kurtka-bomber-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281536154_310_430" alt="Куртка-бомбер uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2850 грн</div>
+                <div class="product-title">Куртка-бомбер uniqlo</div>
+                <div class='product-meta'>Uniqlo • Mі ще 2</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/205274713-zhinocha-kurtka-columbia-mighty-lite-hooded-jacket-rozmir-s" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281539144_310_430" alt="Жіноча куртка columbia mighty lite hooded jacket, розмір s">
+            </div>
+            <div class="product-info">
+                <div class="product-price">3100 грн</div>
+                <div class="product-title">Жіноча куртка columbia mighty lite hooded jacket, розмір s</div>
+                <div class='product-meta'>Columbia • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/205277338-kurtka-pufftech-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281541937_310_430" alt="Куртка pufftech uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">3300 грн</div>
+                <div class="product-title">Куртка pufftech uniqlo</div>
+                <div class='product-meta'>Uniqlo • XXL</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/205280214-puhovik-uniqlo-ultra-light-down-parka" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281548574_310_430" alt="Пуховик uniqlo ultra light down parka">
             </div>
             <div class="product-info">
                 <div class="product-price">3500 грн</div>
-                <div class="product-title">Пальто жіноче з сумішевої вовни uniqlo</div>
+                <div class="product-title">Пуховик uniqlo ultra light down parka</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/205332586-palto-demisezonne-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281634343_310_430" alt="Пальто демісезонне uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">3800 грн</div>
+                <div class="product-title">Пальто демісезонне uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/205334948-flisova-kurtka-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281638576_310_430" alt="Флісова куртка uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1800 грн</div>
+                <div class="product-title">Флісова куртка uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/205342160-zhilet-puffertech-compact-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281650118_310_430" alt="Жилет puffertech compact uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2100 грн</div>
+                <div class="product-title">Жилет puffertech compact uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/205343755-ultralegkiy-puhoviy-zhilet-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281652634_310_430" alt="Ультралегкий пуховий жилет uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1899 грн</div>
+                <div class="product-title">Ультралегкий пуховий жилет uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/205345476-ultralegkiy-puhoviy-zhilet-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281655413_310_430" alt="Ультралегкий пуховий жилет uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1899 грн</div>
+                <div class="product-title">Ультралегкий пуховий жилет uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/205346653-zhinochiy-puhoviy-kompaktniy-zhilet-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281657092_310_430" alt="Жіночий пуховий компактний жилет uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1899 грн</div>
+                <div class="product-title">Жіночий пуховий компактний жилет uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/205347931-ultralegkiy-dovgiy-zhilet-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281658994_310_430" alt="Ультралегкий довгий жилет uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2300 грн</div>
+                <div class="product-title">Ультралегкий довгий жилет uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/205348674-ultralegkiy-dovgiy-zhilet-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281660292_310_430" alt="Ультралегкий довгий жилет uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2300 грн</div>
+                <div class="product-title">Ультралегкий довгий жилет uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/zhiletki/205349489-puhoviy-zhilet-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281661397_310_430" alt="Пуховий жилет uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2100 грн</div>
+                <div class="product-title">Пуховий жилет uniqlo</div>
+                <div class='product-meta'>Uniqlo • Lі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/plashi/205352613-trench-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281666141_310_430" alt="Тренч uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2250 грн</div>
+                <div class="product-title">Тренч uniqlo</div>
+                <div class='product-meta'>Uniqlo • XXL</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/plashi/205353306-trench-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281667214_310_430" alt="Тренч uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2250 грн</div>
+                <div class="product-title">Тренч uniqlo</div>
+                <div class='product-meta'>Uniqlo • Lі ще 1</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/plashi/205355105-trench-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281669836_310_430" alt="Тренч uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2400 грн</div>
+                <div class="product-title">Тренч uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/205356067-palto-wool-blend-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281671259_310_430" alt="Пальто wool blend uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2500 грн</div>
+                <div class="product-title">Пальто wool blend uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/205356891-palto-wool-blend-wrap-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281672674_310_430" alt="Пальто wool blend wrap uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2500 грн</div>
+                <div class="product-title">Пальто wool blend wrap uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/205358328-palto-wool-blend-wrap-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281674766_310_430" alt="Пальто wool blend wrap uniqlo">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2500 грн</div>
+                <div class="product-title">Пальто wool blend wrap uniqlo</div>
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/100053849-puhovaya-kurtka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/205359604-palto-double-face-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/548994550_310_430" alt="Пухова куртка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281676644_310_430" alt="Пальто double face uniqlo">
             </div>
             <div class="product-info">
-                <div class="product-price">2900 грн</div>
-                <div class="product-title">Пухова куртка uniqlo</div>
-                <div class='product-meta'>38 / M / 46</div>
+                <div class="product-price">2300 грн</div>
+                <div class="product-title">Пальто double face uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХSі ще 1</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/100053017-zhenskiy-puhovik-kokon-obraznyy-uniqlo-yuniklo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/205360274-palto-double-face-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/548973117_310_430" alt="Жіночий пуховик кокон-подібний uniqlo юникло">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281677649_310_430" alt="Пальто double face uniqlo">
             </div>
             <div class="product-info">
-                <div class="product-price">3250 грн</div>
-                <div class="product-title">Жіночий пуховик кокон-подібний uniqlo юникло</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
+                <div class="product-price">2300 грн</div>
+                <div class="product-title">Пальто double face uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/puhoviki/100047686-puhovaya-kurtka-uniqlo" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/205360829-palto-double-face-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/548929904_310_430" alt="Пухова куртка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281678512_310_430" alt="Пальто double face uniqlo">
             </div>
             <div class="product-info">
-                <div class="product-price">2900 грн</div>
-                <div class="product-title">Пухова куртка uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+                <div class="product-price">2300 грн</div>
+                <div class="product-title">Пальто double face uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    
     <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/100035714-uniqlo-women-ines-down-jacket" target="_blank" rel="noopener" title="Відкрити оригінал товару">
+        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/palto/205362423-palto-oversayz-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/548730041_310_430" alt="Uniqlo women ines down jacket">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281681277_310_430" alt="Пальто оверсайз uniqlo">
             </div>
             <div class="product-info">
-                <div class="product-price">1999 грн</div>
-                <div class="product-title">Uniqlo women ines down jacket</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
+                <div class="product-price">2300 грн</div>
+                <div class="product-title">Пальто оверсайз uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
+        <a class="card-tg-btn" href="https://t.me/+380XXXXXXXXX" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/100022850-ca-razmer-xl" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/548514711_310_430" alt="C&a розмір xl">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1200 грн</div>
-                <div class="product-title">C&a розмір xl</div>
-                <div class='product-meta'>42 / XL / 50</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/verhnyaya-odezhda/kurtki/93492647-zhenskaya-kurtka-airism-s-setchatym-kapyushonom-i-zashitoy-ot-uf" target="_blank" rel="noopener" title="Відкрити оригінал товару">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/485991567_310_430" alt="Жіноча куртка airism з сітчастим капюшоном і захистом від уф-випромінювання (з довгим рукавом) uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1200 грн</div>
-                <div class="product-title">Жіноча куртка airism з сітчастим капюшоном і захистом від уф-випромінювання (з довгим рукавом) uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/UniqLowbot" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    </div>
-        
-            <div class="show-more-wrap">
+    </div></div>
+        <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-            
-        
-            <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
-        </main>
-    </div>
-    <script>
-        function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('uniqlo_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); }
-        if (localStorage.getItem('uniqlo_theme') === 'dark') { document.body.classList.add('dark'); }
-        function showMoreProducts(button) { document.querySelectorAll('.hidden-card').forEach(el => el.style.display = 'flex'); button.style.display = 'none'; }
-    </script>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+</main>
+</div>
+<script>
+function toggleTheme(){document.body.classList.toggle('dark');
+localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
+if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+</script>
 </body>
 </html>
