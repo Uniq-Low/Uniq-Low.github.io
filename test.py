@@ -885,12 +885,26 @@ class App(ctk.CTk):
             self._log_msg(f"  ✅ OLX ({len(olx)})")
             conn.close()
 
-            # Відгуки
-            reviews = get_db_reviews()
+            # Відгуки — збираємо з Shafa через selenium
+            self._log_msg("  → Збираю відгуки з Shafa (selenium)…")
+            try:
+                driver = make_driver()
+                shafa_reviews = collect_shafa_reviews(driver, SHAFA_REVIEWS_URL, limit=100)
+                driver.quit()
+                self._log_msg(f"  ✅ Shafa відгуки: {len(shafa_reviews)}")
+            except Exception as e:
+                shafa_reviews = []
+                self._log_msg(f"  ⚠️ Shafa відгуки не зібрано: {e}")
+
+            # Telegram відгуки з БД (якщо є)
+            telegram_reviews = get_db_reviews()
+            self._log_msg(f"  ✅ Telegram відгуки: {len(telegram_reviews)}")
+
+            all_reviews = telegram_reviews + shafa_reviews
             save_folder_page("reviews",
                              render_page("Відгуки покупців", "/reviews/",
-                                         reviews, page_type="reviews"))
-            self._log_msg(f"  ✅ Відгуки ({len(reviews)})")
+                                         all_reviews, page_type="reviews"))
+            self._log_msg(f"  ✅ Відгуки всього: {len(all_reviews)}")
 
             # Git
             self._log_msg("🔧 Git push…")
