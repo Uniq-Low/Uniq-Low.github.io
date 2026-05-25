@@ -85,6 +85,31 @@ padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
+.back-link{display:inline-flex;margin-bottom:18px;color:var(--muted);text-decoration:none;font-weight:700;}
+.back-link:hover{color:var(--accent);}
+.product-detail-layout{display:grid;grid-template-columns:minmax(300px,520px) minmax(320px,1fr);gap:34px;align-items:start;}
+.product-gallery-panel{position:sticky;top:24px;}
+.product-main-image-wrap{background:var(--bg-soft);border-radius:18px;overflow:hidden;border:1px solid var(--border);}
+.product-main-image-wrap img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
+.product-thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:10px;margin-top:12px;}
+.product-thumb{border:1px solid var(--border);background:var(--panel-solid);border-radius:12px;padding:0;overflow:hidden;cursor:pointer;}
+.product-thumb img{width:100%;aspect-ratio:1/1.25;object-fit:cover;display:block;}
+.product-thumb:hover{border-color:var(--accent);}
+.product-detail-info{background:var(--panel-solid);border:1px solid var(--border);border-radius:22px;padding:26px;box-shadow:var(--shadow);}
+.detail-source{color:var(--accent);font-weight:800;font-size:13px;text-transform:uppercase;margin-bottom:8px;}
+.product-detail-info h1{font-size:34px;line-height:1.18;margin:0 0 12px;letter-spacing:0;}
+.detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
+.detail-price{font-size:34px;font-weight:900;margin:20px 0;}
+.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
+font-weight:800;padding:13px 22px;margin-bottom:24px;}
+.detail-section{border-top:1px solid var(--border);padding-top:20px;margin-top:20px;}
+.detail-section h2{font-size:20px;margin:0 0 12px;}
+.detail-section p{font-size:15px;line-height:1.7;margin:0;color:var(--text);}
+.detail-attrs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;}
+.detail-attrs div{border:1px solid var(--border);border-radius:14px;padding:12px;background:var(--bg);}
+.detail-attrs dt{color:var(--muted);font-size:13px;margin-bottom:4px;}
+.detail-attrs dd{margin:0;color:var(--text);font-weight:700;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -105,6 +130,10 @@ background:var(--panel-solid);color:var(--muted);}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
 .promo-card{flex-direction:column;text-align:center;}
 .product-search-bar{align-items:stretch;flex-direction:column;}
+.product-detail-layout{grid-template-columns:1fr;}
+.product-gallery-panel{position:static;}
+.product-detail-info h1{font-size:28px;}
+.detail-attrs{grid-template-columns:1fr;}
 .search-status{white-space:normal;}}
 </style>
 </head>
@@ -118,12 +147,11 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 14:30</div>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:40</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
-<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
 </ul></div>
 <div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
@@ -179,7 +207,7 @@ background:var(--panel-solid);color:var(--muted);}
             </div>
         <div class="products-grid">
     <div class="product-card" data-search="светр uniqlo з мериносової вовни s 1400 грн uniqlo 36 / s / 44 kofty-svetry елегантна текстура ультратонких волокон втілена в елегантному стилі вовни. гладкий і стильний, з простим v-подібним вирізом. 100% використання надтонкої мериносової вовни товщиною 19,5 мікрон. з додаванням спеціальної обробки він менш схильний до скочування, ніж старі светри. можна прати в машині, простий у догляді дизайн, придатний для машинного прання. носити 419189-58 светри кофти та светри синій 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/93860126-sviter-uniqlo-iz-merinosovoy-shersti-s" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6158/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/490212297_310_430" alt="Светр uniqlo з мериносової вовни s" loading="lazy" decoding="async">
             </div>
@@ -189,19 +217,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/490212386_310_430' alt='Светр uniqlo з мериносової вовни s' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1382003335_310_430' alt='Светр uniqlo з мериносової вовни s' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Елегантна текстура ультратонких волокон втілена в елегантному стилі вовни. Гладкий і стильний, з простим V-подібним вирізом. 100% використання надтонкої мериносової вовни товщиною 19,5 мікрон. З додаванням спеціальної обробки він менш схильний до скочування, ніж старі светри. Можна прати в машині, простий у догляді дизайн, придатний для машинного прання. носити 419189-58</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="чоловічий светр з бавовни та кашеміру в рубчик з v-подібним вирізом 1449 грн uniqlo 38 / m / 46 kofty-svetry легка, еластична суміш бавовни. супер м&#x27;який светр. ・поєднання кашеміру для максимальної еластичності. ・светр з бавовни x kashmir, легкий і м&#x27;який, зручний в носінні. ・стильний широкий матеріал, що демонструє повсякденний дизайн. ・носіть окремо або з сорочкою або футболкою. злегка v-подібний виріз 402518-a14 светри кофти та светри стиль повсякденний синій 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/100824740-muzhskoy-sviter-iz-hlopka-i-kashemira-v-rubchik-s-v-obraznym-vyrezom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6157/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/563639344_310_430" alt="Чоловічий светр з бавовни та кашеміру в рубчик з v-подібним вирізом" loading="lazy" decoding="async">
             </div>
@@ -211,13 +232,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Легка, еластична суміш бавовни. Супер м&#x27;який светр. ・Поєднання кашеміру для максимальної еластичності. ・Светр з бавовни X Kashmir, легкий і м&#x27;який, зручний в носінні. ・Стильний широкий матеріал, що демонструє повсякденний дизайн. ・Носіть окремо або з сорочкою або футболкою. Злегка V-подібний виріз 402518-a14</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри Стиль Повсякденний</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -228,7 +242,7 @@ background:var(--panel-solid);color:var(--muted);}
 ・вырез средней высоты и свободного кроя, поэтому его легко сочетать с рубашками или футболками.
 ・плотность реберного переплетения подола определяется поэтапно, а дизайн возле плеч также уделяет внимание деталям, что делает его более удобным и легким в носке.
 429067-a14 гольфи кофти та светри червоний 34/xs/42 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/golfy/100825136-muzhskaya-vodolazka-iz-shersti-merinosa" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6156/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/563642424_310_430" alt="Чоловіча водолазка з вовни мериноса" loading="lazy" decoding="async">
             </div>
@@ -238,19 +252,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>100% высококачественная мериносовая шерсть, классика с утонченной и качественной текстурой.<br>・Использование 100% сверхтонкой мериносовой шерсти толщиной 19,5 микрон обеспечивает мягкость и высококачественный блеск.<br>・Специальная обработка для предотвращения катышков и возможность машинной стирки.<br>・Вырез средней высоты и свободного кроя, поэтому его легко сочетать с рубашками или футболками.<br>・Плотность реберного переплетения подола определяется поэтапно, а дизайн возле плеч также уделяет внимание деталям, что делает его более удобным и легким в носке.<br>429067-a14</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Гольфи Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Червоний</dd></div><div><dt>Розмір</dt><dd>34/XS/42</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="чоловіча повсякденна худі з принтом pieter ceizer 1050 грн uniqlo 34 / xs / 42 kofty-svetry пітер цейзер пітер цейзер (pieter ceizer) — паризький голландський друкар/художник, який створює роботи, починаючи від мінімалістського дизайну і закінчуючи динамічним і яскравим абстрактним мистецтвом. його витончено зображені слова поетичні та гумористичні, сповнені оптимістичних повідомлень, які можуть принести людям позитивну енергію. робота uniqlo була розроблена на тему «клубу без турбот», який прославляє душу зі свободою і оптимізмом. 414345-a6 толстовки кофти та светри принт абстракція білий 34/xs/42 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/tolstovki/101173918-muzhskaya-povsednevnaya-hudi-s-printom-pieter-ceizer" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6155/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/568748876_310_430" alt="Чоловіча повсякденна худі з принтом pieter ceizer" loading="lazy" decoding="async">
             </div>
@@ -260,19 +267,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/568794445_310_430' alt='Чоловіча повсякденна худі з принтом pieter ceizer' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/568794202_310_430' alt='Чоловіча повсякденна худі з принтом pieter ceizer' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Пітер Цейзер Пітер Цейзер (Pieter Ceizer) — паризький голландський друкар/художник, який створює роботи, починаючи від мінімалістського дизайну і закінчуючи динамічним і яскравим абстрактним мистецтвом. Його витончено зображені слова поетичні та гумористичні, сповнені оптимістичних повідомлень, які можуть принести людям позитивну енергію. Робота Uniqlo була розроблена на тему «Клубу без турбот», який прославляє душу зі свободою і оптимізмом. 414345-a6</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Толстовки Кофти та Светри Принт Абстракція</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>34/XS/42</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="rise again by verdy толстовка з капюшоном 920 грн uniqlo 38 / m / 46 kofty-svetry графічний дизайнер vk design works, який займається такими проектами, як rise again by verdy girls don&#x27;t cry і wasted youth. в даний час базується в токіо, активний в основному на вуличній сцені. залучення уваги як вдома, так і за кордоном. графіка і типографіка, які він створює, повні гри слів і продовжують знаходити відгук у багатьох людей в різних країнах. коментар дизайнера: «я хотів поділитися своєю графікою з великою кількістю людей, тому я взяв участь у цьому співробітництві. break the mold, яка також є основною графікою, хоче спробувати щось нове. це почуття, яке я завжди відчуваю. в інший графіку, я також додаю повідомлення, які приходять мені на ум у повсякденному житті». 425072-a6 толстовки кофти та светри особливості моделі з капюшоном синій 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/tolstovki/101175123-rise-again-by-verdy-tolstovka-s-kapyushonom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6154/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/568755533_310_430" alt="Rise again by verdy толстовка з капюшоном" loading="lazy" decoding="async">
             </div>
@@ -282,19 +282,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/568755567_310_430' alt='Rise again by verdy толстовка з капюшоном' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Графічний дизайнер VK DESIGN WORKS, який займається такими проектами, як RISE AGAIN BY VERDY Girls don&#x27;t Cry і Wasted Youth. В даний час базується В Токіо, активний в основному на вуличній сцені. Залучення уваги як вдома, так і за кордоном. Графіка і типографіка, які він створює, повні гри слів і продовжують знаходити відгук у багатьох людей в різних країнах. Коментар дизайнера: «Я хотів поділитися своєю графікою з великою кількістю людей, тому я взяв участь у цьому співробітництві. Break the Mold, яка також є основною графікою, хоче спробувати щось нове. Це почуття, яке я завжди відчуваю. В інший графіку, Я також додаю повідомлення, які приходять мені на ум у повсякденному житті». 425072-a6</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Толстовки Кофти та Светри Особливості моделі З капюшоном</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="чоловічий повсякденний топ disney mickey mouse art by andy warhol 990 грн uniqlo 38 / m / 46 kofty-svetry 2 популярних айдола, які народилися в 20 столітті, які знялися в ut miracle! в ознаменування 90-річчя дебюту міккі мауса на екрані буде випущена обмежена колекція дорогоцінних картин міккі, створених майстром поп-арту енді ворхолом. проект, натхненний серією портретів міккі, намальованої енді уорхолом в 1981 році, репрезентативною серією, що поєднує поп-культуру і поп-арт 414708-a6 толстовки кофти та светри сірий 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/tolstovki/101175371-muzhskoy-povsednevnyy-top-disney-mickey-mouse-art-by-andy-warhol" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6153/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/568756316_310_430" alt="Чоловічий повсякденний топ disney mickey mouse art by andy warhol" loading="lazy" decoding="async">
             </div>
@@ -304,19 +297,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/568756342_310_430' alt='Чоловічий повсякденний топ disney mickey mouse art by andy warhol' loading='lazy' decoding='async'></div>
-            <div class='product-description'>2 популярних айдола, які народилися в 20 столітті, які знялися в UT Miracle! В ознаменування 90-річчя дебюту Міккі Мауса на екрані буде випущена обмежена колекція дорогоцінних картин Міккі, створених майстром поп-арту Енді Ворхолом. Проект, натхненний серією портретів Міккі, намальованої Енді Уорхолом в 1981 році, репрезентативною серією, що поєднує поп-культуру і поп-арт 414708-a6</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Толстовки Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="чоловіча повсякденна худі urban walls 850 грн uniqlo 38 / m / 46 kofty-svetry urban walls urban walls — це серія робіт художників, що активно працюють у світі вуличного мистецтва, які використовують вулицю, як полотно. піклуючись про те, що відбувається в світі, додаючи краси забутих місцях, наближаючи людей по всьому світу до мистецтва, з різними цілями, і даруючи людям різноманітні нагадування в їх повсякденному житті у вигляді перфомансу в громадських місцях. 427495-a6 толстовки кофти та светри зелений 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/tolstovki/101182156-muzhskaya-povsednevnaya-hudi-urban-walls" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6152/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/568794202_310_430" alt="Чоловіча повсякденна худі urban walls" loading="lazy" decoding="async">
             </div>
@@ -326,19 +312,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/568794445_310_430' alt='Чоловіча повсякденна худі urban walls' loading='lazy' decoding='async'></div>
-            <div class='product-description'>URBAN WALLS URBAN WALLS — це серія робіт художників, що активно працюють у світі вуличного мистецтва, які використовують вулицю, як полотно. Піклуючись про те, що відбувається в світі, додаючи краси забутих місцях, наближаючи людей по всьому світу до мистецтва, з різними цілями, і даруючи людям різноманітні нагадування в їх повсякденному житті у вигляді перфомансу в громадських місцях. 427495-a6</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Толстовки Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Зелений</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="чоловіча повсякденна худі urban walls 890 грн uniqlo 38 / m / 46 kofty-svetry urban walls urban walls — це серія робіт художників, що активно працюють у світі вуличного мистецтва, які використовують вулицю, як полотно. піклуючись про те, що відбувається в світі, додаючи краси забутих місцях, наближаючи людей по всьому світу до мистецтва, з різними цілями, і даруючи людям різноманітні нагадування в їх повсякденному житті у вигляді перфомансу в громадських місцях. 427499-a6 толстовки кофти та светри білий 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/tolstovki/101182211-muzhskaya-povsednevnaya-hudi-urban-walls" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6151/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/568794445_310_430" alt="Чоловіча повсякденна худі urban walls" loading="lazy" decoding="async">
             </div>
@@ -348,13 +327,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>URBAN WALLS URBAN WALLS — це серія робіт художників, що активно працюють у світі вуличного мистецтва, які використовують вулицю, як полотно. Піклуючись про те, що відбувається в світі, додаючи краси забутих місцях, наближаючи людей по всьому світу до мистецтва, з різними цілями, і даруючи людям різноманітні нагадування в їх повсякденному житті у вигляді перфомансу в громадських місцях. 427499-a6</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Толстовки Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -366,7 +338,7 @@ background:var(--panel-solid);color:var(--muted);}
 ・елегантний і стильний дизайн з v-подібним вирізом.
 ・є різні кольори, які підходять до сорочок.
 400635-a26 светри кофти та светри синій 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/105255265-cholovichiy-vovnyaniy-svetr-z-v-podibnim-virizom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6150/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/638471496_310_430" alt="Чоловічий  вовняний светр з v-подібним вирізом" loading="lazy" decoding="async">
             </div>
@@ -376,13 +348,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Змініть міцність ребра, форму і структуру рукавів для більш компактного дизайну!<br>・Використання 100% дрібної вовни з пухнастими, еластичними, зручними та теплими властивостями обгортання.<br>・Змініть міцність ребра на вирізі та манжетах для більш динамічного вигляду.<br>・Змініть лінію, форму та структуру рукавів для кращої посадки.<br>・Елегантний і стильний дизайн з V-подібним вирізом.<br>・Є різні кольори, які підходять до сорочок.<br>400635-a26</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -393,7 +358,7 @@ background:var(--panel-solid);color:var(--muted);}
 ・змініть лінію, форму та структуру рукавів для більш зручної посадки.
 ・рябчастий колір, схожий на текстуру дерева, використовується в поєднанні з дрібним вовняним матеріалом.
 400634-a26 реглани кофти та светри сірий 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/reglany/105402285-cholovichiy-vovnyaniy-kardigan-iz-v-podibnim-virizom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6149/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/641768961_310_430" alt="Чоловічий вовняний кардиган із v-подібним вирізом" loading="lazy" decoding="async">
             </div>
@@ -403,13 +368,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Збільште міцність ребра, форму рукавів і структуру для більш компактного дизайну!<br>・Використання 100% дрібної вовни з пухнастими, еластичними, зручними та теплими властивостями обгортання.<br>・Змініть міцність ребра на вирізі та манжетах для більш динамічного вигляду.<br>・Змініть лінію, форму та структуру рукавів для більш зручної посадки.<br>・Рябчастий колір, схожий на текстуру дерева, використовується в поєднанні з дрібним вовняним матеріалом.<br>400634-A26</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Реглани Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -418,7 +376,7 @@ background:var(--panel-solid);color:var(--muted);}
 
 urban walls, серія робіт художників, які активно працюють у світі вуличного мистецтва, зосереджуючись на використанні вулиці як полотна. піклуючись про те, що відбувається у світі, додаючи краси забутим місцям, роблячи людей у ​​всьому світі ближчими до мистецтва з різними цілями та даруючи людям різноманітні нагадування у їхньому повсякденному житті у формі перформансу в громадських місцях.
 427496-a29 світшоти кофти та светри синій 40/l/4842/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitshoty/105869095-choloviche-povsyakdenne-hudi-urban-walls" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6148/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/653515978_310_430" alt="Чоловіче повсякденне худі urban walls" loading="lazy" decoding="async">
             </div>
@@ -428,20 +386,13 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 42 / XL / 50і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/653516061_310_430' alt='Чоловіче повсякденне худі urban walls' loading='lazy' decoding='async'></div>
-            <div class='product-description'>URBAN WALLS<br><br>URBAN WALLS, серія робіт художників, які активно працюють у світі вуличного мистецтва, зосереджуючись на використанні вулиці як полотна. Піклуючись про те, що відбувається у світі, додаючи краси забутим місцям, роблячи людей у ​​всьому світі ближчими до мистецтва з різними цілями та даруючи людям різноманітні нагадування у їхньому повсякденному житті у формі перформансу в громадських місцях.<br>427496-a29</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Світшоти Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>40/L/4842/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="чоловічий повсякденний світшот disney mickey mouse art by andy worhol 1099 грн uniqlo 36 / s / 44 kofty-svetry чоловічий повсякденний світшот disney mickey mouse art by andy worhol
 414706-а29 світшоти кофти та светри сірий 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitshoty/105872352-cholovichiy-povsyakdenniy-svitshot-disney-mickey-mouse-art-by-andy" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6147/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/653567490_310_430" alt="Чоловічий повсякденний світшот disney mickey mouse art by andy worhol" loading="lazy" decoding="async">
             </div>
@@ -451,13 +402,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Чоловічий повсякденний світшот DISNEY MICKEY MOUSE art by ANDY WORHOL<br>414706-а29</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Світшоти Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -471,9 +415,8 @@ urban walls, серія робіт художників, які активно �
 калі девітт
 калі девітт живе і працює в zuma beach ca. він описує себе як «багатовимірну істоту» і каже нам, що йому здається, що наступного року йому виповниться 100 років. девітт — художник і дизайнер, який протягом останнього десятиліття виставляв свої роботи по всьому світу, а також займався дизайном для культурних корифеїв епохи.
 
-
 457572-к20 худі кофти та светри білий 34/xs/4236/s/44 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/hudi/166773511-hudi-the-message-vid-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6146/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/-221010926_310_430" alt="Худі the message від uniqlo" loading="lazy" decoding="async">
             </div>
@@ -483,13 +426,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>36 / S / 44і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/-221011059_310_430' alt='Худі the message від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-221010933_310_430' alt='Худі the message від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2160989936_310_430' alt='Худі the message від uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Худі The Message від UNIQLO<br>В наявності розмір XS, S<br><br>Опис:<br>часто відображають думки та тенденції нашого часу. Задовго до соціальних медіа футболки були полотном, на якому люди всюди могли вільно висловлювати свої повідомлення. Ми повернулися до витоків графічної футболки та співпрацювали з трьома сучасними художниками, які ведуть арт-сцену в США та Лондоні.<br><br>Калі Девітт<br>Калі Девітт живе і працює в Zuma Beach CA. Він описує себе як «багатовимірну істоту» і каже нам, що йому здається, що наступного року йому виповниться 100 років. Девітт — художник і дизайнер, який протягом останнього десятиліття виставляв свої роботи по всьому світу, а також займався дизайном для культурних корифеїв епохи.<br><br><br>457572-К20</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Худі Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>34/XS/4236/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -500,7 +436,7 @@ urban walls, серія робіт художників, які активно �
 #hatt,universityt
 © питер цейзе
 416128-62а світшоти кофти та светри принт абстракція синій 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitshoty/166961576-muzhskoy-povsednevnyy-svitshot-s-kapyushonom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6145/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/-225451688_310_430" alt="Мужской повседневный свитшот с капюшоном" loading="lazy" decoding="async">
             </div>
@@ -510,13 +446,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 40 / L / 48</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Питер Цейзер<br><br>Питер Цейзер — голландский типограф/художник, живущий в Париже, который создает работы, начиная от минималистского дизайна и заканчивая динамичным и красочным абстрактным искусством. Его изящно нарисованные слова полны поэзии и юмора, полны оптимистических посланий, которые могут принести людям положительную энергию. Работы Uniqlo созданы на тему «Клуба без забот», восхваляющего душу свободой и оптимизмом.<br>#hatT,universityT<br>© Питер Цейзе<br>416128-62а</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Світшоти Кофти та Светри Принт Абстракція</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -533,7 +462,7 @@ urban walls, серія робіт художників, які активно �
 склад: 78% акрил, 13% поліестер, 5% вовна, 4% нейлон
 
 450546-к3 светри кофти та светри білий бежевий денім нейлон поліестер акрил вовна стиль повсякденний 34/xs/4236/s/44 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/171264889-svetr-z-vizerunkom-aran-vid-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6144/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/-343378453_310_430" alt="Светр з візерунком aran від uniqlo" loading="lazy" decoding="async">
             </div>
@@ -543,13 +472,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/-343378472_310_430' alt='Светр з візерунком aran від uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Светр Aran UNIQLO<br>В наявності розмір ХС та С, колір молочний<br>Опис:<br>- Візерунок Аран, пов&#x27;язаний спицями з легкої, об&#x27;ємної, м&#x27;якої об&#x27;ємної пряжі.<br>- Використання більш м’якої пряжі та зміни моделі в’язання призвели до того, що светр Aran легше адаптується до сучасного життя.<br>- Комбінація пряжі була ретельно розроблена, щоб візерунок в&#x27;язання був чітко вираженим.<br>- Цей предмет має розслаблений силует і яскравий вигляд.<br>- Повсякденний предмет з чудовим акцентом під пальто.<br><br>Склад: 78% акрил, 13% поліестер, 5% вовна, 4% нейлон<br><br>450546-К3</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Білий Бежевий</dd></div><div><dt>Матеріал</dt><dd>Денім Нейлон Поліестер Акрил Вовна Стиль Повсякденний</dd></div><div><dt>Розмір</dt><dd>34/XS/4236/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -562,7 +484,7 @@ urban walls, серія робіт художників, які активно �
 склад: 45% поліестер - перероблене волокно, 29% поліестер, 20% бавовна, 6% еластан
 
 465202 толстовки кофти та светри сірий сітка 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/tolstovki/181600792-tolstovka-dry-uniqlo-rozmir-m" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6143/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2155322902_310_430" alt="Толстовка dry uniqlo, розмір м" loading="lazy" decoding="async">
             </div>
@@ -572,13 +494,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2155322903_310_430' alt='Толстовка dry uniqlo, розмір м' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2155322904_310_430' alt='Толстовка dry uniqlo, розмір м' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2155322965_310_430' alt='Толстовка dry uniqlo, розмір м' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2155322906_310_430' alt='Толстовка dry uniqlo, розмір м' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2155322905_310_430' alt='Толстовка dry uniqlo, розмір м' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Толстовка DRY UNIQLO, розмір М<br><br>Опис:<br>Ця толстовка пошита з матової тканини з додаванням еластичності для зручності пересування. Дихаюча сітка всередині капюшона та кишень забезпечує відчуття свіжості, а блискавка на нагрудній кишені зберігає ваші речі в безпеці.<br><br>Склад: 45% поліестер - перероблене волокно, 29% поліестер, 20% бавовна, 6% еластан<br><br>465202</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Толстовки Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Сітка</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -595,9 +510,8 @@ urban walls, серія робіт художників, які активно �
 - можна прати вручну.
 склад:40% нейлон, 36% акрил, 20% бавовна, 4% спандекс
 
-
 460946 светри кофти та светри синій трикотаж 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/182016243-3d-vyazaniy-svetr-uniqlo-rozmir-m" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6142/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2157852842_310_430" alt="3d-в&#x27;язаний светр uniqlo, розмір м" loading="lazy" decoding="async">
             </div>
@@ -607,13 +521,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2157852840_310_430' alt='3d-в&#x27;язаний светр uniqlo, розмір м' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2157852841_310_430' alt='3d-в&#x27;язаний светр uniqlo, розмір м' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1382003335_310_430' alt='3d-в&#x27;язаний светр uniqlo, розмір м' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2225264003_310_430' alt='3d-в&#x27;язаний светр uniqlo, розмір м' loading='lazy' decoding='async'></div>
-            <div class='product-description'>3D-в&#x27;язаний светр UNIQLO<br>В наявності розмір М, колір 67 BLUE<br><br>Опис:<br>- М&#x27;яка пряжа для суфле, яка не свербить.<br>- Спеціальне матове покриття забезпечує гладку текстуру та відчуття повітря.<br>- Безшовний трикотаж, створений за технікою WHOLEGARMENT®* для неймовірно зручного крою. *WHOLEGARMENTⓇ є зареєстрованою торговою маркою Shima Seiki Mfg., Ltd.<br>- Рукава реглан і еластична пряжа для більш зручного крою.<br>- Прошивка між корпусом і ребристим коміром запобігає розтягуванню під час зберігання на вішалці.<br>- Можна прати вручну.<br>Склад:40% нейлон, 36% акрил, 20% бавовна, 4% спандекс<br><br><br>460946</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Трикотаж</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -634,9 +541,8 @@ urban walls, серія робіт художників, які активно �
 
 склад: 91% поліестер, 9% еластан
 
-
 463067 пуловери кофти та светри синій шкіра фліс поліестер еластан s новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/pulovery/183781777-flisoviy-pulover-uniqlo-rozmir-s" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6141/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2168601748_310_430" alt="Флісовий пуловер uniqlo, розмір с" loading="lazy" decoding="async">
             </div>
@@ -646,13 +552,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2219386429_310_430' alt='Флісовий пуловер uniqlo, розмір с' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219385800_310_430' alt='Флісовий пуловер uniqlo, розмір с' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Флісовий пуловер UNIQLO<br>В наявності  розмір С, колір 66 BLUE<br><br>Опис:<br>Спортивний пуловер із застібкою-блискавкою. Гладкий фліс створює елегантне враження.<br>- Тканина тонкої текстури. Гладке відчуття флісу.<br>- З винятковою еластичністю для легкого руху.<br>- Тонку тканину легко стилізувати.<br>- Універсальна регулярна посадка.<br>- Спортивний дизайн із застібкою-блискавкою.<br>- Комір-стійка чудово виглядає як на блискавці, так і без неї.<br>- Застібка не торкається шкіри.<br>- Дизайн манжет дозволяє легко закатати рукава.<br><br>Склад: 91% поліестер, 9% еластан<br><br><br>463067</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Пуловери Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Шкіра Фліс Поліестер Еластан</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -668,7 +567,7 @@ urban walls, серія робіт художників, які активно �
 100% бавовна
 
 384790020 худі кофти та светри сірий бавовна сезон осінь 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/hudi/184955698-hudi-levis-rozmir-m" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6140/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2175974185_310_430" alt="Худі levis, розмір м" loading="lazy" decoding="async">
             </div>
@@ -678,13 +577,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Levi&#x27;s • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2175974241_310_430' alt='Худі levis, розмір м' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1727578087_310_430' alt='Худі levis, розмір м' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/624353482_310_430' alt='Худі levis, розмір м' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1807871419_310_430' alt='Худі levis, розмір м' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Худі levis, розмір М<br><br>Коли йдеться про стимулювання змін, немає такої потужної дії, як голосування. Отже, ми об’єднуємося з Rock the Vote, щоб зареєструвати якомога більше виборців на осінніх виборах. Разом наш голос буде почутий.<br><br>Зручний худі з невимушеним кроєм<br>Стиль, натхненний вуличним одягом<br><br>Склад:<br>100% бавовна<br><br>384790020</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Худі Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Сезон Осінь</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -701,7 +593,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% бавовна
 
 465199 світшоти кофти та светри блакитний бавовна сезон осінь 42/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitshoty/184958428-svitshot-unisex-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6139/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2175990331_310_430" alt="Світшот unisex uniqlo" loading="lazy" decoding="async">
             </div>
@@ -711,13 +603,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2167754830_310_430' alt='Світшот unisex uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2152595288_310_430' alt='Світшот unisex uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-860561782_310_430' alt='Світшот unisex uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2171437308_310_430' alt='Світшот unisex uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Світшот unisex Uniqlo<br>В наявності розмір ХЛ, колір 64 BLUE<br><br>Опис:<br>гладкий дотик зсередини та зовні<br>класичний світшот<br>кругла горловина<br>меланжева тканина<br><br>Склад: 100% бавовна<br><br>465199</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Світшоти Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Матеріал</dt><dd>Бавовна Сезон Осінь</dd></div><div><dt>Розмір</dt><dd>42/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -726,7 +611,7 @@ urban walls, серія робіт художників, які активно �
 в наявності: розмір с, м та л
 начісу немає!
 100% бавовна світшоти кофти та светри синій бавовна сезон осінь 36/s/4438/m/4640/l/48 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitshoty/184956791-svitshot-ut-archive-louvre-graphic-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6138/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2175980558_310_430" alt="Світшот ut archive louvre graphic uniqlo" loading="lazy" decoding="async">
             </div>
@@ -736,13 +621,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 36 / S / 44і ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2175980619_310_430' alt='Світшот ut archive louvre graphic uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2175980616_310_430' alt='Світшот ut archive louvre graphic uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2175980618_310_430' alt='Світшот ut archive louvre graphic uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2175983750_310_430' alt='Світшот ut archive louvre graphic uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/700124632_310_430' alt='Світшот ut archive louvre graphic uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/583928947_310_430' alt='Світшот ut archive louvre graphic uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Світшот UT Archive Louvre Graphic UNIQLO<br>В наявності: розмір С, М та Л<br>Начісу немає!<br>100% бавовна</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Світшоти Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Бавовна Сезон Осінь</dd></div><div><dt>Розмір</dt><dd>36/S/4438/M/4640/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -751,7 +629,7 @@ urban walls, серія робіт художників, які активно �
 в наявності: розмір м, л та хл
 начісу немає!
 100% бавовна світшоти кофти та светри сірий бавовна сезон осінь mlxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitshoty/184957325-svitshot-ut-archive-louvre-graphic-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6137/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2175983750_310_430" alt="Світшот ut archive louvre graphic uniqlo" loading="lazy" decoding="async">
             </div>
@@ -761,13 +639,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • Mі ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2175983761_310_430' alt='Світшот ut archive louvre graphic uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2175983764_310_430' alt='Світшот ut archive louvre graphic uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2175983770_310_430' alt='Світшот ut archive louvre graphic uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2175983768_310_430' alt='Світшот ut archive louvre graphic uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2175983759_310_430' alt='Світшот ut archive louvre graphic uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Світшот UT Archive Louvre Graphic UNIQLO<br>В наявності: розмір М, Л та ХЛ<br>Начісу немає!<br>100% бавовна</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Світшоти Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Сезон Осінь</dd></div><div><dt>Розмір</dt><dd>MLXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -786,7 +657,7 @@ urban walls, серія робіт художників, які активно �
 60% акрил, 30% нейлон, 8% шерсть, 2% імпортний спандекс
 
 451614 светри кофти та светри чорний акрил нейлон спандекс 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/191657212-svetr-fair-isle-iz-pryazhi-sufle-jw-anderson-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6136/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2216149967_310_430" alt="Светр fair isle із пряжі суфле (jw anderson) uniqlo" loading="lazy" decoding="async">
             </div>
@@ -796,13 +667,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 40 / L / 48</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2216150543_310_430' alt='Светр fair isle із пряжі суфле (jw anderson) uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2216150544_310_430' alt='Светр fair isle із пряжі суфле (jw anderson) uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Светр Fair Isle із пряжі суфле (JW Anderson) Uniqlo, розмір Л<br><br>Опис:<br>Новий одяг LifeWear поєднує в собі увагу UNIQLO до дизайну, посадки, тканини та функціональності з акцентом JW Anderson на традиційному британському одязі в інноваційному дизайні.<br><br>- Чудово м&#x27;яка пряжа для суфле, що не викликає зуду.<br>- Спеціальний процес брошування створює затишне, легке оздоблення.<br>- Вільний крій зі спущеними плечима.<br>- Візерунок Fair Isle додає стильний акцент.<br><br>Склад:<br>60% акрил, 30% нейлон, 8% шерсть, 2% імпортний спандекс<br><br>451614</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Акрил Нейлон Спандекс</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -820,7 +684,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% поліестер
 
 471233 пуловери кофти та светри бежевий білий поліестер фліс xl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/pulovery/192165399-flisoviy-pulover-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6135/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2219385800_310_430" alt="Флісовий пуловер uniqlo" loading="lazy" decoding="async">
             </div>
@@ -830,13 +694,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2219385802_310_430' alt='Флісовий пуловер uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219385804_310_430' alt='Флісовий пуловер uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219385806_310_430' alt='Флісовий пуловер uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219386429_310_430' alt='Флісовий пуловер uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Флісовий пуловер UNIQLO<br>В наявності розмір ХЛ, колір 30 NATURAL<br><br>Опис:<br>- Дизайн із напівзастібкою-блискавкою.<br>- Вільний, оверсайз силует регулюється за допомогою шнурка по низу.<br>- Боді виготовлено з м&#x27;якої, пружинистої тканини.<br>- Практична нагрудна кишеня на застібці-блискавці.<br>- Можна прати в пральній машині для легкого догляду.<br><br>Склад: 100% поліестер<br><br>471233</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Пуловери Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бежевий Білий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -854,7 +711,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% поліестер
 
 471233 пуловери кофти та светри сірий поліестер фліс 3xl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/pulovery/192165516-flisoviy-pulover-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6134/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2219386429_310_430" alt="Флісовий пуловер uniqlo" loading="lazy" decoding="async">
             </div>
@@ -864,13 +721,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 3XL</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2219386478_310_430' alt='Флісовий пуловер uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219386483_310_430' alt='Флісовий пуловер uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219386485_310_430' alt='Флісовий пуловер uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219386487_310_430' alt='Флісовий пуловер uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Флісовий пуловер UNIQLO<br>В наявності розмір  3XL, колір 08 DARK GRAY<br><br>Опис:<br>- Дизайн із напівзастібкою-блискавкою.<br>- Вільний, оверсайз силует регулюється за допомогою шнурка по низу.<br>- Боді виготовлено з м&#x27;якої, пружинистої тканини.<br>- Практична нагрудна кишеня на застібці-блискавці.<br>- Можна прати в пральній машині для легкого догляду.<br><br>Склад: 100% поліестер<br><br>471233</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Пуловери Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс</dd></div><div><dt>Розмір</dt><dd>3XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -887,7 +737,7 @@ urban walls, серія робіт художників, які активно �
 склад
 100% поліестер
 460328 толстовки кофти та светри хакі зелений поліестер фліс 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/tolstovki/192167563-flisova-kofta-uniseks-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6133/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2219399476_310_430" alt="Флісова кофта унісекс uniqlo" loading="lazy" decoding="async">
             </div>
@@ -897,13 +747,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2219399615_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219399624_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2246933014_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219401809_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219400978_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Флісова кофта унісекс uniqlo<br>В наявності розмір С , колір 57 OLIVE<br>Опис:<br>- Легкий, теплий фліс.<br>- Виготовлений із зручного флісу високої щільності.<br>- Можна прати в машині для легкого догляду.<br>- Застібками легко працювати в рукавичках.<br>- Високий комір і вітрозахисна окантовка на подолі та манжетах допомагають зберегти тепло.<br><br>Склад<br>100% поліестер<br>460328</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Толстовки Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Хакі Зелений</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -923,7 +766,7 @@ urban walls, серія робіт художників, які активно �
 100% поліестер
 
 462028 кофти кофти та светри синій чорний поліестер фліс 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/kofty/192167781-flisova-kofta-uniseks-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6132/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2219400978_310_430" alt="Флісова кофта унісекс uniqlo" loading="lazy" decoding="async">
             </div>
@@ -933,13 +776,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2219401076_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219401080_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219401125_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Флісова кофта унісекс UNIQLO<br>В наявності розмір М.<br>Опис:<br>- Легкий, теплий фліс.<br>- Виготовлений із зручного флісу високої щільності.<br>- Можна прати в машині для легкого догляду.<br>- Втачні рукава для чистого вигляду.<br>- Застібками легко працювати в рукавичках.<br>- високий комір і вітрозахисна окантовка на подолі та манжетах допомагають зберегти тепло.<br>- Дизайн кольорових блоків.<br><br>Склад<br>100% поліестер<br><br>462028</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кофти Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій Чорний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -959,7 +795,7 @@ urban walls, серія робіт художників, які активно �
 100% поліестер
 
 462028 кофти кофти та светри бежевий поліестер фліс 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/kofty/192167903-flisova-kofta-uniseks-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6131/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2219401809_310_430" alt="Флісова кофта унісекс uniqlo" loading="lazy" decoding="async">
             </div>
@@ -969,13 +805,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2219401811_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219401815_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219401816_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2219401819_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2246933014_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229816550_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Флісова кофта унісекс UNIQLO<br>В наявності розмір М .<br>Опис:<br>- Легкий, теплий фліс.<br>- Виготовлений із зручного флісу високої щільності.<br>- Можна прати в машині для легкого догляду.<br>- Втачні рукава для чистого вигляду.<br>- Застібками легко працювати в рукавичках.<br>- високий комір і вітрозахисна окантовка на подолі та манжетах допомагають зберегти тепло.<br>- Дизайн кольорових блоків.<br><br>Склад<br>100% поліестер<br><br>462028</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кофти Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -984,9 +813,8 @@ urban walls, серія робіт художників, які активно �
 в наявності розмір ххл, колір 30 natural
 склад: 100% вовна
 
-
 469400 светри кофти та светри білий бежевий вовна 44/xxl/52 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/193931341-svetr-z-ovechoyi-vovni-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6130/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2230057868_310_430" alt="Светр з овечої вовни uniqlo" loading="lazy" decoding="async">
             </div>
@@ -996,13 +824,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 44 / XXL / 52</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2230060045_310_430' alt='Светр з овечої вовни uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Светр з овечої вовни uniqlo<br>В наявності розмір ХХЛ, колір 30 NATURAL<br>Склад: 100% вовна<br><br><br>469400</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Білий Бежевий</dd></div><div><dt>Матеріал</dt><dd>Вовна</dd></div><div><dt>Розмір</dt><dd>44/XXL/52</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1012,7 +833,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% вовна
 
 469400 светри кофти та светри сірий вовна 44/xxl/52 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/193931516-svetr-z-ovechoyi-vovni-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6129/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2230060045_310_430" alt="Светр з овечої вовни uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1022,13 +843,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 44 / XXL / 52</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2230059031_310_430' alt='Светр з овечої вовни uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Светр з овечої вовни uniqlo<br>В наявності розмір ХХЛ, колір 04 GREY<br>Склад: 100% вовна<br><br>469400</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Вовна</dd></div><div><dt>Розмір</dt><dd>44/XXL/52</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1044,7 +858,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% вовна
 
 469398 светри кофти та светри коричневий вовна 44/xxl/52 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/193932600-cholovichiy-merinosoviy-golf-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6128/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2230065842_310_430" alt="Чоловічий мериносовий гольф uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1054,13 +868,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 44 / XXL / 52</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2226840869_310_430' alt='Чоловічий мериносовий гольф uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Чоловічий мериносовий гольф UNIQLO<br>В наявності розмір ХХЛ, колір 36 BROWN<br><br>Опис:<br>Виготовлено зі 100% надзвичайно тонкої мериносової вовни для м&#x27;якості та блискучого ефекту.<br>Висота коміра та натяг ребер розроблені для надзвичайно комфортної посадки.<br>Можна прати в пральній машині, з додатковим покриттям, що запобігає утворенню катишок, для легкого догляду.<br><br>Склад: 100% вовна<br><br>469398</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Коричневий</dd></div><div><dt>Матеріал</dt><dd>Вовна</dd></div><div><dt>Розмір</dt><dd>44/XXL/52</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1077,7 +884,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% перероблений поліестер
 
 469955 кардигани кофти та светри бежевий поліестер фліс 36/s/4438/m/46 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/kardigany/193932812-flisoviy-kardigan-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6127/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2230067073_310_430" alt="Флісовий кардиган uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1087,13 +894,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2230067076_310_430' alt='Флісовий кардиган uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2230067166_310_430' alt='Флісовий кардиган uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2230067164_310_430' alt='Флісовий кардиган uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2230067078_310_430' alt='Флісовий кардиган uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2256629053_310_430' alt='Флісовий кардиган uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2256628685_310_430' alt='Флісовий кардиган uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Флісовий кардиган UNIQLO<br>В наявності розмір С та М, колір 32 BEIGE<br><br>Опис:<br>- високий комір зберігає шию в теплі<br>- прострочка на манжетах та подолі запобігають проникненню вітру та зберігають тепло<br>- рукав-реглан<br>- можна прати у пральній машині<br><br>Склад: 100% перероблений поліестер<br><br>469955</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кардигани Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс</dd></div><div><dt>Розмір</dt><dd>36/S/4438/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1105,11 +905,10 @@ urban walls, серія робіт художників, які активно �
 виготовлено з надзвичайно тонкої 100% мериносової вовни товщиною 19,5 мікрон для гладкості та блиску.
 можна прати в пральній машині, обробка запобігає утворенню катишок для легкого догляду.
 
-
 склад: 100% вовна
 
 469395 светри кофти та светри сірий вовна 44/xxl/52 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/194060370-dzhemper-uniqlo-100-vovni-merinosu" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6126/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2230847578_310_430" alt="Джемпер  uniqlo 100% вовни мериносу" loading="lazy" decoding="async">
             </div>
@@ -1119,13 +918,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 44 / XXL / 52</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2230847579_310_430' alt='Джемпер  uniqlo 100% вовни мериносу' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2256641990_310_430' alt='Джемпер  uniqlo 100% вовни мериносу' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Джемпер  UNIQLO 100% вовни мериносу<br>В наявності розмір ХХЛ, колір 03 GREY<br><br>Опис:<br>Виготовлено з надзвичайно тонкої 100% мериносової вовни товщиною 19,5 мікрон для гладкості та блиску.<br>Можна прати в пральній машині, обробка запобігає утворенню катишок для легкого догляду.<br><br><br>Склад: 100% вовна<br><br>469395</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Вовна</dd></div><div><dt>Розмір</dt><dd>44/XXL/52</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1136,7 +928,7 @@ urban walls, серія робіт художників, які активно �
 склад: 60% акрил, 35% поліамід, 5% вовна
 
 479733 светри кофти та светри чорний акрил поліамід вовна 40/l/4842/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/196246725-svetr-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6125/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2239827210_310_430" alt="Светр uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1146,13 +938,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2239827205_310_430' alt='Светр uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2239838105_310_430' alt='Светр uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1562701884_310_430' alt='Светр uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2225641043_310_430' alt='Светр uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/617896506_310_430' alt='Светр uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Светр uniqlo<br>В наявності розмір Л та ХЛ, колір чорний<br><br>Склад: 60% акрил, 35% поліамід, 5% вовна<br><br>479733</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Акрил Поліамід Вовна</dd></div><div><dt>Розмір</dt><dd>40/L/4842/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1163,7 +948,7 @@ urban walls, серія робіт художників, які активно �
 склад: 60% акрил, 35% поліамід, 5% вовна
 
 479733 светри кофти та светри бордовий акрил поліамід вовна 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/196249307-svetr-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6124/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2239838105_310_430" alt="Светр uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1173,13 +958,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 40 / L / 48</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Светр uniqlo<br>В наявності розмір Л, колір 19 WINE<br><br>Склад: 60% акрил, 35% поліамід, 5% вовна<br><br>479733</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бордовий</dd></div><div><dt>Матеріал</dt><dd>Акрил Поліамід Вовна</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1194,7 +972,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% поліестер
 
 469956 кофти кофти та светри бордовий червоний поліестер фліс 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/kofty/197574586-flisova-kofta-uniseks-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6123/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2246933014_310_430" alt="Флісова кофта унісекс uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1204,13 +982,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 40 / L / 48</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2246933012_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2166850437_310_430' alt='Флісова кофта унісекс uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Флісова кофта унісекс UNIQLO<br>В наявності розмір Л, колір 18 WINE<br> Опис:<br>Тепла, пухнаста тканина.<br>Окантовка на манжетах і подолу не пропускає холодне повітря, а тепло всередину.<br>Високий комір, щоб ваша шия була в теплі.<br><br>Склад: 100% поліестер<br><br>469956</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кофти Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бордовий Червоний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1227,7 +998,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% перероблений поліестер
 
 469955 кофти кофти та светри блакитний поліестер фліс 38/m/4640/l/48 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/kofty/199530355-flisoviy-kardigan-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6122/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2256628685_310_430" alt="Флісовий кардиган uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1237,13 +1008,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2256629053_310_430' alt='Флісовий кардиган uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Флісовий кардиган UNIQLO<br>В наявності розмір М та Л<br><br>Опис:<br>- високий комір зберігає шию в теплі<br>- прострочка на манжетах та подолі запобігають проникненню вітру та зберігають тепло<br>- рукав-реглан<br>- можна прати у пральній машині<br><br>Склад: 100% перероблений поліестер<br><br>469955</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кофти Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс</dd></div><div><dt>Розмір</dt><dd>38/M/4640/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1260,7 +1024,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% перероблений поліестер
 
 469955 кардигани кофти та светри зелений бірюзовий поліестер фліс 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/kardigany/199530409-flisoviy-kardigan-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6121/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2256629053_310_430" alt="Флісовий кардиган uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1270,13 +1034,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 40 / L / 48</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Флісовий кардиган UNIQLO<br>В наявності розмір  Л<br><br>Опис:<br>- високий комір зберігає шию в теплі<br>- прострочка на манжетах та подолі запобігають проникненню вітру та зберігають тепло<br>- рукав-реглан<br>- можна прати у пральній машині<br><br>Склад: 100% перероблений поліестер<br><br>469955</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кардигани Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Зелений Бірюзовий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1285,7 +1042,7 @@ urban walls, серія робіт художників, які активно �
 в наявності розмір хл, колір 32 beige
 
 опис:
-мериносова вовна змішана з акрилом, що не утворює катишок, для виняткового комфорту, довговічності та легкого догляду. 
+мериносова вовна змішана з акрилом, що не утворює катишок, для виняткового комфорту, довговічності та легкого догляду.
 можна прати вручну.
 вільний крій та рукави реглан забезпечують свободу рухів.
 ребристий комір, манжети та поділ.
@@ -1293,7 +1050,7 @@ urban walls, серія робіт художників, які активно �
 склад: 57% акрил, 25% вовна, 18% поліамід
 
 479837 джемпери кофти та светри бежевий акрил поліамід вовна 42/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/dzhempery/199532536-dzhemper-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6120/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2256641990_310_430" alt="Джемпер uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1303,13 +1060,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2232939902_310_430' alt='Джемпер uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2232940627_310_430' alt='Джемпер uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2190206839_310_430' alt='Джемпер uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2190206380_310_430' alt='Джемпер uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2190206654_310_430' alt='Джемпер uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2190103600_310_430' alt='Джемпер uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Джемпер uniqlo<br>В наявності розмір ХЛ, колір 32 BEIGE<br><br>Опис:<br>Мериносова вовна змішана з акрилом, що не утворює катишок, для виняткового комфорту, довговічності та легкого догляду. <br>Можна прати вручну.<br>Вільний крій та рукави реглан забезпечують свободу рухів.<br>Ребристий комір, манжети та поділ.<br><br>Склад: 57% акрил, 25% вовна, 18% поліамід<br><br>479837</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Джемпери Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Акрил Поліамід Вовна</dd></div><div><dt>Розмір</dt><dd>42/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1325,7 +1075,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% мериносова вовна
 
 469396 светри кофти та светри синій вовна 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/194414631-dzhemper-uniqlo-zi-100-vovni-merinosa" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6119/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2232940627_310_430" alt="Джемпер uniqlo зі 100% вовни мериноса" loading="lazy" decoding="async">
             </div>
@@ -1335,18 +1085,11 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2232939902_310_430' alt='Джемпер uniqlo зі 100% вовни мериноса' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Джемпер UNIQLO зі 100% вовни мериноса<br>В наявності розмір М, колір 66 BLUE<br><br>Опис:<br>Виготовлено з надзвичайно тонкої 100% мериносової вовни товщиною 19,5 мікрон для гладкості та блиску.<br>Змінна ребриста в&#x27;язка на рукавах та подолу для запобігання провисанню.<br>Можна прати в пральній машині<br><br>Склад: 100% мериносова вовна<br><br>469396</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Вовна</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card" data-search="джемпер uniqlo зі 100% вовни мериноса 1450 грн uniqlo 38 / m / 46і ще 2 kofty-svetry джемпер uniqlo зі 100% вовни мериноса 
+    <div class="product-card hidden-card" data-search="джемпер uniqlo зі 100% вовни мериноса 1450 грн uniqlo 38 / m / 46і ще 2 kofty-svetry джемпер uniqlo зі 100% вовни мериноса
 в наявності розмір м, л та хл
 
 опис:
@@ -1357,7 +1100,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% мериносова вовна
 
 469396 светри кофти та светри бежевий вовна 38/m/4640/l/4842/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/svitery/194414498-dzhemper-uniqlo-zi-100-vovni-merinosa" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6118/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2232939902_310_430" alt="Джемпер uniqlo зі 100% вовни мериноса" loading="lazy" decoding="async">
             </div>
@@ -1367,13 +1110,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 38 / M / 46і ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Джемпер UNIQLO зі 100% вовни мериноса <br>В наявності розмір М, Л та ХЛ<br><br>Опис:<br>Виготовлено з надзвичайно тонкої 100% мериносової вовни товщиною 19,5 мікрон для гладкості та блиску.<br>Змінна ребриста в&#x27;язка на рукавах та подолу для запобігання провисанню.<br>Можна прати в пральній машині<br><br>Склад: 100% мериносова вовна<br><br>469396</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Светри Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Вовна</dd></div><div><dt>Розмір</dt><dd>38/M/4640/L/4842/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1381,7 +1117,6 @@ urban walls, серія робіт художників, які активно �
     <div class="product-card hidden-card" data-search="худі uniqlo 1200 грн uniqlo 42 / xl / 50 kofty-svetry худі uniqlo
 в наявності розмір хл, колір 31 beige
 без начісу!!!
-
 
 опис:
 худі з колекції uniqlo: c від клер вейт келлер – це сучасний базовий елемент гардеробу, розроблений для комфорту та універсальності. цей худі з товстим, структурованим кроєм оверсайз та лаконічним силуетом виготовлений з щільної структурованої бавовни, яка тримає форму, забезпечуючи м&#x27;якість на дотик. мінімалістичний дизайн дозволяє легко носити його для різних статей та випадків, як шарами, так і самостійно.
@@ -1396,7 +1131,7 @@ urban walls, серія робіт художників, які активно �
 склад: основна частина: 100% бавовна/ ребро: 82% бавовна, 18% поліестер/ підкладка капюшона: 61% бавовна, 39% поліестер
 
 479798 худі кофти та светри бежевий поліестер бавовна фасон оверсайз 42/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/hudi/199259849-hudi-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6117/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2255124220_310_430" alt="Худі uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1406,13 +1141,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2255124219_310_430' alt='Худі uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Худі uniqlo<br>В наявності розмір ХЛ, колір 31 BEIGE<br>Без начісу!!!<br><br><br>Опис:<br>Худі з колекції UNIQLO: C від Клер Вейт Келлер – це сучасний базовий елемент гардеробу, розроблений для комфорту та універсальності. Цей худі з товстим, структурованим кроєм оверсайз та лаконічним силуетом виготовлений з щільної структурованої бавовни, яка тримає форму, забезпечуючи м&#x27;якість на дотик. Мінімалістичний дизайн дозволяє легко носити його для різних статей та випадків, як шарами, так і самостійно.<br><br>- Розроблено Клер Вейт Келлер для UNIQLO: C<br>- Оверсайз унісекс для невимушеного стилю.<br>- Щільна структурована бавовняна тканина для комфорту.<br>- Ребристі манжети та поділ для збереження форми.<br>- Чіткий виріз горловини та мінімалістичний силует.<br>- Ідеально підходить для шарів або самостійного носіння в повсякденних та вишуканих образах.<br><br>Склад: Основна частина: 100% бавовна/ Ребро: 82% бавовна, 18% поліестер/ Підкладка капюшона: 61% бавовна, 39% поліестер<br><br>479798</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Худі Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Фасон Оверсайз</dd></div><div><dt>Розмір</dt><dd>42/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1423,7 +1151,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% бавовна
 
 485289 толстовки кофти та светри сірий бавовна l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/tolstovki/205192124-tolstovka-z-kolekciyi-moma-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6116/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2281283073_310_430" alt="Толстовка з колекції moma uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1433,13 +1161,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2281283070_310_430' alt='Толстовка з колекції moma uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2281283072_310_430' alt='Толстовка з колекції moma uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Толстовка з колекції MoMA UNIQLO<br>В наявності розмір Л, начосу немає<br><br>Склад: 100% бавовна<br><br>485289</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Толстовки Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1455,7 +1176,7 @@ urban walls, серія робіт художників, які активно �
 склад: 56% бавовна, 44% поліестер
 
 471806 лонгсліви кофти та светри бежевий поліестер фліс бавовна сезон осінь демісезон весна зима принт без принту особливості в рубчик стиль спортивний xsl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205689363-longsliv-uniqlo-z-nachosom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6115/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282536211_310_430" alt="Лонгслів uniqlo з начосом" loading="lazy" decoding="async">
             </div>
@@ -1465,13 +1186,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • XSі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282536319_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282536325_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282536331_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282559481_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282558074_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282545635_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів Uniqlo на флісі<br>В наявності розмір ХС  та Л, колір 31 BEIGE<br>Опис:<br>- М&#x27;яка та зручна з начосом.<br>- Дизайн високого коміра зберігає шию в теплі.<br>- Манжети в рубчик дозволяють легко закатати рукава.<br>- Універсальний дизайн імітації горловини зі спущеними плечима та невимушеною посадкою, підходить для носіння як окремо, так і з шарами.<br><br>Склад: 56% бавовна, 44% поліестер<br><br>471806</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс Бавовна Сезон Осінь Демісезон Весна Зима Принт Без принту Особливості В рубчик Стиль Спортивний</dd></div><div><dt>Розмір</dt><dd>XSL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1487,7 +1201,7 @@ urban walls, серія робіт художників, які активно �
 склад: 56% бавовна, 44% поліестер
 
 471806 лонгсліви кофти та светри синій поліестер фліс бавовна принт без принту особливості в рубчик l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205690016-longsliv-uniqlo-z-nachosom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6114/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282538137_310_430" alt="Лонгслів uniqlo з начосом" loading="lazy" decoding="async">
             </div>
@@ -1497,13 +1211,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282539991_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282559481_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282558074_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282545635_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282541897_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282540925_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів Uniqlo на флісі<br>В наявності розмір Л, колір 69 NAVY<br>Опис:<br>- М&#x27;яка та зручна з начосом.<br>- Дизайн високого коміра зберігає шию в теплі.<br>- Манжети в рубчик дозволяють легко закатати рукава.<br>- Універсальний дизайн імітації горловини зі спущеними плечима та невимушеною посадкою, підходить для носіння як окремо, так і з шарами.<br><br>Склад: 56% бавовна, 44% поліестер<br><br>471806</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс Бавовна Принт Без принту Особливості В рубчик</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1519,7 +1226,7 @@ urban walls, серія робіт художників, які активно �
 склад: 56% бавовна, 44% поліестер
 
 471806 лонгсліви кофти та светри чорний поліестер фліс бавовна принт без принту особливості в рубчик m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205690274-longsliv-uniqlo-z-nachosom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6113/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282538897_310_430" alt="Лонгслів uniqlo з начосом" loading="lazy" decoding="async">
             </div>
@@ -1529,13 +1236,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282539902_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282559481_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282558074_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282545635_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282541897_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282540925_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів Uniqlo на флісі<br>В наявності розмір М, колір чорний<br>Опис:<br>- М&#x27;яка та зручна з начосом.<br>- Дизайн високого коміра зберігає шию в теплі.<br>- Манжети в рубчик дозволяють легко закатати рукава.<br>- Універсальний дизайн імітації горловини зі спущеними плечима та невимушеною посадкою, підходить для носіння як окремо, так і з шарами.<br><br>Склад: 56% бавовна, 44% поліестер<br><br>471806</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс Бавовна Принт Без принту Особливості В рубчик</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1551,7 +1251,7 @@ urban walls, серія робіт художників, які активно �
 склад: 56% бавовна, 44% поліестер
 
 471806 лонгсліви кофти та светри коричневий поліестер фліс бавовна принт без принту особливості в рубчик lxlxxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205691030-longsliv-uniqlo-z-nachosom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6112/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282540925_310_430" alt="Лонгслів uniqlo з начосом" loading="lazy" decoding="async">
             </div>
@@ -1561,13 +1261,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • Lі ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282541037_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282541040_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282559481_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282558074_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282545635_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282541897_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів Uniqlo на флісі<br>В наявності розмір Л, ХЛ та ХХЛ, колір 38 DARK BROWN<br>Опис:<br>- М&#x27;яка та зручна з начосом.<br>- Дизайн високого коміра зберігає шию в теплі.<br>- Манжети в рубчик дозволяють легко закатати рукава.<br>- Універсальний дизайн імітації горловини зі спущеними плечима та невимушеною посадкою, підходить для носіння як окремо, так і з шарами.<br><br>Склад: 56% бавовна, 44% поліестер<br><br>471806</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Коричневий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс Бавовна Принт Без принту Особливості В рубчик</dd></div><div><dt>Розмір</dt><dd>LXLXXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1583,7 +1276,7 @@ urban walls, серія робіт художників, які активно �
 склад: 56% бавовна, 44% поліестер
 
 471806 лонгсліви кофти та светри бордовий поліестер фліс бавовна принт без принту особливості в рубчик m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205691289-longsliv-uniqlo-z-nachosom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6111/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282541897_310_430" alt="Лонгслів uniqlo з начосом" loading="lazy" decoding="async">
             </div>
@@ -1593,13 +1286,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282542014_310_430' alt='Лонгслів uniqlo з начосом' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів Uniqlo на флісі<br>В наявності розмір М, колір 18 Wine<br>Опис:<br>- М&#x27;яка та зручна з начосом.<br>- Дизайн високого коміра зберігає шию в теплі.<br>- Манжети в рубчик дозволяють легко закатати рукава.<br>- Універсальний дизайн імітації горловини зі спущеними плечима та невимушеною посадкою, підходить для носіння як окремо, так і з шарами.<br><br>Склад: 56% бавовна, 44% поліестер<br><br>471806</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бордовий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс Бавовна Принт Без принту Особливості В рубчик</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1617,7 +1303,7 @@ urban walls, серія робіт художників, які активно �
 60% бавовна, 40% поліестер
 
 460318 лонгсліви кофти та светри жовтий поліестер бавовна довжина виробу середні сезон осінь весна демісезон принт без принту стиль повсякденний l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205692154-longsliv-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6110/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282545635_310_430" alt="Лонгслів uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1627,13 +1313,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282546075_310_430' alt='Лонгслів uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282559481_310_430' alt='Лонгслів uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282558074_310_430' alt='Лонгслів uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282548642_310_430' alt='Лонгслів uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів uniqlo<br>В наявності розмір Л, колір 47 YELLOW<br><br>Опис:<br>- Вафельна тканина з повсякденним виглядом.<br>- Випрана обробка для м&#x27;якої, повітряної текстури.<br>- Універсальний дизайн звичайного крою.<br>- Ребристі манжети зручно підкочують рукави.<br><br>Склад:<br>60% бавовна, 40% поліестер<br><br>460318</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Жовтий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Довжина виробу Середні Сезон Осінь Весна Демісезон Принт Без принту Стиль Повсякденний</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1650,7 +1329,7 @@ urban walls, серія робіт художників, які активно �
 склад: 91% поліестер, 9% еластан
 
 463164 лонгсліви кофти та светри бордовий фіолетовий поліестер фліс еластан сезон зима демісезон весна осінь принт без принту l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205692755-longsliv-uniqlo-z-flisu" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6109/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282548642_310_430" alt="Лонгслів uniqlo з флісу" loading="lazy" decoding="async">
             </div>
@@ -1660,13 +1339,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282559481_310_430' alt='Лонгслів uniqlo з флісу' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282558074_310_430' alt='Лонгслів uniqlo з флісу' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів Uniqlo з флісу<br>В наявності розмір Л колір 77 PURPLE<br><br>Опис:<br>Гладкий та еластичний фліс. Теплий комір-імітація додає стильного акценту до будь-якого вбрання.<br>- Гладкий фліс, злегка розчесаний для додаткового тепла.<br>- Неймовірна еластичність для свободи рухів.<br>- Теплий комір-імітація додає стильного акценту.<br><br>Склад: 91% поліестер, 9% еластан<br><br>463164</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бордовий Фіолетовий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс Еластан Сезон Зима Демісезон Весна Осінь Принт Без принту</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1681,12 +1353,11 @@ urban walls, серія робіт художників, які активно �
 універсальний прямий низ з розрізами
 колекція uniqlo u
 
-
 склад
 53% бавовна, 30% поліестер (перероблене волокно), 17% еластомультіестер
 
 469922 лонгсліви кофти та светри коричневий поліестер бавовна принт без принту особливості в рубчик xl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205693884-longsliv-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6108/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282553835_310_430" alt="Лонгслів airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1696,13 +1367,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282553960_310_430' alt='Лонгслів airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282556229_310_430' alt='Лонгслів airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282555187_310_430' alt='Лонгслів airism uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів AIRism Uniqlo<br>В наявності розмір ХЛ, колір 39 DARK BROWN<br><br>Опис:<br>гладка тканина “AIRism” з виглядом бавовни<br>технологія Cool Touch для миттєвого відчуття охолодження<br>манжети в рубчик дозволяють легко закатати рукава<br>універсальний прямий низ з розрізами<br>колекція Uniqlo U<br><br><br>Склад<br>53% бавовна, 30% поліестер (перероблене волокно), 17% еластомультіестер<br><br>469922</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Коричневий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Принт Без принту Особливості В рубчик</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1717,12 +1381,11 @@ urban walls, серія робіт художників, які активно �
 універсальний прямий низ з розрізами
 колекція uniqlo u
 
-
 склад
 53% бавовна, 30% поліестер (перероблене волокно), 17% еластомультіестер
 
 469922 лонгсліви кофти та светри синій поліестер бавовна сезон осінь демісезон весна літо принт без принту особливості в рубчик l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205694174-longsliv-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6107/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282555187_310_430" alt="Лонгслів airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1732,13 +1395,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282555294_310_430' alt='Лонгслів airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282556229_310_430' alt='Лонгслів airism uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів AIRism Uniqlo<br>В наявності розмір Л, колір 69 NAVY<br><br>Опис:<br>гладка тканина “AIRism” з виглядом бавовни<br>технологія Cool Touch для миттєвого відчуття охолодження<br>манжети в рубчик дозволяють легко закатати рукава<br>універсальний прямий низ з розрізами<br>колекція Uniqlo U<br><br><br>Склад<br>53% бавовна, 30% поліестер (перероблене волокно), 17% еластомультіестер<br><br>469922</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Сезон Осінь Демісезон Весна Літо Принт Без принту Особливості В рубчик</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1753,12 +1409,11 @@ urban walls, серія робіт художників, які активно �
 універсальний прямий низ з розрізами
 колекція uniqlo u
 
-
 склад
 53% бавовна, 30% поліестер (перероблене волокно), 17% еластомультіестер
 
 469922 лонгсліви кофти та светри зелений оливковий поліестер бавовна сезон зима осінь весна демісезон принт без принту особливості в рубчик стиль спортивний m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205694406-longsliv-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6106/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282556229_310_430" alt="Лонгслів airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1768,13 +1423,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282556344_310_430' alt='Лонгслів airism uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів AIRism Uniqlo<br>В наявності розмір М, колір 56 OLIVE<br><br>Опис:<br>гладка тканина “AIRism” з виглядом бавовни<br>технологія Cool Touch для миттєвого відчуття охолодження<br>манжети в рубчик дозволяють легко закатати рукава<br>універсальний прямий низ з розрізами<br>колекція Uniqlo U<br><br><br>Склад<br>53% бавовна, 30% поліестер (перероблене волокно), 17% еластомультіестер<br><br>469922</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Зелений Оливковий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Сезон Зима Осінь Весна Демісезон Принт Без принту Особливості В рубчик Стиль Спортивний</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1790,7 +1438,7 @@ urban walls, серія робіт художників, які активно �
 
 460319
 469940 лонгсліви кофти та светри синій бавовна принт без принту l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205694824-longsliv-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6105/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282558074_310_430" alt="Лонгслів uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1800,13 +1448,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282559481_310_430' alt='Лонгслів uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282538137_310_430' alt='Лонгслів uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів Uniqlo<br>В наявності розмір  Л, колір 67 BLUE<br><br>Опис:<br>гладка 100% бавовна<br>м&#x27;яка тканина для комфорту<br>конструкція манжета дозволяє легко закатати рукава<br>базовий дизайн круглої горловини зі зручним ребристим вирізом<br><br>460319<br>469940</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Бавовна Принт Без принту</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1818,7 +1459,7 @@ urban walls, серія робіт художників, які активно �
 100% бавовна
 
 460319 лонгсліви кофти та светри оливковий зелений бавовна сезон літо зима весна демісезон принт без принту стиль повсякденний ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/longsliv/205695155-longsliv-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6104/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2282559481_310_430" alt="Лонгслів  uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1828,13 +1469,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282559964_310_430' alt='Лонгслів  uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282560023_310_430' alt='Лонгслів  uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслів  Uniqlo<br>В наявності розмір М та Л, колір 57 OLIVE<br><br>Склад<br>100% бавовна<br><br>460319</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Оливковий Зелений</dd></div><div><dt>Матеріал</dt><dd>Бавовна Сезон Літо Зима Весна Демісезон Принт Без принту Стиль Повсякденний</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1851,7 +1485,7 @@ urban walls, серія робіт художників, які активно �
 основна частина: 100% поліестер (70% переробленого поліестерного волокна) / тканина нагрудних кишень: підкладка коміра: 100%
 
 479863 кофти кофти та светри синій поліестер трикотаж фліс особливості моделі без капюшона сезон літо зима весна демісезон застібка змійка xl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofty/kofty/206579633-flisova-kofta-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6103/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2286623079_310_430" alt="Флісова кофта uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1861,13 +1495,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2286623076_310_430' alt='Флісова кофта uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2286623074_310_430' alt='Флісова кофта uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2286623070_310_430' alt='Флісова кофта uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2286623072_310_430' alt='Флісова кофта uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2286623073_310_430' alt='Флісова кофта uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Флісова кофта UNIQLO<br>В наявності розмір ХЛ<br><br>Опис:<br>Преміальна трикотажна текстура зовні, підкладка з теплого, пухнастого флісу всередині.<br>Захист підборіддя у верхній частині планки.<br>Нагрудна кишеня із застібкою-блискавкою.<br><br>Склад:<br>Основна частина: 100% поліестер (70% переробленого поліестерного волокна) / Тканина нагрудних кишень: Підкладка коміра: 100%<br><br>479863</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кофти Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Поліестер Трикотаж Фліс Особливості моделі Без капюшона Сезон Літо Зима Весна Демісезон Застібка Змійка</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1888,7 +1515,7 @@ urban walls, серія робіт художників, які активно �
 склад: 100% поліестер
 
 467763 худі кофти та светри сірий поліестер трикотаж сітка сезон демісезон літо весна осінь l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/kofti/hudi/208562937-ultrastryaych-dry-ex-hudi-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6102/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295295900_310_430" alt="Ультрастрейч dry-ex худі uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1898,13 +1525,6 @@ urban walls, серія робіт художників, які активно �
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295296140_310_430' alt='Ультрастрейч dry-ex худі uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295296141_310_430' alt='Ультрастрейч dry-ex худі uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295296135_310_430' alt='Ультрастрейч dry-ex худі uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295296136_310_430' alt='Ультрастрейч dry-ex худі uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295296137_310_430' alt='Ультрастрейч dry-ex худі uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295296138_310_430' alt='Ультрастрейч dry-ex худі uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Ультрастрейч DRY-EX худі UNIQLO<br>В наявності розмір Л<br><br>Опис:<br>- Швидковисихаюча тканина «DRY-EX».<br>- З технологією захисту від ультрафіолету.<br>- Ультрастречева тканина.<br>- Дихаюча контурна трикотажна сітка.<br>- Рукави реглан для вільного руху рук.<br>- Бічні кишені на застібках-блискавках.<br>- Динамічний принт, натхненний візерунком сумі-нагаші (мармуровий).<br>- UPF50+.<br><br>Склад: 100% поліестер<br><br>467763</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Худі Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Трикотаж Сітка Сезон Демісезон Літо Весна Осінь</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1912,7 +1532,7 @@ urban walls, серія робіт художників, які активно �
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:30</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:40</div>
 </main>
 </div>
 <script>
@@ -1922,6 +1542,7 @@ if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
 function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
 function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
 function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function setProductImage(btn){const img=document.getElementById('productMainImage');if(img&&btn&&btn.dataset.src)img.src=btn.dataset.src;document.querySelectorAll('.product-thumb').forEach(el=>el.classList.remove('active'));if(btn)btn.classList.add('active');}
 function filterProducts(input){
 const q=(input.value||'').trim().toLowerCase();
 const cards=Array.from(document.querySelectorAll('.product-card'));

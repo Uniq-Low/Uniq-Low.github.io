@@ -85,6 +85,31 @@ padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
+.back-link{display:inline-flex;margin-bottom:18px;color:var(--muted);text-decoration:none;font-weight:700;}
+.back-link:hover{color:var(--accent);}
+.product-detail-layout{display:grid;grid-template-columns:minmax(300px,520px) minmax(320px,1fr);gap:34px;align-items:start;}
+.product-gallery-panel{position:sticky;top:24px;}
+.product-main-image-wrap{background:var(--bg-soft);border-radius:18px;overflow:hidden;border:1px solid var(--border);}
+.product-main-image-wrap img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
+.product-thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:10px;margin-top:12px;}
+.product-thumb{border:1px solid var(--border);background:var(--panel-solid);border-radius:12px;padding:0;overflow:hidden;cursor:pointer;}
+.product-thumb img{width:100%;aspect-ratio:1/1.25;object-fit:cover;display:block;}
+.product-thumb:hover{border-color:var(--accent);}
+.product-detail-info{background:var(--panel-solid);border:1px solid var(--border);border-radius:22px;padding:26px;box-shadow:var(--shadow);}
+.detail-source{color:var(--accent);font-weight:800;font-size:13px;text-transform:uppercase;margin-bottom:8px;}
+.product-detail-info h1{font-size:34px;line-height:1.18;margin:0 0 12px;letter-spacing:0;}
+.detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
+.detail-price{font-size:34px;font-weight:900;margin:20px 0;}
+.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
+font-weight:800;padding:13px 22px;margin-bottom:24px;}
+.detail-section{border-top:1px solid var(--border);padding-top:20px;margin-top:20px;}
+.detail-section h2{font-size:20px;margin:0 0 12px;}
+.detail-section p{font-size:15px;line-height:1.7;margin:0;color:var(--text);}
+.detail-attrs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;}
+.detail-attrs div{border:1px solid var(--border);border-radius:14px;padding:12px;background:var(--bg);}
+.detail-attrs dt{color:var(--muted);font-size:13px;margin-bottom:4px;}
+.detail-attrs dd{margin:0;color:var(--text);font-weight:700;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -105,6 +130,10 @@ background:var(--panel-solid);color:var(--muted);}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
 .promo-card{flex-direction:column;text-align:center;}
 .product-search-bar{align-items:stretch;flex-direction:column;}
+.product-detail-layout{grid-template-columns:1fr;}
+.product-gallery-panel{position:static;}
+.product-detail-info h1{font-size:28px;}
+.detail-attrs{grid-template-columns:1fr;}
 .search-status{white-space:normal;}}
 </style>
 </head>
@@ -118,12 +147,11 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 14:30</div>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:40</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
-<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
 </ul></div>
 <div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
@@ -179,7 +207,7 @@ background:var(--panel-solid);color:var(--muted);}
             </div>
         <div class="products-grid">
     <div class="product-card" data-search="uniqlo чоловіча футболка blizzard heroes overwatch 650 грн uniqlo 40 / l / 48 futbolky-mayky-men вже понад 25 років компанія blizzard entertainment захоплює уяву світу своїми відзначеними нагородами іграми та франшизами, включаючи world of warcraft, overwatch, hearthstone. diablo, starcraft і heroes of the storm. запам&#x27;ятовуються всесвіти blizzard і різноманітні персонажі улюблені в усьому світі. 412328-54 футболки футболки та майки бренд: uniqlo білий 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/93367749-uniqlo-muzhskaya-futbolka-blizzard-heroes-overwatch" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6317/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/484240261_310_430" alt="Uniqlo чоловіча футболка blizzard heroes overwatch" loading="lazy" decoding="async">
             </div>
@@ -189,19 +217,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 40 / L / 48</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Вже понад 25 років компанія Blizzard Entertainment захоплює уяву світу своїми відзначеними нагородами іграми та франшизами, включаючи World of Warcraft, Overwatch, Hearthstone. Diablo, StarCraft і Heroes of the Storm. Запам&#x27;ятовуються всесвіти Blizzard і різноманітні персонажі улюблені в усьому світі. 412328-54</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="кольорова футболка dry з круглим вирізом і короткими рукавами uniqlo 450 грн uniqlo 34 / xs / 42і ще 1 futbolky-mayky-men простий і універсальний. залишається сухим, створюючи відчуття комфорту і сухості на шкірі. 427917-58 футболки футболки та майки бренд: uniqlo блакитний 34/xs/4244/xxl/52 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/93672262-cvetnaya-futbolka-dry-s-kruglym-vyrezom-i-korotkimi-rukavami-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6316/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/487948719_310_430" alt="Кольорова футболка dry з круглим вирізом і короткими рукавами uniqlo" loading="lazy" decoding="async">
             </div>
@@ -211,19 +232,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/487947804_310_430' alt='Кольорова футболка dry з круглим вирізом і короткими рукавами uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Простий і універсальний. Залишається сухим, створюючи відчуття комфорту і сухості на шкірі. 427917-58</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Розмір</dt><dd>34/XS/4244/XXL/52</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="чоловіча футболка від uniqlo 550 грн uniqlo 36 / s / 44 futbolky-mayky-men чоловіча футболка від uniqlo 402889-a4 футболки футболки та майки бренд: uniqlo сірий 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/100281500-cholovicha-futbolka-vid-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6315/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/553423662_310_430" alt="Чоловіча футболка від uniqlo" loading="lazy" decoding="async">
             </div>
@@ -233,19 +247,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/553446607_310_430' alt='Чоловіча футболка від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/553441985_310_430' alt='Чоловіча футболка від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/553432976_310_430' alt='Чоловіча футболка від uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Чоловіча футболка від uniqlo 402889-a4</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="чоловіча футболка від uniqlo 449 грн uniqlo 34 / xs / 42 futbolky-mayky-men чоловіча футболка від uniqlo 413031-a4 футболки футболки та майки бренд: uniqlo білий 34/xs/42 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/100281868-cholovicha-futbolka-vid-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6314/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/553432976_310_430" alt="Чоловіча футболка від uniqlo" loading="lazy" decoding="async">
             </div>
@@ -255,19 +262,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/553446607_310_430' alt='Чоловіча футболка від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/553441985_310_430' alt='Чоловіча футболка від uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Чоловіча футболка від uniqlo 413031-a4</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>34/XS/42</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="чоловіча футболка від uniqlo 650 грн uniqlo 42 / xl / 50 futbolky-mayky-men чоловіча футболка від uniqlo 425069-a4 футболки футболки та майки бренд: uniqlo білий 42/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/100282121-cholovicha-futbolka-vid-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6313/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/553441985_310_430" alt="Чоловіча футболка від uniqlo" loading="lazy" decoding="async">
             </div>
@@ -277,19 +277,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/553446607_310_430' alt='Чоловіча футболка від uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Чоловіча футболка від uniqlo 425069-a4</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>42/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="чоловіча футболка від uniqlo 650 грн uniqlo 40 / l / 48 futbolky-mayky-men чоловіча футболка від uniqlo 419652-a4 футболки футболки та майки бренд: uniqlo синій 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/100282399-cholovicha-futbolka-vid-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6312/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/553446607_310_430" alt="Чоловіча футболка від uniqlo" loading="lazy" decoding="async">
             </div>
@@ -299,20 +292,13 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 40 / L / 48</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Чоловіча футболка від uniqlo 419652-a4</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="футболка uniqlo dry crew 700 грн  40 / l / 48 futbolky-mayky-men эта мужская футболка с круглым вырезом uniqlo 418695 изготовлена ​​из смесового материала, легкого и дышащего, с хорошо продуманным воротником. она подходит для ношения отдельно или в нескольких слоях и универсальна для повседневной носки.
 418695-фут футболки футболки та майки коричневий 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/166753846-futbolka-uniqlo-dry-crew" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6311/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/-220663007_310_430" alt="Футболка uniqlo dry crew" loading="lazy" decoding="async">
             </div>
@@ -322,13 +308,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>40 / L / 48</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Эта мужская футболка с круглым вырезом UNIQLO 418695 изготовлена ​​из смесового материала, легкого и дышащего, с хорошо продуманным воротником. Она подходит для ношения отдельно или в нескольких слоях и универсальна для повседневной носки.<br>418695-фут</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Коричневий</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -345,7 +324,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 66% бавовна, 34% поліестер
 
 455356 футболки футболки та майки бренд: uniqlo синій 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/186365335-futbolka-dry-color-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6310/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2184874143_310_430" alt="Футболка dry color uniqlo" loading="lazy" decoding="async">
             </div>
@@ -355,13 +334,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2184874118_310_430' alt='Футболка dry color uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295261141_310_430' alt='Футболка dry color uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка Dry Color UNIQLO<br>В наявності розмір М, колір 67 BLUE<br><br>Опис:<br>- Невимушене відчуття бавовни.<br>- Підкладка з поліестеру з технологією швидкого висихання DRY.<br>- Базовий дизайн, який можна носити як самостійно, так і в багатошарових образах.<br>- Елегантний V-подібний виріз.<br><br>Склад: 66% бавовна, 34% поліестер<br><br>455356</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -376,7 +348,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 100% поліестер
 
 475374 поло футболки та майки довжина рукава короткий сезон літо зелений поліестер mlxl новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/201193043-futbolka-polo-z-tehnologiyeyu-dry-ex-vid-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6309/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2265683827_310_430" alt="Футболка-поло з технологією dry ex від uniqlo" loading="lazy" decoding="async">
             </div>
@@ -386,13 +358,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • Mі ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2265683856_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265685171_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265684293_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1490669963_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка-поло з технологією Dry EX від Uniqlo<br>В наявності розмір М, Л та  ХЛ, колір 58 DARK GREEN<br><br>Опис:<br>Високоякісна футболка-поло для активного відпочинку або щоденного носіння.<br>Технологія DRY-EX відводить піт, забезпечуючи відчуття свіжості.<br><br>Склад: 100% поліестер<br><br>475374</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки Довжина рукава Короткий Сезон Літо</dd></div><div><dt>Колір</dt><dd>Зелений</dd></div><div><dt>Матеріал</dt><dd>Поліестер</dd></div><div><dt>Розмір</dt><dd>MLXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -407,7 +372,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 100% поліестер
 
 475374 поло футболки та майки синій поліестер xssmlxl новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/201193122-futbolka-polo-z-tehnologiyeyu-dry-ex-vid-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6308/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2265684293_310_430" alt="Футболка-поло з технологією dry ex від uniqlo" loading="lazy" decoding="async">
             </div>
@@ -417,13 +382,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • XSі ще 4</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2265684291_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265684290_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265684292_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265684289_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265685171_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка-поло з технологією Dry EX від Uniqlo<br>В наявності розмір ХС, С, М, Л та  ХЛ, колір 67 BLUE<br><br>Опис:<br>Високоякісна футболка-поло для активного відпочинку або щоденного носіння.<br>Технологія DRY-EX відводить піт, забезпечуючи відчуття свіжості.<br><br>Склад: 100% поліестер<br><br>475374</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Поліестер</dd></div><div><dt>Розмір</dt><dd>XSSMLXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -438,7 +396,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 100% поліестер
 
 475374 поло футболки та майки довжина рукава короткий сезон літо сірий поліестер mlxl новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/201193260-futbolka-polo-z-tehnologiyeyu-dry-ex-vid-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6307/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2265685171_310_430" alt="Футболка-поло з технологією dry ex від uniqlo" loading="lazy" decoding="async">
             </div>
@@ -448,13 +406,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • Mі ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2265685176_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265685181_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265685186_310_430' alt='Футболка-поло з технологією dry ex від uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка-поло з технологією Dry EX від Uniqlo<br>В наявності розмір М, Л та ХЛ, колір 02 LIGHT GREY<br><br>Опис:<br>Високоякісна футболка-поло для активного відпочинку або щоденного носіння.<br>Технологія DRY-EX відводить піт, забезпечуючи відчуття свіжості.<br><br>Склад: 100% поліестер<br><br>475374</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки Довжина рукава Короткий Сезон Літо</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Поліестер</dd></div><div><dt>Розмір</dt><dd>MLXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -476,7 +427,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 65% поліестер, 35% нейлон
 
 465197 поло футболки та майки довжина рукава короткий сезон літо блакитний нейлон поліестер xl новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/201193327-futbolka-polo-uniqlo-z-tehnologiyeyu-shvidkogo-visihannya-_dry-ex" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6306/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2265685590_310_430" alt="Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»" loading="lazy" decoding="async">
             </div>
@@ -486,13 +437,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2265685654_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265685656_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265686429_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265686039_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка-поло DRY-EX UNIQLO<br>В наявності розмір ХЛ колір 63 BLUE<br><br>Опис:<br>- З технологією швидковисихання «DRY-EX».<br>- Тканина швидко вбирає та відводить піт, зберігаючи відчуття свіжості.<br>- З функціями контролю запаху та Cool Touch.<br>- Ергономічний сітчастий дизайн.<br>- Виготовлена ​​з 2 різних типів сітки, включаючи дихаючу сітку під пахвами та посередині спини.<br>- Сітчасті секції вшиті в тканину, а не зшиті разом, що забезпечує гладке та легке відчуття.<br>- Безшовні манжети та поділ для додаткового комфорту.<br>- Має дрібний плоский комір та дихаючу сітку в місцях, схильних до вологи.<br>- Менш блискуча тканина, підходить для будь-якої події.<br><br>Склад: 65% поліестер, 35% нейлон<br><br>465197</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки Довжина рукава Короткий Сезон Літо</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Матеріал</dt><dd>Нейлон Поліестер</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -514,7 +458,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 65% поліестер, 35% нейлон
 
 465197 поло футболки та майки довжина рукава короткий сезон літо принт без принту бежевий нейлон поліестер m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/201193409-futbolka-polo-uniqlo-z-tehnologiyeyu-shvidkogo-visihannya-_dry-ex" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6305/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2265686039_310_430" alt="Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»" loading="lazy" decoding="async">
             </div>
@@ -524,13 +468,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2265686099_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265686100_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265686429_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка-поло DRY-EX UNIQLO<br>В наявності розмір М колір 30 NATURAL<br><br>Опис:<br>- З технологією швидковисихання «DRY-EX».<br>- Тканина швидко вбирає та відводить піт, зберігаючи відчуття свіжості.<br>- З функціями контролю запаху та Cool Touch.<br>- Ергономічний сітчастий дизайн.<br>- Виготовлена ​​з 2 різних типів сітки, включаючи дихаючу сітку під пахвами та посередині спини.<br>- Сітчасті секції вшиті в тканину, а не зшиті разом, що забезпечує гладке та легке відчуття.<br>- Безшовні манжети та поділ для додаткового комфорту.<br>- Має дрібний плоский комір та дихаючу сітку в місцях, схильних до вологи.<br>- Менш блискуча тканина, підходить для будь-якої події.<br><br>Склад: 65% поліестер, 35% нейлон<br><br>465197</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки Довжина рукава Короткий Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Нейлон Поліестер</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -552,7 +489,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 65% поліестер, 35% нейлон
 
 465197 поло футболки та майки білий нейлон поліестер xxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/201193457-futbolka-polo-uniqlo-z-tehnologiyeyu-shvidkogo-visihannya-_dry-ex" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6304/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2265686429_310_430" alt="Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»" loading="lazy" decoding="async">
             </div>
@@ -562,13 +499,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • XXL</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2265686488_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2285707778_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка-поло DRY-EX UNIQLO<br>В наявності розмір ХХЛ колір білий<br><br>Опис:<br>- З технологією швидковисихання «DRY-EX».<br>- Тканина швидко вбирає та відводить піт, зберігаючи відчуття свіжості.<br>- З функціями контролю запаху та Cool Touch.<br>- Ергономічний сітчастий дизайн.<br>- Виготовлена ​​з 2 різних типів сітки, включаючи дихаючу сітку під пахвами та посередині спини.<br>- Сітчасті секції вшиті в тканину, а не зшиті разом, що забезпечує гладке та легке відчуття.<br>- Безшовні манжети та поділ для додаткового комфорту.<br>- Має дрібний плоский комір та дихаючу сітку в місцях, схильних до вологи.<br>- Менш блискуча тканина, підходить для будь-якої події.<br><br>Склад: 65% поліестер, 35% нейлон<br><br>465197</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Нейлон Поліестер</dd></div><div><dt>Розмір</dt><dd>XXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -579,7 +509,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 100% бавовна
 
 465220 футболки футболки та майки виріз круглий сезон демісезон весна літо осінь чорний бавовна фасон прямі бренд: uniqlo mlxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208498968-futbolka-uniqlo-z-seriyi-naruto-ut" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6303/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2294967975_310_430" alt="Футболка uniqlo з серії naruto ut" loading="lazy" decoding="async">
             </div>
@@ -589,13 +519,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • Mі ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2294968046_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294968048_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294968049_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295255343_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295250699_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296475853_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка uniqlo з серії naruto ut<br>В наявності розмір М,Л та ХЛ<br><br>Склад: 100% бавовна<br><br>465220</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий Сезон Демісезон Весна Літо Осінь</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Бавовна Фасон Прямі Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>MLXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -620,7 +543,7 @@ pixar art
 100% бавовна
 
 462062 футболки футболки та майки виріз круглий сезон літо білий бавовна бренд: uniqlo mlxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208499158-futbolka-unisex-pixar-art-ut-vid-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6302/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2294969253_310_430" alt="Футболка unisex pixar art ut від uniqlo" loading="lazy" decoding="async">
             </div>
@@ -630,13 +553,6 @@ pixar art
                 <div class='product-meta'>Uniqlo • Mі ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2294969865_310_430' alt='Футболка unisex pixar art ut від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294969866_310_430' alt='Футболка unisex pixar art ut від uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка UNISEX PIXAR ART UT від UNIQLO<br>В наявності розмір М, Л та ХЛ<br><br>Опис:<br>Цей принт «Історія іграшок» містить мальовану графіку, створену Кадзумою Мікамі. Дизайн нагадує пам’ятну сцену прощання Енді з іграшками в «Історії іграшок 3».<br><br>PIXAR ART<br><br>Студія Pixar Animation Studios створила такі улюблені фільми, як «Історія іграшок» і «Корпорація монстрів», які продовжують любити люди в усьому світі. UNIQLO запросила митців, які люблять фільми Pixar, щоб переосмислити відомих персонажів у своєму власному стилі.<br><br>Кадзума Мікамі<br>Базується в Токіо. Його стиль характеризується використанням як цифрової, так і аналогової техніки. Він працює в основному для журналів, реклами та музичних відео як ілюстратор. Останнім часом він займається різноманітною діяльністю як художник, зокрема створює керамічні роботи за допомогою VR.<br><br>©Disney/Pixar<br>©Disney<br><br>Матеріали<br>100% бавовна<br><br>462062</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий Сезон Літо</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>MLXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -646,7 +562,7 @@ pixar art
 склад: 100% бавовна
 
 478109 футболки футболки та майки принт малюнок білий бавовна бренд: uniqlo s новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208502103-futbolka-z-malyunkom-mikki-mausa-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6301/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2294985572_310_430" alt="Футболка з малюнком міккі мауса uniqlo" loading="lazy" decoding="async">
             </div>
@@ -656,13 +572,6 @@ pixar art
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2294985583_310_430' alt='Футболка з малюнком міккі мауса uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294985580_310_430' alt='Футболка з малюнком міккі мауса uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294985574_310_430' alt='Футболка з малюнком міккі мауса uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294987953_310_430' alt='Футболка з малюнком міккі мауса uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294986342_310_430' alt='Футболка з малюнком міккі мауса uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка з малюнком Міккі Мауса UNIQLO<br>В наявності розмір С<br>Склад: 100% бавовна<br><br>478109</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Принт Малюнок</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -672,7 +581,7 @@ pixar art
 склад: 100% бавовна
 
 478107 футболки футболки та майки принт малюнок блакитний бавовна m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208502381-futbolka-z-malyunkom-mikki-mausa-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6300/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2294986342_310_430" alt="Футболка з малюнком міккі мауса uniqlo" loading="lazy" decoding="async">
             </div>
@@ -682,13 +591,6 @@ pixar art
                 <div class='product-meta'>M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2294986313_310_430' alt='Футболка з малюнком міккі мауса uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294987953_310_430' alt='Футболка з малюнком міккі мауса uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка з малюнком Міккі Мауса UNIQLO<br>В наявності розмір М<br>Склад: 100% бавовна<br><br>478107</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Принт Малюнок</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -699,7 +601,7 @@ pixar art
 склад: 100% бавовна
 
 479028 футболки футболки та майки принт малюнок чорний бавовна бренд: uniqlo m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208502485-futbolka-z-malyunkom-mikki-mausa-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6299/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2294987953_310_430" alt="Футболка з малюнком міккі мауса uniqlo" loading="lazy" decoding="async">
             </div>
@@ -709,13 +611,6 @@ pixar art
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2294987948_310_430' alt='Футболка з малюнком міккі мауса uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294987949_310_430' alt='Футболка з малюнком міккі мауса uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294987950_310_430' alt='Футболка з малюнком міккі мауса uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка з малюнком міккі мауса uniqlo<br>В наявності розмір М<br><br>Склад: 100% бавовна<br><br>479028</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Принт Малюнок</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -726,7 +621,7 @@ pixar art
 склад: 100% бавовна
 
 479032 футболки футболки та майки виріз круглий білий бавовна бренд: uniqlo sm новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208502734-futbolka-z-grafikoyu-manga-curation-ut-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6298/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2294989157_310_430" alt="Футболка з графікою manga curation ut uniqlo" loading="lazy" decoding="async">
             </div>
@@ -736,13 +631,6 @@ pixar art
                 <div class='product-meta'>Uniqlo • Sі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2294988962_310_430' alt='Футболка з графікою manga curation ut uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294988968_310_430' alt='Футболка з графікою manga curation ut uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294988970_310_430' alt='Футболка з графікою manga curation ut uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294989316_310_430' alt='Футболка з графікою manga curation ut uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294989321_310_430' alt='Футболка з графікою manga curation ut uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка з графікою MANGA Curation UT UNIQLO<br>В наявності розмір С та М<br><br>Склад: 100% бавовна<br><br>479032</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>SM</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -762,7 +650,7 @@ pixar art
 склад: 100% бавовна
 
 455360 футболки футболки та майки виріз круглий сезон осінь демісезон весна літо принт без принту особливості базові помаранчевий бавовна бренд: uniqlo ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208554399-naykrasha-bazova-futbolka-uniqlo-u" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6297/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295244193_310_430" alt="Найкраща базова футболка uniqlo u" loading="lazy" decoding="async">
             </div>
@@ -772,13 +660,6 @@ pixar art
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295244504_310_430' alt='Найкраща базова футболка uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295244509_310_430' alt='Найкраща базова футболка uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295255343_310_430' alt='Найкраща базова футболка uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295250699_310_430' alt='Найкраща базова футболка uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295246301_310_430' alt='Найкраща базова футболка uniqlo u' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Найкраща базова футболка UNIQLO U<br>В наявності:<br>розмір М та L , колір 22 ORANGE<br><br>Ретельно підібрана тканина, крій, деталі. Стильна яскрава футболка.<br>Колекція Uniqlo U – це реалізація відданої та кваліфікованої команди міжнародних дизайнерів, що працюють у нашому Центрі досліджень і розвитку в Парижі під керівництвом художнього керівника Крістофа Лемера.<br><br>- Дизайн з круглим вирізом, натхненний вирізом вінтажних військових футболок.<br>- Конструкція зв&#x27;язування допомагає коміру зберігати форму.<br>- Нова класична футболка вільного крою унісекс.<br>- Представляємо сучасну базову посадку.<br><br>Склад: 100% бавовна<br><br>455360</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий Сезон Осінь Демісезон Весна Літо Принт Без принту Особливості Базові</dd></div><div><dt>Колір</dt><dd>Помаранчевий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -798,7 +679,7 @@ pixar art
 склад: 100% бавовна
 
 455360 футболки футболки та майки виріз круглий принт без принту особливості базові зелений бавовна бренд: uniqlo ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208554920-naykrasha-bazova-futbolka-uniqlo-u" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6296/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295246301_310_430" alt="Найкраща базова футболка uniqlo u" loading="lazy" decoding="async">
             </div>
@@ -808,13 +689,6 @@ pixar art
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295246508_310_430' alt='Найкраща базова футболка uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295246517_310_430' alt='Найкраща базова футболка uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295246521_310_430' alt='Найкраща базова футболка uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295255343_310_430' alt='Найкраща базова футболка uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295250699_310_430' alt='Найкраща базова футболка uniqlo u' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Найкраща базова футболка UNIQLO U<br>В наявності:<br>розмір М та L , колір 56 OLIVE<br><br>Ретельно підібрана тканина, крій, деталі. Стильна яскрава футболка.<br>Колекція Uniqlo U – це реалізація відданої та кваліфікованої команди міжнародних дизайнерів, що працюють у нашому Центрі досліджень і розвитку в Парижі під керівництвом художнього керівника Крістофа Лемера.<br><br>- Дизайн з круглим вирізом, натхненний вирізом вінтажних військових футболок.<br>- Конструкція зв&#x27;язування допомагає коміру зберігати форму.<br>- Нова класична футболка вільного крою унісекс.<br>- Представляємо сучасну базову посадку.<br><br>Склад: 100% бавовна<br><br>455360</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий Принт Без принту Особливості Базові</dd></div><div><dt>Колір</dt><dd>Зелений</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -825,7 +699,7 @@ pixar art
 склад: 100% бавовна
 
 440691 футболки футболки та майки бежевий бавовна бренд: uniqlo ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208555875-futbolka-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6295/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295250699_310_430" alt="Футболка uniqlo" loading="lazy" decoding="async">
             </div>
@@ -835,13 +709,6 @@ pixar art
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295250805_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295250810_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295256560_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295255343_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2259251197_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка uniqlo<br>В наявності розмір М, Л<br><br>Склад: 100% бавовна<br><br>440691</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -857,7 +724,7 @@ pixar art
 
 склад:53% бавовна, 47% поліестер
 465185 футболки футболки та майки виріз круглий синій поліестер бавовна фасон оверсайз бренд: uniqlo m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208556358-futbolka-oversayz-z-bavovni-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6294/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295254030_310_430" alt="Футболка оверсайз з бавовни airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -867,13 +734,6 @@ pixar art
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295254078_310_430' alt='Футболка оверсайз з бавовни airism uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка оверсайз з бавовни AIRism UNIQLO<br>В наявності розмір М, колір синій<br><br>Опис:<br>- Комфортна тканина «AIRism» з ефектом бавовни. Технологія Cool to the Touch для миттєвого відчуття прохолоди.<br>- Оверсайз крій з рукавами середньої довжини та спущеними плечима для відчуття розслабленості.<br>- Вузький круглий виріз підійде для вишуканого стилю.<br>- Колекція Uniqlo U<br><br>Склад:53% бавовна, 47% поліестер<br>465185</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Фасон Оверсайз Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -883,9 +743,8 @@ pixar art
 
 склад: 75% бавовна, 25% бавовна - перероблене волокно
 
-
 475327 футболки футболки та майки чорний бавовна бренд: uniqlo m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208556553-futbolka-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6293/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295255343_310_430" alt="Футболка uniqlo" loading="lazy" decoding="async">
             </div>
@@ -895,13 +754,6 @@ pixar art
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295255487_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295255713_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295255724_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295255726_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295255731_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295256560_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка з графікою Magic For All від Yu Nagaba UT від UNIQLO<br>В наявності розмір М<br><br>Склад: 75% бавовна, 25% бавовна - перероблене волокно<br><br><br>475327</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -918,7 +770,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 
 в наявності розмір м та л
 455357 футболки футболки та майки особливості базові жовтий поліестер бавовна бренд: uniqlo ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208556744-yakisna-futbolka-uniqlo-dry-crew-neck-shvidkovisihayucha" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6292/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295256560_310_430" alt="Якісна футболка uniqlo dry crew neck (швидковисихаюча!)" loading="lazy" decoding="async">
             </div>
@@ -928,13 +780,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295256884_310_430' alt='Якісна футболка uniqlo dry crew neck (швидковисихаюча!)' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Uniqlo одними з перших у сегменті мас-маркету звернули увагу на сучасні технології та почали інтегрувати їх у повсякденні предмети гардеробу.<br><br>У 2003 році Uniqlo розпочали співпрацю з японською компанією Toray Industries, чия спеціалізація – розумні тканини. Розроблені Toray матеріали можуть охолоджувати шкіру, накопичувати тепло, виводити вологу, швидко сохнути і довго тримати форму.<br><br>DRY-EX - найшвидшесохнуча тканина, створена Toray для Uniqlo. Забезпечує цю функцію спеціальна аркова структура волокон. Одяг з DRY-EX моментально висихає після прання та найкраще підходить для занять спортом.<br><br>Футболка UNIQLO DRY CREW NECK – базова футболка з круглим вирізом, з технологією DRY-EX подарує відчуття свіжості.<br><br>Склад: 66% бавовна, 34% поліестер<br><br>В наявності Розмір М та Л<br>455357</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Особливості Базові</dd></div><div><dt>Колір</dt><dd>Жовтий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -946,7 +791,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 66% бавовна, 34% поліестер
 
 465187 футболки футболки та майки жовтий поліестер бавовна бренд: uniqlo sl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208556964-futbolka-dry-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6291/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295258076_310_430" alt="Футболка dry uniqlo" loading="lazy" decoding="async">
             </div>
@@ -956,13 +801,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • Sі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295258568_310_430' alt='Футболка dry uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка DRY Uniqlo<br>В наявності розмір С та Л, колір 42 YELLOW<br><br>Склад<br>66% бавовна, 34% поліестер<br><br>465187</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Жовтий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>SL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -974,7 +812,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 66% бавовна, 34% поліестер
 
 465187 футболки футболки та майки сірий поліестер бавовна бренд: uniqlo xs новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208557043-futbolka-dry-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6290/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295258568_310_430" alt="Футболка dry uniqlo" loading="lazy" decoding="async">
             </div>
@@ -984,13 +822,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • XS</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Футболка DRY Uniqlo<br>В наявності розмір ХС, колір 08 DARK GREY<br><br>Склад<br>66% бавовна, 34% поліестер<br><br>465187</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>XS</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1007,7 +838,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 66% бавовна, 34% поліестер
 
 455356 футболки футболки та майки особливості базові синій поліестер бавовна бренд: uniqlo m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208557496-futbolka-dry-color-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6289/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295261141_310_430" alt="Футболка dry color uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1017,19 +848,12 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Футболка Dry Color UNIQLO<br>В наявності розмір М, колір 67 BLUE<br><br>Опис:<br>- Невимушене відчуття бавовни.<br>- Підкладка з поліестеру з технологією швидкого висихання DRY.<br>- Базовий дизайн, який можна носити як самостійно, так і в багатошарових образах.<br>- Елегантний V-подібний виріз.<br><br>Склад: 66% бавовна, 34% поліестер<br><br>455356</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Особливості Базові</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="футболка airism uniqlo 700 грн uniqlo m futbolky-mayky-men футболка airism uniqlo
-в наявності розмір м 
+в наявності розмір м
 
 опис:
 - гладка тканина airism з еластичними властивостями, швидковисихаючим dry, прохолодним дотиком, контролем запаху та відведенням вологи.
@@ -1039,7 +863,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 71% бавовна, 25% поліестер, 4% еластан
 
 467273 футболки футболки та майки сірий чорний поліестер бавовна еластан бренд: uniqlo m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208557741-futbolka-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6288/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295262532_310_430" alt="Футболка airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1049,13 +873,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295262585_310_430' alt='Футболка airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295262586_310_430' alt='Футболка airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295264500_310_430' alt='Футболка airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295263353_310_430' alt='Футболка airism uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка AIRism Uniqlo<br>В наявності розмір М <br><br>Опис:<br>- Гладка тканина AIRism з еластичними властивостями, швидковисихаючим DRY, прохолодним дотиком, контролем запаху та відведенням вологи.<br>- Універсальний верхній одяг, який також можна носити як футболку.<br>- Ідеально підходить для нашарування.<br><br>Склад: 71% бавовна, 25% поліестер, 4% еластан<br><br>467273</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Сірий Чорний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Еластан Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1071,7 +888,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 71% бавовна, 25% поліестер, 4% еластан
 
 467273 футболки футболки та майки сірий поліестер бавовна еластан бренд: uniqlo xxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208557861-futbolka-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6287/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295263353_310_430" alt="Футболка airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1081,13 +898,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • XXL</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295263541_310_430' alt='Футболка airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295263542_310_430' alt='Футболка airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295263549_310_430' alt='Футболка airism uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка AIRism Uniqlo<br>В наявності розмір ХХЛ<br><br>Опис:<br>- Гладка тканина AIRism з еластичними властивостями, швидковисихаючим DRY, прохолодним дотиком, контролем запаху та відведенням вологи.<br>- Універсальний верхній одяг, який також можна носити як футболку.<br>- Ідеально підходить для нашарування.<br><br>Склад: 71% бавовна, 25% поліестер, 4% еластан<br><br>467273</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Еластан Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>XXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1098,7 +908,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 71% бавовна, 25% поліестер, 4% спандекс
 
 452140 футболки футболки та майки персиковий поліестер спандекс бавовна бренд: uniqlo xs новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208558003-futbolka-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6286/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2295264500_310_430" alt="Футболка airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1108,13 +918,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • XS</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Футболка AIRISM Uniqlo<br>В наявності розмір ХС, колір 22 Orange<br><br>Склад: 71% бавовна, 25% поліестер, 4% спандекс<br><br>452140</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Персиковий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Спандекс Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>XS</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1132,7 +935,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 53% бавовна, 30% поліестер - перероблене волокно, 17% еластомультіестер
 
 471581 футболки футболки та майки принт у смужку синій поліестер бавовна бренд: uniqlo l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208734513-futbolka-oversized-striped-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6285/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296146227_310_430" alt="Футболка oversized striped uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1142,13 +945,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296146499_310_430' alt='Футболка oversized striped uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296146447_310_430' alt='Футболка oversized striped uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка OVERSIZED STRIPED Uniqlo<br>В наявності розмір Л, колір 69 NAVY<br><br>Опис:<br>гладка тканина “AIRism” з виглядом бавовни<br>вузький круглий виріз корловини<br>широка футболка з напіврукавом і спущеними плечима<br>в тонку смужку<br>модель унісекс<br><br>Склад: 53% бавовна, 30% поліестер - перероблене волокно, 17% еластомультіестер<br><br>471581</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Принт У смужку</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1168,7 +964,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 73% бавовна, 27% поліестер
 
 466821 поло футболки та майки синій поліестер бавовна ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/208734857-sorochka-polo-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6284/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296147500_310_430" alt="Сорочка-поло airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1178,13 +974,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296147577_310_430' alt='Сорочка-поло airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296148248_310_430' alt='Сорочка-поло airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296147978_310_430' alt='Сорочка-поло airism uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Сорочка-поло AIRism Uniqlo з бавовняного джерсі Skipper<br>В наявності розмір М та Л, колір 69 NAVY<br><br>Опис:<br>- Гладка тканина «AIRism» з ефектом бавовни.<br>- З технологією Cool Touch та швидковисихаючого DRY.<br>- М&#x27;яка тканина створює елегантний силует.<br>- Оновлена ​​ребриста окантовка на комірі для додаткового комфорту та стилю.<br>- Футболка-поло з коміром-скіпером, що поєднує невимушеність футболки та елегантність поло.<br>- Вільний крій стандартного крою.<br>- Розрізи по низу з обох боків означають, що вона добре виглядає як заправленою, так і розправленою.<br><br>Склад: 73% бавовна, 27% поліестер<br><br>466821</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1204,7 +993,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 73% бавовна, 27% поліестер
 
 466821 поло футболки та майки хакі зелений поліестер бавовна m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/208734933-sorochka-polo-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6283/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296147978_310_430" alt="Сорочка-поло airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1214,13 +1003,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296148001_310_430' alt='Сорочка-поло airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296148248_310_430' alt='Сорочка-поло airism uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Сорочка-поло AIRism Uniqlo з бавовняного джерсі Skipper<br>В наявності розмір М, колір 57 OLIVE<br><br>Опис:<br>- Гладка тканина «AIRism» з ефектом бавовни.<br>- З технологією Cool Touch та швидковисихаючого DRY.<br>- М&#x27;яка тканина створює елегантний силует.<br>- Оновлена ​​ребриста окантовка на комірі для додаткового комфорту та стилю.<br>- Футболка-поло з коміром-скіпером, що поєднує невимушеність футболки та елегантність поло.<br>- Вільний крій стандартного крою.<br>- Розрізи по низу з обох боків означають, що вона добре виглядає як заправленою, так і розправленою.<br><br>Склад: 73% бавовна, 27% поліестер<br><br>466821</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Хакі Зелений</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1240,7 +1022,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 73% бавовна, 27% поліестер
 
 466821 поло футболки та майки білий поліестер бавовна xl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/208734994-sorochka-polo-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6282/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296148248_310_430" alt="Сорочка-поло airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1250,13 +1032,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296148332_310_430' alt='Сорочка-поло airism uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Сорочка-поло AIRism Uniqlo з бавовняного джерсі Skipper<br>В наявності розмір ХЛ, колір білий<br><br>Опис:<br>- Гладка тканина «AIRism» з ефектом бавовни.<br>- З технологією Cool Touch та швидковисихаючого DRY.<br>- М&#x27;яка тканина створює елегантний силует.<br>- Оновлена ​​ребриста окантовка на комірі для додаткового комфорту та стилю.<br>- Футболка-поло з коміром-скіпером, що поєднує невимушеність футболки та елегантність поло.<br>- Вільний крій стандартного крою.<br>- Розрізи по низу з обох боків означають, що вона добре виглядає як заправленою, так і розправленою.<br><br>Склад: 73% бавовна, 27% поліестер<br><br>466821</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1271,7 +1046,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 - елегантний v-подібний виріз горловини.
 
 457161 футболки футболки та майки виріз v-подібний особливості базові білий бавовна бренд: uniqlo xl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208735352-futbolka-supima_-z-v-podibnim-virizom-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6281/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296149629_310_430" alt="Футболка supima® з v-подібним вирізом uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1281,13 +1056,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Футболка Supima® з V-подібним вирізом UNIQLO<br>В наявності розмір ХЛ, колір білий<br>Опис:<br>- Оновлена ​​до більш щільної тканини з преміальним оздобленням.<br>- Гладка, стійка до катишок 100% бавовна Supima®.<br>- Базові дизайни окремо або шарами.<br>- Розроблено з ретельною увагою до деталей, аж до ширини коміра та швів.<br>- Елегантний V-подібний виріз горловини.<br><br>457161</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз V-подібний Особливості Базові</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1298,7 +1066,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 
 100% бавовна
 459202 футболки футболки та майки виріз круглий чорний бавовна бренд: uniqlo xl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208735798-futbolka-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6280/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296151235_310_430" alt="Футболка uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1308,13 +1076,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296151371_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296151370_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка  Uniqlo<br>В наявності розмір<br>ХЛ<br><br>100% бавовна<br>459202</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1329,12 +1090,11 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 повітропроникна конструкція з трьома типами сітки різної щільності, включаючи добре повітропроникну сітку під пахвами та в центрі спини
 секції сітки картовані (в’язані в тканину), а не зшиті разом, щоб забезпечити гладке та легке відчуття
 
-
 склад
 40% поліестер, 40% перероблений поліестер, 20% поліамід
 
 456777 поло футболки та майки чорний поліестер поліамід xxs новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/208790154-polo-dry-ex-uniqlo-rozmir-hhs" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6279/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296468148_310_430" alt="Поло dry-ex uniqlo, розмір ххс" loading="lazy" decoding="async">
             </div>
@@ -1344,13 +1104,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • XXS</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296468147_310_430' alt='Поло dry-ex uniqlo, розмір ххс' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Поло DRY-EX Uniqlo<br>В наявності розмір ХХС, колір чорний<br><br>Опис:<br>швидкосихаюча DRY-EX<br>з функціями контролю запаху та Cool Touch<br>тканина швидко вбирає та відводить піт, щоб зберегти відчуття свіжості<br>повітропроникна конструкція з трьома типами сітки різної щільності, включаючи добре повітропроникну сітку під пахвами та в центрі спини<br>секції сітки картовані (в’язані в тканину), а не зшиті разом, щоб забезпечити гладке та легке відчуття<br><br><br>Склад<br>40% поліестер, 40% перероблений поліестер, 20% поліамід<br><br>456777</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Поліамід</dd></div><div><dt>Розмір</dt><dd>XXS</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1369,7 +1122,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 100% бавовна
 
 470934 майки футболки та майки сезон літо принт у смужку сірий білий бавовна m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/maiki/208790213-mayka-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6278/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296468551_310_430" alt="Майка airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1379,13 +1132,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296468600_310_430' alt='Майка airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296468587_310_430' alt='Майка airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296468590_310_430' alt='Майка airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296468595_310_430' alt='Майка airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296468597_310_430' alt='Майка airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296468599_310_430' alt='Майка airism uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Майка AIRism Uniqlo<br>В наявності розмір М<br><br>Опис:<br>гладка тканина “AIRism” з виглядом бавовни<br>технологія швидкого висихання DRY<br>універсальний базовий дизайн і звичайний крій<br>класичний круглий виріз<br>бічні розрізи<br>дуже тонкий візерунок у смужку<br><br>100% бавовна<br><br>470934</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Майки Футболки та Майки Сезон Літо Принт У смужку</dd></div><div><dt>Колір</dt><dd>Сірий Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1396,7 +1142,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 53% бавовна, 47% поліестер
 
 469361 футболки футболки та майки виріз v-подібний сезон літо принт без принту чорний поліестер бавовна бренд: uniqlo m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208790324-bavovnyana-futbolka-z-v-podibnim-virizom-airism-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6277/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296469160_310_430" alt="Бавовняна футболка з v-подібним вирізом airism uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1406,13 +1152,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296469218_310_430' alt='Бавовняна футболка з v-подібним вирізом airism uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296469232_310_430' alt='Бавовняна футболка з v-подібним вирізом airism uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Бавовняна футболка з V-подібним вирізом AIRism UNIQLO<br>В наявності розмір М, колір чорний<br><br>53% бавовна, 47% поліестер<br><br>469361</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз V-подібний Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1423,7 +1162,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 100% бавовна
 
 470742 футболки футболки та майки виріз круглий синій бавовна бренд: uniqlo sml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208790385-futbolka-uniqlo-z-seriyi-street-fighter-ut" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6276/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296469676_310_430" alt="Футболка uniqlo з серії street fighter ut" loading="lazy" decoding="async">
             </div>
@@ -1433,13 +1172,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • Sі ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296469710_310_430' alt='Футболка uniqlo з серії street fighter ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296469711_310_430' alt='Футболка uniqlo з серії street fighter ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296477098_310_430' alt='Футболка uniqlo з серії street fighter ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296475853_310_430' alt='Футболка uniqlo з серії street fighter ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296471144_310_430' alt='Футболка uniqlo з серії street fighter ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296470396_310_430' alt='Футболка uniqlo з серії street fighter ut' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка Uniqlo з серії STREET FIGHTER UT<br>В наявності розмір С, М, Л, колір синій<br><br>Склад: 100% бавовна<br><br>470742</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>SML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1450,7 +1182,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 100% бавовна
 
 472114 футболки футболки та майки виріз круглий чорний бавовна бренд: uniqlo s новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208790426-futbolka-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6275/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296469948_310_430" alt="Футболка uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1460,19 +1192,12 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296469983_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296469985_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296469980_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296469977_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296479340_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296477098_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка uniqlo<br>В наявності розмір С, колір чорний<br><br>Склад: 100% бавовна<br><br>472114</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo з серії fighting game legends ut 650 грн uniqlo s futbolky-mayky-men футболка uniqlo з серії fighting game legends ut
-в наявності розмір с 
+в наявності розмір с
 
 дві легендарні бойові ігри тепер доступні на ut. не пропустіть цю омріяну співпрацю.
 легенди бойових ігор
@@ -1481,7 +1206,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 100% бавовна
 
 470743 футболки футболки та майки виріз круглий білий бавовна бренд: uniqlo s новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208790492-futbolka-uniqlo-z-seriyi-fighting-game-legends-ut" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6274/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296470396_310_430" alt="Футболка uniqlo з серії fighting game legends ut" loading="lazy" decoding="async">
             </div>
@@ -1491,13 +1216,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296470419_310_430' alt='Футболка uniqlo з серії fighting game legends ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296470420_310_430' alt='Футболка uniqlo з серії fighting game legends ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296470421_310_430' alt='Футболка uniqlo з серії fighting game legends ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296470422_310_430' alt='Футболка uniqlo з серії fighting game legends ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296479340_310_430' alt='Футболка uniqlo з серії fighting game legends ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296477098_310_430' alt='Футболка uniqlo з серії fighting game legends ut' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка UNIQLO з серії Fighting Game Legends UT<br>В наявності розмір С <br><br>Дві легендарні бойові ігри тепер доступні на UT. Не пропустіть цю омріяну співпрацю.<br>Легенди бойових ігор<br><br>Ця колекція присвячена «Street Fighter» і «TEKKEN», двом іграм, які викликали бум файтингів у 1990-х роках. В останні роки обидві назви привабили шанувальників у всьому світі як репрезентативні назви кіберспортивних ігор. Ця графічна колекція футболок є захоплюючим уявленням про ці давно продані ігри, які є лідерами жанру бойових ігор.<br>Склад: 100% бавовна<br><br>470743</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1508,7 +1226,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 100% бавовна
 
 466152 футболки футболки та майки виріз круглий білий бавовна бренд: uniqlo m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208790633-futbolka-uniqlo-z-seriyi-haikyu" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6273/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296471144_310_430" alt="Футболка uniqlo з серії haikyu" loading="lazy" decoding="async">
             </div>
@@ -1518,13 +1236,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296471186_310_430' alt='Футболка uniqlo з серії haikyu' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296471187_310_430' alt='Футболка uniqlo з серії haikyu' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296479340_310_430' alt='Футболка uniqlo з серії haikyu' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296477098_310_430' alt='Футболка uniqlo з серії haikyu' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296475853_310_430' alt='Футболка uniqlo з серії haikyu' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка uniqlo з серії HAIKYU<br>В наявності розмір М<br><br>Склад: 100% бавовна<br><br>466152</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1543,7 +1254,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 72% бавовна, 28% поліестер
 
 459240 поло футболки та майки сезон літо принт без принту жовтий поліестер бавовна ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/208790780-futbolka-polo-dry-pique-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6272/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296471988_310_430" alt="Футболка-поло dry pique uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1553,13 +1264,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296471986_310_430' alt='Футболка-поло dry pique uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296473244_310_430' alt='Футболка-поло dry pique uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка-поло Dry Pique Uniqlo<br>В наявності розмір М та Л , колір 41 YELLOW<br><br>Опис:<br>- Тканина піке, виготовлена ​​із суміші стійкої до сколювання бавовни та переробленого поліестеру для гладкої легкої текстури.<br>- Зберігає форму після багаторазового прання.<br>- З технологією DRY.<br>- Ми постійно вдосконалюємо деталі цього класичного дизайну, включно з коміром, який добре виглядає незалежно від того, чи носите його застебнутим чи розстебнутим.<br>- Оновлена ​​строчка коміра для кращого комфорту.<br>- Манжети в рубчик для традиційного вигляду.<br><br>Склад: 72% бавовна, 28% поліестер<br><br>459240</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Жовтий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1581,7 +1285,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 65% поліестер, 35% нейлон
 
 465197 поло футболки та майки сезон літо принт без принту сірий нейлон поліестер xl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/208790842-futbolka-polo-uniqlo-z-tehnologiyeyu-shvidkogo-visihannya-_dry-ex" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6271/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296472447_310_430" alt="Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»" loading="lazy" decoding="async">
             </div>
@@ -1591,13 +1295,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296472472_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296472474_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка-поло DRY-EX UNIQLO<br>В наявності розмір ХЛ колір 07 GREY<br><br>Опис:<br>- З технологією швидковисихання «DRY-EX».<br>- Тканина швидко вбирає та відводить піт, зберігаючи відчуття свіжості.<br>- З функціями контролю запаху та Cool Touch.<br>- Ергономічний сітчастий дизайн.<br>- Виготовлена ​​з 2 різних типів сітки, включаючи дихаючу сітку під пахвами та посередині спини.<br>- Сітчасті секції вшиті в тканину, а не зшиті разом, що забезпечує гладке та легке відчуття.<br>- Безшовні манжети та поділ для додаткового комфорту.<br>- Має дрібний плоский комір та дихаючу сітку в місцях, схильних до вологи.<br>- Менш блискуча тканина, підходить для будь-якої події.<br><br>Склад: 65% поліестер, 35% нейлон<br><br>465197</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Нейлон Поліестер</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1608,7 +1305,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад:  73% бавовна, 27% поліестер
 
 477678 поло футболки та майки довжина рукава короткий сезон літо принт у смужку зелений білий поліестер бавовна s новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/208790988-futbolka-polo-dry-pique-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6270/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296473244_310_430" alt="Футболка-поло dry pique uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1618,13 +1315,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296473243_310_430' alt='Футболка-поло dry pique uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка-поло dry pique uniqlo<br>В наявності розмір С, колір 53 GREEN<br><br>Склад:  73% бавовна, 27% поліестер<br><br>477678</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки Довжина рукава Короткий Сезон Літо Принт У смужку</dd></div><div><dt>Колір</dt><dd>Зелений Білий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1646,7 +1336,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 65% поліестер, 35% нейлон
 
 465197 поло футболки та майки сезон літо принт без принту чорний нейлон поліестер m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/208791052-futbolka-polo-uniqlo-z-tehnologiyeyu-shvidkogo-visihannya-_dry-ex" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6269/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296473791_310_430" alt="Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»" loading="lazy" decoding="async">
             </div>
@@ -1656,13 +1346,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296473872_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296473838_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296473839_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка-поло DRY-EX UNIQLO<br>В наявності розмір М колір 09 BLACK<br><br>Опис:<br>- З технологією швидковисихання «DRY-EX».<br>- Тканина швидко вбирає та відводить піт, зберігаючи відчуття свіжості.<br>- З функціями контролю запаху та Cool Touch.<br>- Ергономічний сітчастий дизайн.<br>- Виготовлена ​​з 2 різних типів сітки, включаючи дихаючу сітку під пахвами та посередині спини.<br>- Сітчасті секції вшиті в тканину, а не зшиті разом, що забезпечує гладке та легке відчуття.<br>- Безшовні манжети та поділ для додаткового комфорту.<br>- Має дрібний плоский комір та дихаючу сітку в місцях, схильних до вологи.<br>- Менш блискуча тканина, підходить для будь-якої події.<br><br>Склад: 65% поліестер, 35% нейлон<br><br>465197</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Нейлон Поліестер</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1674,7 +1357,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 100% бавовна
 
 445000 футболки футболки та майки виріз круглий принт без принту особливості базові червоний бордовий бавовна бренд: uniqlo s новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208791257-bazova-futbolka-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6268/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296475243_310_430" alt="Базова футболка uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1684,13 +1367,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296475291_310_430' alt='Базова футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296475294_310_430' alt='Базова футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296475295_310_430' alt='Базова футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296475313_310_430' alt='Базова футболка uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Базова футболка Uniqlo<br>Футболка унісекс, в наявності розмір С , колір 19 Wine<br><br>Склад<br>100% бавовна<br><br>445000</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий Принт Без принту Особливості Базові</dd></div><div><dt>Колір</dt><dd>Червоний Бордовий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1701,7 +1377,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 100% бавовна
 
 465222 футболки футболки та майки виріз круглий сезон літо чорний бавовна бренд: uniqlo ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208791330-futbolka-uniqlo-z-seriyi-naruto-ut" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6267/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296475853_310_430" alt="Футболка uniqlo з серії naruto ut" loading="lazy" decoding="async">
             </div>
@@ -1711,13 +1387,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296475877_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296475878_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296481970_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296479340_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296477098_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294967975_310_430' alt='Футболка uniqlo з серії naruto ut' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка uniqlo з серії naruto ut<br>В наявності розмір М та Л<br><br>Склад: 100% бавовна<br><br>465222</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий Сезон Літо</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1729,7 +1398,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 100% бавовна
 
 471583 футболки футболки та майки виріз круглий принт без принту особливості базові червоний бавовна бренд: uniqlo ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208791391-bazova-futbolka-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6266/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296476213_310_430" alt="Базова футболка uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1739,13 +1408,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296476257_310_430' alt='Базова футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296495468_310_430' alt='Базова футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296479340_310_430' alt='Базова футболка uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Базова футболка Uniqlo<br>Футболка унісекс, в наявності розмір М та Л, колір 17 RED<br><br>Склад<br>100% бавовна<br><br>471583</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий Принт Без принту Особливості Базові</dd></div><div><dt>Колір</dt><dd>Червоний</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1756,7 +1418,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 100% бавовна
 
 449089 футболки футболки та майки виріз круглий сезон літо чорний бавовна бренд: uniqlo ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208791511-futbolka-uniqlo-z-seriyi-final-fantasy-anniversary-ut" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6265/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296477098_310_430" alt="Футболка uniqlo з серії final fantasy anniversary ut" loading="lazy" decoding="async">
             </div>
@@ -1766,13 +1428,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296477124_310_430' alt='Футболка uniqlo з серії final fantasy anniversary ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296477126_310_430' alt='Футболка uniqlo з серії final fantasy anniversary ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296495468_310_430' alt='Футболка uniqlo з серії final fantasy anniversary ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296481970_310_430' alt='Футболка uniqlo з серії final fantasy anniversary ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296479340_310_430' alt='Футболка uniqlo з серії final fantasy anniversary ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296475853_310_430' alt='Футболка uniqlo з серії final fantasy anniversary ut' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка uniqlo з серії FINAL FANTASY ANNIVERSARY UT<br>В наявності розмір М та Л<br><br>100% бавовна<br><br>449089</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий Сезон Літо</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1783,7 +1438,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 100% бавовна
 
 459551 футболки футболки та майки виріз круглий білий бавовна бренд: uniqlo ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208791858-futbolka-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6264/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296479340_310_430" alt="Футболка uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1793,13 +1448,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • Mі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296479403_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка uniqlo<br>В наявності розмір М та Л<br><br>Склад: 100% бавовна<br><br>459551</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1814,7 +1462,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 - універсальна регулярна посадка.
 
 466775 футболки футболки та майки бренд: uniqlo жовтий m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208791955-futbolka-slub-cotton-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6263/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296480111_310_430" alt="Футболка slub cotton uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1824,13 +1472,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296480106_310_430' alt='Футболка slub cotton uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка Slub Cotton Uniqlo<br>В наявності розмір М, колір 41 YELLOW<br><br>- 100% бавовняна тканина, виготовлена ​​з текстурованої пряжі.<br>- Одяг випраний для ідеального повсякденного стилю.<br>- Відмінна робота швів.<br>- Зручна нагрудна кишеня.<br>- Універсальна регулярна посадка.<br><br>466775</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Жовтий</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1844,7 +1485,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 - універсальна регулярна посадка.
 
 466775 футболки футболки та майки бренд: uniqlo блакитний m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208792025-futbolka-slub-cotton-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6262/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296480471_310_430" alt="Футболка slub cotton uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1854,13 +1495,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296480766_310_430' alt='Футболка slub cotton uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка Slub Cotton Uniqlo<br>В наявності розмір М, колір 63 BLUE<br>- 100% бавовняна тканина, виготовлена ​​з текстурованої пряжі.<br>- Одяг випраний для ідеального повсякденного стилю.<br>- Відмінна робота швів.<br>- Зручна нагрудна кишеня.<br>- Універсальна регулярна посадка.<br><br>466775</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1874,7 +1508,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 - універсальна регулярна посадка.
 
 466775 футболки футболки та майки виріз круглий чорний бавовна бренд: uniqlo m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208792077-chorna-futbolka-slub-cotton-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6261/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296480766_310_430" alt="Чорна футболка slub cotton uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1884,13 +1518,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296480827_310_430' alt='Чорна футболка slub cotton uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка Slub Cotton Uniqlo<br>В наявності розмір М, колір чорний<br>- 100% бавовняна тканина, виготовлена ​​з текстурованої пряжі.<br>- Одяг випраний для ідеального повсякденного стилю.<br>- Відмінна робота швів.<br>- Зручна нагрудна кишеня.<br>- Універсальна регулярна посадка.<br><br>466775</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1908,9 +1535,8 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 хс: плечі 50 пог 52 довжина 64
 хл: плечі 57пог 65 довжина 76
 
-
 469868 футболки футболки та майки виріз круглий білий бавовна бренд: uniqlo xsxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208792174-yakisna-futbolka-uniqlo-z-kolekciyi-andy-warhols-collages-ut" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6260/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296481456_310_430" alt="Якісна футболка uniqlo з колекції andy warhol&#x27;s collages ut" loading="lazy" decoding="async">
             </div>
@@ -1920,13 +1546,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • XSі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296481506_310_430' alt='Якісна футболка uniqlo з колекції andy warhol&#x27;s collages ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296481510_310_430' alt='Якісна футболка uniqlo з колекції andy warhol&#x27;s collages ut' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296481511_310_430' alt='Якісна футболка uniqlo з колекції andy warhol&#x27;s collages ut' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Колажі Енді Ворхола<br><br>Ацетатні колажі Енді Ворхола демонструють його інноваційний художній геній. З особливою точністю він майстерно наклав шари напівпрозорих аркушів для створення яскравих кольорів, сміливих візерунків і захоплюючих образів. Ці візуально приголомшливі композиції додають глибини та текстури його культовим образам поп-арту, таким як Мік Джаггер, розмиваючи кордони та розкриваючи інноваційний дух Воргола у відображенні впливу ЗМІ на суспільство.<br><br>Енді Воргол<br>Як видатний американський митець 20-го століття, Енді Воргол закликав світ дивитися на мистецтво по-іншому. Цей продукт виробляється за ліцензією The Andy Warhol Foundation for the Visual Arts, Inc., нью-йоркської некомерційної корпорації, яка сприяє розвитку образотворчого мистецтва.<br>Склад: 100% бавовна<br><br>В наявності розмір ХС та ХЛ<br>Заміри:<br>ХС: плечі 50 ПОГ 52 довжина 64<br>ХЛ: плечі 57ПОГ 65 довжина 76<br><br><br>469868</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>XSXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1944,7 +1563,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 100% бавовна
 
 453486 футболки футболки та майки виріз круглий принт малюнок білий бавовна бренд: uniqlo xss новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208792245-futbolka-uniqlo-z-seriyi-nyc-pop-icons-ut" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6259/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296481970_310_430" alt="Футболка uniqlo з серії nyc pop icons ut" loading="lazy" decoding="async">
             </div>
@@ -1954,13 +1573,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • XSі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296482025_310_430' alt='Футболка uniqlo з серії nyc pop icons ut' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка UNIQLO з серії NYC Pop Icons UT<br>В наявності: розмір ХС, С<br><br>Опис:<br>Кіт Харінг, Жан-Мішель Баскія та Кенні Шарф започаткували поп-культуру Нью-Йорка у 1980-х роках. Артисти допомогли утвердити Нью-Йорк як центр поп-культури 80-х і зробили місто більш яскравим.<br><br>Жан-Мішель Баскія<br>Ікона Нью-Йорка 1980-х років, Жан-Мішель Баскія став відомим за свою коротку кар’єру роботами, натхненними його раннім вуличним мистецтвом, і характерною іконографією, часто пов’язаною з історією мистецтва. Його картини, малюнки та гравюри спиралися на різноманітні джерела, від африканської, ацтекської та грецької культур до американської у формі джазу, бейсболу та соціальних і політичних подій.<br><br>Склад:<br>100% бавовна<br><br>453486</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий Принт Малюнок</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>XSS</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1971,7 +1583,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 100% бавовна
 
 459201 футболки футболки та майки виріз круглий білий бавовна бренд: uniqlo xs новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208792425-futbolka-uniseks-uniqlo-z-seriyi-hypebeast" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6258/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296483285_310_430" alt="Футболка унісекс uniqlo з серії hypebeast" loading="lazy" decoding="async">
             </div>
@@ -1981,13 +1593,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • XS</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296483299_310_430' alt='Футболка унісекс uniqlo з серії hypebeast' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка унісекс Uniqlo з серії Hypebeast<br>В наявності: розмір ХС<br><br>Склад: 100% бавовна<br><br>459201</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>XS</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1998,7 +1603,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 80% поліестер, 20% нейлон
 
 475765 поло футболки та майки сезон літо синій нейлон поліестер m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/208793789-futbolka-polo-uniqlo-z-tehnologiyeyu-shvidkogo-visihannya-_dry-ex" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6257/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296492442_310_430" alt="Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»" loading="lazy" decoding="async">
             </div>
@@ -2008,13 +1613,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296492438_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296492434_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296492435_310_430' alt='Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка-поло uniqlo з технологією швидкого висихання «dry-ex»<br>В наявності розмір М, колір 68 BLUE<br><br>Склад: 80% поліестер, 20% нейлон<br><br>475765</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки Сезон Літо</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Нейлон Поліестер</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -2025,7 +1623,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
 склад: 72% бавовна, 28% поліестер
 
 422987 поло футболки та майки хакі поліестер бавовна l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/polo/208794287-futbolka-polo-dry-pique-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6256/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296494927_310_430" alt="Футболка-поло dry pique uniqlo" loading="lazy" decoding="async">
             </div>
@@ -2035,13 +1633,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Футболка-поло dry pique uniqlo<br>В наявності розмір Л, колір 56 OLIVE<br><br>Склад: 72% бавовна, 28% поліестер<br><br>422987</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Поло Футболки та Майки</dd></div><div><dt>Колір</dt><dd>Хакі</dd></div><div><dt>Матеріал</dt><dd>Поліестер Бавовна</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -2049,11 +1640,10 @@ dry-ex - найшвидшесохнуча тканина, створена toray
     <div class="product-card hidden-card" data-search="футболка uniqlo 680 грн uniqlo l futbolky-mayky-men футболка uniqlo
 в наявності розмір л, колір 61 blue
 
-
 склад: 75% бавовна, 25% бавовна - перероблене волокно
 
 480859 футболки футболки та майки виріз круглий блакитний бавовна бренд: uniqlo l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/men/futbolki-i-maiki/futbolki/208794385-futbolka-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6255/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296495468_310_430" alt="Футболка uniqlo" loading="lazy" decoding="async">
             </div>
@@ -2063,13 +1653,6 @@ dry-ex - найшвидшесохнуча тканина, створена toray
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296495557_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2287025658_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/587193152_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2261419552_310_430' alt='Футболка uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Футболка uniqlo<br>В наявності розмір Л, колір 61 BLUE<br><br><br>Склад: 75% бавовна, 25% бавовна - перероблене волокно<br><br>480859</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки Футболки та Майки Виріз Круглий</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Матеріал</dt><dd>Бавовна Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -2077,7 +1660,7 @@ dry-ex - найшвидшесохнуча тканина, створена toray
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:30</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:40</div>
 </main>
 </div>
 <script>
@@ -2087,6 +1670,7 @@ if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
 function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
 function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
 function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function setProductImage(btn){const img=document.getElementById('productMainImage');if(img&&btn&&btn.dataset.src)img.src=btn.dataset.src;document.querySelectorAll('.product-thumb').forEach(el=>el.classList.remove('active'));if(btn)btn.classList.add('active');}
 function filterProducts(input){
 const q=(input.value||'').trim().toLowerCase();
 const cards=Array.from(document.querySelectorAll('.product-card'));

@@ -85,6 +85,31 @@ padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
+.back-link{display:inline-flex;margin-bottom:18px;color:var(--muted);text-decoration:none;font-weight:700;}
+.back-link:hover{color:var(--accent);}
+.product-detail-layout{display:grid;grid-template-columns:minmax(300px,520px) minmax(320px,1fr);gap:34px;align-items:start;}
+.product-gallery-panel{position:sticky;top:24px;}
+.product-main-image-wrap{background:var(--bg-soft);border-radius:18px;overflow:hidden;border:1px solid var(--border);}
+.product-main-image-wrap img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
+.product-thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:10px;margin-top:12px;}
+.product-thumb{border:1px solid var(--border);background:var(--panel-solid);border-radius:12px;padding:0;overflow:hidden;cursor:pointer;}
+.product-thumb img{width:100%;aspect-ratio:1/1.25;object-fit:cover;display:block;}
+.product-thumb:hover{border-color:var(--accent);}
+.product-detail-info{background:var(--panel-solid);border:1px solid var(--border);border-radius:22px;padding:26px;box-shadow:var(--shadow);}
+.detail-source{color:var(--accent);font-weight:800;font-size:13px;text-transform:uppercase;margin-bottom:8px;}
+.product-detail-info h1{font-size:34px;line-height:1.18;margin:0 0 12px;letter-spacing:0;}
+.detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
+.detail-price{font-size:34px;font-weight:900;margin:20px 0;}
+.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
+font-weight:800;padding:13px 22px;margin-bottom:24px;}
+.detail-section{border-top:1px solid var(--border);padding-top:20px;margin-top:20px;}
+.detail-section h2{font-size:20px;margin:0 0 12px;}
+.detail-section p{font-size:15px;line-height:1.7;margin:0;color:var(--text);}
+.detail-attrs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;}
+.detail-attrs div{border:1px solid var(--border);border-radius:14px;padding:12px;background:var(--bg);}
+.detail-attrs dt{color:var(--muted);font-size:13px;margin-bottom:4px;}
+.detail-attrs dd{margin:0;color:var(--text);font-weight:700;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -105,6 +130,10 @@ background:var(--panel-solid);color:var(--muted);}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
 .promo-card{flex-direction:column;text-align:center;}
 .product-search-bar{align-items:stretch;flex-direction:column;}
+.product-detail-layout{grid-template-columns:1fr;}
+.product-gallery-panel{position:static;}
+.product-detail-info h1{font-size:28px;}
+.detail-attrs{grid-template-columns:1fr;}
 .search-status{white-space:normal;}}
 </style>
 </head>
@@ -118,12 +147,11 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 14:30</div>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:40</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
-<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
 </ul></div>
 <div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
@@ -179,7 +207,7 @@ background:var(--panel-solid);color:var(--muted);}
             </div>
         <div class="products-grid">
     <div class="product-card" data-search="жіночий комбінезон на тонких бретелях uniqlo 900 грн uniqlo 38 / m / 46 kombinezony жіночний жилет з v-подібним вирізом, тонкими плечима і подолом, який не надто оголює вигини. ・надіньте жилет-спагетті з v-подібним вирізом більш жіночного покрою. ・топ з широким подолом ефектно облягає живіт і робить фігуру стрункішою 406984-52 брючні комбінезони комбінезони рожевий 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kombinezony/bryuchnye-kombinezony/92206153-zhenskiy-kombinezon-na-tonkih-bretelyah-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5635/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/468660696_310_430" alt="Жіночий комбінезон на тонких бретелях uniqlo" loading="lazy" decoding="async">
             </div>
@@ -189,19 +217,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/468660814_310_430' alt='Жіночий комбінезон на тонких бретелях uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Жіночний жилет з V-подібним вирізом, тонкими плечима і подолом, який не надто оголює вигини. ・Надіньте жилет-спагетті з V-подібним вирізом більш жіночного покрою. ・Топ з широким подолом ефектно облягає живіт і робить фігуру стрункішою 406984-52</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брючні комбінезони Комбінезони</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="легкий стрейчевий комбінезон mango 650 грн mango 36 / s / 44 kombinezony легкий стрейчевий комбінезон mango брючні комбінезони комбінезони коричневий 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kombinezony/bryuchnye-kombinezony/101011127-legkiy-stryaychevyy-kombinezon-mango" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5634/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/567069285_310_430" alt="Легкий стрейчевий комбінезон mango" loading="lazy" decoding="async">
             </div>
@@ -211,19 +232,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Mango • 36 / S / 44</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/567069407_310_430' alt='Легкий стрейчевий комбінезон mango' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/569791811_310_430' alt='Легкий стрейчевий комбінезон mango' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/567073380_310_430' alt='Легкий стрейчевий комбінезон mango' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Легкий стрейчевий комбінезон Mango</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брючні комбінезони Комбінезони</dd></div><div><dt>Колір</dt><dd>Коричневий</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="комбінезон mango 700 грн mango 40 / l / 48 kombinezony тканина саржа . класичний комір . довгий рукав «летюча миша» . два нагрудних кишені з клапанами . талія на шнурку . застібка на гудзики на передній частині . брючні комбінезони комбінезони стиль класичний бежевий 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kombinezony/bryuchnye-kombinezony/101011393-kombinezon-mango" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5633/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/567073380_310_430" alt="Комбінезон mango" loading="lazy" decoding="async">
             </div>
@@ -233,19 +247,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Mango • 40 / L / 48</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/567073499_310_430' alt='Комбінезон mango' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/569791811_310_430' alt='Комбінезон mango' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-148411102_310_430' alt='Комбінезон mango' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2199804036_310_430' alt='Комбінезон mango' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296246936_310_430' alt='Комбінезон mango' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Тканина саржа . Класичний комір . Довгий рукав «летюча миша» . Два нагрудних кишені з клапанами . Талія на шнурку . Застібка на гудзики на передній частині .</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брючні комбінезони Комбінезони Стиль Класичний</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="комбінезон mango 800 грн uniqlo 38 / m / 46 kombinezony склад 52% льон, 48% віскоза a11 брючні комбінезони комбінезони синій 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kombinezony/bryuchnye-kombinezony/101361503-kombinezon-mango" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5632/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/569791811_310_430" alt="Комбінезон mango" loading="lazy" decoding="async">
             </div>
@@ -255,13 +262,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2181002898_310_430' alt='Комбінезон mango' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-34511789_310_430' alt='Комбінезон mango' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/265421674_310_430' alt='Комбінезон mango' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Склад 52% льон, 48% віскоза a11</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брючні комбінезони Комбінезони</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -276,7 +276,7 @@ background:var(--panel-solid);color:var(--muted);}
 в наявності розмір с
 
 458659 комбінезони з шортами комбінезони чорний жовтий 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kombinezony/kombinezony-s-shortami/186454757-kombinezon-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5631/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2185430112_310_430" alt="Комбінезон uniqlo" loading="lazy" decoding="async">
             </div>
@@ -286,13 +286,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2185430110_310_430' alt='Комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2207365849_310_430' alt='Комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2207366187_310_430' alt='Комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2187517639_310_430' alt='Комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/818104459_310_430' alt='Комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2161817567_310_430' alt='Комбінезон uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>- М&#x27;яка віскозна тканина з елегантною драпіровкою.<br>- Приємний відкритий дизайн з тонкими лямками та глибоким V-подібним вирізом.<br>- Довжина лямок регулюється для щільнішої посадки.<br>- Прикріплений пояс зав&#x27;язується ззаду для витонченої талії.<br>- Тропічний квітковий принт.<br>- Універсальні комбінезони для відпочинку вдома або у відпустці.<br><br>В наявності розмір С<br><br>458659</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Комбінезони з шортами Комбінезони</dd></div><div><dt>Колір</dt><dd>Чорний Жовтий</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -314,7 +307,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 38% льон, 36% віскоза, 26% поліестер
 
 464773 брючні комбінезони комбінезони бежевий 36/s/4438/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kombinezony/bryuchnye-kombinezony/186787304-llyaniy-kombinezon-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5630/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2187517639_310_430" alt="Лляний комбінезон uniqlo" loading="lazy" decoding="async">
             </div>
@@ -324,13 +317,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2187517638_310_430' alt='Лляний комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2187517636_310_430' alt='Лляний комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2187517630_310_430' alt='Лляний комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2187517633_310_430' alt='Лляний комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2187517635_310_430' alt='Лляний комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2207365849_310_430' alt='Лляний комбінезон uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лляний комбінезон UNIQLO<br>В наявності розмір С та М, колір 31 BEIGE<br><br>Опис:<br>Тканина з льону з вишуканою текстурою. Прямий крій полегшує укладання.<br>- Тканина з льону та віскози.<br>- Універсальний широкий, прямий крій.<br>- Плечові бретелі на ґудзиках для легкого регулювання розміру.<br>- Модель можна носити з поясом або без нього.<br>- Еластична резинка ззаду.<br>- Зі зручними кишенями.<br>- Ідеально підходить для носіння окремо або в парі.<br>- Повсякденний дизайн забезпечує свободу рухів.<br><br>Склад: 38% льон, 36% віскоза, 26% поліестер<br><br>464773</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брючні комбінезони Комбінезони</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Розмір</dt><dd>36/S/4438/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -346,7 +332,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 60% поліестер - перероблене волокно, 28% віскоза, 6% поліестер, 6% еластан
 
 474068 брючні комбінезони комбінезони сірий чорний віскоза поліестер еластан 42/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kombinezony/bryuchnye-kombinezony/190238141-kombinezon-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5629/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2207366187_310_430" alt="Комбінезон uniqlo" loading="lazy" decoding="async">
             </div>
@@ -356,13 +342,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2207366189_310_430' alt='Комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2207366225_310_430' alt='Комбінезон uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Комбінезон uniqlo<br>В наявності розмір ХЛ, колір 08 DARK GREY<br><br>Опис:<br>- Приємний крій поєднує вузький верх із прямим, широким низом.<br>- Можна носити окремо або шарами.<br>- Поєднуйте з піджаком для вишуканого образу.<br><br>Склад: 60% поліестер - перероблене волокно, 28% віскоза, 6% поліестер, 6% еластан<br><br>474068</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брючні комбінезони Комбінезони</dd></div><div><dt>Колір</dt><dd>Сірий Чорний</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер Еластан</dd></div><div><dt>Розмір</dt><dd>42/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -378,7 +357,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 60% поліестер - перероблене волокно, 28% віскоза, 6% поліестер, 6% еластан
 
 474068 брючні комбінезони комбінезони чорний віскоза поліестер еластан 36/s/4440/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kombinezony/bryuchnye-kombinezony/190238093-kombinezon-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5628/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2207365849_310_430" alt="Комбінезон uniqlo" loading="lazy" decoding="async">
             </div>
@@ -388,13 +367,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2218690031_310_430' alt='Комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2218688839_310_430' alt='Комбінезон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2218699780_310_430' alt='Комбінезон uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Комбінезон uniqlo<br>В наявності розмір С та Л, колір чорний<br><br>Опис:<br>- Приємний крій поєднує вузький верх із прямим, широким низом.<br>- Можна носити окремо або шарами.<br>- Поєднуйте з піджаком для вишуканого образу.<br><br>Склад: 60% поліестер - перероблене волокно, 28% віскоза, 6% поліестер, 6% еластан<br><br>474068</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брючні комбінезони Комбінезони</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер Еластан</dd></div><div><dt>Розмір</dt><dd>36/S/4440/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -414,7 +386,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 100% бавовна
 
 458659 комбінезони з шортами комбінезони чорний жовтий драп бавовна довжина міні принт квітковий s новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kombinezony/kombinezony-s-shortami/209055406-printovaniy-top-romper-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5627/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2297902164_310_430" alt="Принтований топ-ромпер uniqlo" loading="lazy" decoding="async">
             </div>
@@ -424,13 +396,6 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2297902340_310_430' alt='Принтований топ-ромпер uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Принтований топ-ромпер uniqlo<br><br>В наявності розмір С<br><br>Опис:<br>- М&#x27;яка віскозна тканина з елегантною драпіровкою.<br>- Приємний відкритий дизайн з тонкими лямками та глибоким V-подібним вирізом.<br>- Довжина лямок регулюється для щільнішої посадки.<br>- Прикріплений пояс зав&#x27;язується ззаду для витонченої талії.<br>- Тропічний квітковий принт.<br>- Універсальні комбінезони для відпочинку вдома або у відпустці.<br><br>Склад: 100% бавовна<br><br>458659</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Комбінезони з шортами Комбінезони</dd></div><div><dt>Колір</dt><dd>Чорний Жовтий</dd></div><div><dt>Матеріал</dt><dd>Драп Бавовна Довжина Міні Принт Квітковий</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -441,7 +406,7 @@ background:var(--panel-solid);color:var(--muted);}
 склад: 38% льон, 36% віскоза, 26% поліестер
 
 464773 брючні комбінезони комбінезони бежевий віскоза льон поліестер sm новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kombinezony/bryuchnye-kombinezony/209091563-kombinezon-z-sumishi-lon-viskoza-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5626/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2298042504_310_430" alt="Комбінезон з суміші льон-віскоза uniqlo" loading="lazy" decoding="async">
             </div>
@@ -451,19 +416,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • Sі ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298042967_310_430' alt='Комбінезон з суміші льон-віскоза uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298042972_310_430' alt='Комбінезон з суміші льон-віскоза uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298042990_310_430' alt='Комбінезон з суміші льон-віскоза uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298042974_310_430' alt='Комбінезон з суміші льон-віскоза uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298042977_310_430' alt='Комбінезон з суміші льон-віскоза uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298042984_310_430' alt='Комбінезон з суміші льон-віскоза uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Комбінезон з суміші льон-віскоза UNIQLO<br>В наявності розмір С та М, колір 31 BEIGE<br><br>Склад: 38% льон, 36% віскоза, 26% поліестер<br><br>464773</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брючні комбінезони Комбінезони</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Льон Поліестер</dd></div><div><dt>Розмір</dt><dd>SM</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div></div>
         
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:30</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:40</div>
 </main>
 </div>
 <script>
@@ -473,6 +431,7 @@ if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
 function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
 function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
 function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function setProductImage(btn){const img=document.getElementById('productMainImage');if(img&&btn&&btn.dataset.src)img.src=btn.dataset.src;document.querySelectorAll('.product-thumb').forEach(el=>el.classList.remove('active'));if(btn)btn.classList.add('active');}
 function filterProducts(input){
 const q=(input.value||'').trim().toLowerCase();
 const cards=Array.from(document.querySelectorAll('.product-card'));

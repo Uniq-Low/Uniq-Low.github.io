@@ -85,6 +85,31 @@ padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
+.back-link{display:inline-flex;margin-bottom:18px;color:var(--muted);text-decoration:none;font-weight:700;}
+.back-link:hover{color:var(--accent);}
+.product-detail-layout{display:grid;grid-template-columns:minmax(300px,520px) minmax(320px,1fr);gap:34px;align-items:start;}
+.product-gallery-panel{position:sticky;top:24px;}
+.product-main-image-wrap{background:var(--bg-soft);border-radius:18px;overflow:hidden;border:1px solid var(--border);}
+.product-main-image-wrap img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
+.product-thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:10px;margin-top:12px;}
+.product-thumb{border:1px solid var(--border);background:var(--panel-solid);border-radius:12px;padding:0;overflow:hidden;cursor:pointer;}
+.product-thumb img{width:100%;aspect-ratio:1/1.25;object-fit:cover;display:block;}
+.product-thumb:hover{border-color:var(--accent);}
+.product-detail-info{background:var(--panel-solid);border:1px solid var(--border);border-radius:22px;padding:26px;box-shadow:var(--shadow);}
+.detail-source{color:var(--accent);font-weight:800;font-size:13px;text-transform:uppercase;margin-bottom:8px;}
+.product-detail-info h1{font-size:34px;line-height:1.18;margin:0 0 12px;letter-spacing:0;}
+.detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
+.detail-price{font-size:34px;font-weight:900;margin:20px 0;}
+.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
+font-weight:800;padding:13px 22px;margin-bottom:24px;}
+.detail-section{border-top:1px solid var(--border);padding-top:20px;margin-top:20px;}
+.detail-section h2{font-size:20px;margin:0 0 12px;}
+.detail-section p{font-size:15px;line-height:1.7;margin:0;color:var(--text);}
+.detail-attrs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;}
+.detail-attrs div{border:1px solid var(--border);border-radius:14px;padding:12px;background:var(--bg);}
+.detail-attrs dt{color:var(--muted);font-size:13px;margin-bottom:4px;}
+.detail-attrs dd{margin:0;color:var(--text);font-weight:700;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -105,6 +130,10 @@ background:var(--panel-solid);color:var(--muted);}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
 .promo-card{flex-direction:column;text-align:center;}
 .product-search-bar{align-items:stretch;flex-direction:column;}
+.product-detail-layout{grid-template-columns:1fr;}
+.product-gallery-panel{position:static;}
+.product-detail-info h1{font-size:28px;}
+.detail-attrs{grid-template-columns:1fr;}
 .search-status{white-space:normal;}}
 </style>
 </head>
@@ -118,12 +147,11 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 14:30</div>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:40</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
-<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
 </ul></div>
 <div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
@@ -179,7 +207,7 @@ background:var(--panel-solid);color:var(--muted);}
             </div>
         <div class="products-grid">
     <div class="product-card" data-search="кросівки puma «clyde» 850 грн puma 31 dlya-divchatok абсолютно нові шкіряні кросівки в оригінальній упаковці! кросівки взуття бренд: puma білий 31 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/krossovki-i-kedy/73486457-krossovki-puma-_clyde" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6053/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/327670230_310_430" alt="Кросівки puma «clyde»" loading="lazy" decoding="async">
             </div>
@@ -189,19 +217,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Puma • 31</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/867691169_310_430' alt='Кросівки puma «clyde»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-179484978_310_430' alt='Кросівки puma «clyde»' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1281553991_310_430' alt='Кросівки puma «clyde»' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Абсолютно нові шкіряні кросівки в оригінальній упаковці!</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кросівки Взуття Бренд: Puma</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>31</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="зимовий мерехтливе пальто matalan на дівчинку 6 років і 5 років 700 грн мatalan 110і ще 1 dlya-divchatok шикарне тепле пальто з мерехтливої тканини з м&#x27;якою хутряною підкладкою щільна, тепла, водонепроникна, продувається. на рукавах манжети. глибокі кишені. капюшон не відстібається. пальто верхній одяг особливості моделі з капюшоном бордовий 110116 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/palto/74467240-zimnee-mercayushee-palto-matalan-na-devochku-6-let-i-5-let" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6052/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/332809090_310_430" alt="Зимовий мерехтливе пальто matalan на дівчинку 6 років і 5 років" loading="lazy" decoding="async">
             </div>
@@ -211,19 +232,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Мatalan • 110і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/332808979_310_430' alt='Зимовий мерехтливе пальто matalan на дівчинку 6 років і 5 років' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/332809029_310_430' alt='Зимовий мерехтливе пальто matalan на дівчинку 6 років і 5 років' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Шикарне тепле пальто з мерехтливої тканини з м&#x27;якою хутряною підкладкою Щільна, тепла, водонепроникна, продувається. На рукавах манжети. Глибокі кишені. Капюшон не відстібається.</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Пальто Верхній одяг Особливості моделі З капюшоном</dd></div><div><dt>Колір</dt><dd>Бордовий</dd></div><div><dt>Розмір</dt><dd>110116</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="дитяча куртка-пуховик gio oversized для дівчаток urban republic 5-6 років 550 грн  110 dlya-divchatok дитяча куртка-пуховик gio oversized для дівчаток urban republic, розмір від 5 до 6, новинка чорного кольору пальто верхній одяг чорний 110 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/palto/74467896-detskaya-kurtka-puhovik-gio-oversized-dlya-devochek-urban-republic-5" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6051/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/332812443_310_430" alt="Дитяча куртка-пуховик gio oversized для дівчаток urban republic 5-6 років" loading="lazy" decoding="async">
             </div>
@@ -233,19 +247,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>110</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/332812528_310_430' alt='Дитяча куртка-пуховик gio oversized для дівчаток urban republic 5-6 років' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/332812838_310_430' alt='Дитяча куртка-пуховик gio oversized для дівчаток urban republic 5-6 років' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Дитяча куртка-пуховик GIO OVERSIZED для дівчаток Urban Republic, розмір від 5 до 6, новинка чорного кольору</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Пальто Верхній одяг</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Розмір</dt><dd>110</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="сукня-футболка з круглим вирізом і короткими рукавами для дівчаток uniqlo 500 грн uniqlo 146 dlya-divchatok дитяча версія нашого жіночого сукні-футболки ідеально підходить для поєднаних стилів. - колекція uniqlo u є плодом роботи відданою і досвідченої команди міжнародних дизайнерів з паризького центру досліджень і розробок, очолюваної художнім керівником крістофом лемером. - той же дизайн доступний у нашій лінійці жіночого одягу uniqlo u для невимушеного поєднання нарядів 437561-58 сукні та сарафани для дівчаток білий кораловий 146 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/platya-i-sarafany/93670936-plate-futbolka-s-kruglym-vyrezom-i-korotkimi-rukavami-dlya-devochek" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6050/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/487937396_310_430" alt="Сукня-футболка з круглим вирізом і короткими рукавами для дівчаток uniqlo" loading="lazy" decoding="async">
             </div>
@@ -255,19 +262,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 146</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/487938702_310_430' alt='Сукня-футболка з круглим вирізом і короткими рукавами для дівчаток uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Дитяча версія нашого жіночого сукні-футболки ідеально підходить для поєднаних стилів. - Колекція Uniqlo U є плодом роботи відданою і досвідченої команди міжнародних дизайнерів з паризького Центру досліджень і розробок, очолюваної художнім керівником Крістофом Лемером. - Той же дизайн доступний у нашій лінійці жіночого одягу Uniqlo U для невимушеного поєднання нарядів 437561-58</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сукні та сарафани Для дівчаток</dd></div><div><dt>Колір</dt><dd>Білий Кораловий</dd></div><div><dt>Розмір</dt><dd>146</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="штани з ультраэластичных легінсів для дівчаток uniqlo 400 грн uniqlo 122 dlya-divchatok неймовірна розтяжка для свободи рухів. лаконічний крій із зручною посадкою. 436033-58 штани, джинси, лосини для дівчаток бірюзовий 122 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/bryuki-i-dzhinsy/93671762-bryuki-iz-ultraelastichnyh-legginsov-dlya-devochek-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6049/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/487943517_310_430" alt="Штани з ультраэластичных легінсів для дівчаток uniqlo" loading="lazy" decoding="async">
             </div>
@@ -277,19 +277,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 122</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Неймовірна розтяжка для свободи рухів. Лаконічний крій із зручною посадкою. 436033-58</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Штани, джинси, лосини Для дівчаток</dd></div><div><dt>Колір</dt><dd>Бірюзовий</dd></div><div><dt>Розмір</dt><dd>122</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="kids kaws x sesame street ut (футболка з коротким рукавом) 9-10 ,11-12 410 грн uniqlo 140і ще 1 dlya-divchatok 100% бавовна машинне прання холодною водою імпортний m412888-а4 футболки та майки для дівчаток червоний 140146 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/futbolki-i-mayki/94914867-kids-kaws-x-sesame-street-ut-futbolka-s-korotkim-rukavom-9-10-11-12" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6048/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/500069520_310_430" alt="Kids kaws x sesame street ut (футболка з коротким рукавом) 9-10 ,11-12" loading="lazy" decoding="async">
             </div>
@@ -299,19 +292,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 140і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/500069174_310_430' alt='Kids kaws x sesame street ut (футболка з коротким рукавом) 9-10 ,11-12' loading='lazy' decoding='async'></div>
-            <div class='product-description'>100% бавовна Машинне прання холодною водою Імпортний m412888-а4</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки та майки Для дівчаток</dd></div><div><dt>Колір</dt><dd>Червоний</dd></div><div><dt>Розмір</dt><dd>140146</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом! 290 грн uniqlo 128і ще 2 dlya-divchatok зроблений з чистого бавовняного матеріалу, модного і універсального, і являє собою популярний аніме-серіал. 409737-а4 футболки та майки для дівчаток рожевий 116122128 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/futbolki-i-mayki/94915216-uniqlo-akciya-3-futbolki-skidkadetskaya-futbolka-s-printom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6047/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/500072024_310_430" alt="Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!" loading="lazy" decoding="async">
             </div>
@@ -321,19 +307,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 128і ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/500072065_310_430' alt='Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/500112713_310_430' alt='Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/500099826_310_430' alt='Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!' loading='lazy' decoding='async'></div>
-            <div class='product-description'>зроблений з чистого бавовняного матеріалу, модного і універсального, і являє собою популярний аніме-серіал. 409737-а4</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки та майки Для дівчаток</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Розмір</dt><dd>116122128</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом! 300 грн uniqlo 134 dlya-divchatok зроблений з чистого бавовняного матеріалу, модного і універсального, і являє собою популярний аніме-серіал. 417050-а4 футболки та майки для дівчаток червоний 134 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/futbolki-i-mayki/94918363-uniqlo-akciya-3-futbolki-skidkadetskaya-futbolka-s-printom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6046/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/500099826_310_430" alt="Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!" loading="lazy" decoding="async">
             </div>
@@ -343,19 +322,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 134</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/500100034_310_430' alt='Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/500112713_310_430' alt='Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!' loading='lazy' decoding='async'></div>
-            <div class='product-description'>зроблений з чистого бавовняного матеріалу, модного і універсального, і являє собою популярний аніме-серіал. 417050-а4</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки та майки Для дівчаток</dd></div><div><dt>Колір</dt><dd>Червоний</dd></div><div><dt>Розмір</dt><dd>134</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="uniqlo акція! 3 футболки -знижка!дитяча футболка 300 грн uniqlo 122 dlya-divchatok матеріал продукту 100% бавовна 404925-a4 футболки та майки для дівчаток білий 122 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/futbolki-i-mayki/94919416-uniqlo-akciya-3-futbolki-skidkadetskaya-futbolka" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6045/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/500112713_310_430" alt="Uniqlo акція! 3 футболки -знижка!дитяча футболка" loading="lazy" decoding="async">
             </div>
@@ -365,19 +337,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 122</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>матеріал продукту 100% бавовна 404925-a4</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки та майки Для дівчаток</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>122</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="уникло красуня дісней футболка! 300 грн uniqlo 110 dlya-divchatok уникло красуня дісней і футболка 415588-a4 футболки та майки для дівчаток улюблені персонажі disney білий 110 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/futbolki-i-mayki/94919598-uniklo-krasavica-disnyay-futbolka" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6044/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/500114889_310_430" alt="Уникло красуня дісней футболка!" loading="lazy" decoding="async">
             </div>
@@ -387,19 +352,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 110</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>УНИКЛО Красуня Дісней і футболка 415588-a4</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Футболки та майки Для дівчаток Улюблені персонажі Disney</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>110</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="crocs ralen clog k fuchsia pink girls size j1 roomy fit 750 грн crocs 28 dlya-divchatok повністю лита взуття з легкого матеріалу croslite™ для максимальної підтримки і комфорту: сучасний полімерний матеріал, понад легкий, еластичний, водостійкий і гігієнічний. зручні і м&#x27;які crocs забезпечать комфорт маленьким ніжкам в будь-якій ситуації! - легкі, комфортні і ергономічні властивості: анатомічні, антибактеріальні, водовідштовхувальні - п&#x27;ятковий ремінь з матеріалу croslite™ для надійної фіксації - колір рожевий босоніжки та сандалі взуття рожевий 28 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/bosonozhki-i-shlepancy/96700601-crocs-ralen-clog-k-fuchsia-pink-girls-size-j1-roomy-fit" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6043/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/514652886_310_430" alt="Crocs ralen clog k fuchsia pink girls size j1 roomy fit" loading="lazy" decoding="async">
             </div>
@@ -409,19 +367,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Crocs • 28</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Повністю лита взуття з легкого матеріалу Croslite™ для максимальної підтримки і комфорту: сучасний полімерний матеріал, понад легкий, еластичний, водостійкий і гігієнічний. Зручні і м&#x27;які Crocs забезпечать комфорт маленьким ніжкам в будь-якій ситуації! - легкі, комфортні і ергономічні властивості: анатомічні, антибактеріальні, водовідштовхувальні - п&#x27;ятковий ремінь з матеріалу Croslite™ для надійної фіксації - колір рожевий</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Босоніжки та сандалі Взуття</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Розмір</dt><dd>28</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card" data-search="пальто uniqlo флісова непродуваемое windproof 7-8 років 600 грн uniqlo 122і ще 1 dlya-divchatok uniqlo дитяче вітрозахисні флісова пальто uniqlo 411223-aman пальто верхній одяг бежевий 122128 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/palto/101011855-palto-uniqlo-flisovoe-neproduvaemoe-windproof-7-8-let" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6042/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/567078997_310_430" alt="Пальто uniqlo флісова непродуваемое windproof 7-8 років" loading="lazy" decoding="async">
             </div>
@@ -431,19 +382,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 122і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/567079135_310_430' alt='Пальто uniqlo флісова непродуваемое windproof 7-8 років' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-471138031_310_430' alt='Пальто uniqlo флісова непродуваемое windproof 7-8 років' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/463224665_310_430' alt='Пальто uniqlo флісова непродуваемое windproof 7-8 років' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-871474830_310_430' alt='Пальто uniqlo флісова непродуваемое windproof 7-8 років' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/712292307_310_430' alt='Пальто uniqlo флісова непродуваемое windproof 7-8 років' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1442453919_310_430' alt='Пальто uniqlo флісова непродуваемое windproof 7-8 років' loading='lazy' decoding='async'></div>
-            <div class='product-description'>UNIQLO Дитяче вітрозахисні флісова пальто Uniqlo 411223-aman</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Пальто Верхній одяг</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Розмір</dt><dd>122128</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="mango лосини 355 грн mango 122 dlya-divchatok mango лосини штани, джинси, лосини для дівчаток сріблястий 122 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/bryuki-i-dzhinsy/101014866-mango-losiny" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6041/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/567114663_310_430" alt="Mango лосини" loading="lazy" decoding="async">
             </div>
@@ -453,19 +397,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Mango • 122</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2064076317_310_430' alt='Mango лосини' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-225685660_310_430' alt='Mango лосини' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1020392443_310_430' alt='Mango лосини' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Mango лосини</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Штани, джинси, лосини Для дівчаток</dd></div><div><dt>Колір</dt><dd>Сріблястий</dd></div><div><dt>Розмір</dt><dd>122</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="дитяча піжама 600 грн uniqlo 104 dlya-divchatok дитяча піжама 410061-а11 піжами спідня білизна блакитний 104 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/pizhamy/101360227-dityacha-pizhama" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6040/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/569784490_310_430" alt="Дитяча піжама" loading="lazy" decoding="async">
             </div>
@@ -475,19 +412,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 104</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/569785066_310_430' alt='Дитяча піжама' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2195461114_310_430' alt='Дитяча піжама' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2271190238_310_430' alt='Дитяча піжама' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2187738217_310_430' alt='Дитяча піжама' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1267210926_310_430' alt='Дитяча піжама' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Дитяча піжама 410061-а11</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Спідня білизна</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Розмір</dt><dd>104</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="дитяча піжама 600 грн uniqlo 104 dlya-divchatok дитяча піжама 409194-а11 піжами спідня білизна синій сірий 104 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/pizhamy/101360323-dityacha-pizhama" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6039/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/569785066_310_430" alt="Дитяча піжама" loading="lazy" decoding="async">
             </div>
@@ -497,19 +427,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 104</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Дитяча піжама 409194-а11</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Спідня білизна</dd></div><div><dt>Колір</dt><dd>Синій Сірий</dd></div><div><dt>Розмір</dt><dd>104</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="сукня без рукавів uniqlo 350 грн uniqlo 110і ще 1 dlya-divchatok сукня без рукавів uniqlo 195153-a11 сукні та сарафани для дівчаток білий 110116 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/platya-i-sarafany/101360427-suknya-bez-rukaviv-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6038/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/569785805_310_430" alt="Сукня без рукавів uniqlo" loading="lazy" decoding="async">
             </div>
@@ -519,19 +442,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 110і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Сукня без рукавів UNIQLO 195153-a11</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сукні та сарафани Для дівчаток</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>110116</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="дитячий светр з круглим вирізом peanuts 550 грн uniqlo 122і ще 1 dlya-divchatok оригінально написана чарльзом шульцем, peanuts — це популярна манга «peanuts», яка була опублікована в 75 країнах світу, перекладена на 25 мов і опублікована в 2600 газетах. описує повсякденне життя між головним героєм чарлі брауном, снупі та його друзями, перемежовуючи філософські діалоги та спонукаючі до роздумів. 418645-a11 кофти та светри для дівчаток бежевий 122128 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/kofty-i-svitery/101360533-dityachiy-svetr-z-kruglim-virizom-peanuts" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6037/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/569786272_310_430" alt="Дитячий светр з круглим вирізом peanuts" loading="lazy" decoding="async">
             </div>
@@ -541,19 +457,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 122і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Оригінально написана Чарльзом Шульцем, PEANUTS — це популярна манга «PEANUTS», яка була опублікована в 75 країнах світу, перекладена на 25 мов і опублікована в 2600 газетах. Описує повсякденне життя між головним героєм Чарлі Брауном, Снупі та його друзями, перемежовуючи філософські діалоги та спонукаючі до роздумів. 418645-a11</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кофти та светри Для дівчаток</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Розмір</dt><dd>122128</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="сукня з об&#x27;єднання ємними рукавами girls з мерсеризованої бавовни 550 грн uniqlo 110і ще 1 dlya-divchatok додайте обсяг рукавах для модного дизайну. - мерсеризована бавовна, щоб надати їй шовковистий блиск, надавши їй чисту та гарну текстуру. - м&#x27;ясного м&#x27;який і зручний матеріал 100% бавовна. - також рекомендується використовувати легінси або денім. - прості у використанні кишені з обох сторін. 425796-a11 сукні та сарафани для дівчаток сірий 110116 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/platya-i-sarafany/101360621-suknya-z-obyemnimi-rukavami-girls-z-merserizovanoyi-bavovni" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6036/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/569786789_310_430" alt="Сукня з об&#x27;єднання ємними рукавами girls з мерсеризованої бавовни" loading="lazy" decoding="async">
             </div>
@@ -563,19 +472,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 110і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Додайте обсяг рукавах для модного дизайну. - Мерсеризована Бавовна, щоб надати їй шовковистий блиск, надавши їй чисту та гарну текстуру. - М&#x27;ясного м&#x27;який і зручний матеріал 100% бавовна. - Також рекомендується використовувати легінси або денім. - Прості у використанні кишені з обох сторін. 425796-a11</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сукні та сарафани Для дівчаток</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>110116</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="дитяча сітчаста толстовка airism з ультрафіолетовим вирізом 650 грн uniqlo 122і ще 1 dlya-divchatok швидко висихає після прання та зберігає вас сухим, навіть якщо ви спітніли. - капюшон зосереджений за кроєм і акуратно сидить. 425209-a11 кофти та светри для дівчаток бузковий 122128 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/kofty-i-svitery/101360744-dityacha-sitchasta-tolstovka-airism-z-ultrafioletovim-virizom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6035/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/569787567_310_430" alt="Дитяча сітчаста толстовка airism з ультрафіолетовим вирізом" loading="lazy" decoding="async">
             </div>
@@ -585,19 +487,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 122і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Швидко висихає після прання та зберігає вас сухим, навіть якщо ви спітніли. - Капюшон зосереджений за кроєм і акуратно сидить. 425209-a11</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кофти та светри Для дівчаток</dd></div><div><dt>Колір</dt><dd>Бузковий</dd></div><div><dt>Розмір</dt><dd>122128</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="дитяча колекція disney светр з круглим вирізом 650 грн uniqlo 122і ще 1 dlya-divchatok дитяча колекція disney светр з круглим вирізом 412303-a11 кофти та светри для дівчаток улюблені персонажі disney сірий 122128 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/kofty-i-svitery/101361095-dityacha-kolekciya-disney-svetr-z-kruglim-virizom" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6034/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/569790052_310_430" alt="Дитяча колекція disney светр з круглим вирізом" loading="lazy" decoding="async">
             </div>
@@ -607,19 +502,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 122і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Дитяча колекція Disney Светр з круглим вирізом 412303-a11</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кофти та светри Для дівчаток Улюблені персонажі Disney</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>122128</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="кардиган дитячий 400 грн uniqlo 122і ще 1 dlya-divchatok кардиган дитячий 433511-a11 кофти та светри для дівчаток синій 122128 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/kofty-i-svitery/101361212-kardigan-detskiy" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6033/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/569790554_310_430" alt="Кардиган дитячий" loading="lazy" decoding="async">
             </div>
@@ -629,19 +517,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 122і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Кардиган дитячий 433511-a11</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кофти та светри Для дівчаток</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>122128</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="жилетка gymboree 4 роки 350 грн gymboree 104 dlya-divchatok жилетка gymboree 4 роки жилетки верхній одяг сріблястий 104 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/zhiletki/101838265-zhiletka-gymboree-4-roki" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6032/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/578346126_310_430" alt="Жилетка gymboree 4 роки" loading="lazy" decoding="async">
             </div>
@@ -651,19 +532,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Gymboree • 104</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2156981030_310_430' alt='Жилетка gymboree 4 роки' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-305433511_310_430' alt='Жилетка gymboree 4 роки' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-255470378_310_430' alt='Жилетка gymboree 4 роки' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2029091961_310_430' alt='Жилетка gymboree 4 роки' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1490997717_310_430' alt='Жилетка gymboree 4 роки' loading='lazy' decoding='async'></div>
-            <div class='product-description'>жилетка Gymboree 4 роки</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Жилетки Верхній одяг</dd></div><div><dt>Колір</dt><dd>Сріблястий</dd></div><div><dt>Розмір</dt><dd>104</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="курточка gymboree 4 роки 640 грн gymboree 104 dlya-divchatok курточка gymboree 4 роки куртки верхній одяг бірюзовий 104 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/kurtki/102891587-kurtochka-gymboree-4-roki" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6031/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/587363593_310_430" alt="Курточка gymboree 4 роки" loading="lazy" decoding="async">
             </div>
@@ -673,19 +547,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Gymboree • 104</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/587363663_310_430' alt='Курточка gymboree 4 роки' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/544798156_310_430' alt='Курточка gymboree 4 роки' loading='lazy' decoding='async'></div>
-            <div class='product-description'>курточка Gymboree 4 роки</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Куртки Верхній одяг</dd></div><div><dt>Колір</dt><dd>Бірюзовий</dd></div><div><dt>Розмір</dt><dd>104</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="двустороння куртка 116 зріст c&amp;a 697 грн c&amp;a 116 dlya-divchatok двустороння куртка 116 зріст c&amp;a! тепла! куртки верхній одяг рожевий синій 116 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/kurtki/103516007-dvustoronnya-kurtka-116-zrist-ca" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6030/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/598270235_310_430" alt="Двустороння куртка 116 зріст c&amp;a" loading="lazy" decoding="async">
             </div>
@@ -695,19 +562,12 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>C&amp;A • 116</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/598270424_310_430' alt='Двустороння куртка 116 зріст c&amp;a' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/598270862_310_430' alt='Двустороння куртка 116 зріст c&amp;a' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Двустороння куртка 116 зріст C&amp;A! Тепла!</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Куртки Верхній одяг</dd></div><div><dt>Колір</dt><dd>Рожевий Синій</dd></div><div><dt>Розмір</dt><dd>116</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="дитяче флісове пальто uniqlo blocktech 800 грн uniqlo 146і ще 3 dlya-divchatok uniqlo (uniqlo) — бренд повсякденного одягу швидкої моди з японії. це велике дитяче флісове пальто uniqlo uniqlo blocktech 401405 a27 має вигляд штучного шерпа з сучасним відтінком. внутрішня флісова тканина м&#x27;яка і зручна в носінні. дизайн довжини допомагає блокувати лінію стегон, і він міцний і холодний. вітрозахисний дизайн додається до поверхні та всередині. холодний вітер непросто пробити, а тепло помірно зберігається. пальто верхній одяг бежевий 134140146152 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/palto/105416412-dityache-flisove-palto-uniqlo-blocktech" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6029/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/642499440_310_430" alt="Дитяче флісове пальто uniqlo blocktech" loading="lazy" decoding="async">
             </div>
@@ -717,20 +577,13 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 146і ще 3</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/1350729020_310_430' alt='Дитяче флісове пальто uniqlo blocktech' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-641576639_310_430' alt='Дитяче флісове пальто uniqlo blocktech' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2149609172_310_430' alt='Дитяче флісове пальто uniqlo blocktech' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/712292307_310_430' alt='Дитяче флісове пальто uniqlo blocktech' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-724060583_310_430' alt='Дитяче флісове пальто uniqlo blocktech' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-681398510_310_430' alt='Дитяче флісове пальто uniqlo blocktech' loading='lazy' decoding='async'></div>
-            <div class='product-description'>UNIQLO (Uniqlo) — бренд повсякденного одягу швидкої моди з Японії. Це велике дитяче флісове пальто UNIQLO Uniqlo BLOCKTECH 401405 a27 має вигляд штучного шерпа з сучасним відтінком. Внутрішня флісова тканина м&#x27;яка і зручна в носінні. Дизайн довжини допомагає блокувати лінію стегон, і він міцний і холодний. Вітрозахисний дизайн додається до поверхні та всередині. Холодний вітер непросто пробити, а тепло помірно зберігається.</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Пальто Верхній одяг</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Розмір</dt><dd>134140146152</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="колекція теплого домашнього одягу 800 грн uniqlo 146і ще 1 dlya-divchatok колекція теплого домашнього одягу зі щетиною та предметів для дому з мотивами міккі, мінні та пуху для святкового сезону. рекомендується легко використовувати з батьківщиною чи друзями будь-якої години або як подарунок коханій людині.
 a28 повсякденні костюми особливості теплі рожевий 146152 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/povsednevnye-kostiumy/105462481-kolekciya-teplogo-domashnogo-odyagu" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6028/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/643265114_310_430" alt="Колекція теплого домашнього одягу" loading="lazy" decoding="async">
             </div>
@@ -740,20 +593,13 @@ a28 повсякденні костюми особливості теплі ро
                 <div class='product-meta'>Uniqlo • 146і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/643265266_310_430' alt='Колекція теплого домашнього одягу' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Колекція теплого домашнього одягу зі щетиною та предметів для дому з мотивами Міккі, Мінні та Пуху для святкового сезону. Рекомендується легко використовувати з батьківщиною чи друзями будь-якої години або як подарунок коханій людині.<br>a28</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Повсякденні Костюми Особливості Теплі</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Розмір</dt><dd>146152</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="колекція теплого домашнього одягу 750 грн uniqlo 128і ще 1 dlya-divchatok колекція теплого домашнього одягу зі щетиною та предметів для дому з мотивами міккі, мінні та пуху для святкового сезону. рекомендується легко використовувати з батьківщиною чи друзями будь-якої години або як подарунок коханій людині.
 a28 повсякденні костюми особливості теплі рожевий 122128 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/povsednevnye-kostiumy/105462608-kolekciya-teplogo-domashnogo-odyagu" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6027/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/643267499_310_430" alt="Колекція теплого домашнього одягу" loading="lazy" decoding="async">
             </div>
@@ -763,20 +609,13 @@ a28 повсякденні костюми особливості теплі ро
                 <div class='product-meta'>Uniqlo • 128і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Колекція теплого домашнього одягу зі щетиною та предметів для дому з мотивами Міккі, Мінні та Пуху для святкового сезону. Рекомендується легко використовувати з батьківщиною чи друзями будь-якої години або як подарунок коханій людині.<br>a28</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Повсякденні Костюми Особливості Теплі</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Розмір</dt><dd>122128</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card" data-search="пижама для девочки carters 590 грн  122 dlya-divchatok пижама для девочки carters 
+    <div class="product-card hidden-card" data-search="пижама для девочки carters 590 грн  122 dlya-divchatok пижама для девочки carters
 a28 повсякденні костюми рожевий 122 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/povsednevnye-kostiumy/105464366-pizhama-dlya-devochki-carters" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6026/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/643296650_310_430" alt="Пижама для девочки carters" loading="lazy" decoding="async">
             </div>
@@ -786,20 +625,13 @@ a28 повсякденні костюми рожевий 122 новий uniqlo-s
                 <div class='product-meta'>122</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Пижама для девочки Carters <br>a28</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Повсякденні Костюми</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Розмір</dt><dd>122</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="темно-сині з  м флісовим утіпленням легінси nwt gymboree warm and fuzzy toddler north star party 299 грн gymboree 98 dlya-divchatok абсолютно новий, невикористаний і неношений предмет (включаючи предмети ручної роботи) в оригінальній упаковці (наприклад, оригінальна коробка чи сумка) та/або з прикріпленими оригінальними бирками
 a27 штани, джинси, лосини для дівчаток синій 98 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/bryuki-i-dzhinsy/105426457-temno-sini-z-m-flisovim-utiplennyam-leginsi-nwt-gymboree-warm-and" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6025/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/642629511_310_430" alt="Темно-сині з  м флісовим утіпленням легінси nwt gymboree warm and fuzzy toddler north star party" loading="lazy" decoding="async">
             </div>
@@ -809,13 +641,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Gymboree • 98</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Абсолютно новий, невикористаний і неношений предмет (включаючи предмети ручної роботи) в оригінальній упаковці (наприклад, оригінальна коробка чи сумка) та/або з прикріпленими оригінальними бирками<br>a27</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Штани, джинси, лосини Для дівчаток</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>98</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -823,7 +648,7 @@ a27 штани, джинси, лосини для дівчаток синій 98
     <div class="product-card hidden-card" data-search="угг bearpaw brady black 1600 грн ugg 32і ще 1 dlya-divchatok тип: уги
 основний матеріал: замшева шкіра.(замшева шкіра)
 36 розмір 1900 уггі взуття чорний 3236 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/obuv/uggi/142917201-uggi-bearpaw-brady-black" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6024/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/1586695422_310_430" alt="Угг bearpaw brady black" loading="lazy" decoding="async">
             </div>
@@ -833,20 +658,13 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>UGG • 32і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Тип: Уги<br>Основний матеріал: Замшева шкіра.(Замшева шкіра)<br>36 розмір 1900</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Уггі Взуття</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Розмір</dt><dd>3236</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="ugg bearpaw emma tall black boots 1700 грн ugg 32і ще 2 dlya-divchatok високі черевики bearpaw emma, ​​sz 7. верх із замші, підкладка із суміші овчини та вовни, устілка з овчини, підошва tpr.
 36 розмір 1900 чоботи взуття чорний підкладки овчина 323336 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/sapogi/142917955-ugg-bearpaw-emma-tall-black-boots" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6023/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/1586724763_310_430" alt="Ugg bearpaw emma tall black boots" loading="lazy" decoding="async">
             </div>
@@ -856,19 +674,12 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>UGG • 32і ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/1586725491_310_430' alt='Ugg bearpaw emma tall black boots' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Високі черевики BearPaw Emma, ​​Sz 7. Верх із замші, підкладка із суміші овчини та вовни, устілка з овчини, підошва TPR.<br>36 розмір 1900</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Чоботи Взуття</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>підкладки Овчина</dd></div><div><dt>Розмір</dt><dd>323336</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="carter&#x27;s чоботи 650 грн carter&#x27;s 25 dlya-divchatok симпатичні демісезонні чобітки на дівчинку , м&#x27;які та зручні, верх виконаний зі штучної шкіри, всередині синтетична підкладка, застібаються на змійку. черевики взуття чорний 25 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/sapogi-i-botinki/142920855-carters-choboti" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6022/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/1586833844_310_430" alt="Carter&#x27;s чоботи" loading="lazy" decoding="async">
             </div>
@@ -878,19 +689,12 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Carter&#x27;s • 25</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Симпатичні демісезонні чобітки на дівчинку , м&#x27;які та зручні, верх виконаний зі штучної шкіри, всередині синтетична підкладка, застібаються на змійку.</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Черевики Взуття</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Розмір</dt><dd>25</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="резиновые сапоги carter’s 600 грн carter&#x27;s 30 dlya-divchatok резиновые сапоги carter’s нові! черевики взуття бежевий 30 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/sapogi-i-botinki/142920995-rezinovye-sapogi-carter_s" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6021/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/1586843336_310_430" alt="Резиновые сапоги carter’s" loading="lazy" decoding="async">
             </div>
@@ -900,21 +704,14 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Carter&#x27;s • 30</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'></div>
-            <div class='product-description'>Резиновые сапоги carter’s Нові!</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Черевики Взуття</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Розмір</dt><dd>30</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="лонгслив для дівчинки zara 250 грн zara 146і ще 1 dlya-divchatok лонгслив zara
-розмір 152 (11/12 років) 
+розмір 152 (11/12 років)
 новий, з етикеткою кофти кофти та светри сезон літо сірий 146152 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/kofty/170558077-longsliv-dlya-divchinki-zara" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6020/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/-320876822_310_430" alt="Лонгслив для дівчинки zara" loading="lazy" decoding="async">
             </div>
@@ -924,13 +721,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>ZARA • 146і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/-320876823_310_430' alt='Лонгслив для дівчинки zara' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-320876824_310_430' alt='Лонгслив для дівчинки zara' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лонгслив Zara<br>Розмір 152 (11/12 років) <br>Новий, з етикеткою</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кофти Кофти та светри Сезон Літо</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>146152</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -948,7 +738,7 @@ a27 штани, джинси, лосини для дівчаток синій 98
 - ідеально підходить для відпочинку вдома та носіння як верхній або середній одяг.
 
 449887 кофти кофти та светри сірий салатовий фліс категорія для дітей 122128 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/kofty/186752530-myaka-puhnasta-flisova-kofta-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6019/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2187300193_310_430" alt="М&#x27;яка пухнаста флісова кофта uniqlo" loading="lazy" decoding="async">
             </div>
@@ -958,13 +748,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Uniqlo • 122і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2187300374_310_430' alt='М&#x27;яка пухнаста флісова кофта uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2187300377_310_430' alt='М&#x27;яка пухнаста флісова кофта uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2187300380_310_430' alt='М&#x27;яка пухнаста флісова кофта uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>М&#x27;яка пухнаста флісова кофта UNIQLO<br>В наявності<br>розмір 5/6 та 7/8, колір 08 DARK GRAY<br>розмір 7/8 колір 52 GREEN<br><br>Опис:<br>- Пухнаста начісована тканина, м’яка на дотик.<br>- Шов заднього коміра покритий стрічкою для комфорту.<br>- Мітка з назвою всередині лівої сторони.<br>- Довжина та об’єм рукавів ретельно розроблені, щоб створити відчуття ідеального відпочинку.<br>- Ідеально підходить для відпочинку вдома та носіння як верхній або середній одяг.<br><br>449887</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кофти Кофти та светри</dd></div><div><dt>Колір</dt><dd>Сірий Салатовий</dd></div><div><dt>Матеріал</dt><dd>Фліс Категорія Для дітей</dd></div><div><dt>Розмір</dt><dd>122128</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -982,7 +765,7 @@ a27 штани, джинси, лосини для дівчаток синій 98
 комфортна м’яка устілка warm tech memory foam
 
 в наявності розмір us 5 (довжина устілки 22 см) черевики взуття категорія для підлітків стиль повсякденний застібка замок довжина устілки 22 см бренд: skechers чорний 35 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/sapogi-i-botinki/192057803-chereviki-skechers-synergy-collab" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6018/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2218709887_310_430" alt="Черевики skechers synergy - collab" loading="lazy" decoding="async">
             </div>
@@ -992,20 +775,13 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Skechers • 35</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2218709871_310_430' alt='Черевики skechers synergy - collab' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2218709853_310_430' alt='Черевики skechers synergy - collab' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2218709877_310_430' alt='Черевики skechers synergy - collab' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2218709737_310_430' alt='Черевики skechers synergy - collab' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2218709764_310_430' alt='Черевики skechers synergy - collab' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2218709782_310_430' alt='Черевики skechers synergy - collab' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Черевики Skechers Synergy - Collab - чудовий баланс між спортивним легким комфортом і сезонним повсякденним стилем.<br><br>Оздоблення коміра з м’якої теплої тканини зі штучного хутра з текстурою шерпи<br><br>Верх оброблений 3M Scotchguard™, щоб бути водонепроникним<br><br>Бічна блискавка по всій довжині для легкого доступу<br><br>М&#x27;яка тепла плюшева підкладка<br><br>Комфортна м’яка устілка Warm Tech Memory Foam<br><br>В наявності розмір US 5 (довжина устілки 22 см)</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Черевики Взуття Категорія Для підлітків Стиль Повсякденний Застібка Замок Довжина устілки 22 см Бренд: Skechers</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Розмір</dt><dd>35</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
     <div class="product-card hidden-card" data-search="теплий  пуховик для дівчаток uniqlo 1600 грн uniqlo 116 dlya-divchatok 408622-l пак1
 теплий пуховик(90% пуха) uniqlo для дівчинки пуховики верхній одяг довжина виробу подовжені білий 116 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/puhoviki/192089118-tepliy-puhovik-dlya-divchatok-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6017/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2218909693_310_430" alt="Теплий  пуховик для дівчаток uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1015,13 +791,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Uniqlo • 116</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/-291927903_310_430' alt='Теплий  пуховик для дівчаток uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>408622-L пак1<br>Теплий пуховик(90% пуха) UNIQLO для дівчинки</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Пуховики Верхній одяг Довжина виробу Подовжені</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>116</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1031,7 +800,7 @@ a27 штани, джинси, лосини для дівчаток синій 98
 - знімний капюшон для додаткової універсальності.
 - стиль унісекс, стандартний крій.
 - з внутрішньою етикеткою з іменем куртки верхній одяг синій 152 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/kurtki/192118373-kurtka-uniqlo-dityacha" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6016/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2219084220_310_430" alt="Куртка uniqlo дитяча" loading="lazy" decoding="async">
             </div>
@@ -1041,13 +810,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Uniqlo • 152</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2297083997_310_430' alt='Куртка uniqlo дитяча' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Міцне водовідштовхувальне покриття.<br>- Можна прати в пральній машині.<br>- Знімний капюшон для додаткової універсальності.<br>- Стиль унісекс, стандартний крій.<br>- З внутрішньою етикеткою з іменем</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Куртки Верхній одяг</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>152</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1057,7 +819,7 @@ a27 штани, джинси, лосини для дівчаток синій 98
 ці зимові черевики мають теплий утеплювач вагою 200 г, водонепроникний шкіряний і текстильний верх, а також мембранну конструкцію черевиків із ущільненими швами. гума omni-grip™, що не залишає слідів, і легка проміжна підошва techlite™ забезпечують тривалий комфорт, чудову амортизацію та високу віддачу енергії – захищаючи ваші ноги від екстремальних ситуацій, водночас чудово виглядаючи в дорозі.
 
 в наявності розмір по сітці columbia us 5 ( довжина устілки 22 см) черевики взуття чорний верху шкіра сезон зима застібка шнурівка довжина устілки 22 см 35 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/sapogi-i-botinki/193480444-zimovi-chereviki-columbia-ice-maiden-shorty-snow-boot" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6015/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2227266804_310_430" alt="Зимові черевики columbia ice maiden shorty snow boot" loading="lazy" decoding="async">
             </div>
@@ -1067,13 +829,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Columbia • 35</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227266710_310_430' alt='Зимові черевики columbia ice maiden shorty snow boot' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227266552_310_430' alt='Зимові черевики columbia ice maiden shorty snow boot' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227266584_310_430' alt='Зимові черевики columbia ice maiden shorty snow boot' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227266633_310_430' alt='Зимові черевики columbia ice maiden shorty snow boot' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227266699_310_430' alt='Зимові черевики columbia ice maiden shorty snow boot' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Зимові черевики Columbia Ice Maiden Shorty Snow Boot - стильні сучасні короткі зимові черевики, розроблені  з експертною майстерністю, Columbia Ice Maiden Shorty Boot є чудовим захистом у холодну чи морозну погоду.<br><br>Ці зимові черевики мають теплий утеплювач вагою 200 г, водонепроникний шкіряний і текстильний верх, а також мембранну конструкцію черевиків із ущільненими швами. Гума Omni-Grip™, що не залишає слідів, і легка проміжна підошва Techlite™ забезпечують тривалий комфорт, чудову амортизацію та високу віддачу енергії – захищаючи ваші ноги від екстремальних ситуацій, водночас чудово виглядаючи в дорозі.<br><br>В наявності розмір по сітці Columbia US 5 ( довжина устілки 22 см)</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Черевики Взуття</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>верху Шкіра Сезон Зима Застібка Шнурівка Довжина устілки 22 см</dd></div><div><dt>Розмір</dt><dd>35</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1096,7 +851,7 @@ a27 штани, джинси, лосини для дівчаток синій 98
 підкладка з флісу conductor
 
 в наявності розмір us 5 (довжина устілки 22 см) черевики взуття хакі верху шкіра сезон зима матеріал підкладки фліс застібка замок мембрана є довжина устілки 22 см 35 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/sapogi-i-botinki/193484389-zimovi-chereviki-merrell-thermo-rhea-waterproof-boot" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6014/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2227290636_310_430" alt="Зимові черевики merrell thermo rhea waterproof boot," loading="lazy" decoding="async">
             </div>
@@ -1106,13 +861,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>35</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227291126_310_430' alt='Зимові черевики merrell thermo rhea waterproof boot,' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227291402_310_430' alt='Зимові черевики merrell thermo rhea waterproof boot,' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227291507_310_430' alt='Зимові черевики merrell thermo rhea waterproof boot,' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227291147_310_430' alt='Зимові черевики merrell thermo rhea waterproof boot,' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Merrell Thermo Rhea Waterproof Boot-черевики із захистом від негоди взимку.<br><br>Верх із водонепроникної суцільнозернистої шкіри зберігає ноги сухими<br>Синтетичний утеплювач і флісова підкладка додають тепла в холодну погоду<br>Знімна устілка Kinetic Fit забезпечує гнучку підтримку під час походу<br>Проміжна підошва EVA забезпечує стабільність і амортизацію на всі милі<br>Підошви Vibram забезпечують надійне зчеплення на мокрому льоду та снігу<br>Медіальна бічна блискавка полегшує надягання та знімання черевика<br><br>Мембрана M Select DRY<br>Ізоляція Primaloft® Gold Series<br>Жіночий утеплювач Primaloft® Airgel<br>Знімна контурна устілка Kinetic Fit BASE<br>Компресійна проміжна підошва EVA<br>Гумова підошва Vibram® Arctic Grip<br>Підкладка з флісу Conductor<br><br>В наявності розмір US 5 (довжина устілки 22 см)</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Черевики Взуття</dd></div><div><dt>Колір</dt><dd>Хакі</dd></div><div><dt>Матеріал</dt><dd>верху Шкіра Сезон Зима Матеріал підкладки Фліс Застібка Замок Мембрана Є Довжина устілки 22 см</dd></div><div><dt>Розмір</dt><dd>35</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1124,12 +872,12 @@ a27 штани, джинси, лосини для дівчаток синій 98
 - у 1,5 рази* тепліший за наш звичайний матеріал «heattech».
 - довжина та фасон підходять для носіння як внутрішній шар або футболка.
 - м&#x27;яка тканина з начісуванням зі 100% бавовною всередині.
-- задній шов коміра покритий стрічкою для комфорту. 
+- задній шов коміра покритий стрічкою для комфорту.
 
 склад: 53% бавовна, 42% акрил, 5% еластан
 
 450973 термобілизна спідня білизна рожевий акрил бавовна еластан вид термофутболка 146152 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/termobelye/193891769-termolongsliv-uniqlo-heattech-extra-warm-rozmir-1112-rokiv" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6013/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2229802106_310_430" alt="Термолонгслів uniqlo heattech extra warm, розмір 11/12 років" loading="lazy" decoding="async">
             </div>
@@ -1139,13 +887,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Uniqlo • 146і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2229802107_310_430' alt='Термолонгслів uniqlo heattech extra warm, розмір 11/12 років' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Термолонгслів uniqlo heattech extra warm<br>В наявності розмір 11/12 років на зріст 145-155 см, колір 12 PINK<br><br>Опис:<br>- У 1,5 рази* тепліший за наш звичайний матеріал «HEATTECH».<br>- Довжина та фасон підходять для носіння як внутрішній шар або футболка.<br>- М&#x27;яка тканина з начісуванням зі 100% бавовною всередині.<br>- Задній шов коміра покритий стрічкою для комфорту. <br><br>Склад: 53% бавовна, 42% акрил, 5% еластан<br><br>450973</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Термобілизна Спідня білизна</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Матеріал</dt><dd>Акрил Бавовна Еластан Вид Термофутболка</dd></div><div><dt>Розмір</dt><dd>146152</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1154,12 +895,12 @@ a27 штани, джинси, лосини для дівчаток синій 98
 в наявності розмір 11/12 та 13/14
 
 куртка-пуховик з високим коміром, капюшоном і довгими рукавами.
-планка з прихованою блискавкою і кнопками спереду і кишені з окантовкою спереду. 
+планка з прихованою блискавкою і кнопками спереду і кишені з окантовкою спереду.
 
 наповнювач — 50% пуху і 55% пір’я.
 
 0562/726 пуховики верхній одяг білий сірий 146-152158-164164-170 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/puhoviki/194120433-dityacha-kurtka-puhovik-zara" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6012/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2231212411_310_430" alt="Дитяча куртка пуховик zara" loading="lazy" decoding="async">
             </div>
@@ -1169,13 +910,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>ZARA • 146-152і ще 2</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2231212505_310_430' alt='Дитяча куртка пуховик zara' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2231212506_310_430' alt='Дитяча куртка пуховик zara' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2231212508_310_430' alt='Дитяча куртка пуховик zara' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2231212509_310_430' alt='Дитяча куртка пуховик zara' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2231212510_310_430' alt='Дитяча куртка пуховик zara' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2231212511_310_430' alt='Дитяча куртка пуховик zara' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Дитяча куртка пуховик  ZARA<br>В наявності розмір 11/12 та 13/14<br><br>Куртка-пуховик з високим коміром, капюшоном і довгими рукавами.<br>Планка з прихованою блискавкою і кнопками спереду і кишені з окантовкою спереду. <br><br>Наповнювач — 50% пуху і 55% пір’я.<br><br>0562/726</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Пуховики Верхній одяг</dd></div><div><dt>Колір</dt><dd>Білий Сірий</dd></div><div><dt>Розмір</dt><dd>146-152158-164164-170</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1188,7 +922,7 @@ a27 штани, джинси, лосини для дівчаток синій 98
 * спеціально для занять улюбленим видом спорту.
 
 в наявності розмір under armour  4y (uk 3.5) (довжина устілки 23 см) кросівки взуття сезон літо категорія для підлітків застібка шнурівка довжина устілки 23 см сірий рожевий 4y новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/krossovki-i-kedy/200718804-krosivki-under-armour-kids-youth-4y-assert-9" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6011/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2263034446_310_430" alt="Кросівки under armour kids youth 4y  assert 9" loading="lazy" decoding="async">
             </div>
@@ -1198,13 +932,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Under Armour • US 4Y</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2263034501_310_430' alt='Кросівки under armour kids youth 4y  assert 9' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2263034536_310_430' alt='Кросівки under armour kids youth 4y  assert 9' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2263034554_310_430' alt='Кросівки under armour kids youth 4y  assert 9' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2263034559_310_430' alt='Кросівки under armour kids youth 4y  assert 9' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2263034567_310_430' alt='Кросівки under armour kids youth 4y  assert 9' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2263034574_310_430' alt='Кросівки under armour kids youth 4y  assert 9' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Кросівки Under Armour Assert 9 у кольорі Halo Grey White (молодіжна модель) від відомого бренду Under Armour поєднують в собі міцність і стиль. Ці кросівки ідеально підходять для підлітків, забезпечуючи зручну посадку та чудове зчеплення з поверхнею. Лаконічний дизайн виконаний у модній кольоровій гамі Halo Grey White. Будьте впевненими в собі та модними з кросівками Under Armour Assert 9.<br><br>* підошва з ЕВА та гуми<br>* шнурівка<br>* верх із синтетичного матеріалу<br>* спеціально для занять улюбленим видом спорту.<br><br>В наявності розмір Under Armour  4Y (UK 3.5) (довжина устілки 23 см)</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Кросівки Взуття Сезон Літо Категорія Для підлітків Застібка Шнурівка Довжина устілки 23 см</dd></div><div><dt>Колір</dt><dd>Сірий Рожевий</dd></div><div><dt>Розмір</dt><dd>4Y</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1212,7 +939,7 @@ a27 штани, джинси, лосини для дівчаток синій 98
     <div class="product-card hidden-card" data-search="сабо crocs classic terry cloth clog 1150 грн crocs us 4y dlya-divchatok модель crocs classic  terry cloth clog  у кольорі arctic/multi — це оригінальний і практичний варіант взуття, що поєднує в собі комфорт і стиль. ці сабо мають верх із м&#x27;якої махрової тканини, що забезпечує затишне та тепле відчуття. колірна гама arctic/multi — це заспокійливе поєднання відтінків, натхненне спокійною естетикою дзен-саду. ця палітра не тільки додає нотку елегантності, але й робить ці сабо візуально привабливими та універсальними для різних повсякденних образів. на тлі розкішної махрової тканини дизайн зберігає культовий силует crocs, забезпечуючи той самий рівень комфорту та підтримки, якого звикли очікувати шанувальники бренду.
 
 в наявності розмір crocs j4 (довжина  устілки 22,5 см) шльопанці взуття призначення для повсякденного носіння сезон літо довжина устілки 22,5 см блакитний жовтий 4y новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/shlepancy/208870284-sabo-crocs-classic-terry-cloth-clog" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6010/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2296910453_310_430" alt="Сабо crocs classic terry cloth clog" loading="lazy" decoding="async">
             </div>
@@ -1222,13 +949,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Crocs • US 4Y</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2296910583_310_430' alt='Сабо crocs classic terry cloth clog' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296910353_310_430' alt='Сабо crocs classic terry cloth clog' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296910715_310_430' alt='Сабо crocs classic terry cloth clog' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296910253_310_430' alt='Сабо crocs classic terry cloth clog' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296910817_310_430' alt='Сабо crocs classic terry cloth clog' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2296911053_310_430' alt='Сабо crocs classic terry cloth clog' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Модель Crocs Classic  Terry Cloth Clog  у кольорі Arctic/Multi — це оригінальний і практичний варіант взуття, що поєднує в собі комфорт і стиль. Ці сабо мають верх із м&#x27;якої махрової тканини, що забезпечує затишне та тепле відчуття. Колірна гама Arctic/Multi — це заспокійливе поєднання відтінків, натхненне спокійною естетикою дзен-саду. Ця палітра не тільки додає нотку елегантності, але й робить ці сабо візуально привабливими та універсальними для різних повсякденних образів. На тлі розкішної махрової тканини дизайн зберігає культовий силует Crocs, забезпечуючи той самий рівень комфорту та підтримки, якого звикли очікувати шанувальники бренду.<br><br>В наявності розмір Crocs J4 (довжина  устілки 22,5 см)</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Шльопанці Взуття Призначення Для повсякденного носіння Сезон Літо Довжина устілки 22,5 см</dd></div><div><dt>Колір</dt><dd>Блакитний Жовтий</dd></div><div><dt>Розмір</dt><dd>4Y</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1241,7 +961,7 @@ a27 штани, джинси, лосини для дівчаток синій 98
 склад: 92% віскоза, 8% поліамід
 
 477606 сукні сукні та сарафани рожевий віскоза поліамід довжина міді дитячий вік 11 років10 років9 років сезон літо принт квітковий стиль повсякденний 146152 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/platya/209128307-dityacha-suknya-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6009/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2298234896_310_430" alt="Дитяча сукня uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1251,13 +971,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Uniqlo • 146і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298234904_310_430' alt='Дитяча сукня uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298234913_310_430' alt='Дитяча сукня uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298234924_310_430' alt='Дитяча сукня uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298234931_310_430' alt='Дитяча сукня uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Дитяча сукня UNIQLO<br>В наявності:<br>розмір 9/10 років на зріст 135-145см<br>розмір 11/12 років на зріст 145-155см<br><br>Склад: 92% віскоза, 8% поліамід<br><br>477606</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сукні Сукні та сарафани</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліамід Довжина Міді Дитячий вік 11 років10 років9 років Сезон Літо Принт Квітковий Стиль Повсякденний</dd></div><div><dt>Розмір</dt><dd>146152</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1268,7 +981,7 @@ a27 штани, джинси, лосини для дівчаток синій 98
 склад: 62% віскоза, 33% льон, 5% поліамід
 
 475771 брюки штани, джинси, лосини блакитний віскоза льон поліамід дитячий вік 5 років6 років категорія для дітей 116122 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
-        <a class="card-main-link" href="https://shafa.ua/uk/kids/dlya-devochek/shtany/209137433-dityachi-shtani-shtani-z-llyanoyi-sumishi-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/6008/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2298283967_310_430" alt="Дитячі штани штани з лляної суміші uniqlo" loading="lazy" decoding="async">
             </div>
@@ -1278,13 +991,6 @@ a27 штани, джинси, лосини для дівчаток синій 98
                 <div class='product-meta'>Uniqlo • 122і ще 1</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298283966_310_430' alt='Дитячі штани штани з лляної суміші uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298283960_310_430' alt='Дитячі штани штани з лляної суміші uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298283962_310_430' alt='Дитячі штани штани з лляної суміші uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298284006_310_430' alt='Дитячі штани штани з лляної суміші uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Дитячі штани штани з лляної суміші UNIQLO<br>В наявності розмір 5/6 на зріст 115/125см<br><br>Склад: 62% віскоза, 33% льон, 5% поліамід<br><br>475771</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брюки Штани, джинси, лосини</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Матеріал</dt><dd>Віскоза Льон Поліамід Дитячий вік 5 років6 років Категорія Для дітей</dd></div><div><dt>Розмір</dt><dd>116122</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -1292,7 +998,7 @@ a27 штани, джинси, лосини для дівчаток синій 98
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:30</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:40</div>
 </main>
 </div>
 <script>
@@ -1302,6 +1008,7 @@ if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
 function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
 function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
 function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function setProductImage(btn){const img=document.getElementById('productMainImage');if(img&&btn&&btn.dataset.src)img.src=btn.dataset.src;document.querySelectorAll('.product-thumb').forEach(el=>el.classList.remove('active'));if(btn)btn.classList.add('active');}
 function filterProducts(input){
 const q=(input.value||'').trim().toLowerCase();
 const cards=Array.from(document.querySelectorAll('.product-card'));

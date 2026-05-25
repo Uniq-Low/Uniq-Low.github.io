@@ -85,6 +85,31 @@ padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
+.back-link{display:inline-flex;margin-bottom:18px;color:var(--muted);text-decoration:none;font-weight:700;}
+.back-link:hover{color:var(--accent);}
+.product-detail-layout{display:grid;grid-template-columns:minmax(300px,520px) minmax(320px,1fr);gap:34px;align-items:start;}
+.product-gallery-panel{position:sticky;top:24px;}
+.product-main-image-wrap{background:var(--bg-soft);border-radius:18px;overflow:hidden;border:1px solid var(--border);}
+.product-main-image-wrap img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
+.product-thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:10px;margin-top:12px;}
+.product-thumb{border:1px solid var(--border);background:var(--panel-solid);border-radius:12px;padding:0;overflow:hidden;cursor:pointer;}
+.product-thumb img{width:100%;aspect-ratio:1/1.25;object-fit:cover;display:block;}
+.product-thumb:hover{border-color:var(--accent);}
+.product-detail-info{background:var(--panel-solid);border:1px solid var(--border);border-radius:22px;padding:26px;box-shadow:var(--shadow);}
+.detail-source{color:var(--accent);font-weight:800;font-size:13px;text-transform:uppercase;margin-bottom:8px;}
+.product-detail-info h1{font-size:34px;line-height:1.18;margin:0 0 12px;letter-spacing:0;}
+.detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
+.detail-price{font-size:34px;font-weight:900;margin:20px 0;}
+.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
+font-weight:800;padding:13px 22px;margin-bottom:24px;}
+.detail-section{border-top:1px solid var(--border);padding-top:20px;margin-top:20px;}
+.detail-section h2{font-size:20px;margin:0 0 12px;}
+.detail-section p{font-size:15px;line-height:1.7;margin:0;color:var(--text);}
+.detail-attrs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;}
+.detail-attrs div{border:1px solid var(--border);border-radius:14px;padding:12px;background:var(--bg);}
+.detail-attrs dt{color:var(--muted);font-size:13px;margin-bottom:4px;}
+.detail-attrs dd{margin:0;color:var(--text);font-weight:700;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -105,6 +130,10 @@ background:var(--panel-solid);color:var(--muted);}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
 .promo-card{flex-direction:column;text-align:center;}
 .product-search-bar{align-items:stretch;flex-direction:column;}
+.product-detail-layout{grid-template-columns:1fr;}
+.product-gallery-panel{position:static;}
+.product-detail-info h1{font-size:28px;}
+.detail-attrs{grid-template-columns:1fr;}
 .search-status{white-space:normal;}}
 </style>
 </head>
@@ -118,12 +147,11 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 14:30</div>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:40</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
-<li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
 </ul></div>
 <div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
@@ -179,7 +207,7 @@ background:var(--panel-solid);color:var(--muted);}
             </div>
         <div class="products-grid">
     <div class="product-card" data-search="вовняний костюм mango!розмір! 3900 грн mango 36 / s / 44 kostyumy основний матеріал: 1% акрил, 31% поліамід, 2% поліестер, 63% вовна, 3% віскоза. елегантна модель з гладкої тканини. брючні костюми костюми сірий 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kostyumy/bryuchnye-kostyumy/84792893-sherstyanoy-kostyum-mangorazmer-s" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5625/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/396924179_310_430" alt="Вовняний костюм mango!розмір!" loading="lazy" decoding="async">
             </div>
@@ -189,18 +217,11 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Mango • 36 / S / 44</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/396924285_310_430' alt='Вовняний костюм mango!розмір!' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/396924565_310_430' alt='Вовняний костюм mango!розмір!' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Основний матеріал: 1% акрил, 31% поліамід, 2% поліестер, 63% вовна, 3% віскоза. Елегантна модель з гладкої тканини.</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брючні костюми Костюми</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card" data-search="лляний комплект uniqlo 1500 грн uniqlo l kostyumy лляний комплект uniqlo 
+    <div class="product-card" data-search="лляний комплект uniqlo 1500 грн uniqlo l kostyumy лляний комплект uniqlo
 в наявності розмір л, колір 56 olive
 
 опис:
@@ -215,7 +236,7 @@ linen blend short sleeve pajamas
 70% віскоза, 30% льон
 
 466020 костюми з шортами костюми хакі віскоза льон l новий uniqlo-shop 5.0 (1272 оцінки)">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/zhenskie-kostyumy/kostyumy-s-shortami/186531554-llyaniy-komplekt-uniqlo" target="_blank" rel="noopener">
+        <a class="card-main-link" href="../product/5624/">
             <div class="product-image-wrap">
                 <img class="product-image" src="https://image-thumbs.shafastatic.net/2185910682_310_430" alt="Лляний комплект uniqlo" loading="lazy" decoding="async">
             </div>
@@ -225,19 +246,12 @@ linen blend short sleeve pajamas
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        
-        <details class="product-extra">
-            <summary>Опис і характеристики</summary>
-            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2185910888_310_430' alt='Лляний комплект uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2185910878_310_430' alt='Лляний комплект uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2185910881_310_430' alt='Лляний комплект uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2185910883_310_430' alt='Лляний комплект uniqlo' loading='lazy' decoding='async'></div>
-            <div class='product-description'>Лляний комплект Uniqlo <br>В наявності розмір Л, колір 56 OLIVE<br><br>Опис:<br>Linen Blend Short Sleeve Pajamas<br>виготовлена ​​зі спеціально розробленої суміші льону з натуральним відчуттям<br>верх вільного крою з коміром сорочки та передніми карманами<br>шорти з еластичним поясом<br>зі зручними бічними карманами<br>чудовий варіант одягу для сну, роботи вдома чи носіння на вулиці<br><br>Склад<br>70% віскоза, 30% льон<br><br>466020</div>
-            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Костюми з шортами Костюми</dd></div><div><dt>Колір</dt><dd>Хакі</dd></div><div><dt>Матеріал</dt><dd>Віскоза Льон</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
-        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div></div>
         
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:30</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:40</div>
 </main>
 </div>
 <script>
@@ -247,6 +261,7 @@ if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
 function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
 function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
 function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function setProductImage(btn){const img=document.getElementById('productMainImage');if(img&&btn&&btn.dataset.src)img.src=btn.dataset.src;document.querySelectorAll('.product-thumb').forEach(el=>el.classList.remove('active'));if(btn)btn.classList.add('active');}
 function filterProducts(input){
 const q=(input.value||'').trim().toLowerCase();
 const cards=Array.from(document.querySelectorAll('.product-card'));
