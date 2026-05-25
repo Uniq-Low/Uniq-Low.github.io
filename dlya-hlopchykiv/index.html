@@ -73,9 +73,9 @@ box-shadow:var(--shadow);transition:.2s ease;animation:fadeUp .28s ease both;}
 .product-card:hover{transform:translateY(-5px);border-color:rgba(225,29,72,.18);
 box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .card-main-link{text-decoration:none;color:inherit;flex-grow:1;display:flex;flex-direction:column;}
-.product-image-wrap{background:var(--bg-soft);overflow:hidden;}
-.product-image{width:100%;height:clamp(230px,28vw,330px);object-fit:cover;display:block;transition:transform .35s ease;}
-.product-card:hover .product-image{transform:scale(1.04);}
+.product-image-wrap{background:linear-gradient(145deg,var(--panel-solid),var(--bg-soft));overflow:hidden;}
+.product-image{width:100%;height:clamp(230px,28vw,330px);object-fit:contain;display:block;padding:8px;box-sizing:border-box;transition:filter .25s ease;}
+.product-card:hover .product-image{filter:saturate(1.05) contrast(1.02);}
 .product-info{padding:16px;flex-grow:1;}
 .product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
 .product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
@@ -83,7 +83,7 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-extra{margin:0 16px 14px;border-top:1px solid var(--border);padding-top:10px;}
 .product-extra summary{cursor:pointer;color:var(--accent);font-weight:800;font-size:14px;}
 .detail-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0;}
-.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:cover;border-radius:10px;background:var(--bg-soft);}
+.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:contain;border-radius:10px;background:var(--bg-soft);padding:4px;box-sizing:border-box;}
 .product-description{margin-top:10px;color:var(--text);font-size:13px;line-height:1.55;white-space:normal;}
 .product-attrs{display:grid;gap:7px;margin:10px 0 0;font-size:13px;}
 .product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
@@ -220,7 +220,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 22:50</div>
+    <div class='updated-at'>Оновлено: 25.05.2026 23:04</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -1304,7 +1304,7 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 22:50</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 23:04</div>
 </main>
 </div>
 <script>
