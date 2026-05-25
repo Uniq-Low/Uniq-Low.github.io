@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UniqLow — Лонгслив uniqlo с начесом</title>
+<style>
+:root{--bg:#f6f8fc;--bg-soft:#eef2ff;--panel:rgba(255,255,255,0.92);--panel-solid:#fff;
+--text:#101828;--muted:#667085;--accent:#e11d48;--accent-soft:rgba(225,29,72,.12);
+--border:rgba(16,24,40,.08);--shadow:0 18px 45px rgba(16,24,40,.08);
+--green:#16a34a;--orange:#f59e0b;}
+body.dark{--bg:#0b1220;--bg-soft:#111827;--panel:rgba(17,24,39,.88);--panel-solid:#111827;
+--text:#f8fafc;--muted:#98a2b3;--accent:#ff4d6d;--accent-soft:rgba(255,77,109,.12);
+--border:rgba(255,255,255,.08);--shadow:0 18px 45px rgba(0,0,0,.35);}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:
+radial-gradient(circle at top left,rgba(225,29,72,.08),transparent 32rem),var(--bg);}
+img{max-width:100%;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.layout{display:grid;grid-template-columns:minmax(240px,288px) minmax(0,1fr);min-height:100vh;}
+.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;padding:20px;
+border-right:1px solid var(--border);background:var(--panel);backdrop-filter:blur(18px);}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;margin-bottom:18px;
+padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
+.brand-avatar{width:66px;height:66px;border-radius:50%;object-fit:cover;
+border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
+.brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
+.brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.updated-at{margin:-8px 0 16px;padding:0 12px;color:var(--muted);font-size:12px;line-height:1.4;}
+.theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
+color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;margin-bottom:18px;
+display:flex;align-items:center;justify-content:center;transition:.18s ease;}
+.theme-toggle:hover{border-color:var(--accent);transform:translateY(-1px);}
+.theme-toggle img{width:22px;height:22px;display:block;}
+.desktop-catalog{display:block;}
+.mobile-catalog{display:none;}
+.menu-block{margin-bottom:18px;}
+.menu-title{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;
+color:var(--muted);margin-bottom:8px;padding:0 6px;}
+.menu-block ul{list-style:none;margin:0;padding:0;}
+.menu-block a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);padding:10px 12px;
+border-radius:12px;font-size:14px;margin-bottom:4px;transition:.18s ease;}
+.nav-icon{width:18px;height:18px;object-fit:contain;flex:0 0 18px;}
+.menu-block a:hover{background:var(--accent-soft);color:var(--accent);transform:translateX(2px);}
+.active-link{background:var(--accent-soft);color:var(--accent)!important;font-weight:700;}
+.content{padding:clamp(16px,2.6vw,32px);min-width:0;}
+.section-top{margin-bottom:14px;}
+.section-top h2{margin:0 0 6px;font-size:24px;}
+.section-top p{margin:0;color:var(--muted);line-height:1.6;}
+.quick-section,.promo-section{margin-bottom:28px;}
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;}
+.quick-tile{min-height:102px;display:flex;align-items:flex-end;padding:18px;text-decoration:none;
+color:var(--text);font-size:18px;font-weight:800;border-radius:22px;border:1px solid var(--border);
+background:var(--panel-solid);box-shadow:var(--shadow);transition:transform .18s ease;}
+.quick-tile:hover{transform:translateY(-3px);border-color:var(--accent);}
+.promo-card{display:flex;gap:18px;align-items:center;
+background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.04));
+border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:var(--shadow);}
+.promo-badge{width:100px;height:100px;border-radius:50%;background:var(--green);color:white;
+display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
+.telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
+padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.product-search-bar{display:flex;align-items:center;gap:12px;margin:0 0 18px;max-width:760px;}
+.product-search-input{width:min(520px,100%);border:1px solid var(--border);border-radius:14px;
+background:var(--panel-solid);color:var(--text);padding:13px 14px;font-size:15px;outline:none;}
+.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.search-status{color:var(--muted);font-size:13px;white-space:nowrap;}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:clamp(14px,2vw,20px);}
+.product-card{display:flex;flex-direction:column;background:var(--panel-solid);
+border:1px solid var(--border);border-radius:22px;overflow:hidden;
+box-shadow:var(--shadow);transition:.2s ease;animation:fadeUp .28s ease both;}
+.product-card:hover{transform:translateY(-5px);border-color:rgba(225,29,72,.18);
+box-shadow:0 25px 48px rgba(16,24,40,.14);}
+.card-main-link{text-decoration:none;color:inherit;flex-grow:1;display:flex;flex-direction:column;}
+.product-image-wrap{background:var(--bg-soft);overflow:hidden;}
+.product-image{width:100%;height:clamp(230px,28vw,330px);object-fit:cover;display:block;transition:transform .35s ease;}
+.product-card:hover .product-image{transform:scale(1.04);}
+.product-info{padding:16px;flex-grow:1;}
+.product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
+.product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
+.product-meta{font-size:13px;color:var(--muted);}
+.product-extra{margin:0 16px 14px;border-top:1px solid var(--border);padding-top:10px;}
+.product-extra summary{cursor:pointer;color:var(--accent);font-weight:800;font-size:14px;}
+.detail-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0;}
+.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:cover;border-radius:10px;background:var(--bg-soft);}
+.product-description{margin-top:10px;color:var(--text);font-size:13px;line-height:1.55;white-space:normal;}
+.product-attrs{display:grid;gap:7px;margin:10px 0 0;font-size:13px;}
+.product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
+.product-attrs dt{color:var(--muted);}
+.product-attrs dd{margin:0;color:var(--text);}
+.card-tg-btn{display:block;margin:0 16px 16px;
+background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
+padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
+.card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
+.hidden-card{display:none;}
+.is-hidden-by-search{display:none!important;}
+.product-detail-page{max-width:1500px;margin:0 auto;animation:fadeUp .3s ease both;}
+.back-link{display:inline-flex;margin-bottom:18px;color:var(--muted);text-decoration:none;font-weight:700;}
+.back-link:hover{color:var(--accent);}
+.product-detail-layout{display:grid;grid-template-columns:minmax(260px,min(42vw,520px)) minmax(320px,1fr);gap:clamp(18px,2.6vw,32px);align-items:start;}
+.product-gallery-panel{position:sticky;top:24px;min-width:0;}
+.product-main-image-wrap{background:linear-gradient(145deg,var(--panel-solid),var(--bg-soft));border-radius:18px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);}
+.product-main-image-wrap img{width:100%;height:min(64vh,620px);min-height:320px;object-fit:contain;display:block;padding:8px;}
+.product-thumbs{display:flex;gap:10px;margin-top:12px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity;}
+.product-thumb{border:1px solid var(--border);background:var(--panel-solid);border-radius:12px;padding:0;overflow:hidden;cursor:pointer;transition:.18s ease;}
+.product-thumb{flex:0 0 78px;scroll-snap-align:start;}
+.product-thumb img{width:100%;aspect-ratio:1/1.12;object-fit:contain;display:block;padding:4px;background:var(--bg-soft);}
+.product-thumb:hover,.product-thumb.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);transform:translateY(-2px);}
+.product-detail-info{background:rgba(255,255,255,.88);border:1px solid var(--border);border-radius:22px;padding:clamp(18px,2.4vw,30px);box-shadow:var(--shadow);backdrop-filter:blur(16px);min-width:0;}
+body.dark .product-detail-info{background:rgba(17,24,39,.88);}
+.detail-source{color:var(--accent);font-weight:800;font-size:13px;text-transform:uppercase;margin-bottom:8px;}
+.product-detail-info h1{font-size:clamp(26px,3.2vw,42px);line-height:1.12;margin:0 0 12px;letter-spacing:0;overflow-wrap:anywhere;}
+.detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
+.detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
+.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
+font-weight:800;padding:13px 22px;margin-bottom:24px;box-shadow:0 14px 30px rgba(34,158,217,.24);transition:.18s ease;}
+.detail-order-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.32);}
+.detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
+.detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.detail-section summary::-webkit-details-marker{display:none;}
+.detail-section summary::after{content:"+";width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--accent-soft);color:var(--accent);font-weight:900;flex:0 0 28px;}
+.detail-section[open] summary::after{content:"-";}
+.detail-section h2{font-size:20px;margin:0;}
+.detail-section p{font-size:15px;line-height:1.65;margin:12px 0 0;color:var(--text);}
+.detail-attrs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;}
+.detail-section .detail-attrs{margin-top:12px;}
+.detail-attrs div{border:1px solid var(--border);border-radius:14px;padding:12px;background:var(--bg);min-width:0;}
+.detail-attrs dt{color:var(--muted);font-size:13px;margin-bottom:4px;}
+.detail-attrs dd{margin:0;color:var(--text);font-weight:700;line-height:1.35;overflow-wrap:anywhere;}
+.show-more-wrap{margin-top:30px;text-align:center;}
+.show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
+color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
+.reviews-page-grid{display:grid;grid-template-columns:1fr;gap:15px;max-width:800px;}
+.review-card{background:var(--panel-solid);border:1px solid var(--border);
+border-radius:16px;padding:20px;box-shadow:var(--shadow);}
+.hidden-review{display:none;}
+.review-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.review-name{font-weight:800;font-size:16px;display:flex;align-items:center;gap:10px;}
+.review-stars{display:flex;gap:4px;align-items:center;}
+.rating-star{width:17px;height:17px;display:inline-block;background:var(--border);
+clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 56%,79% 91%,50% 70%,21% 91%,32% 56%,2% 35%,39% 35%);}
+.rating-star.filled{background:var(--orange);}
+.review-text{color:var(--text);line-height:1.6;font-size:15px;}
+.empty-box{padding:30px;border-radius:22px;border:1px dashed var(--border);
+background:var(--panel-solid);color:var(--muted);}
+.footer-note{margin-top:26px;text-align:center;color:var(--muted);font-size:13px;}
+@media(max-width:1080px){
+.layout{display:block;min-height:100vh;}
+.sidebar{position:sticky;top:0;z-index:30;height:auto;overflow:visible;border-right:none;border-bottom:1px solid var(--border);padding:10px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 12px;align-items:center;}
+.brand{margin:0;padding:8px;border-radius:16px;min-width:0;}
+.brand-avatar{width:48px;height:48px;}
+.brand-name{font-size:22px;}
+.brand-sub,.updated-at{display:none;}
+.theme-toggle{width:44px;height:44px;margin:0;padding:0;border-radius:13px;}
+.desktop-catalog{display:none;}
+.mobile-catalog{display:block;grid-column:1/-1;min-width:0;}
+.mobile-catalog summary{cursor:pointer;list-style:none;border:1px solid var(--border);background:var(--panel-solid);border-radius:14px;padding:11px 14px;font-weight:800;display:flex;align-items:center;justify-content:space-between;}
+.mobile-catalog summary::-webkit-details-marker{display:none;}
+.mobile-catalog summary::after{content:"+";color:var(--accent);font-size:20px;line-height:1;}
+.mobile-catalog[open] summary::after{content:"-";}
+.mobile-catalog-body{max-height:min(58vh,420px);overflow:auto;margin-top:10px;padding:2px 2px 8px;}
+.mobile-catalog .menu-block{margin-bottom:12px;}
+.mobile-catalog .menu-block ul{display:flex;flex-wrap:wrap;gap:6px;}
+.mobile-catalog .menu-block a{margin:0;padding:9px 11px;border:1px solid var(--border);background:var(--panel-solid);white-space:nowrap;}
+.promo-card{flex-direction:column;text-align:center;}
+.product-search-bar{align-items:stretch;flex-direction:column;}
+.product-detail-layout{grid-template-columns:minmax(230px,.9fr) minmax(290px,1.1fr);gap:16px;}
+.product-gallery-panel{top:92px;}
+.product-main-image-wrap img{height:min(56vh,500px);min-height:260px;}
+.detail-attrs{grid-template-columns:1fr;}
+.search-status{white-space:normal;}}
+@media(max-width:760px){
+.sidebar{padding:9px 12px;}
+.brand-avatar{width:42px;height:42px;}
+.brand-name{font-size:20px;}
+.content{padding:14px;}
+.quick-grid,.products-grid{grid-template-columns:1fr 1fr;gap:12px;}
+.quick-tile{min-height:82px;font-size:15px;border-radius:16px;padding:14px;}
+.product-card{border-radius:16px;}
+.product-info{padding:12px;}
+.product-price{font-size:20px;}
+.product-title{font-size:14px;min-height:0;}
+.card-tg-btn{margin:0 12px 12px;font-size:13px;padding:11px 8px;}
+.product-detail-layout{gap:14px;}
+.product-thumbs{padding-bottom:6px;scroll-snap-type:x mandatory;}
+.product-thumb{min-width:74px;scroll-snap-align:start;}
+.product-main-image-wrap img{height:min(52vh,430px);min-height:240px;}
+.product-detail-info{padding:16px;border-radius:18px;}
+.product-detail-info h1{font-size:clamp(23px,7vw,31px);}
+.detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
+.detail-section{padding-top:14px;margin-top:14px;}
+.detail-order-btn{width:100%;}
+.review-header{align-items:flex-start;flex-direction:column;gap:8px;}
+.footer-note{font-size:12px;}}
+@media(max-width:680px){
+.product-detail-layout{grid-template-columns:1fr;}
+.product-gallery-panel{position:static;}
+.product-main-image-wrap img{height:min(50vh,390px);min-height:230px;}
+}
+@media(max-width:430px){
+.quick-grid,.products-grid{grid-template-columns:1fr;}
+.mobile-catalog .menu-block ul{display:grid;grid-template-columns:1fr;}
+.product-image{height:260px;}
+.product-main-image-wrap img{height:min(44vh,340px);min-height:220px;}
+.product-thumb{min-width:68px;}
+.promo-card{padding:18px;border-radius:20px;}
+.promo-badge{width:78px;height:78px;font-size:20px;}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+    <a class="brand" href="../../">
+        <img class="brand-avatar" src="../../icon.png" alt="UniqLow">
+        <div>
+            <div class="brand-name">UniqLow</div>
+            <div class="brand-sub">Одяг та аксесуари</div>
+        </div>
+    </a>
+    <div class='updated-at'>Оновлено: 25.05.2026 22:24</div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
+        <img src="../../assets/icons/theme.png" alt="">
+    </button>
+    <nav class="desktop-catalog" aria-label="Каталог">
+        <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/all/'><img class='nav-icon' src='../../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/reviews/'><img class='nav-icon' src='../../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
+<li><a class='' href='/olx/'><img class='nav-icon' src='../../assets/icons/market.png' alt=''><span>OLX</span></a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
+<li><a class='' href='/spidnytsi/'><span>Спідниці</span></a></li>
+<li><a class='' href='/plattya/'><span>Плаття</span></a></li>
+<li><a class='' href='/verhniy-odyag/'><span>Верхній одяг</span></a></li>
+<li><a class='' href='/maiky-futbolky/'><span>Майки й футболки</span></a></li>
+<li><a class='' href='/sorochky-bluzy/'><span>Сорочки та блузи</span></a></li>
+<li><a class='' href='/kofty/'><span>Кофти</span></a></li>
+<li><a class='' href='/spidnya-bilyzna/'><span>Спідня білизна</span></a></li>
+<li><a class='' href='/sportyvnyy-odyag/'><span>Спортивний одяг</span></a></li>
+<li><a class='' href='/kostyumy/'><span>Костюми</span></a></li>
+<li><a class='' href='/kombinezony/'><span>Комбінезони</span></a></li>
+<li><a class='' href='/odyag-dlya-domu/'><span>Одяг для дому та сну</span></a></li>
+<li><a class='' href='/vzuttya/'><span>Взуття</span></a></li>
+<li><a class='' href='/shtany-shorty/'><span>Штани та шорти</span></a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Дитячий одяг</div><ul>
+<li><a class='' href='/dlya-divchatok/'><span>Для дівчаток</span></a></li>
+<li><a class='' href='/dlya-hlopchykiv/'><span>Для хлопчиків</span></a></li>
+<li><a class='' href='/dlya-malyukiv/'><span>Для малюків</span></a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Чоловічий одяг</div><ul>
+<li><a class='' href='/cholovichyy-verhniy-odyag/'><span>Верхній одяг</span></a></li>
+<li><a class='' href='/kofty-svetry/'><span>Кофти та светри</span></a></li>
+<li><a class='' href='/sorochky-tenisky/'><span>Сорочки та теніски</span></a></li>
+<li><a class='' href='/futbolky-mayky-men/'><span>Футболки та майки</span></a></li>
+<li><a class='' href='/spidnya-bilyzna-men/'><span>Спідня білизна</span></a></li>
+<li><a class='' href='/vzuttya-men/'><span>Взуття</span></a></li>
+<li><a class='' href='/sportyvnyy-odyag-men/'><span>Спортивний одяг</span></a></li>
+<li><a class='' href='/odyag-dlya-domu-men/'><span>Одяг для дому та сну</span></a></li>
+<li><a class='' href='/shtany-shorty-men/'><span>Штани та шорти</span></a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Аксесуари</div><ul>
+<li><a class='' href='/sumky-ryukzaky/'><span>Сумки та рюкзаки</span></a></li>
+<li><a class='' href='/golovni-ubory/'><span>Головні убори</span></a></li>
+<li><a class='' href='/remeni-poyasy/'><span>Ремені та пояси</span></a></li>
+</ul></div>
+    </nav>
+    <details class="mobile-catalog">
+        <summary>Каталог</summary>
+        <div class="mobile-catalog-body">
+            <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/all/'><img class='nav-icon' src='../../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/reviews/'><img class='nav-icon' src='../../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
+<li><a class='' href='/olx/'><img class='nav-icon' src='../../assets/icons/market.png' alt=''><span>OLX</span></a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Жіночий одяг</div><ul>
+<li><a class='' href='/spidnytsi/'><span>Спідниці</span></a></li>
+<li><a class='' href='/plattya/'><span>Плаття</span></a></li>
+<li><a class='' href='/verhniy-odyag/'><span>Верхній одяг</span></a></li>
+<li><a class='' href='/maiky-futbolky/'><span>Майки й футболки</span></a></li>
+<li><a class='' href='/sorochky-bluzy/'><span>Сорочки та блузи</span></a></li>
+<li><a class='' href='/kofty/'><span>Кофти</span></a></li>
+<li><a class='' href='/spidnya-bilyzna/'><span>Спідня білизна</span></a></li>
+<li><a class='' href='/sportyvnyy-odyag/'><span>Спортивний одяг</span></a></li>
+<li><a class='' href='/kostyumy/'><span>Костюми</span></a></li>
+<li><a class='' href='/kombinezony/'><span>Комбінезони</span></a></li>
+<li><a class='' href='/odyag-dlya-domu/'><span>Одяг для дому та сну</span></a></li>
+<li><a class='' href='/vzuttya/'><span>Взуття</span></a></li>
+<li><a class='' href='/shtany-shorty/'><span>Штани та шорти</span></a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Дитячий одяг</div><ul>
+<li><a class='' href='/dlya-divchatok/'><span>Для дівчаток</span></a></li>
+<li><a class='' href='/dlya-hlopchykiv/'><span>Для хлопчиків</span></a></li>
+<li><a class='' href='/dlya-malyukiv/'><span>Для малюків</span></a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Чоловічий одяг</div><ul>
+<li><a class='' href='/cholovichyy-verhniy-odyag/'><span>Верхній одяг</span></a></li>
+<li><a class='' href='/kofty-svetry/'><span>Кофти та светри</span></a></li>
+<li><a class='' href='/sorochky-tenisky/'><span>Сорочки та теніски</span></a></li>
+<li><a class='' href='/futbolky-mayky-men/'><span>Футболки та майки</span></a></li>
+<li><a class='' href='/spidnya-bilyzna-men/'><span>Спідня білизна</span></a></li>
+<li><a class='' href='/vzuttya-men/'><span>Взуття</span></a></li>
+<li><a class='' href='/sportyvnyy-odyag-men/'><span>Спортивний одяг</span></a></li>
+<li><a class='' href='/odyag-dlya-domu-men/'><span>Одяг для дому та сну</span></a></li>
+<li><a class='' href='/shtany-shorty-men/'><span>Штани та шорти</span></a></li>
+</ul></div>
+<div class='menu-block'><div class='menu-title'>Аксесуари</div><ul>
+<li><a class='' href='/sumky-ryukzaky/'><span>Сумки та рюкзаки</span></a></li>
+<li><a class='' href='/golovni-ubory/'><span>Головні убори</span></a></li>
+<li><a class='' href='/remeni-poyasy/'><span>Ремені та пояси</span></a></li>
+</ul></div>
+        </div>
+    </details>
+</aside>
+<main class="content">
+    
+    
+    
+    <section class="product-detail-page">
+        <a class="back-link" href="../../kofty-svetry/">← Назад до товарів</a>
+        <div class="product-detail-layout">
+            <div class="product-gallery-panel">
+                <div class="product-main-image-wrap">
+                    <img id="productMainImage" src="https://image-thumbs.shafastatic.net/2282536211_310_430" alt="Лонгслив uniqlo с начесом" loading="eager" decoding="async">
+                </div>
+                <div class="product-thumbs"><button class='product-thumb active' data-src='https://image-thumbs.shafastatic.net/2282536211_310_430' onclick='setProductImage(this)'><img src='https://image-thumbs.shafastatic.net/2282536211_310_430' alt='Лонгслив uniqlo с начесом' loading='lazy' decoding='async'></button><button class='product-thumb' data-src='https://image-thumbs.shafastatic.net/2282536319_310_430' onclick='setProductImage(this)'><img src='https://image-thumbs.shafastatic.net/2282536319_310_430' alt='Лонгслив uniqlo с начесом' loading='lazy' decoding='async'></button><button class='product-thumb' data-src='https://image-thumbs.shafastatic.net/2282536325_310_430' onclick='setProductImage(this)'><img src='https://image-thumbs.shafastatic.net/2282536325_310_430' alt='Лонгслив uniqlo с начесом' loading='lazy' decoding='async'></button><button class='product-thumb' data-src='https://image-thumbs.shafastatic.net/2282536331_310_430' onclick='setProductImage(this)'><img src='https://image-thumbs.shafastatic.net/2282536331_310_430' alt='Лонгслив uniqlo с начесом' loading='lazy' decoding='async'></button><button class='product-thumb' data-src='https://image-thumbs.shafastatic.net/2282559481_310_430' onclick='setProductImage(this)'><img src='https://image-thumbs.shafastatic.net/2282559481_310_430' alt='Лонгслив uniqlo с начесом' loading='lazy' decoding='async'></button><button class='product-thumb' data-src='https://image-thumbs.shafastatic.net/2282558074_310_430' onclick='setProductImage(this)'><img src='https://image-thumbs.shafastatic.net/2282558074_310_430' alt='Лонгслив uniqlo с начесом' loading='lazy' decoding='async'></button><button class='product-thumb' data-src='https://image-thumbs.shafastatic.net/2282545635_310_430' onclick='setProductImage(this)'><img src='https://image-thumbs.shafastatic.net/2282545635_310_430' alt='Лонгслив uniqlo с начесом' loading='lazy' decoding='async'></button><button class='product-thumb' data-src='https://image-thumbs.shafastatic.net/2282541897_310_430' onclick='setProductImage(this)'><img src='https://image-thumbs.shafastatic.net/2282541897_310_430' alt='Лонгслив uniqlo с начесом' loading='lazy' decoding='async'></button><button class='product-thumb' data-src='https://image-thumbs.shafastatic.net/2282540925_310_430' onclick='setProductImage(this)'><img src='https://image-thumbs.shafastatic.net/2282540925_310_430' alt='Лонгслив uniqlo с начесом' loading='lazy' decoding='async'></button><button class='product-thumb' data-src='https://image-thumbs.shafastatic.net/2282538897_310_430' onclick='setProductImage(this)'><img src='https://image-thumbs.shafastatic.net/2282538897_310_430' alt='Лонгслив uniqlo с начесом' loading='lazy' decoding='async'></button><button class='product-thumb' data-src='https://image-thumbs.shafastatic.net/2282538137_310_430' onclick='setProductImage(this)'><img src='https://image-thumbs.shafastatic.net/2282538137_310_430' alt='Лонгслив uniqlo с начесом' loading='lazy' decoding='async'></button></div>
+            </div>
+            <article class="product-detail-info">
+                <div class="detail-source">UniqLow</div>
+                <h1>Лонгслив uniqlo с начесом</h1>
+                <div class='detail-meta'>Uniqlo • XS, L</div>
+                <div class="detail-price">1010 грн</div>
+                <a class="detail-order-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">Замовити в Telegram (-10%)</a>
+                <details class="detail-section" open>
+                    <summary><h2>Опис</h2></summary>
+                    <p>Лонгслів Uniqlo на флісі<br>В наявності розмір ХС  та Л, колір 31 BEIGE<br>Опис:<br>- М&#x27;яка та зручна з начосом.<br>- Дизайн високого коміра зберігає шию в теплі.<br>- Манжети в рубчик дозволяють легко закатати рукава.<br>- Універсальний дизайн імітації горловини зі спущеними плечима та невимушеною посадкою, підходить для носіння як окремо, так і з шарами.<br><br>Склад: 56% бавовна, 44% поліестер<br><br>471806</p>
+                </details>
+                <details class="detail-section detail-attrs-section" open data-mobile-closed="1">
+                    <summary><h2>Характеристики</h2></summary>
+                    <dl class="detail-attrs"><div><dt>Категорії</dt><dd>Лонгсліви Кофти та Светри</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс Бавовна Сезон Осінь Демісезон Весна Зима Принт Без принту Особливості В рубчик Стиль Спортивний</dd></div><div><dt>Розмір</dt><dd>XSL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div></dl>
+                </details>
+            </article>
+        </div>
+    </section>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 22:24</div>
+</main>
+</div>
+<script>
+function toggleTheme(){document.body.classList.toggle('dark');
+localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
+if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
+function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
+function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function showMoreReviews(btn){const batch=Array.from(document.querySelectorAll('.hidden-review')).slice(0,12);batch.forEach(el=>el.classList.remove('hidden-review'));if(!document.querySelector('.hidden-review'))btn.style.display='none';}
+function setProductImage(btn){const img=document.getElementById('productMainImage');if(img&&btn&&btn.dataset.src)img.src=btn.dataset.src;document.querySelectorAll('.product-thumb').forEach(el=>el.classList.remove('active'));if(btn)btn.classList.add('active');}
+function syncCompactDetails(){const compact=window.innerWidth<=860;document.querySelectorAll('[data-mobile-closed]').forEach(el=>{if(compact)el.removeAttribute('open');else el.setAttribute('open','');});}
+syncCompactDetails();
+window.addEventListener('resize',syncCompactDetails);
+function filterProducts(input){
+const q=(input.value||'').trim().toLowerCase();
+const cards=Array.from(document.querySelectorAll('.product-card'));
+let shown=0;
+cards.forEach((card)=>{
+const matches=!q||(card.dataset.search||card.innerText).toLowerCase().includes(q);
+card.classList.toggle('is-hidden-by-search',!matches);
+if(q){
+card.classList.remove('hidden-card');
+card.style.display=matches?'flex':'none';
+}else{
+card.style.display='';
+if(card.dataset.initialHidden==='1'&&card.dataset.expanded!=='1')card.classList.add('hidden-card');
+}
+if(matches&&(q||!card.classList.contains('hidden-card')))shown++;
+});
+const btn=document.querySelector('.show-more-btn');
+if(btn)btn.style.display=q?'none':(document.querySelector('.hidden-card')?'inline-block':'none');
+updateSearchStatus(cards.length, q?shown:visibleProductCount());
+}
+</script>
+</body>
+</html>
