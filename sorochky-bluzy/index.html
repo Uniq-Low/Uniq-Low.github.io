@@ -23,6 +23,7 @@ padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
 border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
 .brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
 .brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.updated-at{margin:-8px 0 16px;padding:0 12px;color:var(--muted);font-size:12px;line-height:1.4;}
 .theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
 color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
 .menu-block{margin-bottom:18px;}
@@ -50,6 +51,11 @@ border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
 .telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
 padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.product-search-bar{display:flex;align-items:center;gap:12px;margin:0 0 18px;max-width:760px;}
+.product-search-input{width:min(520px,100%);border:1px solid var(--border);border-radius:14px;
+background:var(--panel-solid);color:var(--text);padding:13px 14px;font-size:15px;outline:none;}
+.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.search-status{color:var(--muted);font-size:13px;white-space:nowrap;}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
 .product-card{display:flex;flex-direction:column;background:var(--panel-solid);
 border:1px solid var(--border);border-radius:22px;overflow:hidden;
@@ -64,11 +70,21 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
 .product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
 .product-meta{font-size:13px;color:var(--muted);}
+.product-extra{margin:0 16px 14px;border-top:1px solid var(--border);padding-top:10px;}
+.product-extra summary{cursor:pointer;color:var(--accent);font-weight:800;font-size:14px;}
+.detail-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0;}
+.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:cover;border-radius:10px;background:var(--bg-soft);}
+.product-description{margin-top:10px;color:var(--text);font-size:13px;line-height:1.55;white-space:normal;}
+.product-attrs{display:grid;gap:7px;margin:10px 0 0;font-size:13px;}
+.product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
+.product-attrs dt{color:var(--muted);}
+.product-attrs dd{margin:0;color:var(--text);}
 .card-tg-btn{display:block;margin:0 16px 16px;
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
 padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
+.is-hidden-by-search{display:none!important;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -87,7 +103,9 @@ background:var(--panel-solid);color:var(--muted);}
 @media(max-width:1080px){
 .layout{grid-template-columns:1fr;}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
-.promo-card{flex-direction:column;text-align:center;}}
+.promo-card{flex-direction:column;text-align:center;}
+.product-search-bar{align-items:stretch;flex-direction:column;}
+.search-status{white-space:normal;}}
 </style>
 </head>
 <body>
@@ -100,8 +118,10 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:11</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -150,11 +170,18 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
+        
+            <div class="product-search-bar">
+                <input class="product-search-input" type="search"
+                       placeholder="Пошук на цій сторінці: назва, бренд, розмір..."
+                       oninput="filterProducts(this)" autocomplete="off">
+                <div class="search-status" data-total="48">Показано: 12 / 48</div>
+            </div>
         <div class="products-grid">
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча блуза з рюшами від uniqlo 650 грн uniqlo 36 / s / 44 sorochky-bluzy оборчатый виріз. дизайн в богемному стилі випромінює вишуканість. ・спільна серія з британським дизайнером бренду jw anderson. ・додайте нашийник з листя лотоса, щоб створити ефектний богемний образ у стилі ретро. ・його можна поєднувати з спідницями для чудового образу. 419510-54 блузи сорочки та блузи декор рюши синій 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/93367299-zhenskaya-bluzka-s-ryushami-ot-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/484235207_310_430" alt="Жіноча блуза з рюшами від uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/484235207_310_430" alt="Жіноча блуза з рюшами від uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">650 грн</div>
@@ -162,14 +189,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Оборчатый виріз. Дизайн в богемному стилі випромінює вишуканість. ・Спільна серія з британським дизайнером бренду JW ANDERSON. ・Додайте нашийник з листя лотоса, щоб створити ефектний богемний образ у стилі ретро. ・Його можна поєднувати з спідницями для чудового образу. 419510-54</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Декор Рюши</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="uniqlo червона блузка з довгим рукавом з твілу з драпіруванням 680 грн uniqlo 34 / xs / 42 sorochky-bluzy проста і чиста, ця чудова червона блузка ідеально підходить для універсального гардеробу. м&#x27;яка і зручна тканина, яка чудово поєднується з джинсами, шортами, брюками або спідницею. 100% віскоза новий з бірками! 412093-54 блузи сорочки та блузи червоний 34/xs/42 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/93367638-uniqlo-krasnaya-bluzka-s-dlinnym-rukavom-iz-tvila-s-drapirovkoy" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/484238103_310_430" alt="Uniqlo червона блузка з довгим рукавом з твілу з драпіруванням">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/484238103_310_430" alt="Uniqlo червона блузка з довгим рукавом з твілу з драпіруванням" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">680 грн</div>
@@ -177,14 +211,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/484238202_310_430' alt='Uniqlo червона блузка з довгим рукавом з твілу з драпіруванням' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/280989036_310_430' alt='Uniqlo червона блузка з довгим рукавом з твілу з драпіруванням' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Проста і чиста, ця чудова червона блузка ідеально підходить для універсального гардеробу. М&#x27;яка і зручна тканина, яка чудово поєднується з джинсами, шортами, брюками або спідницею. 100% віскоза Новий з бірками! 412093-54</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Червоний</dd></div><div><dt>Розмір</dt><dd>34/XS/42</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча сорочка з відкритим коміром uniqlo 780 грн uniqlo 36 / s / 44 sorochky-bluzy ви можете носити два стилю коміра в одному виробі!дизайн з глибоким розрізом і геометричними лініями підкреслює жіночність. ・одну річ можна носити двома способами. ・геометричний крій з глибокими прорізами. 406453-58 блузи сорочки та блузи принт геометричний рожевий 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/93860477-zhenskaya-rubashka-s-otkrytym-vorotnikom-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/490217087_310_430" alt="Жіноча сорочка з відкритим коміром uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/490217087_310_430" alt="Жіноча сорочка з відкритим коміром uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">780 грн</div>
@@ -192,14 +233,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/490217116_310_430' alt='Жіноча сорочка з відкритим коміром uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/564893497_310_430' alt='Жіноча сорочка з відкритим коміром uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/564514040_310_430' alt='Жіноча сорочка з відкритим коміром uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Ви можете носити два стилю коміра в одному виробі!Дизайн з глибоким розрізом і геометричними лініями підкреслює жіночність. ・Одну річ можна носити двома способами. ・Геометричний крій з глибокими прорізами. 406453-58</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Принт Геометричний</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="сорочка овер extra fine cotton від uniqlo японія 949 грн uniqlo 34 / xs / 42 sorochky-bluzy сорочка з 100% бавовни преміум-класу. ефектна смугаста сорочка, підходить як для занять в приміщенні, так і для активного відпочинку. -100% щільний бавовна преміум-класу. ・прозорі смуги, а також широкі плечі, невимушена і зручна сорочка. ・досить прикрити сідниці. ・стандартна сорочка, підходить як для занять в приміщенні, так і на відкритому повітрі 413006-а14 сорочки сорочки та блузи принт у смужку блакитний 34/xs/42 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/100866779-rubashka-over-extra-fine-cotton-ot-uniqlo-yaponiya" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/564431462_310_430" alt="Сорочка овер extra fine cotton від uniqlo японія">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/564431462_310_430" alt="Сорочка овер extra fine cotton від uniqlo японія" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">949 грн</div>
@@ -207,29 +255,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/564431509_310_430' alt='Сорочка овер extra fine cotton від uniqlo японія' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/564431583_310_430' alt='Сорочка овер extra fine cotton від uniqlo японія' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сорочка з 100% бавовни преміум-класу. Ефектна смугаста сорочка, підходить як для занять в приміщенні, так і для активного відпочинку. -100% щільний бавовна преміум-класу. ・Прозорі смуги, а також широкі плечі, невимушена і зручна сорочка. ・Досить прикрити сідниці. ・Стандартна сорочка, підходить як для занять в приміщенні, так і на відкритому повітрі 413006-а14</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Принт У смужку</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Розмір</dt><dd>34/XS/42</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/100867897-zhenskaya-rubashka-iz-smesovoy-lnyanoy-tkani-s-kruglym-vyrezom" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/564443248_310_430" alt="Жіноча сорочка із змішаної лляної тканини з круглим вирізом">
-            </div>
-            <div class="product-info">
-                <div class="product-price">949 грн</div>
-                <div class="product-title">Жіноча сорочка із змішаної лляної тканини з круглим вирізом</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча блузка 690 грн uniqlo 36 / s / 44 sorochky-bluzy красива блузка з широким кроєм і выточками що прикрашає її і робить жіночною 401695-a14 блузи сорочки та блузи білий 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/100871785-zhenskaya-bluzka" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/564483723_310_430" alt="Жіноча блузка">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/564483723_310_430" alt="Жіноча блузка" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">690 грн</div>
@@ -237,14 +277,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/564543919_310_430' alt='Жіноча блузка' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Красива блузка з широким кроєм і выточками що прикрашає її і робить жіночною 401695-a14</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча сорочка 949 грн uniqlo 36 / s / 44 sorochky-bluzy м&#x27;які лінії драпірування дуже красиві. мінімалістський дизайн можна носити як у повсякденному, так і в офіційному стилі. ・матеріал з додаванням віскози з м&#x27;якими драпірованими лініями. ・легкий догляд, не мнеться після прання, простий у догляді. ・класичний крій, серія з штучного шовку підходить для будь-якого випадку і будь-якого стилю. ・чіткий крій для одноразового носіння. ・менше шиття, більше чистоти і формальності. 408901-а14 сорочки сорочки та блузи стиль класичний повсякденний білий з додаванням віскози з м&#x27;якими драпірованими лініями. ・легкий догляд, не мнеться після прання, простий у догляді. ・класичний крій, серія з штучного шовку підходить для будь-якого випадку і будь-якого стилю. ・чіткий крій для одноразового носіння. ・менше шиття, більше чистоти і формальності. 408901-а14 стан: новий колір: білий розмір: 36/s/44 категорії: сорочки сорочки та блузи стиль класичний повсякденний 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/100873702-zhenskaya-rubashka" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/564514040_310_430" alt="Жіноча сорочка">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/564514040_310_430" alt="Жіноча сорочка" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">949 грн</div>
@@ -252,14 +299,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/564893497_310_430' alt='Жіноча сорочка' loading='lazy' decoding='async'></div>
+            <div class='product-description'>М&#x27;які лінії драпірування дуже красиві. Мінімалістський дизайн можна носити як у повсякденному, так і в офіційному стилі. ・Матеріал з додаванням віскози з м&#x27;якими драпірованими лініями. ・Легкий догляд, не мнеться після прання, простий у догляді. ・Класичний крій, серія з штучного шовку підходить для будь-якого випадку і будь-якого стилю. ・Чіткий крій для одноразового носіння. ・Менше шиття, більше чистоти і формальності. 408901-а14</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Стиль Класичний Повсякденний</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>з додаванням віскози з м&#x27;якими драпірованими лініями. ・Легкий догляд, не мнеться після прання, простий у догляді. ・Класичний крій, серія з штучного шовку підходить для будь-якого випадку і будь-якого стилю. ・Чіткий крій для одноразового носіння. ・Менше шиття, більше чистоти і формальності. 408901-а14 Стан: Новий Колір: Білий Розмір: 36/S/44 Категорії: Сорочки Сорочки та блузи Стиль Класичний Повсякденний</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіночий топ з змішаної лляної тканини з коміром-стійкою 999 грн uniqlo 36 / s / 44 sorochky-bluzy крута і повсякденна річ з прохолодним і гнучким відчуттям. м&#x27;який прохолодний лляної віскоза. ・він не мнеться і надає гарний вигляд. ・тонкі і природно виглядають гудзики підходять для лляних тканин. ・рекомендується поєднувати його з брюками і т. д. 415678-a14 сорочки сорочки та блузи стиль повсякденний білий 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/100874653-zhenskiy-top-iz-smesovoy-lnyanoy-tkani-s-vorotnikom-stoykoy" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/564528579_310_430" alt="Жіночий топ з змішаної лляної тканини з коміром-стійкою">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/564528579_310_430" alt="Жіночий топ з змішаної лляної тканини з коміром-стійкою" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">999 грн</div>
@@ -267,14 +321,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Крута і повсякденна річ з прохолодним і гнучким відчуттям. М&#x27;який прохолодний лляної віскоза. ・Він не мнеться і надає гарний вигляд. ・Тонкі і природно виглядають гудзики підходять для лляних тканин. ・Рекомендується поєднувати його з брюками і т. д. 415678-a14</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Стиль Повсякденний</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча блузка з бавовни і льону 999 грн uniqlo 36 / s / 44 sorochky-bluzy жіноча блузка uniqlo uniqlo 195493 з бавовни і льону виготовлено з 66 % бавовни і 34 % льону, що робить його зручним і освіжаючим. вільний крій з напіввідкритим коміром і рукавами-ліхтариками три чверті створює відчуття жвавості. 195493 блузи сорочки та блузи фасон рукава рукави ліхтарики білий 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/100876128-zhenskaya-bluzka-iz-hlopka-i-lna" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/564543919_310_430" alt="Жіноча блузка з бавовни і льону">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/564543919_310_430" alt="Жіноча блузка з бавовни і льону" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">999 грн</div>
@@ -282,14 +343,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>жіноча блузка UNIQLO Uniqlo 195493 з бавовни і льону виготовлено з 66 % бавовни і 34 % льону, що робить його зручним і освіжаючим. Вільний крій з напіввідкритим коміром і рукавами-ліхтариками три чверті створює відчуття жвавості. 195493</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Фасон рукава Рукави ліхтарики</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча сорочка 699 грн uniqlo 36 / s / 44 sorochky-bluzy 100%коттон 402269-а14 сорочки сорочки та блузи зелений 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/100892995-zhenskaya-rubashka" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/564893497_310_430" alt="Жіноча сорочка">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/564893497_310_430" alt="Жіноча сорочка" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">699 грн</div>
@@ -297,14 +365,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2263577124_310_430' alt='Жіноча сорочка' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-324978159_310_430' alt='Жіноча сорочка' loading='lazy' decoding='async'></div>
+            <div class='product-description'>100%коттон 402269-а14</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Зелений</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча дизайнерська довга сорочка в смужку 799 грн uniqlo 36 / s / 44 sorochky-bluzy сорочка без коміра в традиційному стилі. можна поєднувати з різними низом. ・спільна серія з британським дизайнером бренду jw anderson. носіть з короткою спідницею. ・традиційна сорочка без коміра, яка виходить за рамки часу і виражає елегантний смак і жіночність. ・надівається з джинсами з високою талією або заправляється в спідницю. 4`17573-a14 сорочки сорочки та блузи принт у смужку білий блакитний 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/100893113-zhenskaya-dizaynerskaya-dlinnaya-rubashka-v-polosku" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/564894471_310_430" alt="Жіноча дизайнерська довга сорочка в смужку">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/564894471_310_430" alt="Жіноча дизайнерська довга сорочка в смужку" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">799 грн</div>
@@ -312,29 +387,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/564894495_310_430' alt='Жіноча дизайнерська довга сорочка в смужку' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сорочка без коміра в традиційному стилі. Можна поєднувати з різними низом. ・Спільна серія з британським дизайнером бренду JW ANDERSON. Носіть з короткою спідницею. ・Традиційна сорочка без коміра, яка виходить за рамки часу і виражає елегантний смак і жіночність. ・Надівається з джинсами з високою талією або заправляється в спідницю. 4`17573-a14</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Принт У смужку</dd></div><div><dt>Колір</dt><dd>Білий Блакитний</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/100893251-zhenskiy-top-lingying-s-otkrytym-vorotnikom" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/564895920_310_430" alt="Жіночий топ lingying з відкритим коміром">
-            </div>
-            <div class="product-info">
-                <div class="product-price">899 грн</div>
-                <div class="product-title">Жіночий топ lingying з відкритим коміром</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card hidden-card">
+    <div class="product-card" data-search="жіноча лляна сорочка з круглим вирізом idlf premium 1299 грн uniqlo 34 / xs / 42 sorochky-bluzy класний і зручний якісний 100% лляної матеріал! насолоджуйтеся комфортом преміальних матеріалів. ・продукти в співробітництві з всесвітньо відомою моделлю інес де ла фасанж. ・прохолодний і зручний 100% льон преміум-класу. сорочки сорочки та блузи білий 34/xs/42 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/100871982-zhenskaya-lnyanaya-rubashka-s-kruglym-vyrezom-idlf-premium" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/564484546_310_430" alt="Жіноча лляна сорочка з круглим вирізом idlf premium">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/564484546_310_430" alt="Жіноча лляна сорочка з круглим вирізом idlf premium" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1299 грн</div>
@@ -342,119 +409,31 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Класний і зручний якісний 100% лляної матеріал! Насолоджуйтеся комфортом преміальних матеріалів. ・Продукти в співробітництві з всесвітньо відомою моделлю Інес де ла Фасанж. ・Прохолодний і зручний 100% льон преміум-класу.</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>34/XS/42</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/186490967-corochka-uniqlo-z-lonu-premium-klasu" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185658302_310_430" alt="Cорочка uniqlo з льону преміум класу">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1200 грн</div>
-                <div class="product-title">Cорочка uniqlo з льону преміум класу</div>
-                <div class='product-meta'>34 / XS / 42і ще 4</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/186490470-corochka-uniqlo-z-lonu-premium-klasu" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185655321_310_430" alt="Cорочка uniqlo з льону преміум класу">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1200 грн</div>
-                <div class="product-title">Cорочка uniqlo з льону преміум класу</div>
-                <div class='product-meta'>Uniqlo • ХS</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/186491034-corochka-uniqlo-z-lonu-premium-klasu" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185658806_310_430" alt="Cорочка uniqlo з льону преміум класу">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1200 грн</div>
-                <div class="product-title">Cорочка uniqlo з льону преміум класу</div>
-                <div class='product-meta'>34 / XS / 42і ще 4</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/190311569-sorochka-uniqlo" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2207822602_310_430" alt="Сорочка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">900 грн</div>
-                <div class="product-title">Сорочка uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/190994535-sorochka-uniseks-uniqlo" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211980868_310_430" alt="Сорочка унісекс uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">950 грн</div>
-                <div class="product-title">Сорочка унісекс uniqlo</div>
-                <div class='product-meta'>Uniqlo • ХSі ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/193586744-bluzka-z-viskozi-uniqlo" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227878817_310_430" alt="Блузка з віскози uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1080 грн</div>
-                <div class="product-title">Блузка з віскози uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/193586966-bluzka-z-viskozi-uniqlo" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227880191_310_430" alt="Блузка з віскози uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1080 грн</div>
-                <div class="product-title">Блузка з віскози uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card hidden-card">
+    <div class="product-card" data-search="фланелева сорочка uniqlo 850 грн uniqlo 36 / s / 44 sorochky-bluzy фланелева сорочка uniqlo
+в наявності розмір хс, розмір зазначений по чоловічій сітці, підійде на с-ку жіночу
+колір 41 yellow
+
+опис:
+тонка 100% бавовна з начісуванням для гладкості зовні та м&#x27;якості й затишку всередині.
+закруглені ґудзики для легкого застібання.
+
+склад: 100% бавовна
+
+478928 сорочки сорочки та блузи чорний жовтий бавовна фланель 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/193956664-flaneleva-sorochka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230212827_310_430" alt="Фланелева сорочка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230212827_310_430" alt="Фланелева сорочка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">850 грн</div>
@@ -462,51 +441,1074 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2230212814_310_430' alt='Фланелева сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2230212819_310_430' alt='Фланелева сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2230212821_310_430' alt='Фланелева сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2230212823_310_430' alt='Фланелева сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2230212825_310_430' alt='Фланелева сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2230212830_310_430' alt='Фланелева сорочка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Фланелева сорочка Uniqlo<br>В наявності розмір ХС, розмір зазначений по чоловічій сітці, підійде на С-ку жіночу<br>Колір 41 YELLOW<br><br>Опис:<br>Тонка 100% бавовна з начісуванням для гладкості зовні та м&#x27;якості й затишку всередині.<br>Закруглені ґудзики для легкого застібання.<br><br>Склад: 100% бавовна<br><br>478928</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Чорний Жовтий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Фланель</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card hidden-card" data-search="бавовняна сорочка uniqlo 1100 грн uniqlo sі ще 1 sorochky-bluzy бавовняна сорочка uniqlo
+в наявності розмір с та л
+
+опис:
+комір-стійка
+великі кишені додають дизайнерського акценту.
+100% бавовна.
+
+
+481429 сорочки сорочки та блузи довжина рукава довгий стиль класичний принт у смужку блакитний бавовна sl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/205187596-bavovnyana-sorochka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281264970_310_430" alt="Бавовняна сорочка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281264970_310_430" alt="Бавовняна сорочка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1100 грн</div>
                 <div class="product-title">Бавовняна сорочка uniqlo</div>
-                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2281264967_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2281264957_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2281264959_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2281264961_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2281264963_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2281264953_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Бавовняна сорочка uniqlo<br>В наявності розмір С та Л<br><br>Опис:<br>Комір-стійка<br>Великі кишені додають дизайнерського акценту.<br>100% бавовна.<br><br><br>481429</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Довжина рукава Довгий Стиль Класичний Принт У смужку</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>SL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card hidden-card" data-search="блузка з віскози uniqlo 1010 грн uniqlo sі ще 1 sorochky-bluzy блузка з віскози uniqlo
+в наявності розмір с та м
+
+склад: 76% віскоза, 24% поліестер
+479072 блузи сорочки та блузи сірий білий віскоза поліестер sm новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
         <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/205191873-bluzka-z-viskozi-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281281827_310_430" alt="Блузка з віскози uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281281827_310_430" alt="Блузка з віскози uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1010 грн</div>
                 <div class="product-title">Блузка з віскози uniqlo</div>
-                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2281281823_310_430' alt='Блузка з віскози uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка з віскози UNIQLO<br>В наявності розмір С та М<br><br>Склад: 76% віскоза, 24% поліестер<br>479072</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Сірий Білий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер</dd></div><div><dt>Розмір</dt><dd>SM</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/205192458-velvetova-verhnya-sorochka-uniqlo" target="_blank" rel="noopener">
+    <div class="product-card hidden-card" data-search="cорочка uniqlo з льону преміум класу 1200 грн  34 / xs / 42і ще 4 sorochky-bluzy жіноча сорочка uniqlo з льону преміум класу
+в наявності розмір хс, с, м, л та хл колір 21 light orange
+
+опис:
+100% premium linen long sleeved shirt
+м’яке, прохолодне відчуття льон
+класичний комір
+цю універсальну сорочку легко стилізувати самостійно або як легкий верхній шар
+
+склад:100% льон
+
+464732 сорочки сорочки та блузи довжина рукава довгий стиль класичний сезон літо кораловий льон 34/xs/4236/s/4438/m/4640/l/4842/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/186490967-corochka-uniqlo-z-lonu-premium-klasu" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2281284961_310_430" alt="Вельветова верхня сорочка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185658302_310_430" alt="Cорочка uniqlo з льону преміум класу" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">1010 грн</div>
-                <div class="product-title">Вельветова верхня сорочка uniqlo</div>
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Cорочка uniqlo з льону преміум класу</div>
+                <div class='product-meta'>34 / XS / 42і ще 4</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2290653858_310_430' alt='Cорочка uniqlo з льону преміум класу' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Жіноча сорочка uniqlo з льону преміум класу<br>В наявності розмір ХС, С, М, Л та ХЛ колір 21 LIGHT ORANGE<br><br>Опис:<br>100% PREMIUM LINEN LONG SLEEVED SHIRT<br>м’яке, прохолодне відчуття льон<br>класичний комір<br>цю універсальну сорочку легко стилізувати самостійно або як легкий верхній шар<br><br>Склад:100% льон<br><br>464732</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Довжина рукава Довгий Стиль Класичний Сезон Літо</dd></div><div><dt>Колір</dt><dd>Кораловий</dd></div><div><dt>Матеріал</dt><dd>Льон</dd></div><div><dt>Розмір</dt><dd>34/XS/4236/S/4438/M/4640/L/4842/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="cорочка uniqlo з льону преміум класу 1200 грн uniqlo s sorochky-bluzy жіноча сорочка uniqlo з льону преміум класу
+в наявності розмір хс колір 02 light grey
+
+опис:
+100% premium linen long sleeved shirt
+м’яке, прохолодне відчуття льон
+класичний комір
+цю універсальну сорочку легко стилізувати самостійно або як легкий верхній шар
+
+склад:100% льон
+
+446845 сорочки сорочки та блузи довжина рукава довгий стиль класичний сезон літо принт без принту сірий льон s новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/207487493-corochka-uniqlo-z-lonu-premium-klasu" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2290653858_310_430" alt="Cорочка uniqlo з льону преміум класу" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Cорочка uniqlo з льону преміум класу</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Жіноча сорочка uniqlo з льону преміум класу<br>В наявності розмір ХС колір 02 LIGHT GREY<br><br>Опис:<br>100% PREMIUM LINEN LONG SLEEVED SHIRT<br>м’яке, прохолодне відчуття льон<br>класичний комір<br>цю універсальну сорочку легко стилізувати самостійно або як легкий верхній шар<br><br>Склад:100% льон<br><br>446845</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Довжина рукава Довгий Стиль Класичний Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Льон</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блуза з віскози uniqlo 950 грн uniqlo хs sorochky-bluzy блуза з 3/4 рукавами з коміром із віскози uniqlo
+в наявності розмір хс, колір 59 dark green
+
+опис:
+- м&#x27;який, гладкий на дотик.
+- стійкість до зминання для легкого догляду.
+- шкіперський комір підкреслює шию.
+
+склад: 76% віскоза, 24% поліестер.
+
+461143 блузи сорочки та блузи довжина рукава три чверті комір з коміром сезон весна літо осінь принт без принту зелений віскоза поліестер хs новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/207490647-bluza-z-viskozi-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2290666456_310_430" alt="Блуза з віскози uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">950 грн</div>
+                <div class="product-title">Блуза з віскози uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХS</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2290667425_310_430' alt='Блуза з віскози uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290667410_310_430' alt='Блуза з віскози uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290667405_310_430' alt='Блуза з віскози uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290667392_310_430' alt='Блуза з віскози uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290667398_310_430' alt='Блуза з віскози uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290667401_310_430' alt='Блуза з віскози uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блуза з 3/4 рукавами з коміром із віскози UNIQLO<br>В наявності розмір ХС, колір 59 DARK GREEN<br><br>Опис:<br>- М&#x27;який, гладкий на дотик.<br>- Стійкість до зминання для легкого догляду.<br>- Шкіперський комір підкреслює шию.<br><br>Склад: 76% віскоза, 24% поліестер.<br><br>461143</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Довжина рукава Три чверті Комір З коміром Сезон Весна Літо Осінь Принт Без принту</dd></div><div><dt>Колір</dt><dd>Зелений</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер</dd></div><div><dt>Розмір</dt><dd>ХS</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="бавовняна сорочка з колекції ines de la fressange від uniqlo 950 грн uniqlo s sorochky-bluzy бавовняна сорочка з колекції ines de la fressange від uniqlo
+в наявності: розмір с, колір 09 black
+
+опис:
+- 100% бавовняна прозора тканина.
+- пряжа з високою крученістю створює повітряне відчуття.
+- круглий край подовжений ззаду для зручності укладання.
+- прозорий матеріал у фірмовому перевіреному дизайні ines de la fressange.
+
+463563 сорочки сорочки та блузи довжина рукава довгий стиль повсякденний сезон осінь весна літо принт у клітинку чорний білий бавовна s новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/207492167-bavovnyana-sorochka-z-kolekciyi-ines-de-la-fressange-vid-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2290672467_310_430" alt="Бавовняна сорочка з колекції ines de la fressange від uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">950 грн</div>
+                <div class="product-title">Бавовняна сорочка з колекції ines de la fressange від uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2290673228_310_430' alt='Бавовняна сорочка з колекції ines de la fressange від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290673241_310_430' alt='Бавовняна сорочка з колекції ines de la fressange від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290673252_310_430' alt='Бавовняна сорочка з колекції ines de la fressange від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290673264_310_430' alt='Бавовняна сорочка з колекції ines de la fressange від uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290673280_310_430' alt='Бавовняна сорочка з колекції ines de la fressange від uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Бавовняна сорочка з колекції Ines de la Fressange від Uniqlo<br>В наявності: розмір С, колір 09 BLACK<br><br>Опис:<br>- 100% бавовняна прозора тканина.<br>- Пряжа з високою крученістю створює повітряне відчуття.<br>- Круглий край подовжений ззаду для зручності укладання.<br>- Прозорий матеріал у фірмовому перевіреному дизайні Ines de la Fressange.<br><br>463563</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Довжина рукава Довгий Стиль Повсякденний Сезон Осінь Весна Літо Принт У клітинку</dd></div><div><dt>Колір</dt><dd>Чорний Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="бавовняна сорочка uniqlo 880 грн uniqlo хs sorochky-bluzy бавовняна сорочка uniqlo
+в наявності розмір хс  колір 72 purple
+
+опис:
+легка бавовняна тканина
+об’ємний крій і дизайн рукава
+складки на вирізі коміра-стійки додають стильний акцент
+злегка подовжена спинка
+на гудзиках
+
+матеріал: 100% бавовна
+451096 сорочки сорочки та блузи довжина рукава довгий стиль повсякденний фасон рукава широкі рукави сезон літо принт без принту бузковий : 100% бавовна 451096 стан: новий колір: бузковий розмір: хs категорії: сорочки сорочки та блузи довжина рукава довгий стиль повсякденний фасон рукава широкі рукави сезон літо принт без принту матеріал бавовна хs новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/207493151-bavovnyana-sorochka-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2290677071_310_430" alt="Бавовняна сорочка uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">880 грн</div>
+                <div class="product-title">Бавовняна сорочка uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХS</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2290677549_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290677562_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290677582_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290677595_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Бавовняна сорочка UNIQLO<br>В наявності розмір ХС  колір 72 Purple<br><br>Опис:<br>легка бавовняна тканина<br>об’ємний крій і дизайн рукава<br>складки на вирізі коміра-стійки додають стильний акцент<br>злегка подовжена спинка<br>на гудзиках<br><br>Матеріал: 100% бавовна<br>451096</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Довжина рукава Довгий Стиль Повсякденний Фасон рукава Широкі рукави Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Бузковий</dd></div><div><dt>Матеріал</dt><dd>: 100% бавовна 451096 Стан: Новий Колір: Бузковий Розмір: ХS Категорії: Сорочки Сорочки та блузи Довжина рукава Довгий Стиль Повсякденний Фасон рукава Широкі рукави Сезон Літо Принт Без принту Матеріал Бавовна</dd></div><div><dt>Розмір</dt><dd>ХS</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="бавовняна блузка uniqlo 1050 грн uniqlo l sorochky-bluzy бавовняна блузка uniqlo
+в наявності розмір л
+
+опис:
+тонкий шнурок підкреслює талію.
+дизайн відрізняється об&#x27;ємними рукавами.
+виготовлений з легких наддовгих бавовняних волокон, ідеально підходить для носіння в теплу погоду.
+
+склад: 100% бавовна
+
+469440 блузи сорочки та блузи довжина рукава довгий комір без коміра сезон літо принт без принту бордовий бавовна l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/207494319-bavovnyana-bluzka-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2290682702_310_430" alt="Бавовняна блузка uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Бавовняна блузка uniqlo</div>
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2290683146_310_430' alt='Бавовняна блузка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290683157_310_430' alt='Бавовняна блузка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290683163_310_430' alt='Бавовняна блузка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290683170_310_430' alt='Бавовняна блузка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290683175_310_430' alt='Бавовняна блузка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Бавовняна блузка UNIQLO<br>В наявності розмір Л<br><br>Опис:<br>Тонкий шнурок підкреслює талію.<br>Дизайн відрізняється об&#x27;ємними рукавами.<br>Виготовлений з легких наддовгих бавовняних волокон, ідеально підходить для носіння в теплу погоду.<br><br>Склад: 100% бавовна<br><br>469440</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Довжина рукава Довгий Комір Без коміра Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Бордовий</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="бавовняна блуза uniqlo 880 грн uniqlo s sorochky-bluzy бавовняна блуза uniqlo, розмір с
+- легка бавовна.
+- стильна блузка з багаторівневим дизайном і зібраними манжетами.
+
+склад
+100% бавовна
+
+447937 блузи сорочки та блузи особливості крою вільні фасон рукава широкі рукави сезон літо принт без принту білий бавовна s новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/207495476-bavovnyana-bluza-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2290688434_310_430" alt="Бавовняна блуза uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">880 грн</div>
+                <div class="product-title">Бавовняна блуза uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2290688851_310_430' alt='Бавовняна блуза uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2228449054_310_430' alt='Бавовняна блуза uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Бавовняна блуза Uniqlo, розмір С<br>- Легка бавовна.<br>- Стильна блузка з багаторівневим дизайном і зібраними манжетами.<br><br>Склад<br>100% бавовна<br><br>447937</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Особливості крою Вільні Фасон рукава Широкі рукави Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="об&#x27;ємна напівпрозора блузка uniqlo + jw anderson 1050 грн uniqlo s sorochky-bluzy новий lifewear, який поєднує увагу uniqlo до дизайну, крою, тканини та функціональності з фокусом jw anderson на традиційному британському одязі в інноваційному дизайні.
+
+- 100% бавовна.
+- просторий дизайн пуловера.
+- еластичні манжети.
+- акцентна смужка на декольте.
+- помірно прозора тканина ідеально підходить для багатошаровості.
+- розслаблений крій.
+
+в наявності розмір с , колір чорний
+
+467020 блузи сорочки та блузи довжина рукава довгий особливості крою вільні сезон літо принт у смужку чорний бавовна s новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/207508266-obyemna-napivprozora-bluzka-uniqlo-jw-anderson" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2290750050_310_430" alt="Об&#x27;ємна напівпрозора блузка uniqlo + jw anderson" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Об&#x27;ємна напівпрозора блузка uniqlo + jw anderson</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2290751013_310_430' alt='Об&#x27;ємна напівпрозора блузка uniqlo + jw anderson' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290751025_310_430' alt='Об&#x27;ємна напівпрозора блузка uniqlo + jw anderson' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2290751029_310_430' alt='Об&#x27;ємна напівпрозора блузка uniqlo + jw anderson' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Новий LifeWear, який поєднує увагу UNIQLO до дизайну, крою, тканини та функціональності з фокусом JW ANDERSON на традиційному британському одязі в інноваційному дизайні.<br><br>- 100% бавовна.<br>- Просторий дизайн пуловера.<br>- Еластичні манжети.<br>- Акцентна смужка на декольте.<br>- Помірно прозора тканина ідеально підходить для багатошаровості.<br>- Розслаблений крій.<br><br>В наявності розмір С , колір чорний<br><br>467020</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Довжина рукава Довгий Особливості крою Вільні Сезон Літо Принт У смужку</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="сорочка без рукавів uniqlo 1200 грн uniqlo sі ще 1 sorochky-bluzy сорочка без рукавів uniqlo
+в наявності розмір с та хл, колір 30 natural
+
+склад: 57% бавовна, 43% ліоцел
+
+476947 сорочки сорочки та блузи довжина рукава без рукавів сезон літо принт без принту білий бежевий бавовна декор без декору sxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/208497425-sorochka-bez-rukaviv-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2294958396_310_430" alt="Сорочка без рукавів uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Сорочка без рукавів uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2294958397_310_430' alt='Сорочка без рукавів uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294958403_310_430' alt='Сорочка без рукавів uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294958407_310_430' alt='Сорочка без рукавів uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294958409_310_430' alt='Сорочка без рукавів uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294959146_310_430' alt='Сорочка без рукавів uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сорочка без рукавів Uniqlo<br>В наявності розмір С та ХЛ, колір 30 NATURAL<br><br>Склад: 57% бавовна, 43% ліоцел<br><br>476947</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Довжина рукава Без рукавів Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Білий Бежевий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Декор Без декору</dd></div><div><dt>Розмір</dt><dd>SXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="сорочка без рукавів uniqlo 1200 грн uniqlo хsі ще 1 sorochky-bluzy сорочка без рукавів uniqlo
+в наявності розмір хс та м, колір 76 purple
+
+склад: 57% бавовна, 43% ліоцел
+
+476947 сорочки сорочки та блузи довжина рукава без рукавів сезон літо принт без принту фіолетовий бавовна декор без декору хsm новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/208497559-sorochka-bez-rukaviv-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2294959146_310_430" alt="Сорочка без рукавів uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Сорочка без рукавів uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХSі ще 1</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2294959136_310_430' alt='Сорочка без рукавів uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294959138_310_430' alt='Сорочка без рукавів uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294959141_310_430' alt='Сорочка без рукавів uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сорочка без рукавів Uniqlo<br>В наявності розмір ХС та М, колір 76 PURPLE<br><br>Склад: 57% бавовна, 43% ліоцел<br><br>476947</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Довжина рукава Без рукавів Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Фіолетовий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Декор Без декору</dd></div><div><dt>Розмір</dt><dd>ХSM</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="вельветова довга сорочка-куртка uniqlo 1010 грн uniqlo l sorochky-bluzy вельветова довга сорочка-куртка uniqlo
+в наявності розмір л, колір 57 olive
+
+склад: 100% бавовна
+
+
+
+480318 сорочки сорочки та блузи сезон осінь демісезон весна літо принт без принту хакі оливковий бавовна вельвет декор без декору l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/208498315-velvetova-dovga-sorochka-kurtka-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2294963540_310_430" alt="Вельветова довга сорочка-куртка uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Вельветова довга сорочка-куртка uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2294963903_310_430' alt='Вельветова довга сорочка-куртка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Вельветова довга сорочка-куртка UNIQLO<br>В наявності розмір Л, колір 57 OLIVE<br><br>Склад: 100% бавовна<br><br><br><br>480318</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Сезон Осінь Демісезон Весна Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Хакі Оливковий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Вельвет Декор Без декору</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo xl sorochky-bluzy блузка uniqlo з віскози
+в наявності розмір хл, колір чорний
+
+опис:
+зручна крепова тканина.
+стійкий до зморшок для легкого догляду. *після прання надайте форму для сушіння.
+розроблено без видимих швів зовні для вишуканого вигляду.
+манжети можна регулювати за допомогою запонок.
+
+склад:76% віскоза, 24% поліестер - перероблене волокно
+
+475658 блузи сорочки та блузи чорний віскоза поліестер xl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209170654-bluzka-uniqlo-z-viskozi" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298480431_310_430" alt="Блузка uniqlo з віскози" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Блузка uniqlo з віскози</div>
+                <div class='product-meta'>Uniqlo • XL</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298481004_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490606_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490189_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298485486_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298484547_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298484124_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка uniqlo з віскози<br>В наявності розмір ХЛ, колір чорний<br><br>Опис:<br>Зручна крепова тканина.<br>Стійкий до зморшок для легкого догляду. *Після прання надайте форму для сушіння.<br>Розроблено без видимих швів зовні для вишуканого вигляду.<br>Манжети можна регулювати за допомогою запонок.<br><br>Склад:76% віскоза, 24% поліестер - перероблене волокно<br><br>475658</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo mі ще 2 sorochky-bluzy блузка uniqlo з віскози
+в наявності розмір м, л та хл, колір блакитний
+опис:
+текстурована крепова тканина, підходить для будь-якого стилю.
+спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.
+
+склад: 76% віскоза, 24% поліестер - перероблене волокно
+
+475657 блузи сорочки та блузи блакитний віскоза поліестер mlxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209170915-bluzka-uniqlo-z-viskozi" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298482578_310_430" alt="Блузка uniqlo з віскози" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Блузка uniqlo з віскози</div>
+                <div class='product-meta'>Uniqlo • Mі ще 2</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Блузка Uniqlo з віскози<br>В наявності розмір М, Л та ХЛ, колір блакитний<br>Опис:<br>Текстурована крепова тканина, підходить для будь-якого стилю.<br>Спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.<br><br>Склад: 76% віскоза, 24% поліестер - перероблене волокно<br><br>475657</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер</dd></div><div><dt>Розмір</dt><dd>MLXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo lі ще 1 sorochky-bluzy блузка uniqlo з віскози
+в наявності розмір л та хл
+
+також в наявності пояс зі шкіри що на фото https://shafa.ua/uk/aksesuary/remeni-poyasy/remeni/189213676-shkiryaniy-remin-uniqlo
+
+опис:
+текстурована крепова тканина, підходить для будь-якого стилю.
+спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.
+
+склад: 76% віскоза, 24% поліестер - перероблене волокно
+
+
+475657 блузи сорочки та блузи білий віскоза поліестер lxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209170981-bluzka-uniqlo-z-viskozi" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298483014_310_430" alt="Блузка uniqlo з віскози" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Блузка uniqlo з віскози</div>
+                <div class='product-meta'>Uniqlo • Lі ще 1</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298486054_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка Uniqlo з віскози<br>В наявності розмір Л та ХЛ<br><br>також в наявності пояс зі шкіри що на фото https://shafa.ua/uk/aksesuary/remeni-poyasy/remeni/189213676-shkiryaniy-remin-uniqlo<br><br>Опис:<br>Текстурована крепова тканина, підходить для будь-якого стилю.<br>Спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.<br><br>Склад: 76% віскоза, 24% поліестер - перероблене волокно<br><br><br>475657</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер</dd></div><div><dt>Розмір</dt><dd>LXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo mі ще 1 sorochky-bluzy блузка uniqlo з віскози
+в наявності розмір м та хл, колір білий
+
+опис:
+текстурована крепова тканина, підходить для будь-якого стилю.
+спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.
+
+склад: 76% віскоза, 24% поліестер - перероблене волокно
+
+475657 блузи сорочки та блузи білий віскоза поліестер mxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209171099-bluzka-uniqlo-z-viskozi" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298483852_310_430" alt="Блузка uniqlo з віскози" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Блузка uniqlo з віскози</div>
+                <div class='product-meta'>Uniqlo • Mі ще 1</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298483900_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298483901_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490606_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490189_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298485486_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298484547_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка Uniqlo з віскози<br>В наявності розмір М та ХЛ, колір білий<br><br>Опис:<br>Текстурована крепова тканина, підходить для будь-якого стилю.<br>Спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.<br><br>Склад: 76% віскоза, 24% поліестер - перероблене волокно<br><br>475657</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер</dd></div><div><dt>Розмір</dt><dd>MXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo xl sorochky-bluzy блузка uniqlo з віскози
+в наявності розмір хл, колір 58 dark green
+
+опис:
+текстурована крепова тканина, підходить для будь-якого стилю.
+спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.
+
+склад: 76% віскоза, 24% поліестер - перероблене волокно
+
+475657 блузи сорочки та блузи зелений віскоза поліестер xl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209171143-bluzka-uniqlo-z-viskozi" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298484124_310_430" alt="Блузка uniqlo з віскози" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Блузка uniqlo з віскози</div>
+                <div class='product-meta'>Uniqlo • XL</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298484172_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298484173_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490606_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490189_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298485486_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298484547_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка Uniqlo з віскози<br>В наявності розмір ХЛ, колір 58 DARK GREEN<br><br>Опис:<br>Текстурована крепова тканина, підходить для будь-якого стилю.<br>Спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.<br><br>Склад: 76% віскоза, 24% поліестер - перероблене волокно<br><br>475657</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Зелений</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo mі ще 1 sorochky-bluzy блузка uniqlo з віскози
+в наявності розмір м та л,  колір 11 pink
+
+опис:
+текстурована крепова тканина, підходить для будь-якого стилю.
+спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.
+
+склад: 76% віскоза, 24% поліестер - перероблене волокно
+
+475657 блузи сорочки та блузи рожевий віскоза поліестер ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209171200-bluzka-uniqlo-z-viskozi" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298484547_310_430" alt="Блузка uniqlo з віскози" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Блузка uniqlo з віскози</div>
+                <div class='product-meta'>Uniqlo • Mі ще 1</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298484760_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490606_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490189_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298485486_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка Uniqlo з віскози<br>В наявності розмір М та Л,  колір 11 PINK<br><br>Опис:<br>Текстурована крепова тканина, підходить для будь-якого стилю.<br>Спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.<br><br>Склад: 76% віскоза, 24% поліестер - перероблене волокно<br><br>475657</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo xl sorochky-bluzy блузка uniqlo з віскози
+в наявності розмір хл, колір чорний
+
+опис:
+текстурована крепова тканина, підходить для будь-якого стилю.
+спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.
+
+склад: 76% віскоза, 24% поліестер - перероблене волокно
+
+475657 блузи сорочки та блузи чорний віскоза поліестер xl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209171440-bluzka-uniqlo-z-viskozi" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298485486_310_430" alt="Блузка uniqlo з віскози" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Блузка uniqlo з віскози</div>
+                <div class='product-meta'>Uniqlo • XL</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298485497_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298480431_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка Uniqlo з віскози<br>В наявності розмір ХЛ, колір чорний<br><br>Опис:<br>Текстурована крепова тканина, підходить для будь-якого стилю.<br>Спеціально виткана для створення насиченого відчуття об&#x27;єму та елегантної драпіровки.<br><br>Склад: 76% віскоза, 24% поліестер - перероблене волокно<br><br>475657</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка з суміші льону uniqlo 1080 грн uniqlo sі ще 2 sorochky-bluzy блузка з суміші льону uniqlo
+в наявності розмір с, м та л, колір 61 blue
+
+склад: 62% віскоза, 33% льон, 5% нейлон
+
+475655 блузи сорочки та блузи сезон літо принт без принту блакитний віскоза льон нейлон sml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209171697-bluzka-z-sumishi-lonu-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298486844_310_430" alt="Блузка з суміші льону uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1080 грн</div>
+                <div class="product-title">Блузка з суміші льону uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 2</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298487143_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298487136_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298487139_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298487151_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298487141_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298489392_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка з суміші льону uniqlo<br>В наявності розмір С, М та Л, колір 61 BLUE<br><br>Склад: 62% віскоза, 33% льон, 5% нейлон<br><br>475655</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Матеріал</dt><dd>Віскоза Льон Нейлон</dd></div><div><dt>Розмір</dt><dd>SML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка з суміші льону uniqlo 1080 грн uniqlo l sorochky-bluzy блузка з суміші льону uniqlo
+в наявності розмір л, колір 38 dark brown
+
+склад: 62% віскоза, 33% льон, 5% нейлон
+
+475655 блузи сорочки та блузи сезон літо принт без принту коричневий віскоза льон нейлон l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209171810-bluzka-z-sumishi-lonu-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298487904_310_430" alt="Блузка з суміші льону uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1080 грн</div>
+                <div class="product-title">Блузка з суміші льону uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298487914_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298487907_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298487909_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298487913_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298489392_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка з суміші льону uniqlo<br>В наявності розмір Л, колір 38 DARK BROWN<br><br>Склад: 62% віскоза, 33% льон, 5% нейлон<br><br>475655</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Сезон Літо Принт Без принту</dd></div><div><dt>Колір</dt><dd>Коричневий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Льон Нейлон</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка з суміші льону uniqlo 1080 грн uniqlo sі ще 2 sorochky-bluzy блузка з суміші льону uniqlo
+в наявності розмір с, м та л, колір чорний
+
+склад: 62% віскоза, 33% льон, 5% нейлон
+
+475655 блузи сорочки та блузи сезон літо чорний віскоза льон нейлон sml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209172038-bluzka-z-sumishi-lonu-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298489392_310_430" alt="Блузка з суміші льону uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1080 грн</div>
+                <div class="product-title">Блузка з суміші льону uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 2</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298489393_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298489395_310_430' alt='Блузка з суміші льону uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка з суміші льону uniqlo<br>В наявності розмір С, М та Л, колір чорний<br><br>Склад: 62% віскоза, 33% льон, 5% нейлон<br><br>475655</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Сезон Літо</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Віскоза Льон Нейлон</dd></div><div><dt>Розмір</dt><dd>SML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo m sorochky-bluzy блузка uniqlo з віскози
+в наявності розмір м, колір 50 light green
+
+
+склад: 76% район, 24% поліестер
+
+475657 блузи сорочки та блузи довжина рукава три чверті комір з коміром сезон осінь літо весна принт у смужку м&#x27;ятний білий віскоза поліестер m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209172162-bluzka-uniqlo-z-viskozi" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298490189_310_430" alt="Блузка uniqlo з віскози" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Блузка uniqlo з віскози</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298490187_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490190_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490188_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490606_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка Uniqlo з віскози<br>В наявності розмір М, колір 50 LIGHT GREEN<br><br><br>Склад: 76% район, 24% поліестер<br><br>475657</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Довжина рукава Три чверті Комір З коміром Сезон Осінь Літо Весна Принт У смужку</dd></div><div><dt>Колір</dt><dd>М&#x27;ятний Білий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo m sorochky-bluzy блузка uniqlo з віскози
+в наявності розмір м, колір 01 off white
+
+
+склад: 76% район, 24% поліестер
+
+475657 блузи сорочки та блузи довжина рукава три чверті білий віскоза поліестер m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209172235-bluzka-uniqlo-z-viskozi" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298490606_310_430" alt="Блузка uniqlo з віскози" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Блузка uniqlo з віскози</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298490658_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298483852_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298490189_310_430' alt='Блузка uniqlo з віскози' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка Uniqlo з віскози<br>В наявності розмір М, колір 01 OFF WHITE<br><br><br>Склад: 76% район, 24% поліестер<br><br>475657</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи Довжина рукава Три чверті</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="сорочка унісекс uniqlo 900 грн uniqlo sі ще 2 sorochky-bluzy сорочка унісекс uniqlo
+в наявності розмір хс по чоловічій сітці, що відповідає жіночому с/м, колір 69 navy
+
+опис:
+глянцева 100% надтонка бавовна забезпечує приголомшливі кольори.
+викрійки ретельно вирівнюються вручну, щоб забезпечити симетричний візерунок на комірі, планці, рукавах та манжетах.
+ґудзики із заокругленими краями для легкого застібання.
+
+склад: 100% бавовна
+
+476018 сорочки сорочки та блузи синій чорний бавовна хssm новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/209182812-sorochka-uniseks-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298554607_310_430" alt="Сорочка унісекс uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">900 грн</div>
+                <div class="product-title">Сорочка унісекс uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 2</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298555010_310_430' alt='Сорочка унісекс uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298555008_310_430' alt='Сорочка унісекс uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сорочка унісекс UNIQLO<br>В наявності розмір ХС по чоловічій сітці, що відповідає жіночому С/М, колір 69 NAVY<br><br>Опис:<br>Глянцева 100% надтонка бавовна забезпечує приголомшливі кольори.<br>Викрійки ретельно вирівнюються вручну, щоб забезпечити симетричний візерунок на комірі, планці, рукавах та манжетах.<br>Ґудзики із заокругленими краями для легкого застібання.<br><br>Склад: 100% бавовна<br><br>476018</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Синій Чорний</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>ХSSM</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="сорочка вільного крою uniqlo u 1050 грн uniqlo m sorochky-bluzy сорочка вільного крою uniqlo u
+в наявності розмір м, колір 56 olive
+
+склад: 70% віскоза, 30% поліамід
+
+471301 сорочки сорочки та блузи гірчичний оливковий віскоза поліамід m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/209183287-sorochka-vilnogo-kroyu-uniqlo-u" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298557203_310_430" alt="Сорочка вільного крою uniqlo u" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Сорочка вільного крою uniqlo u</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298557269_310_430' alt='Сорочка вільного крою uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298557262_310_430' alt='Сорочка вільного крою uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298557264_310_430' alt='Сорочка вільного крою uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298557267_310_430' alt='Сорочка вільного крою uniqlo u' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298565080_310_430' alt='Сорочка вільного крою uniqlo u' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сорочка вільного крою UNIQLO U<br>В наявності розмір М, колір 56 OLIVE<br><br>Склад: 70% віскоза, 30% поліамід<br><br>471301</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Гірчичний Оливковий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліамід</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="сорочка бавовняна uniqlo 1100 грн uniqlo l sorochky-bluzy сорочка бавовняна uniqlo
+в наявності розмір л, колір 67 blue
+
+склад
+100% бавовна
+
+480074 сорочки сорочки та блузи синій бавовна l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/209183569-sorochka-bavovnyana-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298558484_310_430" alt="Сорочка бавовняна uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Сорочка бавовняна uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Сорочка бавовняна Uniqlo<br>В наявності розмір Л, колір 67 BLUE<br><br>Склад<br>100% бавовна<br><br>480074</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="бавовняна сорочка-кокон uniqlo 1100 грн uniqlo l sorochky-bluzy бавовняна сорочка-кокон uniqlo
+в наявності розмір л, колір 63 blue
+
+склад: 100% бавовна
+
+479678 сорочки сорочки та блузи довжина рукава довгий блакитний білий бавовна l новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/209183832-bavovnyana-sorochka-kokon-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298560098_310_430" alt="Бавовняна сорочка-кокон uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Бавовняна сорочка-кокон uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298560078_310_430' alt='Бавовняна сорочка-кокон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298560085_310_430' alt='Бавовняна сорочка-кокон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298560108_310_430' alt='Бавовняна сорочка-кокон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298560089_310_430' alt='Бавовняна сорочка-кокон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298560101_310_430' alt='Бавовняна сорочка-кокон uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298560106_310_430' alt='Бавовняна сорочка-кокон uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Бавовняна сорочка-кокон UNIQLO<br>В наявності розмір Л, колір 63 BLUE<br><br>Склад: 100% бавовна<br><br>479678</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Довжина рукава Довгий</dd></div><div><dt>Колір</dt><dd>Блакитний Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="укорочена сорочка оксфордського крою uniqlo 1150 грн uniqlo lі ще 1 sorochky-bluzy укорочена сорочка оксфордського крою uniqlo
+в наявності розмір л та хл, колір 61 blue
+
+склад: 60% бавовна, 40% віскоза
+
+479975 сорочки сорочки та блузи блакитний віскоза бавовна lxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/209184265-ukorochena-sorochka-oksfordskogo-kroyu-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298562519_310_430" alt="Укорочена сорочка оксфордського крою uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1150 грн</div>
+                <div class="product-title">Укорочена сорочка оксфордського крою uniqlo</div>
+                <div class='product-meta'>Uniqlo • Lі ще 1</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298562474_310_430' alt='Укорочена сорочка оксфордського крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298562514_310_430' alt='Укорочена сорочка оксфордського крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298562510_310_430' alt='Укорочена сорочка оксфордського крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298562586_310_430' alt='Укорочена сорочка оксфордського крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298563889_310_430' alt='Укорочена сорочка оксфордського крою uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Укорочена сорочка оксфордського крою UNIQLO<br>В наявності розмір Л та ХЛ, колір 61 BLUE<br><br>Склад: 60% бавовна, 40% віскоза<br><br>479975</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Матеріал</dt><dd>Віскоза Бавовна</dd></div><div><dt>Розмір</dt><dd>LXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="укорочена сорочка оксфордського крою uniqlo 1150 грн uniqlo m sorochky-bluzy укорочена сорочка оксфордського крою uniqlo
+в наявності розмір л , колір 31 beige
+
+склад: 60% бавовна, 40% віскоза
+
+483601 сорочки сорочки та блузи бежевий віскоза бавовна m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/209184497-ukorochena-sorochka-oksfordskogo-kroyu-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298563889_310_430" alt="Укорочена сорочка оксфордського крою uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1150 грн</div>
+                <div class="product-title">Укорочена сорочка оксфордського крою uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298564044_310_430' alt='Укорочена сорочка оксфордського крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298564041_310_430' alt='Укорочена сорочка оксфордського крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298563898_310_430' alt='Укорочена сорочка оксфордського крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298563909_310_430' alt='Укорочена сорочка оксфордського крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298563916_310_430' alt='Укорочена сорочка оксфордського крою uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Укорочена сорочка оксфордського крою UNIQLO<br>В наявності розмір Л , колір 31 BEIGE<br><br>Склад: 60% бавовна, 40% віскоза<br><br>483601</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Бавовна</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="оксфордська сорочка вільного крою uniqlo 1150 грн uniqlo m sorochky-bluzy оксфордська сорочка вільного крою uniqlo
+в наявності розмір м, колір 64 blau
+
+склад: 60% бавовна, 40% віскоза
+
+479974 сорочки сорочки та блузи блакитний синій віскоза бавовна m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/209184698-oksfordska-sorochka-vilnogo-kroyu-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298565080_310_430" alt="Оксфордська сорочка вільного крою uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1150 грн</div>
+                <div class="product-title">Оксфордська сорочка вільного крою uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298565062_310_430' alt='Оксфордська сорочка вільного крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298565052_310_430' alt='Оксфордська сорочка вільного крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298565053_310_430' alt='Оксфордська сорочка вільного крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298565057_310_430' alt='Оксфордська сорочка вільного крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298565110_310_430' alt='Оксфордська сорочка вільного крою uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298565063_310_430' alt='Оксфордська сорочка вільного крою uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Оксфордська сорочка вільного крою UNIQLO<br>В наявності розмір М, колір 64 BLAU<br><br>Склад: 60% бавовна, 40% віскоза<br><br>479974</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Блакитний Синій</dd></div><div><dt>Матеріал</dt><dd>Віскоза Бавовна</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="блузка uniqlo з сатіну 1050 грн uniqlo m sorochky-bluzy блузка uniqlo з сатіну
+в наявності розмір м, колір 32 beige
+
+склад: 62% поліестер - перероблене волокно, 38% еластомультіестер - перероблене волокно
+
+475662 блузи сорочки та блузи бежевий поліестер m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/bluzy/209184896-bluzka-uniqlo-z-satinu" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298566354_310_430" alt="Блузка uniqlo з сатіну" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Блузка uniqlo з сатіну</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298566340_310_430' alt='Блузка uniqlo з сатіну' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298566341_310_430' alt='Блузка uniqlo з сатіну' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298566339_310_430' alt='Блузка uniqlo з сатіну' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Блузка uniqlo з сатіну<br>В наявності розмір М, колір 32 BEIGE<br><br>Склад: 62% поліестер - перероблене волокно, 38% еластомультіестер - перероблене волокно<br><br>475662</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Блузи Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Поліестер</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="бавовняна сорочка uniqlo 1100 грн uniqlo sі ще 1 sorochky-bluzy бавовняна сорочка uniqlo
+в наявності розмір с та л
+
+опис:
+комір-стійка
+великі кишені додають дизайнерського акценту.
+100% бавовна.
+
+
+481429 сорочки сорочки та блузи блакитний бавовна sl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/209207020-bavovnyana-sorochka-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298696612_310_430" alt="Бавовняна сорочка uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Бавовняна сорочка uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298696753_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298696751_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298696746_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298696748_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298696744_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298696742_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Бавовняна сорочка uniqlo<br>В наявності розмір С та Л<br><br>Опис:<br>Комір-стійка<br>Великі кишені додають дизайнерського акценту.<br>100% бавовна.<br><br><br>481429</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>SL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="бавовняна сорочка оверсайз uniqlo 1100 грн uniqlo sі ще 1 sorochky-bluzy бавовняна сорочка оверсайз uniqlo
+в наявності розмір с та м, колір 62 blau
+
+склад: 100% бавовна
+
+483880 сорочки сорочки та блузи блакитний білий бавовна sm новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/209207341-bavovnyana-sorochka-oversayz-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298697628_310_430" alt="Бавовняна сорочка оверсайз uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Бавовняна сорочка оверсайз uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298698076_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298698086_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298698100_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298698098_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298698073_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298699104_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Бавовняна сорочка оверсайз UNIQLO<br>В наявності розмір С та М, колір 62 BLAU<br><br>Склад: 100% бавовна<br><br>483880</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи</dd></div><div><dt>Колір</dt><dd>Блакитний Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>SM</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="бавовняна сорочка оверсайз uniqlo 1100 грн uniqlo sі ще 2 sorochky-bluzy бавовняна сорочка оверсайз uniqlo
+в наявності розмір с, м та хл, колір білий
+
+склад: 100% бавовна
+
+483880 сорочки сорочки та блузи довжина рукава довгий сезон літо демісезон осінь весна принт без принту білий бавовна smxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/rubashki-i-bluzy/rubashki/209207514-bavovnyana-sorochka-oversayz-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298699104_310_430" alt="Бавовняна сорочка оверсайз uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1100 грн</div>
+                <div class="product-title">Бавовняна сорочка оверсайз uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 2</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298699103_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298699099_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298699100_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298699097_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298699098_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298697628_310_430' alt='Бавовняна сорочка оверсайз uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Бавовняна сорочка оверсайз UNIQLO<br>В наявності розмір С, М та ХЛ, колір білий<br><br>Склад: 100% бавовна<br><br>483880</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та блузи Довжина рукава Довгий Сезон Літо Демісезон Осінь Весна Принт Без принту</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>SMXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -514,14 +1516,36 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:11</div>
 </main>
 </div>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
 if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
+function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function filterProducts(input){
+const q=(input.value||'').trim().toLowerCase();
+const cards=Array.from(document.querySelectorAll('.product-card'));
+let shown=0;
+cards.forEach((card)=>{
+const matches=!q||(card.dataset.search||card.innerText).toLowerCase().includes(q);
+card.classList.toggle('is-hidden-by-search',!matches);
+if(q){
+card.classList.remove('hidden-card');
+card.style.display=matches?'flex':'none';
+}else{
+card.style.display='';
+if(card.dataset.initialHidden==='1'&&card.dataset.expanded!=='1')card.classList.add('hidden-card');
+}
+if(matches&&(q||!card.classList.contains('hidden-card')))shown++;
+});
+const btn=document.querySelector('.show-more-btn');
+if(btn)btn.style.display=q?'none':(document.querySelector('.hidden-card')?'inline-block':'none');
+updateSearchStatus(cards.length, q?shown:visibleProductCount());
+}
 </script>
 </body>
 </html>

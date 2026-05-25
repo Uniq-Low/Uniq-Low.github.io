@@ -23,6 +23,7 @@ padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
 border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
 .brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
 .brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.updated-at{margin:-8px 0 16px;padding:0 12px;color:var(--muted);font-size:12px;line-height:1.4;}
 .theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
 color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
 .menu-block{margin-bottom:18px;}
@@ -50,6 +51,11 @@ border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
 .telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
 padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.product-search-bar{display:flex;align-items:center;gap:12px;margin:0 0 18px;max-width:760px;}
+.product-search-input{width:min(520px,100%);border:1px solid var(--border);border-radius:14px;
+background:var(--panel-solid);color:var(--text);padding:13px 14px;font-size:15px;outline:none;}
+.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.search-status{color:var(--muted);font-size:13px;white-space:nowrap;}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
 .product-card{display:flex;flex-direction:column;background:var(--panel-solid);
 border:1px solid var(--border);border-radius:22px;overflow:hidden;
@@ -64,11 +70,21 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
 .product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
 .product-meta{font-size:13px;color:var(--muted);}
+.product-extra{margin:0 16px 14px;border-top:1px solid var(--border);padding-top:10px;}
+.product-extra summary{cursor:pointer;color:var(--accent);font-weight:800;font-size:14px;}
+.detail-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0;}
+.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:cover;border-radius:10px;background:var(--bg-soft);}
+.product-description{margin-top:10px;color:var(--text);font-size:13px;line-height:1.55;white-space:normal;}
+.product-attrs{display:grid;gap:7px;margin:10px 0 0;font-size:13px;}
+.product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
+.product-attrs dt{color:var(--muted);}
+.product-attrs dd{margin:0;color:var(--text);}
 .card-tg-btn{display:block;margin:0 16px 16px;
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
 padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
+.is-hidden-by-search{display:none!important;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -87,7 +103,9 @@ background:var(--panel-solid);color:var(--muted);}
 @media(max-width:1080px){
 .layout{grid-template-columns:1fr;}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
-.promo-card{flex-direction:column;text-align:center;}}
+.promo-card{flex-direction:column;text-align:center;}
+.product-search-bar{align-items:stretch;flex-direction:column;}
+.search-status{white-space:normal;}}
 </style>
 </head>
 <body>
@@ -100,8 +118,10 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:11</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -150,86 +170,173 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
+        
+            <div class="product-search-bar">
+                <input class="product-search-input" type="search"
+                       placeholder="Пошук на цій сторінці: назва, бренд, розмір..."
+                       oninput="filterProducts(this)" autocomplete="off">
+                <div class="search-status" data-total="14">Показано: 12 / 14</div>
+            </div>
         <div class="products-grid">
-    <div class="product-card">
+    <div class="product-card" data-search="жіночий м&#x27;який повсякденний комплект ultra stretch 1100 грн uniqlo 36 / s / 44 odyag-dlya-domu супер еластичний матеріал, легкий, еластичний і м&#x27;який. можна використовувати вдома та за кордоном.
+・він легший і тонший, ніж еластичний матеріал преміум-класу, а також еластичний м’який матеріал преміум-класу з кращим відчуттям релаксації.
+· відмінна еластичність, легка в носінні.
+・вільний крій і пишні рукави-буфи.
+・зменшено кількість швів, легкий і еластичний на дотик, його зручно носити.
+422846-а28 домашній одяг одяг для дому та сну бежевий 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/domashnyaya-odezhda/105463454-zhinochiy-myakiy-povsyakdenniy-komplekt-ultra-stretch" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/643281729_310_430" alt="Жіночий м'який повсякденний комплект ultra stretch">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/643281729_310_430" alt="Жіночий м&#x27;який повсякденний комплект ultra stretch" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1100 грн</div>
-                <div class="product-title">Жіночий м'який повсякденний комплект ultra stretch</div>
+                <div class="product-title">Жіночий м&#x27;який повсякденний комплект ultra stretch</div>
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Супер еластичний матеріал, легкий, еластичний і м&#x27;який. Можна використовувати вдома та за кордоном.<br>・Він легший і тонший, ніж еластичний матеріал преміум-класу, а також еластичний м’який матеріал преміум-класу з кращим відчуттям релаксації.<br>· Відмінна еластичність, легка в носінні.<br>・Вільний крій і пишні рукави-буфи.<br>・Зменшено кількість швів, легкий і еластичний на дотик, його зручно носити.<br>422846-а28</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Домашній одяг Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="бавовняна піжама snoopy women&#x27;secret 1000 грн women&#x27;secret 38 / m / 46 odyag-dlya-domu бавовняна піжама snoopy women&#x27;secret
+в наявності розмір м
+
+довга піжама з короткими рукавами та сорочковим коміром яскравого синього кольору. виготовлений зі 100% бавовни. з оригінальним принтом снупі та чарлі брауна на повільних нічних прогулянках. крім того, топ має кишеню на грудях. штани з еластичним поясом підходять під будь-яку фігуру. вони являють собою морквяний візерунок з бантом з люрексу. у холодні дні снупі та чарлі будуть вашими сусідами по дому! піжами одяг для дому та сну блакитний 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/143593139-bavovnyana-pizhama-snoopy-womensecret" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/1622067259_310_430" alt="Бавовняна піжама snoopy women'secret">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1622067259_310_430" alt="Бавовняна піжама snoopy women&#x27;secret" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1000 грн</div>
-                <div class="product-title">Бавовняна піжама snoopy women'secret</div>
-                <div class='product-meta'>Women'Secret • 38 / M / 46</div>
+                <div class="product-title">Бавовняна піжама snoopy women&#x27;secret</div>
+                <div class='product-meta'>Women&#x27;Secret • 38 / M / 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/1622067254_310_430' alt='Бавовняна піжама snoopy women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1622067255_310_430' alt='Бавовняна піжама snoopy women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/-308696184_310_430' alt='Бавовняна піжама snoopy women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1051227806_310_430' alt='Бавовняна піжама snoopy women&#x27;secret' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Бавовняна піжама Snoopy Women&#x27;secret<br>В наявності розмір М<br><br>Довга піжама з короткими рукавами та сорочковим коміром яскравого синього кольору. Виготовлений зі 100% бавовни. З оригінальним принтом Снупі та Чарлі Брауна на повільних нічних прогулянках. Крім того, топ має кишеню на грудях. Штани з еластичним поясом підходять під будь-яку фігуру. Вони являють собою морквяний візерунок з бантом з люрексу. У холодні дні Снупі та Чарлі будуть вашими сусідами по дому!</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="піжама women&#x27;secret 1000 грн women&#x27;secret 38 / m / 46 odyag-dlya-domu піжама в сорочковому стилі з принтом  women&#x27;secret
+в наявності розмір м
+
+опис:
+піжама в сорочковому стилі з принтом у вигляді серця. штани вільного крою з куліскою на поясі. сорочка з короткими рукавами, коміром, нагрудною кишенею.
+
+
+60% бавовна, 40% поліестер піжами одяг для дому та сну білий червоний 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/143593439-pizhama-womensecret" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/1622084753_310_430" alt="Піжама women'secret">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1622084753_310_430" alt="Піжама women&#x27;secret" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1000 грн</div>
-                <div class="product-title">Піжама women'secret</div>
-                <div class='product-meta'>Women'Secret • 38 / M / 46</div>
+                <div class="product-title">Піжама women&#x27;secret</div>
+                <div class='product-meta'>Women&#x27;Secret • 38 / M / 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/1622084764_310_430' alt='Піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227584402_310_430' alt='Піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227583660_310_430' alt='Піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582950_310_430' alt='Піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582523_310_430' alt='Піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582157_310_430' alt='Піжама women&#x27;secret' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Піжама в сорочковому стилі з принтом  Women&#x27;secret<br>В наявності розмір М<br><br>Опис:<br>Піжама в сорочковому стилі з принтом у вигляді серця. Штани вільного крою з куліскою на поясі. Сорочка з короткими рукавами, коміром, нагрудною кишенею.<br><br><br>60% Бавовна, 40% Поліестер</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Білий Червоний</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="піжама satin uniqlo 1400 грн  36 / s / 44і ще 1 odyag-dlya-domu піжама satin uniqlo
+в наявності розмір с 
+
+опис:
+чудова тканина з глянцевим блиском та елегантною драпіровкою. зручна піжама з класичною окантовкою.
+- гладка атласна тканина з глянцевим блиском та елегантною драпіровкою.
+- класичний дизайн піжами з окантовкою, топом з короткими рукавами та короткими штанинами.
+- милий круглий комір.
+- низ має зручні кишені з обох боків.
+- ідеально підходить для домашнього одягу.
+
+склад
+65% поліестер, 35% перероблений поліестер
+
+466015 піжами одяг для дому та сну сірий 36/s/4440/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/186492632-pizhama-satin-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185668507_310_430" alt="Піжама satin uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185668507_310_430" alt="Піжама satin uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1400 грн</div>
                 <div class="product-title">Піжама satin uniqlo</div>
-                <div class='product-meta'>36 / S / 44і ще 1</div>
+                <div class='product-meta'>36 / S / 44і ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2185668505_310_430' alt='Піжама satin uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2185668504_310_430' alt='Піжама satin uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2185668499_310_430' alt='Піжама satin uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2185668398_310_430' alt='Піжама satin uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Піжама Satin Uniqlo<br>В наявності розмір С <br><br>Опис:<br>Чудова тканина з глянцевим блиском та елегантною драпіровкою. Зручна піжама з класичною окантовкою.<br>- Гладка атласна тканина з глянцевим блиском та елегантною драпіровкою.<br>- Класичний дизайн піжами з окантовкою, топом з короткими рукавами та короткими штанинами.<br>- Милий круглий комір.<br>- Низ має зручні кишені з обох боків.<br>- Ідеально підходить для домашнього одягу.<br><br>Склад<br>65% поліестер, 35% перероблений поліестер<br><br>466015</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>36/S/4440/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча тепла флісова піжама women&#x27;secret 1020 грн women&#x27;secret 38 / m / 46і ще 1 odyag-dlya-domu тепла , приємна до тіла флісова піжама women&#x27; secret. 
+ідеальний варіант для прохолодних вечорів.
+в наявності розмір  м та хл
+
+заміри с:
+кофта: пог 54 рукав від горловини 70 довжина 61
+штани: пот 34 поб 48 довжина 103
+
+заміри м: 
+кофта: пог 54 рукав від горловини 76 довжина 64
+штани: пот 36 поб 53 довжина 104
+
+заміри хл:
+кофта: пог 60 рукав від горловини 78 довжина 67
+штани: пот 41 поб 56 довжина  106 піжами одяг для дому та сну сірий фліс сезон осінь 38/m/4642/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/192073282-zhinocha-tepla-flisova-pizhama-womensecret" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2218810178_310_430" alt="Жіноча тепла флісова піжама women'secret">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2218810178_310_430" alt="Жіноча тепла флісова піжама women&#x27;secret" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1020 грн</div>
-                <div class="product-title">Жіноча тепла флісова піжама women'secret</div>
-                <div class='product-meta'>Women'Secret • 38 / M / 46і ще 1</div>
+                <div class="product-title">Жіноча тепла флісова піжама women&#x27;secret</div>
+                <div class='product-meta'>Women&#x27;Secret • 38 / M / 46і ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2218810175_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2218810176_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2218810177_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227584402_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227583660_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582950_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Тепла , приємна до тіла флісова піжама Women&#x27; secret. <br>Ідеальний варіант для прохолодних вечорів.<br>В наявності розмір  М та ХЛ<br><br>Заміри С:<br>кофта: ПОГ 54 рукав від горловини 70 довжина 61<br>штани: ПОТ 34 ПОБ 48 довжина 103<br><br>Заміри М: <br>кофта: ПОГ 54 рукав від горловини 76 довжина 64<br>штани: ПОТ 36 ПОБ 53 довжина 104<br><br>Заміри ХЛ:<br>кофта: ПОГ 60 рукав від горловини 78 довжина 67<br>штани: ПОТ 41 ПОБ 56 довжина  106</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Фліс Сезон Осінь</dd></div><div><dt>Розмір</dt><dd>38/M/4642/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="комплект для відпочинку з принтом 900 грн uniqlo 42 / xl / 50 odyag-dlya-domu футболка зі 100% бавовни з легким виглядом та низом з еластичного бавовняного віскози.
+гарний принт пейслі робить її підходящою як для носіння в приміщенні, так і на вулиці.
+429997=102ann домашній одяг одяг для дому та сну сірий віскоза бавовна 42/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/domashnyaya-odezhda/193257653-komplekt-dlya-vidpochinku-z-printom" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2225977744_310_430" alt="Комплект для відпочинку з принтом">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2225977744_310_430" alt="Комплект для відпочинку з принтом" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">900 грн</div>
@@ -237,126 +344,244 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 42 / XL / 50</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2225977766_310_430' alt='Комплект для відпочинку з принтом' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2225977773_310_430' alt='Комплект для відпочинку з принтом' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Футболка зі 100% бавовни з легким виглядом та низом з еластичного бавовняного віскози.<br>Гарний принт пейслі робить її підходящою як для носіння в приміщенні, так і на вулиці.<br>429997=102ann</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Домашній одяг Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Віскоза Бавовна</dd></div><div><dt>Розмір</dt><dd>42/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="піжама з бавовни women&#x27;secret серії harry potter 850 грн women&#x27;secret 38 / m / 46і ще 1 odyag-dlya-domu піжама з бавовни women&#x27;secret серії harry potter
+в наявності розмір м та л
+
+опис:
+піжамний комплект у стилі сорочки з довгими рукавами та принтом гаррі поттера з довгими штанами зі 100% бавовни. ідеально підходить для комфортного та стильного сну або відпочинку вдома.
+- сорочка з відворотом, перламутровими ґудзиками та нагрудною кишенею.
+- штани прямого крою з регульованим еластичним поясом.
+
+склад: 100% бавовна
+
+35961069803 піжами одяг для дому та сну білий синій бавовна застібка ґудзики 38/m/4640/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/193539437-pizhama-z-bavovni-womensecret-seriyi-harry-potter" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227579070_310_430" alt="Піжама з бавовни women'secret серії harry potter">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227579070_310_430" alt="Піжама з бавовни women&#x27;secret серії harry potter" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">850 грн</div>
-                <div class="product-title">Піжама з бавовни women'secret серії harry potter</div>
-                <div class='product-meta'>Women'Secret • 38 / M / 46і ще 1</div>
+                <div class="product-title">Піжама з бавовни women&#x27;secret серії harry potter</div>
+                <div class='product-meta'>Women&#x27;Secret • 38 / M / 46і ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227579062_310_430' alt='Піжама з бавовни women&#x27;secret серії harry potter' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227579063_310_430' alt='Піжама з бавовни women&#x27;secret серії harry potter' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227579065_310_430' alt='Піжама з бавовни women&#x27;secret серії harry potter' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227579067_310_430' alt='Піжама з бавовни women&#x27;secret серії harry potter' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Піжама з бавовни Women&#x27;secret серії Harry Potter<br>В наявності розмір М та Л<br><br>Опис:<br>Піжамний комплект у стилі сорочки з довгими рукавами та принтом Гаррі Поттера з довгими штанами зі 100% бавовни. Ідеально підходить для комфортного та стильного сну або відпочинку вдома.<br>- Сорочка з відворотом, перламутровими ґудзиками та нагрудною кишенею.<br>- Штани прямого крою з регульованим еластичним поясом.<br><br>Склад: 100% бавовна<br><br>35961069803</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Білий Синій</dd></div><div><dt>Матеріал</dt><dd>Бавовна Застібка Ґудзики</dd></div><div><dt>Розмір</dt><dd>38/M/4640/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча тепла флісова піжама women&#x27;secret 980 грн women&#x27;secret 40 / l / 48 odyag-dlya-domu жіноча тепла флісова піжама women&#x27;secret
+в наявності розмір л
+
+опис:
+довга флісова піжама з довгими рукавами та довгі штани червоного кольору з принтом гаррі поттера та люрексовими деталями. ідеально підходить для прохолодних вечорів та фанатів саги!
+- флісовий топ із заниженими плечима та ребристими деталями.
+- вузькі штани з принтом, еластичним поясом та манжетами по низу.
+
+склад: 100% поліестер
+
+31361187304 піжами одяг для дому та сну рожевий червоний поліестер фліс 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/193539658-zhinocha-tepla-flisova-pizhama-womensecret" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227580461_310_430" alt="Жіноча тепла флісова піжама women'secret">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227580461_310_430" alt="Жіноча тепла флісова піжама women&#x27;secret" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">980 грн</div>
-                <div class="product-title">Жіноча тепла флісова піжама women'secret</div>
-                <div class='product-meta'>Women'Secret • 40 / L / 48</div>
+                <div class="product-title">Жіноча тепла флісова піжама women&#x27;secret</div>
+                <div class='product-meta'>Women&#x27;Secret • 40 / L / 48</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227580436_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227580430_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227580434_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227584402_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227583660_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582950_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Жіноча тепла флісова піжама women&#x27;secret<br>В наявності розмір Л<br><br>Опис:<br>Довга флісова піжама з довгими рукавами та довгі штани червоного кольору з принтом Гаррі Поттера та люрексовими деталями. Ідеально підходить для прохолодних вечорів та фанатів саги!<br>- Флісовий топ із заниженими плечима та ребристими деталями.<br>- Вузькі штани з принтом, еластичним поясом та манжетами по низу.<br><br>Склад: 100% поліестер<br><br>31361187304</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Рожевий Червоний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Фліс</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча тепла флісова піжама women&#x27;secret 980 грн women&#x27;secret 38 / m / 46 odyag-dlya-domu жіноча тепла флісова піжама women&#x27;secret
+в наявності розмір м
+опис:
+піжама з довгими рукавами з м&#x27;якої флісової тканини з яскравим зимовим принтом, що зображує гедвігу, сову з гаррі поттера. частина колекції «краще разом», ідеально підходить для сімейного відпочинку.
+- різнокольоровий топ з ребристим круглим вирізом та заниженими плечима з ребристими еластичними манжетами.
+- вузькі флісові штани з регульованим еластичним поясом та манжетами по низу.
+
+
+31361059803 піжами одяг для дому та сну білий зелений фліс сезон зима 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/193539840-zhinocha-tepla-flisova-pizhama-womensecret" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227581746_310_430" alt="Жіноча тепла флісова піжама women'secret">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227581746_310_430" alt="Жіноча тепла флісова піжама women&#x27;secret" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">980 грн</div>
-                <div class="product-title">Жіноча тепла флісова піжама women'secret</div>
-                <div class='product-meta'>Women'Secret • 38 / M / 46</div>
+                <div class="product-title">Жіноча тепла флісова піжама women&#x27;secret</div>
+                <div class='product-meta'>Women&#x27;Secret • 38 / M / 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227581744_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227581741_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227581743_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227584402_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227583660_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582950_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Жіноча тепла флісова піжама women&#x27;secret<br>В наявності розмір М<br>Опис:<br>Піжама з довгими рукавами з м&#x27;якої флісової тканини з яскравим зимовим принтом, що зображує Гедвігу, сову з Гаррі Поттера. Частина колекції «Краще разом», ідеально підходить для сімейного відпочинку.<br>- Різнокольоровий топ з ребристим круглим вирізом та заниженими плечима з ребристими еластичними манжетами.<br>- Вузькі флісові штани з регульованим еластичним поясом та манжетами по низу.<br><br><br>31361059803</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Білий Зелений</dd></div><div><dt>Матеріал</dt><dd>Фліс Сезон Зима</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча тепла флісова піжама women&#x27;secret 980 грн women&#x27;secret 38 / m / 46 odyag-dlya-domu жіноча тепла флісова піжама women&#x27;secret
+в наявності розмір м
+
+опис:
+довга флісова піжама з довгими рукавами та довгими штанами, білого кольору з принтом гедвіги, улюбленця гаррі поттера. ідеально підходить для прохолодних вечорів та шанувальників саги!
+- флісовий топ із заниженими плечима та регульованою талією на шнурку.
+- вузькі штани з принтом, еластичним поясом та манжетами по низу.
+
+31361049603 піжами одяг для дому та сну білий фліс 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/193539892-zhinocha-tepla-flisova-pizhama-womensecret" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227582157_310_430" alt="Жіноча тепла флісова піжама women'secret">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227582157_310_430" alt="Жіноча тепла флісова піжама women&#x27;secret" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">980 грн</div>
-                <div class="product-title">Жіноча тепла флісова піжама women'secret</div>
-                <div class='product-meta'>Women'Secret • 38 / M / 46</div>
+                <div class="product-title">Жіноча тепла флісова піжама women&#x27;secret</div>
+                <div class='product-meta'>Women&#x27;Secret • 38 / M / 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227582147_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582149_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582155_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227584402_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227583660_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582950_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Жіноча тепла флісова піжама women&#x27;secret<br>В наявності розмір М<br><br>Опис:<br>Довга флісова піжама з довгими рукавами та довгими штанами, білого кольору з принтом Гедвіги, улюбленця Гаррі Поттера. Ідеально підходить для прохолодних вечорів та шанувальників саги!<br>- Флісовий топ із заниженими плечима та регульованою талією на шнурку.<br>- Вузькі штани з принтом, еластичним поясом та манжетами по низу.<br><br>31361049603</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Фліс</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча флісова піжама women&#x27;secret 980 грн women&#x27;secret 40 / l / 48 odyag-dlya-domu жіноча флісова піжама women&#x27;secret
+в наявності розмір л
+
+
+31360679604 піжами одяг для дому та сну білий фліс 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/193539955-zhinocha-flisova-pizhama-womensecret" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227582523_310_430" alt="Жіноча флісова піжама women'secret">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227582523_310_430" alt="Жіноча флісова піжама women&#x27;secret" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">980 грн</div>
-                <div class="product-title">Жіноча флісова піжама women'secret</div>
-                <div class='product-meta'>Women'Secret • 40 / L / 48</div>
+                <div class="product-title">Жіноча флісова піжама women&#x27;secret</div>
+                <div class='product-meta'>Women&#x27;Secret • 40 / L / 48</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227582524_310_430' alt='Жіноча флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582525_310_430' alt='Жіноча флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582526_310_430' alt='Жіноча флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1666981335_310_430' alt='Жіноча флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1864724141_310_430' alt='Жіноча флісова піжама women&#x27;secret' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Жіноча флісова піжама women&#x27;secret<br>В наявності розмір Л<br><br><br>31360679604</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Фліс</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча тепла флісова піжама women&#x27;secret 980 грн women&#x27;secret 40 / l / 48 odyag-dlya-domu жіноча тепла флісова піжама women&#x27;secret
+в наявності розмір  л
+
+
+31376109602 піжами одяг для дому та сну білий фліс 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/193540036-zhinocha-tepla-flisova-pizhama-womensecret" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227582950_310_430" alt="Жіноча тепла флісова піжама women'secret">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227582950_310_430" alt="Жіноча тепла флісова піжама women&#x27;secret" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">980 грн</div>
-                <div class="product-title">Жіноча тепла флісова піжама women'secret</div>
-                <div class='product-meta'>Women'Secret • 40 / L / 48</div>
+                <div class="product-title">Жіноча тепла флісова піжама women&#x27;secret</div>
+                <div class='product-meta'>Women&#x27;Secret • 40 / L / 48</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227582951_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582946_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582949_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227582953_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227584402_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227583660_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Жіноча тепла флісова піжама women&#x27;secret<br>В наявності розмір  Л<br><br><br>31376109602</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Фліс</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card hidden-card" data-search="жіноча тепла флісова піжама women&#x27;secret 1050 грн women&#x27;secret 40 / l / 48 odyag-dlya-domu жіноча тепла флісова піжама women&#x27;secret
+в наявності розмір л
+
+
+31376099803 піжами одяг для дому та сну білий чорний фліс 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/193540143-zhinocha-tepla-flisova-pizhama-womensecret" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227583660_310_430" alt="Жіноча тепла флісова піжама women'secret">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227583660_310_430" alt="Жіноча тепла флісова піжама women&#x27;secret" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1050 грн</div>
-                <div class="product-title">Жіноча тепла флісова піжама women'secret</div>
-                <div class='product-meta'>Women'Secret • 40 / L / 48</div>
+                <div class="product-title">Жіноча тепла флісова піжама women&#x27;secret</div>
+                <div class='product-meta'>Women&#x27;Secret • 40 / L / 48</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227583652_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227583654_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227583656_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227583657_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227584402_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Жіноча тепла флісова піжама women&#x27;secret<br>В наявності розмір Л<br><br><br>31376099803</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Білий Чорний</dd></div><div><dt>Матеріал</dt><dd>Фліс</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card hidden-card" data-search="жіноча тепла флісова піжама women&#x27;secret 950 грн women&#x27;secret 38 / m / 46і ще 1 odyag-dlya-domu жіноча тепла флісова піжама women&#x27;secret
+в наявності розмір м та л
+
+
+заміри л: 
+кофта: довжина рукава від горловини 71 пог 59 довжина 63
+штани: пот 40 (резинка) поб 56 довжина по зовн шву 107 довжина по внутр шву 78
+3132046 піжами одяг для дому та сну помаранчевий кораловий фліс 38/m/4640/l/48 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
         <a class="card-main-link" href="https://shafa.ua/uk/women/odezhda-dlya-doma-i-sna/pizhamy/193540259-zhinocha-tepla-flisova-pizhama-womensecret" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227584402_310_430" alt="Жіноча тепла флісова піжама women'secret">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227584402_310_430" alt="Жіноча тепла флісова піжама women&#x27;secret" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">950 грн</div>
-                <div class="product-title">Жіноча тепла флісова піжама women'secret</div>
-                <div class='product-meta'>Women'Secret • 38 / M / 46і ще 1</div>
+                <div class="product-title">Жіноча тепла флісова піжама women&#x27;secret</div>
+                <div class='product-meta'>Women&#x27;Secret • 38 / M / 46і ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227584400_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227584399_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227584404_310_430' alt='Жіноча тепла флісова піжама women&#x27;secret' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Жіноча тепла флісова піжама women&#x27;secret<br>В наявності розмір М та Л<br><br><br>Заміри Л: <br>кофта: довжина рукава від горловини 71 ПОГ 59 довжина 63<br>штани: ПОТ 40 (резинка) ПОБ 56 довжина по зовн шву 107 довжина по внутр шву 78<br>3132046</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Піжами Одяг для дому та сну</dd></div><div><dt>Колір</dt><dd>Помаранчевий Кораловий</dd></div><div><dt>Матеріал</dt><dd>Фліс</dd></div><div><dt>Розмір</dt><dd>38/M/4640/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -364,14 +589,36 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:11</div>
 </main>
 </div>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
 if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
+function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function filterProducts(input){
+const q=(input.value||'').trim().toLowerCase();
+const cards=Array.from(document.querySelectorAll('.product-card'));
+let shown=0;
+cards.forEach((card)=>{
+const matches=!q||(card.dataset.search||card.innerText).toLowerCase().includes(q);
+card.classList.toggle('is-hidden-by-search',!matches);
+if(q){
+card.classList.remove('hidden-card');
+card.style.display=matches?'flex':'none';
+}else{
+card.style.display='';
+if(card.dataset.initialHidden==='1'&&card.dataset.expanded!=='1')card.classList.add('hidden-card');
+}
+if(matches&&(q||!card.classList.contains('hidden-card')))shown++;
+});
+const btn=document.querySelector('.show-more-btn');
+if(btn)btn.style.display=q?'none':(document.querySelector('.hidden-card')?'inline-block':'none');
+updateSearchStatus(cards.length, q?shown:visibleProductCount());
+}
 </script>
 </body>
 </html>

@@ -23,6 +23,7 @@ padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
 border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
 .brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
 .brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.updated-at{margin:-8px 0 16px;padding:0 12px;color:var(--muted);font-size:12px;line-height:1.4;}
 .theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
 color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
 .menu-block{margin-bottom:18px;}
@@ -50,6 +51,11 @@ border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
 .telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
 padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.product-search-bar{display:flex;align-items:center;gap:12px;margin:0 0 18px;max-width:760px;}
+.product-search-input{width:min(520px,100%);border:1px solid var(--border);border-radius:14px;
+background:var(--panel-solid);color:var(--text);padding:13px 14px;font-size:15px;outline:none;}
+.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.search-status{color:var(--muted);font-size:13px;white-space:nowrap;}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
 .product-card{display:flex;flex-direction:column;background:var(--panel-solid);
 border:1px solid var(--border);border-radius:22px;overflow:hidden;
@@ -64,11 +70,21 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
 .product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
 .product-meta{font-size:13px;color:var(--muted);}
+.product-extra{margin:0 16px 14px;border-top:1px solid var(--border);padding-top:10px;}
+.product-extra summary{cursor:pointer;color:var(--accent);font-weight:800;font-size:14px;}
+.detail-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0;}
+.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:cover;border-radius:10px;background:var(--bg-soft);}
+.product-description{margin-top:10px;color:var(--text);font-size:13px;line-height:1.55;white-space:normal;}
+.product-attrs{display:grid;gap:7px;margin:10px 0 0;font-size:13px;}
+.product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
+.product-attrs dt{color:var(--muted);}
+.product-attrs dd{margin:0;color:var(--text);}
 .card-tg-btn{display:block;margin:0 16px 16px;
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
 padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
+.is-hidden-by-search{display:none!important;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -87,7 +103,9 @@ background:var(--panel-solid);color:var(--muted);}
 @media(max-width:1080px){
 .layout{grid-template-columns:1fr;}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
-.promo-card{flex-direction:column;text-align:center;}}
+.promo-card{flex-direction:column;text-align:center;}
+.product-search-bar{align-items:stretch;flex-direction:column;}
+.search-status{white-space:normal;}}
 </style>
 </head>
 <body>
@@ -100,8 +118,10 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:11</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -150,11 +170,21 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
+        
+            <div class="product-search-bar">
+                <input class="product-search-input" type="search"
+                       placeholder="Пошук на цій сторінці: назва, бренд, розмір..."
+                       oninput="filterProducts(this)" autocomplete="off">
+                <div class="search-status" data-total="20">Показано: 12 / 20</div>
+            </div>
         <div class="products-grid">
-    <div class="product-card">
+    <div class="product-card" data-search="сумка zara 950 грн zara  sumky-ryukzaky сумка zara
+нова з бірками, в наявності
+
+ 6755/210 сумки сумки та рюкзаки бренд: zara чорний новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/sumky/184511682-sumka-zara" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2173157812_310_430" alt="Сумка zara">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2173157812_310_430" alt="Сумка zara" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">950 грн</div>
@@ -162,14 +192,24 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>ZARA</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2173157815_310_430' alt='Сумка zara' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2173157813_310_430' alt='Сумка zara' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сумка ZARA<br>Нова з бірками, в наявності<br><br> 6755/210</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сумки Сумки та рюкзаки Бренд: ZARA</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="сумка uniqlo серії kaws + warhol 650 грн uniqlo  sumky-ryukzaky сумка uniqlo серії kaws + warhol 
+ширина (зверху): 43 см, ширина (знизу): 29 см, висота: 39 см, глибина: 14,5 см, довжина ручки: 37 см, довжина ремінця: 68,5 см～130 см, місткість сумки: 21 л
+
+473556 сумки сумки та рюкзаки чорний новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/sumky/186145043-sumka-uniqlo-seriyi-kaws-warhol" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183494458_310_430" alt="Сумка uniqlo серії kaws + warhol">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183494458_310_430" alt="Сумка uniqlo серії kaws + warhol" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">650 грн</div>
@@ -177,14 +217,24 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2183494486_310_430' alt='Сумка uniqlo серії kaws + warhol' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2183494488_310_430' alt='Сумка uniqlo серії kaws + warhol' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2183494482_310_430' alt='Сумка uniqlo серії kaws + warhol' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2183494462_310_430' alt='Сумка uniqlo серії kaws + warhol' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2183494464_310_430' alt='Сумка uniqlo серії kaws + warhol' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2183494467_310_430' alt='Сумка uniqlo серії kaws + warhol' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сумка UNIQLO серії KAWS + Warhol <br>Ширина (зверху): 43 см, Ширина (знизу): 29 см, Висота: 39 см, Глибина: 14,5 см, Довжина ручки: 37 см, Довжина ремінця: 68,5 см～130 см, Місткість сумки: 21 л<br><br>473556</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сумки Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="сумка uniqlo серії kaws + warhol 650 грн uniqlo  sumky-ryukzaky сумка uniqlo серії kaws + warhol
+ширина (зверху): 43 см, ширина (знизу): 29 см, висота: 39 см, глибина: 14,5 см, довжина ручки: 37 см, довжина ремінця: 68,5 см～130 см, місткість сумки: 21 л
+
+473556 сумки сумки та рюкзаки білий новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/sumky/186145340-sumka-uniqlo-seriyi-kaws-warhol" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183496157_310_430" alt="Сумка uniqlo серії kaws + warhol">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2183496157_310_430" alt="Сумка uniqlo серії kaws + warhol" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">650 грн</div>
@@ -192,59 +242,101 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2183496178_310_430' alt='Сумка uniqlo серії kaws + warhol' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2183496165_310_430' alt='Сумка uniqlo серії kaws + warhol' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2183496179_310_430' alt='Сумка uniqlo серії kaws + warhol' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2183496181_310_430' alt='Сумка uniqlo серії kaws + warhol' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282123116_310_430' alt='Сумка uniqlo серії kaws + warhol' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сумка UNIQLO серії KAWS + Warhol<br>Ширина (зверху): 43 см, Ширина (знизу): 29 см, Висота: 39 см, Глибина: 14,5 см, Довжина ручки: 37 см, Довжина ремінця: 68,5 см～130 см, Місткість сумки: 21 л<br><br>473556</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сумки Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="велика сумка uniqlo 1300 грн uniqlo  sumky-ryukzaky велика сумка uniqlo
+
+опис:
+водостійка застібка. водовідштовхувальне покриття захищає від легкого дощу.
+має дві внутрішні кишені для зберігання дрібних предметів.
+бічна кишеня для легкого доступу до необхідних речей.
+
+склад
+100% поліестер; наповнювач: 100% поліестер; підкладка: 100% поліестер
+
+480114 сумки сумки та рюкзаки чорний поліестер новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/sumky/198921589-velika-sumka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2253392097_310_430" alt="Велика сумка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2253392097_310_430" alt="Велика сумка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">1200 грн</div>
+                <div class="product-price">1300 грн</div>
                 <div class="product-title">Велика сумка uniqlo</div>
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2253392098_310_430' alt='Велика сумка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2253392096_310_430' alt='Велика сумка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Велика сумка Uniqlo<br><br>Опис:<br>Водостійка застібка. Водовідштовхувальне покриття захищає від легкого дощу.<br>Має дві внутрішні кишені для зберігання дрібних предметів.<br>Бічна кишеня для легкого доступу до необхідних речей.<br><br>Склад<br>100% поліестер; наповнювач: 100% поліестер; підкладка: 100% поліестер<br><br>480114</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сумки Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Поліестер</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="велика сумка uniqlo 1300 грн uniqlo  sumky-ryukzaky велика сумка uniqlo
+
+опис:
+водостійка застібка. водовідштовхувальне покриття захищає від легкого дощу.
+має дві внутрішні кишені для зберігання дрібних предметів.
+бічна кишеня для легкого доступу до необхідних речей.
+
+склад
+100% поліестер; наповнювач: 100% поліестер; підкладка: 100% поліестер
+
+480114 сумки сумки та рюкзаки сірий поліестер новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/sumky/198930670-velika-sumka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2253452956_310_430" alt="Велика сумка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2253452956_310_430" alt="Велика сумка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">1200 грн</div>
+                <div class="product-price">1300 грн</div>
                 <div class="product-title">Велика сумка uniqlo</div>
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2253452961_310_430' alt='Велика сумка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2253470450_310_430' alt='Велика сумка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2253470451_310_430' alt='Велика сумка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282123116_310_430' alt='Велика сумка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Велика сумка Uniqlo<br><br>Опис:<br>Водостійка застібка. Водовідштовхувальне покриття захищає від легкого дощу.<br>Має дві внутрішні кишені для зберігання дрібних предметів.<br>Бічна кишеня для легкого доступу до необхідних речей.<br><br>Склад<br>100% поліестер; наповнювач: 100% поліестер; підкладка: 100% поліестер<br><br>480114</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сумки Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Поліестер</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/sumky/200800979-velika-sumka-uniqlo" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2263593741_310_430" alt="Велика сумка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1200 грн</div>
-                <div class="product-title">Велика сумка uniqlo</div>
-                <div class='product-meta'>Uniqlo</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card">
+    <div class="product-card" data-search="сумка бананка uniqlo 780 грн uniqlo  sumky-ryukzaky саме потрібного розміру для всіх необхідних речей. натуральна текстура підходить до будь-якого стилю.
+- брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.
+- водовідштовхувальне покриття. *тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. оздоблення не є постійним.
+- форма, що підходить для активного носіння.
+- зручний розмір, який підходить для вашого смартфона та гаманця.
+- додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.
+- зручна внутрішня кишеня для ключів або смартфона.
+- дизайн унісекс.
+
+розмір:
+ширина (верх): 28 см
+висота: 17 см
+глибина: 10 см
+довжина плечового ременя: 116 см
+
+
+473474 бананки сумки та рюкзаки рожевий нейлон текстиль застібка замок стать для дівчаток для жінок принт без принту ширина (верх): 28 см висота: 17 см глибина: 10 см довжина плечового ременя: 116 см 473474 стан: новий колір: рожевий новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/bananky/205564300-sumka-bananka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282064125_310_430" alt="Сумка бананка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282064125_310_430" alt="Сумка бананка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">780 грн</div>
@@ -252,14 +344,36 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282064126_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282532404_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282531917_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282120551_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282119906_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282119287_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Саме потрібного розміру для всіх необхідних речей. Натуральна текстура підходить до будь-якого стилю.<br>- Брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.<br>- Водовідштовхувальне покриття. *Тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. Оздоблення не є постійним.<br>- Форма, що підходить для активного носіння.<br>- Зручний розмір, який підходить для вашого смартфона та гаманця.<br>- Додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.<br>- Зручна внутрішня кишеня для ключів або смартфона.<br>- Дизайн унісекс.<br><br>Розмір:<br>ширина (верх): 28 см<br>висота: 17 см<br>глибина: 10 см<br>довжина плечового ременя: 116 см<br><br><br>473474</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Бананки Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Матеріал</dt><dd>Нейлон Текстиль Застібка Замок Стать Для дівчаток Для жінок Принт Без принту</dd></div><div><dt>Розмір</dt><dd>ширина (верх): 28 см висота: 17 см глибина: 10 см довжина плечового ременя: 116 см 473474 Стан: Новий Колір: Рожевий</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="сумка бананка uniqlo 799 грн uniqlo  sumky-ryukzaky саме потрібного розміру для всіх необхідних речей. натуральна текстура підходить до будь-якого стилю.
+- брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.
+- водовідштовхувальне покриття. *тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. оздоблення не є постійним.
+- форма, що підходить для активного носіння.
+- зручний розмір, який підходить для вашого смартфона та гаманця.
+- додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.
+- зручна внутрішня кишеня для ключів або смартфона.
+- дизайн унісекс.
+
+розмір:
+ширина (верх): 28 см
+висота: 17 см
+глибина: 10 см
+довжина плечового ременя: 116 см
+
+470040 бананки сумки та рюкзаки синій нейлон текстиль стать для дівчаток для жінок для чоловіків застібка замок принт без принту ширина (верх): 28 см висота: 17 см глибина: 10 см довжина плечового ременя: 116 см 470040 стан: новий колір: синій новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/bananky/205574882-sumka-bananka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282119287_310_430" alt="Сумка бананка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282119287_310_430" alt="Сумка бананка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">799 грн</div>
@@ -267,14 +381,36 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282119423_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294693567_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282532404_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282531917_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282120551_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282119906_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Саме потрібного розміру для всіх необхідних речей. Натуральна текстура підходить до будь-якого стилю.<br>- Брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.<br>- Водовідштовхувальне покриття. *Тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. Оздоблення не є постійним.<br>- Форма, що підходить для активного носіння.<br>- Зручний розмір, який підходить для вашого смартфона та гаманця.<br>- Додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.<br>- Зручна внутрішня кишеня для ключів або смартфона.<br>- Дизайн унісекс.<br><br>Розмір:<br>ширина (верх): 28 см<br>висота: 17 см<br>глибина: 10 см<br>довжина плечового ременя: 116 см<br><br>470040</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Бананки Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Нейлон Текстиль Стать Для дівчаток Для жінок Для чоловіків Застібка Замок Принт Без принту</dd></div><div><dt>Розмір</dt><dd>ширина (верх): 28 см висота: 17 см глибина: 10 см довжина плечового ременя: 116 см 470040 Стан: Новий Колір: Синій</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="сумка бананка uniqlo 780 грн uniqlo  sumky-ryukzaky саме потрібного розміру для всіх необхідних речей. натуральна текстура підходить до будь-якого стилю.
+- брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.
+- водовідштовхувальне покриття. *тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. оздоблення не є постійним.
+- форма, що підходить для активного носіння.
+- зручний розмір, який підходить для вашого смартфона та гаманця.
+- додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.
+- зручна внутрішня кишеня для ключів або смартфона.
+- дизайн унісекс.
+
+розмір:
+ширина (верх): 28 см
+висота: 17 см
+глибина: 10 см
+довжина плечового ременя: 116 см
+
+470040 бананки сумки та рюкзаки червоний нейлон текстиль стать для хлопчиків для чоловіків для жінок застібка замок ширина (верх): 28 см висота: 17 см глибина: 10 см довжина плечового ременя: 116 см 470040 стан: новий колір: червоний новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/bananky/205575038-sumka-bananka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282119906_310_430" alt="Сумка бананка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282119906_310_430" alt="Сумка бананка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">780 грн</div>
@@ -282,14 +418,34 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282120081_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295760026_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294693567_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282532404_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282531917_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282120551_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Саме потрібного розміру для всіх необхідних речей. Натуральна текстура підходить до будь-якого стилю.<br>- Брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.<br>- Водовідштовхувальне покриття. *Тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. Оздоблення не є постійним.<br>- Форма, що підходить для активного носіння.<br>- Зручний розмір, який підходить для вашого смартфона та гаманця.<br>- Додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.<br>- Зручна внутрішня кишеня для ключів або смартфона.<br>- Дизайн унісекс.<br><br>Розмір:<br>ширина (верх): 28 см<br>висота: 17 см<br>глибина: 10 см<br>довжина плечового ременя: 116 см<br><br>470040</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Бананки Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Червоний</dd></div><div><dt>Матеріал</dt><dd>Нейлон Текстиль Стать Для хлопчиків Для чоловіків Для жінок Застібка Замок</dd></div><div><dt>Розмір</dt><dd>ширина (верх): 28 см висота: 17 см глибина: 10 см довжина плечового ременя: 116 см 470040 Стан: Новий Колір: Червоний</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="сумка бананка uniqlo 780 грн uniqlo  sumky-ryukzaky саме потрібного розміру для всіх необхідних речей. натуральна текстура підходить до будь-якого стилю.
+- брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.
+- водовідштовхувальне покриття. *тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. оздоблення не є постійним.
+- форма, що підходить для активного носіння.
+- зручний розмір, який підходить для вашого смартфона та гаманця.
+- додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.
+- зручна внутрішня кишеня для ключів або смартфона.
+- дизайн унісекс.
+
+розмір:
+ширина (верх): 28 см
+висота: 17 см
+глибина: 10 см
+довжина плечового ременя: 116 см бананки сумки та рюкзаки коричневий нейлон текстиль стать для хлопчиків для чоловіків для жінок застібка замок ширина (верх): 28 см висота: 17 см глибина: 10 см довжина плечового ременя: 116 см стан: новий колір: коричневий новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/bananky/205575175-sumka-bananka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282120551_310_430" alt="Сумка бананка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282120551_310_430" alt="Сумка бананка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">780 грн</div>
@@ -297,14 +453,28 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282120626_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295760026_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294693567_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282532404_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282531917_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2191400539_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Саме потрібного розміру для всіх необхідних речей. Натуральна текстура підходить до будь-якого стилю.<br>- Брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.<br>- Водовідштовхувальне покриття. *Тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. Оздоблення не є постійним.<br>- Форма, що підходить для активного носіння.<br>- Зручний розмір, який підходить для вашого смартфона та гаманця.<br>- Додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.<br>- Зручна внутрішня кишеня для ключів або смартфона.<br>- Дизайн унісекс.<br><br>Розмір:<br>ширина (верх): 28 см<br>висота: 17 см<br>глибина: 10 см<br>довжина плечового ременя: 116 см</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Бананки Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Коричневий</dd></div><div><dt>Матеріал</dt><dd>Нейлон Текстиль Стать Для хлопчиків Для чоловіків Для жінок Застібка Замок</dd></div><div><dt>Розмір</dt><dd>ширина (верх): 28 см висота: 17 см глибина: 10 см довжина плечового ременя: 116 см Стан: Новий Колір: Коричневий</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="вельветова сумка-бананка uniqlo 799 грн uniqlo  sumky-ryukzaky вельветова сумка-бананка uniqlo, в наявності 28 dark orange
+- вельветова тканина з бавовни.
+- ластовица розширюється, щоб умістити смартфон або довгий гаманець. саме потрібного розміру, з дивовижною кількістю місця всередині.
+- форма, що підходить для активного використання.
+- кант допомагає сумці зберігати форму.
+- зручна внутрішня кишеня для ключів або смартфона.
+
+461934 бананки сумки та рюкзаки кораловий коричневий поліестер стать для хлопчиків для чоловіків для жінок застібка замок принт без принту новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/bananky/205575348-velvetova-sumka-bananka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282121704_310_430" alt="Вельветова сумка-бананка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282121704_310_430" alt="Вельветова сумка-бананка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">799 грн</div>
@@ -312,14 +482,29 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282121861_310_430' alt='Вельветова сумка-бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282121858_310_430' alt='Вельветова сумка-бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282516996_310_430' alt='Вельветова сумка-бананка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Вельветова сумка-бананка UNIQLO, в наявності 28 DARK ORANGE<br>- Вельветова тканина з бавовни.<br>- Ластовица розширюється, щоб умістити смартфон або довгий гаманець. Саме потрібного розміру, з дивовижною кількістю місця всередині.<br>- Форма, що підходить для активного використання.<br>- Кант допомагає сумці зберігати форму.<br>- Зручна внутрішня кишеня для ключів або смартфона.<br><br>461934</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Бананки Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Кораловий Коричневий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Стать Для хлопчиків Для чоловіків Для жінок Застібка Замок Принт Без принту</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="сумка uniqlo 820 грн uniqlo  sumky-ryukzaky nylon crossbody bag
+- дизайн сумки через плече.
+- досить великий, щоб носити довгий гаманець або складану парасольку.
+- водовідштовхувальне покриття. *тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. оздоблення не є постійним.
+- задня кишеня на блискавці надійно зберігає ваші речі.
+- зручна внутрішня кишеня для впорядкування дрібниць.
+- відрегулюйте ремінь для використання як сумки через плече або поясної сумки
+
+467629 сумки сумки та рюкзаки стать для хлопчиків для чоловіків для жінок застібка замок принт без принту модель сумки поясна хакі зелений новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/sumky/205575664-sumka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282123116_310_430" alt="Сумка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282123116_310_430" alt="Сумка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">820 грн</div>
@@ -327,14 +512,32 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282123355_310_430' alt='Сумка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282123361_310_430' alt='Сумка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282526081_310_430' alt='Сумка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>NYLON CROSSBODY BAG<br>- Дизайн сумки через плече.<br>- Досить великий, щоб носити довгий гаманець або складану парасольку.<br>- Водовідштовхувальне покриття. *Тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. Оздоблення не є постійним.<br>- Задня кишеня на блискавці надійно зберігає ваші речі.<br>- Зручна внутрішня кишеня для впорядкування дрібниць.<br>- Відрегулюйте ремінь для використання як сумки через плече або поясної сумки<br><br>467629</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сумки Сумки та рюкзаки Стать Для хлопчиків Для чоловіків Для жінок Застібка Замок Принт Без принту Модель сумки Поясна</dd></div><div><dt>Колір</dt><dd>Хакі Зелений</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card" data-search="велика сумка через плече uniqlo 1750 грн uniqlo  sumky-ryukzaky сумка через плече uniqlo
+в наявності колір бежевий
+
+опис:
+- багато місця для зберігання речей для вашої наступної подорожі. шнурок для легкого відкривання та закривання.
+- дві зовнішні бічні кишені та дві внутрішні кишені зручно зберігатимуть ваші речі впорядковано.
+- широкий плечовий ремінь для комфортного перенесення.
+- вставлення кінця ременя в центр регулятора запобігає ослабленню плечового ременя.
+
+ширина (верх): 31 см, ширина (низ): 39 см, висота: 34 см, глибина: 20 см, довжина плечового ременя: 62 см ~ 120 см, місткість сумки: 21 літр
+
+483802 сумки сумки та рюкзаки принт без принту бежевий новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/sumky/205576060-sumka-cherez-pleche-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282124632_310_430" alt="Велика сумка через плече uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282124632_310_430" alt="Велика сумка через плече uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1750 грн</div>
@@ -342,14 +545,28 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282124956_310_430' alt='Велика сумка через плече uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282124963_310_430' alt='Велика сумка через плече uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282124968_310_430' alt='Велика сумка через плече uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сумка через плече UNIQLO<br>В наявності колір бежевий<br><br>Опис:<br>- Багато місця для зберігання речей для вашої наступної подорожі. Шнурок для легкого відкривання та закривання.<br>- Дві зовнішні бічні кишені та дві внутрішні кишені зручно зберігатимуть ваші речі впорядковано.<br>- Широкий плечовий ремінь для комфортного перенесення.<br>- Вставлення кінця ременя в центр регулятора запобігає ослабленню плечового ременя.<br><br>Ширина (верх): 31 см, ширина (низ): 39 см, висота: 34 см, глибина: 20 см, довжина плечового ременя: 62 см ~ 120 см, місткість сумки: 21 літр<br><br>483802</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сумки Сумки та рюкзаки Принт Без принту</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card hidden-card" data-search="вельветова сумка-бананка uniqlo 820 грн uniqlo  sumky-ryukzaky вельветова сумка-бананка uniqlo, в наявності 11 pink
+ширина (верхня частина): 28 см
+висота: 17 см
+глибина: 10 см
+довжина ременя: 62 см~116 см
+місткість сумки: 4 літри
+
+472049 бананки сумки та рюкзаки стать для дівчаток для жінок застібка замок рожевий новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/bananky/205683699-velvetova-sumka-bananka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282516996_310_430" alt="Вельветова сумка-бананка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282516996_310_430" alt="Вельветова сумка-бананка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">820 грн</div>
@@ -357,29 +574,26 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282517189_310_430' alt='Вельветова сумка-бананка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Вельветова сумка-бананка UNIQLO, в наявності 11 PINK<br>ширина (верхня частина): 28 см<br>висота: 17 см<br>глибина: 10 см<br>довжина ременя: 62 см~116 см<br>місткість сумки: 4 літри<br><br>472049</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Бананки Сумки та рюкзаки Стать Для дівчаток Для жінок Застібка Замок</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/bananky/205685419-velika-sumka-bananka-uniqlo" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282523540_310_430" alt="Велика сумка бананка uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1050 грн</div>
-                <div class="product-title">Велика сумка бананка uniqlo</div>
-                <div class='product-meta'>Uniqlo</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card hidden-card">
+    <div class="product-card hidden-card" data-search="сумка uniqlo з серії marimekko 1200 грн uniqlo  sumky-ryukzaky сумка uniqlo з серії marimekko
+колір 30 natural
+
+ширина (верх): 46 см, ширина (низ): 41 см, висота: 60 ​​см, глибина: 9 см, довжина плечового ременя: 62 см ~ 113 см, місткість сумки: 30 літрів
+
+471772 сумки сумки та рюкзаки стать для дівчаток для жінок розмір великі бежевий новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/sumky/205686265-sumka-uniqlo-z-seriyi-marimekko" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282526081_310_430" alt="Сумка uniqlo з серії marimekko">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282526081_310_430" alt="Сумка uniqlo з серії marimekko" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1200 грн</div>
@@ -387,14 +601,32 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282526209_310_430' alt='Сумка uniqlo з серії marimekko' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282526212_310_430' alt='Сумка uniqlo з серії marimekko' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сумка UNIQLO з серії Marimekko<br>колір 30 NATURAL<br><br>Ширина (верх): 46 см, ширина (низ): 41 см, висота: 60 ​​см, глибина: 9 см, довжина плечового ременя: 62 см ~ 113 см, місткість сумки: 30 літрів<br><br>471772</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сумки Сумки та рюкзаки Стать Для дівчаток Для жінок Розмір Великі</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card hidden-card" data-search="сумка бананка uniqlo 750 грн uniqlo  sumky-ryukzaky сумка бананка uniqlo
+опис:
+водовідштовхувальне покриття захищає від легкого дощу.
+компактний дизайн з дивовижною місткістю для зберігання.
+
+
+розмір
+ширина (зверху): 28 см, висота: 17 см, глибина: 10 см, довжина плечового ременя: 62 см ~ 116 см, місткість сумки: 4 літри
+
+
+
+476379 бананки сумки та рюкзаки синій білий новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/bananky/205687870-sumka-bananka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282531917_310_430" alt="Сумка бананка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282531917_310_430" alt="Сумка бананка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">750 грн</div>
@@ -402,14 +634,32 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282532076_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282532078_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295760026_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2294693567_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282532404_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сумка бананка uniqlo<br>Опис:<br>Водовідштовхувальне покриття захищає від легкого дощу.<br>Компактний дизайн з дивовижною місткістю для зберігання.<br><br><br>Розмір<br>Ширина (зверху): 28 см, Висота: 17 см, Глибина: 10 см, Довжина плечового ременя: 62 см ~ 116 см, Місткість сумки: 4 літри<br><br><br><br>476379</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Бананки Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Синій Білий</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card hidden-card" data-search="сумка бананка uniqlo 750 грн uniqlo  sumky-ryukzaky сумка бананка uniqlo
+опис:
+водовідштовхувальне покриття захищає від легкого дощу.
+компактний дизайн з дивовижною місткістю для зберігання.
+
+
+розмір
+ширина (зверху): 28 см, висота: 17 см, глибина: 10 см, довжина плечового ременя: 62 см ~ 116 см, місткість сумки: 4 літри
+
+
+
+476379 бананки сумки та рюкзаки застібка замок чорний білий новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/bananky/205688071-sumka-bananka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282532404_310_430" alt="Сумка бананка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282532404_310_430" alt="Сумка бананка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">750 грн</div>
@@ -417,14 +667,32 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282532400_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282532380_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282532390_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282532395_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282532410_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295760026_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сумка бананка uniqlo<br>Опис:<br>Водовідштовхувальне покриття захищає від легкого дощу.<br>Компактний дизайн з дивовижною місткістю для зберігання.<br><br><br>Розмір<br>Ширина (зверху): 28 см, Висота: 17 см, Глибина: 10 см, Довжина плечового ременя: 62 см ~ 116 см, Місткість сумки: 4 літри<br><br><br><br>476379</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Бананки Сумки та рюкзаки Застібка Замок</dd></div><div><dt>Колір</dt><dd>Чорний Білий</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card hidden-card" data-search="велика сумка через плече uniqlo 1800 грн uniqlo  sumky-ryukzaky сумка через плече uniqlo
+в наявності колір 19 wine
+
+опис:
+- багато місця для зберігання речей для вашої наступної подорожі. шнурок для легкого відкривання та закривання.
+- дві зовнішні бічні кишені та дві внутрішні кишені зручно зберігатимуть ваші речі впорядковано.
+- широкий плечовий ремінь для комфортного перенесення.
+- вставлення кінця ременя в центр регулятора запобігає ослабленню плечового ременя.
+
+ширина (верх): 31 см, ширина (низ): 39 см, висота: 34 см, глибина: 20 см, довжина плечового ременя: 62 см ~ 120 см, місткість сумки: 21 літр
+
+483802 сумки сумки та рюкзаки стать для дівчаток для жінок розмір великі бордовий новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/sumky/205688453-velika-sumka-cherez-pleche-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282533675_310_430" alt="Велика сумка через плече uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2282533675_310_430" alt="Велика сумка через плече uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1800 грн</div>
@@ -432,6 +700,108 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2282533412_310_430' alt='Велика сумка через плече uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282533669_310_430' alt='Велика сумка через плече uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282533670_310_430' alt='Велика сумка через плече uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282533672_310_430' alt='Велика сумка через плече uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282533673_310_430' alt='Велика сумка через плече uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/651241930_310_430' alt='Велика сумка через плече uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сумка через плече UNIQLO<br>В наявності колір 19 WINE<br><br>Опис:<br>- Багато місця для зберігання речей для вашої наступної подорожі. Шнурок для легкого відкривання та закривання.<br>- Дві зовнішні бічні кишені та дві внутрішні кишені зручно зберігатимуть ваші речі впорядковано.<br>- Широкий плечовий ремінь для комфортного перенесення.<br>- Вставлення кінця ременя в центр регулятора запобігає ослабленню плечового ременя.<br><br>Ширина (верх): 31 см, ширина (низ): 39 см, висота: 34 см, глибина: 20 см, довжина плечового ременя: 62 см ~ 120 см, місткість сумки: 21 літр<br><br>483802</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сумки Сумки та рюкзаки Стать Для дівчаток Для жінок Розмір Великі</dd></div><div><dt>Колір</dt><dd>Бордовий</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="сумка бананка uniqlo 780 грн uniqlo  sumky-ryukzaky саме потрібного розміру для всіх необхідних речей. натуральна текстура підходить до будь-якого стилю.
+- брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.
+- водовідштовхувальне покриття. *тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. оздоблення не є постійним.
+- форма, що підходить для активного носіння.
+- зручний розмір, який підходить для вашого смартфона та гаманця.
+- додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.
+- зручна внутрішня кишеня для ключів або смартфона.
+- дизайн унісекс.
+
+розмір:
+ширина (верх): 28 см
+висота: 17 см
+глибина: 10 см
+довжина плечового ременя: 116 см
+
+470040 бананки сумки та рюкзаки рожевий нейлон текстиль застібка замок стать для дівчаток для жінок принт без принту ширина (верх): 28 см висота: 17 см глибина: 10 см довжина плечового ременя: 116 см 470040 стан: новий колір: рожевий новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/bananky/208449854-sumka-bananka-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2294693567_310_430" alt="Сумка бананка uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">780 грн</div>
+                <div class="product-title">Сумка бананка uniqlo</div>
+                <div class='product-meta'>Uniqlo</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295760026_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2210516396_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2282064125_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2182529477_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Саме потрібного розміру для всіх необхідних речей. Натуральна текстура підходить до будь-якого стилю.<br>- Брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.<br>- Водовідштовхувальне покриття. *Тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. Оздоблення не є постійним.<br>- Форма, що підходить для активного носіння.<br>- Зручний розмір, який підходить для вашого смартфона та гаманця.<br>- Додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.<br>- Зручна внутрішня кишеня для ключів або смартфона.<br>- Дизайн унісекс.<br><br>Розмір:<br>ширина (верх): 28 см<br>висота: 17 см<br>глибина: 10 см<br>довжина плечового ременя: 116 см<br><br>470040</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Бананки Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Матеріал</dt><dd>Нейлон Текстиль Застібка Замок Стать Для дівчаток Для жінок Принт Без принту</dd></div><div><dt>Розмір</dt><dd>ширина (верх): 28 см висота: 17 см глибина: 10 см довжина плечового ременя: 116 см 470040 Стан: Новий Колір: Рожевий</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="сумка бананка uniqlo 750 грн uniqlo  sumky-ryukzaky сумка бананка uniqlo
+в наявності колір 42 yellow
+
+
+розмір
+ширина (зверху): 28 см, висота: 17 см, глибина: 10 см, довжина плечового ременя: 62 см ~ 116 см, місткість сумки: 4 літри
+
+476379 бананки сумки та рюкзаки застібка замок стать для дівчаток для жінок принт у клітинку жовтий новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/bananky/208643120-sumka-bananka-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2295760026_310_430" alt="Сумка бананка uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">750 грн</div>
+                <div class="product-title">Сумка бананка uniqlo</div>
+                <div class='product-meta'>Uniqlo</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295760029_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2207537708_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/530664784_310_430' alt='Сумка бананка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сумка бананка uniqlo<br>В наявності колір 42 YELLOW<br><br><br>Розмір<br>Ширина (зверху): 28 см, Висота: 17 см, Глибина: 10 см, Довжина плечового ременя: 62 см ~ 116 см, Місткість сумки: 4 літри<br><br>476379</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Бананки Сумки та рюкзаки Застібка Замок Стать Для дівчаток Для жінок Принт У клітинку</dd></div><div><dt>Колір</dt><dd>Жовтий</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="квадратний чохол uniqlo x anya hindmarch 380 грн uniqlo  sumky-ryukzaky квадратний чохол uniqlo x anya hindmarch
+розмір
+ширина: 22 см, висота: 22 см, глибина: 8,5 см, місткість мішка: 5 літрів
+
+деталі тканини
+верхній матеріал: 52% поліамід, 48% поліамід - перероблене волокно/ підкладка: 100% поліестер
+
+478699 органайзери сумки та рюкзаки білий поліестер новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/vsi-sumky/orhanayzery/209031192-kvadratniy-chohol-uniqlo-x-anya-hindmarch" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2297781714_310_430" alt="Квадратний чохол uniqlo x anya hindmarch" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">380 грн</div>
+                <div class="product-title">Квадратний чохол uniqlo x anya hindmarch</div>
+                <div class='product-meta'>Uniqlo</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2297781709_310_430' alt='Квадратний чохол uniqlo x anya hindmarch' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2297781713_310_430' alt='Квадратний чохол uniqlo x anya hindmarch' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Квадратний чохол UNIQLO x ANYA HINDMARCH<br>Розмір<br>Ширина: 22 см, Висота: 22 см, Глибина: 8,5 см, Місткість мішка: 5 літрів<br><br>Деталі тканини<br>Верхній матеріал: 52% поліамід, 48% поліамід - перероблене волокно/ Підкладка: 100% поліестер<br><br>478699</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Органайзери Сумки та рюкзаки</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Поліестер</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -439,14 +809,36 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:11</div>
 </main>
 </div>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
 if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
+function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function filterProducts(input){
+const q=(input.value||'').trim().toLowerCase();
+const cards=Array.from(document.querySelectorAll('.product-card'));
+let shown=0;
+cards.forEach((card)=>{
+const matches=!q||(card.dataset.search||card.innerText).toLowerCase().includes(q);
+card.classList.toggle('is-hidden-by-search',!matches);
+if(q){
+card.classList.remove('hidden-card');
+card.style.display=matches?'flex':'none';
+}else{
+card.style.display='';
+if(card.dataset.initialHidden==='1'&&card.dataset.expanded!=='1')card.classList.add('hidden-card');
+}
+if(matches&&(q||!card.classList.contains('hidden-card')))shown++;
+});
+const btn=document.querySelector('.show-more-btn');
+if(btn)btn.style.display=q?'none':(document.querySelector('.hidden-card')?'inline-block':'none');
+updateSearchStatus(cards.length, q?shown:visibleProductCount());
+}
 </script>
 </body>
 </html>

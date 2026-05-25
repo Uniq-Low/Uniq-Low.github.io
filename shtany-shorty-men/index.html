@@ -23,6 +23,7 @@ padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
 border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
 .brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
 .brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.updated-at{margin:-8px 0 16px;padding:0 12px;color:var(--muted);font-size:12px;line-height:1.4;}
 .theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
 color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
 .menu-block{margin-bottom:18px;}
@@ -50,6 +51,11 @@ border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
 .telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
 padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.product-search-bar{display:flex;align-items:center;gap:12px;margin:0 0 18px;max-width:760px;}
+.product-search-input{width:min(520px,100%);border:1px solid var(--border);border-radius:14px;
+background:var(--panel-solid);color:var(--text);padding:13px 14px;font-size:15px;outline:none;}
+.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.search-status{color:var(--muted);font-size:13px;white-space:nowrap;}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
 .product-card{display:flex;flex-direction:column;background:var(--panel-solid);
 border:1px solid var(--border);border-radius:22px;overflow:hidden;
@@ -64,11 +70,21 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
 .product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
 .product-meta{font-size:13px;color:var(--muted);}
+.product-extra{margin:0 16px 14px;border-top:1px solid var(--border);padding-top:10px;}
+.product-extra summary{cursor:pointer;color:var(--accent);font-weight:800;font-size:14px;}
+.detail-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0;}
+.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:cover;border-radius:10px;background:var(--bg-soft);}
+.product-description{margin-top:10px;color:var(--text);font-size:13px;line-height:1.55;white-space:normal;}
+.product-attrs{display:grid;gap:7px;margin:10px 0 0;font-size:13px;}
+.product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
+.product-attrs dt{color:var(--muted);}
+.product-attrs dd{margin:0;color:var(--text);}
 .card-tg-btn{display:block;margin:0 16px 16px;
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
 padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
+.is-hidden-by-search{display:none!important;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -87,7 +103,9 @@ background:var(--panel-solid);color:var(--muted);}
 @media(max-width:1080px){
 .layout{grid-template-columns:1fr;}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
-.promo-card{flex-direction:column;text-align:center;}}
+.promo-card{flex-direction:column;text-align:center;}
+.product-search-bar{align-items:stretch;flex-direction:column;}
+.search-status{white-space:normal;}}
 </style>
 </head>
 <body>
@@ -100,8 +118,10 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:11</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -150,41 +170,67 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
+        
+            <div class="product-search-bar">
+                <input class="product-search-input" type="search"
+                       placeholder="Пошук на цій сторінці: назва, бренд, розмір..."
+                       oninput="filterProducts(this)" autocomplete="off">
+                <div class="search-status" data-total="7">Показано: 7 / 7</div>
+            </div>
         <div class="products-grid">
-    <div class="product-card">
+    <div class="product-card" data-search="джинси levi&#x27;s men 511 slim fit з необробленим краєм 33w x 34l 2400 грн levi&#x27;s 33 / l / 48 shtany-shorty-men джинси slim fit raw hem levi&#x27;s 511 ™. колір: деталі. джинси 511 ™ slim fit в сучасному стилі з простором для рухів є класикою з цього моменту. джинси з необробленим краєм для стильного образу сидять нижче талії, забезпечуючи тонку штанину від стегна до щиколотки. стиль # 248760001 матеріали 100% бавовна джинсова тканина середньої щільності необроблений край підготовка і розмір підходить нижче талії тонкий від стегна до щиколотки вузькі штанини 248760001 джинси штани та шорти бренд: levi&#x27;s синій 33/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/shtany-i-shorty/dzhinsy/73465003-dzhinsy-levis-men-511-slim-fit-s-neobrabotannym-kraem-33w-x-34l" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/327560403_310_430" alt="Джинси levi's men 511 slim fit з необробленим краєм 33w x 34l">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/327560403_310_430" alt="Джинси levi&#x27;s men 511 slim fit з необробленим краєм 33w x 34l" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">2400 грн</div>
-                <div class="product-title">Джинси levi's men 511 slim fit з необробленим краєм 33w x 34l</div>
-                <div class='product-meta'>Levi's • 33 / L / 48</div>
+                <div class="product-title">Джинси levi&#x27;s men 511 slim fit з необробленим краєм 33w x 34l</div>
+                <div class='product-meta'>Levi&#x27;s • 33 / L / 48</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2168460451_310_430' alt='Джинси levi&#x27;s men 511 slim fit з необробленим краєм 33w x 34l' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2264524763_310_430' alt='Джинси levi&#x27;s men 511 slim fit з необробленим краєм 33w x 34l' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/1899105133_310_430' alt='Джинси levi&#x27;s men 511 slim fit з необробленим краєм 33w x 34l' loading='lazy' decoding='async'></div>
+            <div class='product-description'>ДЖИНСИ SLIM FIT RAW HEM LEVI&#x27;S 511 ™. КОЛІР: ДЕТАЛІ. Джинси 511 ™ Slim Fit в сучасному стилі з простором для рухів є класикою з цього моменту. Джинси з необробленим краєм для стильного образу сидять нижче талії, забезпечуючи тонку штанину від стегна до щиколотки. Стиль # 248760001 МАТЕРІАЛИ 100% бавовна Джинсова тканина середньої щільності Необроблений край ПІДГОТОВКА І РОЗМІР Підходить нижче талії Тонкий від стегна до щиколотки Вузькі штанини 248760001</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Джинси Штани та шорти Бренд: Levi&#x27;s</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>33/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="джинси levis w32l36 2350 грн levi&#x27;s 32 / m / 46 shtany-shorty-men матеріал: 98,83% бавовна, 1,17% еластан модель: 511 застібка: блискавка сезон: демисезон артикул товару: № 045112213 посадка: низька посадка фасон: завужені щільність: 10-12 унцій джинси штани та шорти модель завужені застібка змійка бренд: levi&#x27;s синій : 98,83% бавовна, 1,17% еластан модель: 511 застібка: блискавка сезон: демисезон артикул товару: № 045112213 посадка: низька посадка фасон: завужені щільність: 10-12 унцій стан: новий колір: синій розмір: 32/m/46 категорії: джинси штани та шорти модель завужені застібка змійка бренд: levi&#x27;s 32/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/shtany-i-shorty/dzhinsy/73467682-dzhinsy-levis-w32l36" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/327574057_310_430" alt="Джинси levis w32l36">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/327574057_310_430" alt="Джинси levis w32l36" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">2350 грн</div>
                 <div class="product-title">Джинси levis w32l36</div>
-                <div class='product-meta'>Levi's • 32 / M / 46</div>
+                <div class='product-meta'>Levi&#x27;s • 32 / M / 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Матеріал: 98,83% бавовна, 1,17% еластан Модель: 511 Застібка: блискавка Сезон: демисезон Артикул товару: № 045112213 Посадка: Низька посадка Фасон: завужені Щільність: 10-12 унцій</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Джинси Штани та шорти Модель Завужені Застібка Змійка Бренд: Levi&#x27;s</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>: 98,83% бавовна, 1,17% еластан Модель: 511 Застібка: блискавка Сезон: демисезон Артикул товару: № 045112213 Посадка: Низька посадка Фасон: завужені Щільність: 10-12 унцій Стан: Новий Колір: Синій Розмір: 32/M/46 Категорії: Джинси Штани та шорти Модель Завужені Застібка Змійка Бренд: Levi&#x27;s</dd></div><div><dt>Розмір</dt><dd>32/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="чоловічі стрейч повсякденні штани dry 960 грн uniqlo 31 / m / 44 shtany-shorty-men високі та прямі повсякденні брюки активніше! підходить для щоденного та спортивного носіння.
+・штани з функцією dry, що поглинає піт і швидко висихає.
+・еластичний матеріал полегшує рух.
+・міцний і стильний матеріал sweat покращує рухливість.
+・кишеня застібається на блискавку, тож вам не доведеться турбуватися про те, що речі з кишені впадуть під час тренування.
+413013-a28 брюки штани та шорти стиль спортивний бренд: uniqlo сірий 31/m/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/shtany-i-shorty/bryuki/105465644-cholovichi-stryaych-povsyakdenni-shtani-dry" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/643309130_310_430" alt="Чоловічі стрейч повсякденні штани dry">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/643309130_310_430" alt="Чоловічі стрейч повсякденні штани dry" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">960 грн</div>
@@ -192,14 +238,27 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 31 / M / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Високі та прямі повсякденні брюки активніше! Підходить для щоденного та спортивного носіння.<br>・Штани з функцією DRY, що поглинає піт і швидко висихає.<br>・Еластичний матеріал полегшує рух.<br>・Міцний і стильний матеріал SWEAT покращує рухливість.<br>・Кишеня застібається на блискавку, тож вам не доведеться турбуватися про те, що речі з кишені впадуть під час тренування.<br>413013-a28</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брюки Штани та шорти Стиль Спортивний Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>31/M/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="чоловічі вітрозахисні теплі легкі штани 1699 грн uniqlo 31 / m / 44 shtany-shorty-men покращена повітропроникність і чудовий комфорт!теплі штани зігрівають, щойно надягаєш, і холодний вітер не проникає всередину.
+・нове оновлення цього сезону вже тут! додайте антистатичну функцію, пил нелегко прилипає.
+・поверхня тканини виготовлена ​​з матеріалу ripstop, вітрозахисного листа та 3-шарової структури tricot з піднятою підкладкою, яка може протистояти холодному вітру.
+・додавши водовідштовхувальну обробку, він може витримувати певний ступінь дощу та снігу.
+・складки навколо талії зменшені, охайні та стильні, а спереду на талії є зав’язка, тому пояс не потрібен.
+・як кажуть клієнти, сітчастий матеріал у кишені покращує повітропроникність. (стандартна довжина штанів 79~82см)
+408510-a20 брюки штани та шорти бренд: uniqlo чорний 31/m/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/shtany-i-shorty/bryuki/105870063-cholovichi-vitrozahisni-tepli-legki-shtani" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/653529496_310_430" alt="Чоловічі вітрозахисні теплі легкі штани">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/653529496_310_430" alt="Чоловічі вітрозахисні теплі легкі штани" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1699 грн</div>
@@ -207,14 +266,34 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 31 / M / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Покращена повітропроникність і чудовий комфорт!Теплі штани зігрівають, щойно надягаєш, і холодний вітер не проникає всередину.<br>・Нове оновлення цього сезону вже тут! Додайте антистатичну функцію, пил нелегко прилипає.<br>・Поверхня тканини виготовлена ​​з матеріалу RIPSTOP, вітрозахисного листа та 3-шарової структури TRICOT з піднятою підкладкою, яка може протистояти холодному вітру.<br>・Додавши водовідштовхувальну обробку, він може витримувати певний ступінь дощу та снігу.<br>・Складки навколо талії зменшені, охайні та стильні, а спереду на талії є зав’язка, тому пояс не потрібен.<br>・Як кажуть клієнти, сітчастий матеріал у кишені покращує повітропроникність. (стандартна довжина штанів 79~82см)<br>408510-a20</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брюки Штани та шорти Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Розмір</dt><dd>31/M/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="шорти dry stretch easy uniqlo 650 грн  31 / m / 44 shtany-shorty-men шорти dry stretch easy uniqlo
+в наявності розмір м, колір 08 dark grey
+
+опис:
+- зручна, еластична саржева тканина.
+- прання у швейній машині для м&#x27;якого, невимушеного відчуття.
+- з технологією швидкого висихання dry.
+- передній дизайн із застібкою-блискавкою.
+- еластичний пояс зі шнурком для регулювання розміру.
+- універсальний дизайн, що підходить для носіння в приміщенні або на вулиці.
+
+склад: 66% бавовна, 32% поліестер, 2% еластан 
+
+464822 шорти штани та шорти сірий 31/m/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/shtany-i-shorty/shorty/189948774-shorti-dry-stretch-easy-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2205585194_310_430" alt="Шорти dry stretch easy uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2205585194_310_430" alt="Шорти dry stretch easy uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">650 грн</div>
@@ -222,14 +301,34 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>31 / M / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2205585219_310_430' alt='Шорти dry stretch easy uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2205585216_310_430' alt='Шорти dry stretch easy uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2205585218_310_430' alt='Шорти dry stretch easy uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Шорти DRY Stretch Easy UNIQLO<br>В наявності розмір М, колір 08 DARK GREY<br><br>Опис:<br>- Зручна, еластична саржева тканина.<br>- Прання у швейній машині для м&#x27;якого, невимушеного відчуття.<br>- З технологією швидкого висихання DRY.<br>- Передній дизайн із застібкою-блискавкою.<br>- Еластичний пояс зі шнурком для регулювання розміру.<br>- Універсальний дизайн, що підходить для носіння в приміщенні або на вулиці.<br><br>Склад: 66% бавовна, 32% поліестер, 2% еластан <br><br>464822</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Шорти Штани та шорти</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>31/M/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="штани uniqlo heattech з теплою підкладкою 1790 грн  34 / l / 50 shtany-shorty-men штани uniqlo heattech з теплою підкладкою
+в наявності розмір л, колір чорний
+
+опис:
+неймовірно м&#x27;який та теплий фліс heattech. ідеально підходить для повсякденного носіння та носіння на природі.
+- біозігрівальний та утеплювальний heattech.
+- модні широкі штани-джогери.
+- простий дизайн із пряжкою на талії та практичними кишенями на швах.
+- високофункціональні штани-джогери для повсякденного носіння та носіння на природі.
+
+склад: 64% поліестер, 35% бавовна, 1% спандекс; підкладка: 64% поліестер, 22% акрил, 14% віскоза; підкладка кишень: 100% поліестер; ремені: 100% поліестер
+
+
+451816 брюки штани та шорти чорний віскоза поліестер спандекс особливості утеплені модель джогер стиль повсякденний 34/l/50 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/shtany-i-shorty/bryuki/192591678-shtani-uniqlo-heattech-z-teployu-pidkladkoyu" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2221888838_310_430" alt="Штани uniqlo heattech з теплою підкладкою">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2221888838_310_430" alt="Штани uniqlo heattech з теплою підкладкою" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1790 грн</div>
@@ -237,19 +336,82 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>34 / L / 50</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2221888840_310_430' alt='Штани uniqlo heattech з теплою підкладкою' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2221888841_310_430' alt='Штани uniqlo heattech з теплою підкладкою' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2221888842_310_430' alt='Штани uniqlo heattech з теплою підкладкою' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2221888843_310_430' alt='Штани uniqlo heattech з теплою підкладкою' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2221888845_310_430' alt='Штани uniqlo heattech з теплою підкладкою' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2221888846_310_430' alt='Штани uniqlo heattech з теплою підкладкою' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Штани uniqlo heattech з теплою підкладкою<br>В наявності розмір Л, колір чорний<br><br>Опис:<br>Неймовірно м&#x27;який та теплий фліс HEATTECH. Ідеально підходить для повсякденного носіння та носіння на природі.<br>- Біозігрівальний та утеплювальний HEATTECH.<br>- Модні широкі штани-джогери.<br>- Простий дизайн із пряжкою на талії та практичними кишенями на швах.<br>- Високофункціональні штани-джогери для повсякденного носіння та носіння на природі.<br><br>Склад: 64% поліестер, 35% бавовна, 1% спандекс; підкладка: 64% поліестер, 22% акрил, 14% віскоза; підкладка кишень: 100% поліестер; ремені: 100% поліестер<br><br><br>451816</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брюки Штани та шорти</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер Спандекс Особливості Утеплені Модель Джогер Стиль Повсякденний</dd></div><div><dt>Розмір</dt><dd>34/L/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card" data-search="джогери geared uniqlo 1600 грн uniqlo l shtany-shorty-men джогери geared uniqlo
+в наявності розмір л, колір чорний
+
+опис:
+двосторонній еластичний матеріал з повсякденним виглядом
+з ременем на пряжці
+ретельні деталі дизайну, включаючи шість кишень
+водовідштовхувальне покриття
+
+склад
+88% нейлон, 12% спандекс
+
+479029 брюки штани та шорти чорний нейлон спандекс модель джогер принт без принту стиль спортивний бренд: uniqlo l новий uniqlo-shop 5.0 (1272 оцінки)">
+        <a class="card-main-link" href="https://shafa.ua/uk/men/shtany-i-shorty/bryuki/208643258-dzhogeri-geared-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2295760761_310_430" alt="Джогери geared uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1600 грн</div>
+                <div class="product-title">Джогери geared uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295760902_310_430' alt='Джогери geared uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295760904_310_430' alt='Джогери geared uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295760906_310_430' alt='Джогери geared uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Джогери Geared Uniqlo<br>В наявності розмір Л, колір чорний<br><br>Опис:<br>двосторонній еластичний матеріал з повсякденним виглядом<br>з ременем на пряжці<br>ретельні деталі дизайну, включаючи шість кишень<br>водовідштовхувальне покриття<br><br>Склад<br>88% нейлон, 12% спандекс<br><br>479029</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Брюки Штани та шорти</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Нейлон Спандекс Модель Джогер Принт Без принту Стиль Спортивний Бренд: Uniqlo</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div></div>
         
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:11</div>
 </main>
 </div>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
 if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
+function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function filterProducts(input){
+const q=(input.value||'').trim().toLowerCase();
+const cards=Array.from(document.querySelectorAll('.product-card'));
+let shown=0;
+cards.forEach((card)=>{
+const matches=!q||(card.dataset.search||card.innerText).toLowerCase().includes(q);
+card.classList.toggle('is-hidden-by-search',!matches);
+if(q){
+card.classList.remove('hidden-card');
+card.style.display=matches?'flex':'none';
+}else{
+card.style.display='';
+if(card.dataset.initialHidden==='1'&&card.dataset.expanded!=='1')card.classList.add('hidden-card');
+}
+if(matches&&(q||!card.classList.contains('hidden-card')))shown++;
+});
+const btn=document.querySelector('.show-more-btn');
+if(btn)btn.style.display=q?'none':(document.querySelector('.hidden-card')?'inline-block':'none');
+updateSearchStatus(cards.length, q?shown:visibleProductCount());
+}
 </script>
 </body>
 </html>

@@ -23,6 +23,7 @@ padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
 border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
 .brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
 .brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.updated-at{margin:-8px 0 16px;padding:0 12px;color:var(--muted);font-size:12px;line-height:1.4;}
 .theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
 color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
 .menu-block{margin-bottom:18px;}
@@ -50,6 +51,11 @@ border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
 .telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
 padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.product-search-bar{display:flex;align-items:center;gap:12px;margin:0 0 18px;max-width:760px;}
+.product-search-input{width:min(520px,100%);border:1px solid var(--border);border-radius:14px;
+background:var(--panel-solid);color:var(--text);padding:13px 14px;font-size:15px;outline:none;}
+.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.search-status{color:var(--muted);font-size:13px;white-space:nowrap;}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
 .product-card{display:flex;flex-direction:column;background:var(--panel-solid);
 border:1px solid var(--border);border-radius:22px;overflow:hidden;
@@ -64,11 +70,21 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
 .product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
 .product-meta{font-size:13px;color:var(--muted);}
+.product-extra{margin:0 16px 14px;border-top:1px solid var(--border);padding-top:10px;}
+.product-extra summary{cursor:pointer;color:var(--accent);font-weight:800;font-size:14px;}
+.detail-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0;}
+.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:cover;border-radius:10px;background:var(--bg-soft);}
+.product-description{margin-top:10px;color:var(--text);font-size:13px;line-height:1.55;white-space:normal;}
+.product-attrs{display:grid;gap:7px;margin:10px 0 0;font-size:13px;}
+.product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
+.product-attrs dt{color:var(--muted);}
+.product-attrs dd{margin:0;color:var(--text);}
 .card-tg-btn{display:block;margin:0 16px 16px;
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
 padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
+.is-hidden-by-search{display:none!important;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -87,7 +103,9 @@ background:var(--panel-solid);color:var(--muted);}
 @media(max-width:1080px){
 .layout{grid-template-columns:1fr;}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
-.promo-card{flex-direction:column;text-align:center;}}
+.promo-card{flex-direction:column;text-align:center;}
+.product-search-bar{align-items:stretch;flex-direction:column;}
+.search-status{white-space:normal;}}
 </style>
 </head>
 <body>
@@ -100,8 +118,10 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:11</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -150,11 +170,18 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
+        
+            <div class="product-search-bar">
+                <input class="product-search-input" type="search"
+                       placeholder="Пошук на цій сторінці: назва, бренд, розмір..."
+                       oninput="filterProducts(this)" autocomplete="off">
+                <div class="search-status" data-total="13">Показано: 12 / 13</div>
+            </div>
         <div class="products-grid">
-    <div class="product-card">
+    <div class="product-card" data-search="чоловічі повсякденні штани dry стрейч uniqlo 950 грн uniqlo інший sportyvnyy-odyag-men не только для спорта, но и для повседневной жизни!влагоотводящие, быстросохнущие, повседневные хлопчатобумажные брюки с хорошей подвижностью. ・быстросохнущий эластичный материал с хорошей гибкостью и подвижностью. ・материал, похожий на хлопок, подходит для ежедневных занятий спортом. ・без добавления дополнительных деталей подходит для самых разных случаев. ・скидки под бедрами и коленями, отсутствие швов, меньше швов, мягкое прикосновение к коже, более удобное ношение. ・добавьте молнию в карман, чтобы предметы не выпадали во время тренировки. 408989-57 спортивні штани спортивний одяг синій бавовна призначення для повсякденного носіння інший новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/93518682-muzhskie-povsednevnye-bryuki-dry-stryaych-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/486295494_310_430" alt="Чоловічі повсякденні штани dry стрейч uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/486295494_310_430" alt="Чоловічі повсякденні штани dry стрейч uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">950 грн</div>
@@ -162,14 +189,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • Інший</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/486294758_310_430' alt='Чоловічі повсякденні штани dry стрейч uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Не только для спорта, но и для повседневной жизни!Влагоотводящие, быстросохнущие, повседневные хлопчатобумажные брюки с хорошей подвижностью. ・Быстросохнущий эластичный материал с хорошей гибкостью и подвижностью. ・Материал, похожий на хлопок, подходит для ежедневных занятий спортом. ・Без добавления дополнительных деталей подходит для самых разных случаев. ・Скидки под бедрами и коленями, отсутствие швов, меньше швов, мягкое прикосновение к коже, более удобное ношение. ・Добавьте молнию в карман, чтобы предметы не выпадали во время тренировки. 408989-57</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Бавовна Призначення Для повсякденного носіння</dd></div><div><dt>Розмір</dt><dd>Інший</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="спортивні штани боа uniqlo 1400 грн uniqlo інший sportyvnyy-odyag-men спортивні штани жіночі забезпечують більш теплу посадку завдяки використанню матеріалу з начосом навіть на підкладці кишень. · підкладка виконана з матеріалу боа-фліс. · можна носити не тільки в спортивних сценах, але і в якості одягу на одну милю. 421370-18 спортивні штани спортивний одяг синій фліс особливості моделі з начосом інший новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/96702659-sportivnye-shtany-boa-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/514675540_310_430" alt="Спортивні штани боа uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/514675540_310_430" alt="Спортивні штани боа uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1400 грн</div>
@@ -177,14 +211,21 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • Інший</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/514675726_310_430' alt='Спортивні штани боа uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/211159876_310_430' alt='Спортивні штани боа uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/476509085_310_430' alt='Спортивні штани боа uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спортивні штани жіночі забезпечують більш теплу посадку завдяки використанню матеріалу з начосом навіть на підкладці кишень. · Підкладка виконана з матеріалу боа-фліс. · Можна носити не тільки в спортивних сценах, але і в якості одягу на одну милю. 421370-18</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Фліс Особливості моделі З начосом</dd></div><div><dt>Розмір</dt><dd>Інший</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="уникло чоловічі штани-джоггеры uniqlo u 900 грн uniqlo інший sportyvnyy-odyag-men уникло чоловічі штани-джоггеры uniqlo u 193226-a20 спортивні штани спортивний одяг хакі інший новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/101247140-uniklo-muzhskie-bryuki-dzhoggery-uniqlo-u" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/569153143_310_430" alt="Уникло чоловічі штани-джоггеры uniqlo u">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/569153143_310_430" alt="Уникло чоловічі штани-джоггеры uniqlo u" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">900 грн</div>
@@ -192,14 +233,24 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • Інший</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>УНИКЛО ЧОЛОВІЧІ штани-джоггеры Uniqlo U 193226-a20</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Хакі</dd></div><div><dt>Розмір</dt><dd>Інший</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="очень теплые штаны uniqlo 1949 грн uniqlo 44 / xxl / 52 sportyvnyy-odyag-men спортивні штани boa мають більш теплу посадку завдяки використанню щіткового матеріалу для підкладки кишень.
+· підкладка виконана з флісу.
+· можна носити не лише під час спортивних змагань, але й як одяг, що їздить на одну милю
+421370-46 спортивні штани спортивний одяг синій фліс 44/xxl/52 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/143108614-ochen-teplye-shtany-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/1598882892_310_430" alt="Очень теплые штаны uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1598882892_310_430" alt="Очень теплые штаны uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1949 грн</div>
@@ -207,14 +258,32 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 44 / XXL / 52</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/1598885903_310_430' alt='Очень теплые штаны uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спортивні штани Boa мають більш теплу посадку завдяки використанню щіткового матеріалу для підкладки кишень.<br>· Підкладка виконана з флісу.<br>· Можна носити не лише під час спортивних змагань, але й як одяг, що їздить на одну милю<br>421370-46</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Фліс</dd></div><div><dt>Розмір</dt><dd>44/XXL/52</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="чоловічі спортивні штани uniqlo з системою dry, розмір л 1100 грн uniqlo 40 / l / 48 sportyvnyy-odyag-men чоловічі спортивні штани uniqlo з системою dry
+в наявності: розмір л, колір 03 gray
+
+- швидковисихаюча, еластична тканина з ідеальною гладкістю.
+- класний, спортивний дизайн, який не надто повсякденний.
+- технологія dry та стрейч для комфорту та легкості рухів.
+- стильний звужений крій для елегантного вигляду.
+- зручна задня кишеня на блискавці.
+
+матеріал: 78% поліестер, 16% віскоза, 6% спандекс
+
+458038 спортивні штани спортивний одяг сірий : 78% поліестер, 16% віскоза, 6% спандекс 458038 стан: новий колір: сірий розмір: 40/l/48 категорії: спортивні штани спортивний одяг матеріал поліестер призначення для повсякденного носіння особливості моделі з кишенями 40/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/186419071-cholovichi-sportivni-shtani-uniqlo-z-sistemoyu-dry-rozmir-l" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185207185_310_430" alt="Чоловічі спортивні штани uniqlo з системою dry, розмір л">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185207185_310_430" alt="Чоловічі спортивні штани uniqlo з системою dry, розмір л" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1100 грн</div>
@@ -222,29 +291,69 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 40 / L / 48</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2185207190_310_430' alt='Чоловічі спортивні штани uniqlo з системою dry, розмір л' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2185207085_310_430' alt='Чоловічі спортивні штани uniqlo з системою dry, розмір л' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2185207188_310_430' alt='Чоловічі спортивні штани uniqlo з системою dry, розмір л' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Чоловічі спортивні штани Uniqlo з системою Dry<br>В наявності: розмір Л, колір 03 GRAY<br><br>- Швидковисихаюча, еластична тканина з ідеальною гладкістю.<br>- Класний, спортивний дизайн, який не надто повсякденний.<br>- Технологія DRY та стрейч для комфорту та легкості рухів.<br>- Стильний звужений крій для елегантного вигляду.<br>- Зручна задня кишеня на блискавці.<br><br>Матеріал: 78% поліестер, 16% віскоза, 6% спандекс<br><br>458038</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>: 78% поліестер, 16% віскоза, 6% спандекс 458038 Стан: Новий Колір: Сірий Розмір: 40/L/48 Категорії: Спортивні штани Спортивний одяг Матеріал Поліестер Призначення Для повсякденного носіння Особливості моделі З кишенями</dd></div><div><dt>Розмір</dt><dd>40/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="джогери uniqlo 1100 грн uniqlo 38 / m / 46і ще 1 sportyvnyy-odyag-men джогери uniqlo
+в наявності: розмір м та л, колір gray
+опис:
+- м&#x27;які спортивні штани.
+- ребриста тканина, яка використовується для гарної посадки та м&#x27;якості.
+- ретро-дизайн у спортивному стилі з лініями з обох сторін.
+- бічні лінії створюють гладкий силует.
+- талія на шнурках дозволяє легко регулювати розмір.
+- бічні кишені та права задня кишеня.
+
+склад:
+корпус: кишенькова підкладка: 100% бавовна/ ребра: 86% бавовна, 14% поліестер/ стрічка: 100%
+
+458745 спортивні штани спортивний одяг сірий бавовна поліестер особливості моделі з кишенями модель джогер 38/m/4640/l/48 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/186419217-dzhogeri-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185208239_310_430" alt="Джогери uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185208239_310_430" alt="Джогери uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1100 грн</div>
                 <div class="product-title">Джогери uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
+                <div class='product-meta'>Uniqlo • 38 / M / 46і ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2185208020_310_430' alt='Джогери uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2185208227_310_430' alt='Джогери uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295290791_310_430' alt='Джогери uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2185208771_310_430' alt='Джогери uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2209232206_310_430' alt='Джогери uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2231639264_310_430' alt='Джогери uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Джогери uniqlo<br>В наявності: розмір М та Л, колір GRAY<br>Опис:<br>- М&#x27;які спортивні штани.<br>- Ребриста тканина, яка використовується для гарної посадки та м&#x27;якості.<br>- Ретро-дизайн у спортивному стилі з лініями з обох сторін.<br>- Бічні лінії створюють гладкий силует.<br>- Талія на шнурках дозволяє легко регулювати розмір.<br>- Бічні кишені та права задня кишеня.<br><br>Склад:<br>Корпус: кишенькова підкладка: 100% бавовна/ Ребра: 86% бавовна, 14% поліестер/ Стрічка: 100%<br><br>458745</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Поліестер Особливості моделі З кишенями Модель Джогер</dd></div><div><dt>Розмір</dt><dd>38/M/4640/L/48</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="джогери uniqlo 1100 грн uniqlo 38 / m / 46 sportyvnyy-odyag-men джогери uniqlo
+в наявності: розмір м, колір 02 light gray
+опис:
+- м&#x27;які спортивні штани.
+- ребриста тканина, яка використовується для гарної посадки та м&#x27;якості.
+- ретро-дизайн у спортивному стилі з лініями з обох сторін.
+- бічні лінії створюють гладкий силует.
+- талія на шнурках дозволяє легко регулювати розмір.
+- бічні кишені та права задня кишеня.
+
+склад:
+корпус: кишенькова підкладка: 100% бавовна/ ребра: 86% бавовна, 14% поліестер/ стрічка: 100%
+
+458745 спортивні штани спортивний одяг білий бавовна поліестер особливості моделі з кишенями модель джогер 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/186419287-dzhogeri-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185208771_310_430" alt="Джогери uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185208771_310_430" alt="Джогери uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1100 грн</div>
@@ -252,59 +361,105 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2185208613_310_430' alt='Джогери uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2185208770_310_430' alt='Джогери uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295290791_310_430' alt='Джогери uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Джогери uniqlo<br>В наявності: розмір М, колір 02 LIGHT GRAY<br>Опис:<br>- М&#x27;які спортивні штани.<br>- Ребриста тканина, яка використовується для гарної посадки та м&#x27;якості.<br>- Ретро-дизайн у спортивному стилі з лініями з обох сторін.<br>- Бічні лінії створюють гладкий силует.<br>- Талія на шнурках дозволяє легко регулювати розмір.<br>- Бічні кишені та права задня кишеня.<br><br>Склад:<br>Корпус: кишенькова підкладка: 100% бавовна/ Ребра: 86% бавовна, 14% поліестер/ Стрічка: 100%<br><br>458745</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Поліестер Особливості моделі З кишенями Модель Джогер</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="спортивні штани uniqlo u 1400 грн uniqlo l sportyvnyy-odyag-men спортивні штани uniqlo u
+в наявності розмір л
+
+опис:
+- колекція uniqlo u – це результат роботи відданої та кваліфікованої команди міжнародних дизайнерів, що працюють у нашому паризькому центрі досліджень та розробок під керівництвом художнього керівника крістофа лемера.
+- оновлена ​​колекція для сучасного, вишуканого вигляду.
+- високоякісна бавовняна тканина з підкладкою з начосом.
+- вільний крій з м&#x27;якої тканини.
+- деталі та крій спортивних штанів у вінтажному стилі.
+- ткана тканина всередині талії запобігає утворенню катишок для більшої міцності.
+- елегантний вигляд означає, що ці штани ідеально підходять для прогулянок.
+
+склад: 87% cotton, 13% polyester
+
+442472 спортивні штани спортивний одяг бежевий l новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/192593120-sportivni-shtani-uniqlo-u" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2221897747_310_430" alt="Спортивні штани uniqlo u">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2221897747_310_430" alt="Спортивні штани uniqlo u" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">1100 грн</div>
+                <div class="product-price">1400 грн</div>
                 <div class="product-title">Спортивні штани uniqlo u</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+                <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Спортивні штани Uniqlo U<br>В наявності розмір Л<br><br>Опис:<br>- Колекція Uniqlo U – це результат роботи відданої та кваліфікованої команди міжнародних дизайнерів, що працюють у нашому Паризькому центрі досліджень та розробок під керівництвом художнього керівника Крістофа Лемера.<br>- Оновлена ​​колекція для сучасного, вишуканого вигляду.<br>- Високоякісна бавовняна тканина з підкладкою з начосом.<br>- Вільний крій з м&#x27;якої тканини.<br>- Деталі та крій спортивних штанів у вінтажному стилі.<br>- Ткана тканина всередині талії запобігає утворенню катишок для більшої міцності.<br>- Елегантний вигляд означає, що ці штани ідеально підходять для прогулянок.<br><br>Склад: 87% Cotton, 13% Polyester<br><br>442472</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="спортивні штани з ворсовою підкладкою uniqlo heattech 1800 грн uniqlo l sportyvnyy-odyag-men спортивні штани з ворсовою підкладкою uniqlo heattech
+в наявності розмір л, колір 68 blue
+
+опис:
+- м&#x27;яка тканина з підкладкою з начосом з внутрішньої сторони та матеріалом «heattech» зовні з функціями поглинання тепла та утримання тепла.
+- оновлений повсякденний крій з еластичними складками по низу для створення гарної драпіровки.
+- елегантний крій.
+- багато еластичності для свободи рухів.
+- високопродуктивні спортивні штани преміального вигляду.
+
+склад: основна частина: 67% поліестер, 19% акрил, 14% віскоза / підкладка кишень: зовнішній шар: 100% поліестер / внутрішній шар: 67% поліестер, 19% акрил, 14% віскоза
+
+460335 спортивні штани спортивний одяг синій поліестер призначення для повсякденного носіння особливості моделі з кишенями l новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/192594167-sportivni-shtani-z-vorsovoyu-pidkladkoyu-uniqlo-heattech" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2221904941_310_430" alt="Спортивні штани з ворсовою підкладкою uniqlo heattech">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2221904941_310_430" alt="Спортивні штани з ворсовою підкладкою uniqlo heattech" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">1600 грн</div>
+                <div class="product-price">1800 грн</div>
                 <div class="product-title">Спортивні штани з ворсовою підкладкою uniqlo heattech</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+                <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2221904943_310_430' alt='Спортивні штани з ворсовою підкладкою uniqlo heattech' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2221904944_310_430' alt='Спортивні штани з ворсовою підкладкою uniqlo heattech' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2221904951_310_430' alt='Спортивні штани з ворсовою підкладкою uniqlo heattech' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2221904957_310_430' alt='Спортивні штани з ворсовою підкладкою uniqlo heattech' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2246186555_310_430' alt='Спортивні штани з ворсовою підкладкою uniqlo heattech' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/263933389_310_430' alt='Спортивні штани з ворсовою підкладкою uniqlo heattech' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спортивні штани з ворсовою підкладкою UNIQLO HEATTECH<br>В наявності розмір Л, колір 68 BLUE<br><br>Опис:<br>- М&#x27;яка тканина з підкладкою з начосом з внутрішньої сторони та матеріалом «HEATTECH» зовні з функціями поглинання тепла та утримання тепла.<br>- Оновлений повсякденний крій з еластичними складками по низу для створення гарної драпіровки.<br>- Елегантний крій.<br>- Багато еластичності для свободи рухів.<br>- Високопродуктивні спортивні штани преміального вигляду.<br><br>Склад: Основна частина: 67% поліестер, 19% акрил, 14% віскоза / Підкладка кишень: зовнішній шар: 100% поліестер / внутрішній шар: 67% поліестер, 19% акрил, 14% віскоза<br><br>460335</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Поліестер Призначення Для повсякденного носіння Особливості моделі З кишенями</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/194414878-sportivni-shtani-uniqlo-rozmir-l" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2232942079_310_430" alt="Спортивні штани uniqlo, розмір л">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1250 грн</div>
-                <div class="product-title">Спортивні штани uniqlo, розмір л</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card">
+    <div class="product-card" data-search="штани sweat wide uniqlo 1450 грн uniqlo m sportyvnyy-odyag-men штани sweat wide uniqlo
+в наявності розмір м, колір 34 braun
+
+опис:
+зовнішній шар з м’якої бавовни
+гладка, зручна підкладка
+задня кишеня додає стилю та зручності
+еластичний пояс та шнурок для легкої зміни вбрання
+об’ємний широкий прямий крій з високою талією
+шнурки на колошах дозволяють регулювати силует
+модель унісекс
+
+склад: 67% поліестер, 33% бавовна
+
+479854 спортивні штани спортивний одяг коричневий бавовна поліестер особливості моделі з кишенями принт без принту особливості крою прямі m новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/204169644-shtani-sweat-wide-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2277551134_310_430" alt="Штани sweat wide uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2277551134_310_430" alt="Штани sweat wide uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1450 грн</div>
@@ -312,19 +467,134 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2277551129_310_430' alt='Штани sweat wide uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Штани Sweat Wide Uniqlo<br>В наявності розмір М, колір 34 BRAUN<br><br>Опис:<br>зовнішній шар з м’якої бавовни<br>гладка, зручна підкладка<br>задня кишеня додає стилю та зручності<br>еластичний пояс та шнурок для легкої зміни вбрання<br>об’ємний широкий прямий крій з високою талією<br>шнурки на колошах дозволяють регулювати силует<br>модель унісекс<br><br>Склад: 67% поліестер, 33% бавовна<br><br>479854</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Коричневий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Поліестер Особливості моделі З кишенями Принт Без принту Особливості крою Прямі</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card" data-search="джогери uniqlo 1250 грн uniqlo l sportyvnyy-odyag-men джогери uniqlo
+в наявності розмір л, колір 69 navy
+
+склад
+88% бавовна, 12% поліестер
+
+477877 спортивні штани спортивний одяг синій бавовна поліестер призначення для повсякденного носіння особливості моделі з манжетами модель джогер сезон весна літо демісезон осінь принт без принту l новий uniqlo-shop 5.0 (1272 оцінки)">
+        <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/208562159-dzhogeri-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2295290791_310_430" alt="Джогери uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1250 грн</div>
+                <div class="product-title">Джогери uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295290834_310_430' alt='Джогери uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Джогери Uniqlo<br>В наявності розмір Л, колір 69 NAVY<br><br>Склад<br>88% бавовна, 12% поліестер<br><br>477877</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Бавовна Поліестер Призначення Для повсякденного носіння Особливості моделі З манжетами Модель Джогер Сезон Весна Літо Демісезон Осінь Принт Без принту</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card" data-search="джогери dry-ex uniqlo 1200 грн uniqlo xl sportyvnyy-odyag-men джогери dry-ex uniqlo 
+в наявності розмір  хл, колір чорний
+
+склад
+67% еластомультіестер, 33% поліестер - перероблене волокно
+
+477748 спортивні штани спортивний одяг чорний поліестер модель джогер сезон осінь демісезон весна літо xl новий uniqlo-shop 5.0 (1272 оцінки)">
+        <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/208569089-dzhogeri-dry-ex-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2295334715_310_430" alt="Джогери dry-ex uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Джогери dry-ex uniqlo</div>
+                <div class='product-meta'>Uniqlo • XL</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295334711_310_430' alt='Джогери dry-ex uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2295335115_310_430' alt='Джогери dry-ex uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Джогери DRY-EX Uniqlo <br>В наявності розмір  ХЛ, колір чорний<br><br>Склад<br>67% еластомультіестер, 33% поліестер - перероблене волокно<br><br>477748</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Модель Джогер Сезон Осінь Демісезон Весна Літо</dd></div><div><dt>Розмір</dt><dd>XL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="джогери dry-ex uniqlo 1200 грн uniqlo mі ще 1 sportyvnyy-odyag-men джогери dry-ex uniqlo
+в наявності розмір м та л, колір 08 dark grey
+
+склад
+67% еластомультіестер, 33% поліестер - перероблене волокно
+
+477748 спортивні штани спортивний одяг сірий поліестер модель джогер сезон осінь демісезон весна літо ml новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/men/sport-i-otdyh/sportivnyye-shtany/208569157-dzhogeri-dry-ex-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2295335115_310_430" alt="Джогери dry-ex uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1200 грн</div>
+                <div class="product-title">Джогери dry-ex uniqlo</div>
+                <div class='product-meta'>Uniqlo • Mі ще 1</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2295335174_310_430' alt='Джогери dry-ex uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Джогери DRY-EX Uniqlo<br>В наявності розмір М та Л, колір 08 DARK GREY<br><br>Склад<br>67% еластомультіестер, 33% поліестер - перероблене волокно<br><br>477748</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Спортивні штани Спортивний одяг</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Модель Джогер Сезон Осінь Демісезон Весна Літо</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div></div>
-        
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+        <div class="show-more-wrap">
+                <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
+            </div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:11</div>
 </main>
 </div>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
 if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
+function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function filterProducts(input){
+const q=(input.value||'').trim().toLowerCase();
+const cards=Array.from(document.querySelectorAll('.product-card'));
+let shown=0;
+cards.forEach((card)=>{
+const matches=!q||(card.dataset.search||card.innerText).toLowerCase().includes(q);
+card.classList.toggle('is-hidden-by-search',!matches);
+if(q){
+card.classList.remove('hidden-card');
+card.style.display=matches?'flex':'none';
+}else{
+card.style.display='';
+if(card.dataset.initialHidden==='1'&&card.dataset.expanded!=='1')card.classList.add('hidden-card');
+}
+if(matches&&(q||!card.classList.contains('hidden-card')))shown++;
+});
+const btn=document.querySelector('.show-more-btn');
+if(btn)btn.style.display=q?'none':(document.querySelector('.hidden-card')?'inline-block':'none');
+updateSearchStatus(cards.length, q?shown:visibleProductCount());
+}
 </script>
 </body>
 </html>

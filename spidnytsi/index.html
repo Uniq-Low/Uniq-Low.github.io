@@ -23,6 +23,7 @@ padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
 border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
 .brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
 .brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.updated-at{margin:-8px 0 16px;padding:0 12px;color:var(--muted);font-size:12px;line-height:1.4;}
 .theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
 color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
 .menu-block{margin-bottom:18px;}
@@ -50,6 +51,11 @@ border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
 .telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
 padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.product-search-bar{display:flex;align-items:center;gap:12px;margin:0 0 18px;max-width:760px;}
+.product-search-input{width:min(520px,100%);border:1px solid var(--border);border-radius:14px;
+background:var(--panel-solid);color:var(--text);padding:13px 14px;font-size:15px;outline:none;}
+.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.search-status{color:var(--muted);font-size:13px;white-space:nowrap;}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
 .product-card{display:flex;flex-direction:column;background:var(--panel-solid);
 border:1px solid var(--border);border-radius:22px;overflow:hidden;
@@ -64,11 +70,21 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
 .product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
 .product-meta{font-size:13px;color:var(--muted);}
+.product-extra{margin:0 16px 14px;border-top:1px solid var(--border);padding-top:10px;}
+.product-extra summary{cursor:pointer;color:var(--accent);font-weight:800;font-size:14px;}
+.detail-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0;}
+.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:cover;border-radius:10px;background:var(--bg-soft);}
+.product-description{margin-top:10px;color:var(--text);font-size:13px;line-height:1.55;white-space:normal;}
+.product-attrs{display:grid;gap:7px;margin:10px 0 0;font-size:13px;}
+.product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
+.product-attrs dt{color:var(--muted);}
+.product-attrs dd{margin:0;color:var(--text);}
 .card-tg-btn{display:block;margin:0 16px 16px;
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
 padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
+.is-hidden-by-search{display:none!important;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -87,7 +103,9 @@ background:var(--panel-solid);color:var(--muted);}
 @media(max-width:1080px){
 .layout{grid-template-columns:1fr;}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
-.promo-card{flex-direction:column;text-align:center;}}
+.promo-card{flex-direction:column;text-align:center;}
+.product-search-bar{align-items:stretch;flex-direction:column;}
+.search-status{white-space:normal;}}
 </style>
 </head>
 <body>
@@ -100,8 +118,10 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:11</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -150,11 +170,18 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
+        
+            <div class="product-search-bar">
+                <input class="product-search-input" type="search"
+                       placeholder="Пошук на цій сторінці: назва, бренд, розмір..."
+                       oninput="filterProducts(this)" autocomplete="off">
+                <div class="search-status" data-total="19">Показано: 12 / 19</div>
+            </div>
         <div class="products-grid">
-    <div class="product-card">
+    <div class="product-card" data-search="жіноча широка спідниця з завищеною талією 700 грн uniqlo 34 / xs / 42 spidnytsi жіноча широка спідниця з завищеною талією ремені-бантики на талії підкреслюють жіночність і подовжують ноги. бавовна преміум-класу для красивої текстури. ・серія колаборацій з британським модельєром jw anderson. ・краватка-метелик на талії дуже привертає увагу, демонструючи жіночну фігуру. ・використання високоякісної гладкою надм&#x27;якої бавовняної тканини 409689-a14 міді спідниці спідниці блакитний 34/xs/42 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/100863569-zhenskaya-shirokaya-yubka-s-zavyshennoy-taliyay" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/564367217_310_430" alt="Жіноча широка спідниця з завищеною талією">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/564367217_310_430" alt="Жіноча широка спідниця з завищеною талією" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">700 грн</div>
@@ -162,29 +189,49 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/564367477_310_430' alt='Жіноча широка спідниця з завищеною талією' loading='lazy' decoding='async'></div>
+            <div class='product-description'>жіноча широка спідниця з завищеною талією Ремені-бантики на талії підкреслюють жіночність і подовжують ноги. Бавовна преміум-класу для красивої текстури. ・Серія колаборацій з британським модельєром JW ANDERSON. ・Краватка-метелик на талії дуже привертає увагу, демонструючи жіночну фігуру. ・Використання високоякісної гладкою надм&#x27;якої бавовняної тканини 409689-a14</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Блакитний</dd></div><div><dt>Розмір</dt><dd>34/XS/42</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="плісирована довга спідниця uniqlo 799 грн uniqlo 36 / s / 44і ще 1 spidnytsi - плісирований дизайн необхідний для модних стилів.
+- легка талія, щоб ви могли легко носити його.
+- елегантна обробка, унікальна для ручних складок.
+420358-46л синя м розмір,зелена -с розмір довгі спідниці спідниці бірюзовий синій 36/s/4438/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/maksi/142972733-plisirovana-dovga-spidnicya-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/1591167184_310_430" alt="Плісирована довга спідниця uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1591167184_310_430" alt="Плісирована довга спідниця uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">799 грн</div>
                 <div class="product-title">Плісирована довга спідниця uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/1590612549_310_430' alt='Плісирована довга спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227873487_310_430' alt='Плісирована довга спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227864155_310_430' alt='Плісирована довга спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227862972_310_430' alt='Плісирована довга спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227861838_310_430' alt='Плісирована довга спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>- Плісирований дизайн необхідний для модних стилів.<br>- Легка талія, щоб ви могли легко носити його.<br>- Елегантна обробка, унікальна для ручних складок.<br>420358-46л синя м розмір,зелена -с розмір</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Довгі спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Бірюзовий Синій</dd></div><div><dt>Розмір</dt><dd>36/S/4438/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="довга спідниця в рубчик uniqlo 695 грн uniqlo 34 / xs / 42 spidnytsi - додана еластичність вельветового матеріалу, що створює відчуття тепла.
+・вертикальні лінії товстих виступів роблять ваші ноги красивими.
+・середня довжина до литок створює акуратний, вузький силует із розрізом на спині для додаткової зручності рухів.
+419691-46l міді спідниці спідниці особливості моделі в рубчик сірий 34/xs/42 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/142986649-dovga-spidnicya-v-rubchik-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/1590893475_310_430" alt="Довга спідниця в рубчик uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/1590893475_310_430" alt="Довга спідниця в рубчик uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">695 грн</div>
@@ -192,44 +239,31 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/1590892888_310_430' alt='Довга спідниця в рубчик uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>- Додана еластичність вельветового матеріалу, що створює відчуття тепла.<br>・Вертикальні лінії товстих виступів роблять ваші ноги красивими.<br>・Середня довжина до литок створює акуратний, вузький силует із розрізом на спині для додаткової зручності рухів.<br>419691-46l</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці Особливості моделі В рубчик</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>34/XS/42</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/186535993-bavovnana-spidnicya-uniqlo" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185937791_310_430" alt="Бавовнана спідниця uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1050 грн</div>
-                <div class="product-title">Бавовнана спідниця uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/186536093-bavovnana-spidnicya-uniqlo" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2185938415_310_430" alt="Бавовнана спідниця uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1050 грн</div>
-                <div class="product-title">Бавовнана спідниця uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card">
+    <div class="product-card" data-search="спідниця uniqlo 1080 грн uniqlo 36 / s / 44 spidnytsi спідниця uniqlo
+в наявності розмір с, колір 03 grey
+
+опис:
+- м’яка, трикотажна тканина
+- зручний еластичний пояс
+- приталений силует
+
+склад: 87% бавовна, 13% поліамід
+
+476596 міді спідниці спідниці сірий поліамід трикотаж бавовна особливості крою приталена 36/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193583986-spidnicya-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227861838_310_430" alt="Спідниця uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227861838_310_430" alt="Спідниця uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1080 грн</div>
@@ -237,14 +271,31 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227861915_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227861920_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298123417_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298122924_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229602119_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229602506_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спідниця Uniqlo<br>В наявності розмір С, колір 03 GREY<br><br>Опис:<br>- м’яка, трикотажна тканина<br>- зручний еластичний пояс<br>- приталений силует<br><br>Склад: 87% бавовна, 13% поліамід<br><br>476596</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Матеріал</dt><dd>Поліамід Трикотаж Бавовна Особливості крою Приталена</dd></div><div><dt>Розмір</dt><dd>36/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="спідниця uniqlo 1080 грн uniqlo s spidnytsi спідниця uniqlo
+в наявності розмір  с, колір 69 navy
+
+опис:
+- м’яка, трикотажна тканина
+- зручний еластичний пояс
+- приталений силует
+
+склад: 87% бавовна, 13% поліамід
+
+476596 міді спідниці спідниці синій поліамід трикотаж бавовна особливості крою приталена s новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193584167-spidnicya-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227862972_310_430" alt="Спідниця uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227862972_310_430" alt="Спідниця uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1080 грн</div>
@@ -252,59 +303,63 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227862977_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298124930_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298123417_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298122924_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229602119_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229602506_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спідниця Uniqlo<br>В наявності розмір  С, колір 69 NAVY<br><br>Опис:<br>- м’яка, трикотажна тканина<br>- зручний еластичний пояс<br>- приталений силует<br><br>Склад: 87% бавовна, 13% поліамід<br><br>476596</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Поліамід Трикотаж Бавовна Особливості крою Приталена</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="спідниця uniqlo 1080 грн uniqlo 34 / xs / 42і ще 2 spidnytsi спідниця uniqlo
+в наявності розмір хс, с та м, колір 67 blue
+
+опис:
+- м’яка, трикотажна тканина
+- зручний еластичний пояс
+- приталений силует
+
+склад: 87% бавовна, 13% поліамід
+
+476596 міді спідниці спідниці бірюзовий зелений поліамід трикотаж бавовна особливості крою приталена 34/xs/4236/s/4438/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193584759-spidnicya-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227864155_310_430" alt="Спідниця uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227864155_310_430" alt="Спідниця uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1080 грн</div>
                 <div class="product-title">Спідниця uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 2</div>
+                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 2</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227864156_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227864159_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227864161_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227864164_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298139884_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298124930_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спідниця Uniqlo<br>В наявності розмір ХС, С та М, колір 67 BLUE<br><br>Опис:<br>- м’яка, трикотажна тканина<br>- зручний еластичний пояс<br>- приталений силует<br><br>Склад: 87% бавовна, 13% поліамід<br><br>476596</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Бірюзовий Зелений</dd></div><div><dt>Матеріал</dt><dd>Поліамід Трикотаж Бавовна Особливості крою Приталена</dd></div><div><dt>Розмір</dt><dd>34/XS/4236/S/4438/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193585544-spidnicya-uniqlo" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227871187_310_430" alt="Спідниця uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1050 грн</div>
-                <div class="product-title">Спідниця uniqlo</div>
-                <div class='product-meta'>Uniqlo • 38 / M / 46</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193585628-spidnicya-uniqlo" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227871904_310_430" alt="Спідниця uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1050 грн</div>
-                <div class="product-title">Спідниця uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42і ще 3</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card">
+    <div class="product-card" data-search="спідниця uniqlo 1500 грн uniqlo 34 / xs / 42 spidnytsi спідниця uniqlo
+в наявності розмір хс, колір 53 green
+
+опис:
+- спідниця зі складками, яка створює пишний та об&#x27;ємний вигляд.
+- повністю еластичний пояс для легкої зміни вбрання.
+
+склад
+70% поліестер - перероблене волокно, 30% віскоза
+
+470922 міді спідниці спідниці хакі зелений віскоза поліестер фасон з воланами 34/xs/42 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193585890-spidnicya-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227873487_310_430" alt="Спідниця uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227873487_310_430" alt="Спідниця uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1500 грн</div>
@@ -312,29 +367,67 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227873594_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227873601_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227873615_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227873617_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спідниця uniqlo<br>В наявності розмір ХС, колір 53 GREEN<br><br>Опис:<br>- Спідниця зі складками, яка створює пишний та об&#x27;ємний вигляд.<br>- Повністю еластичний пояс для легкої зміни вбрання.<br><br>Склад<br>70% поліестер - перероблене волокно, 30% віскоза<br><br>470922</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Хакі Зелений</dd></div><div><dt>Матеріал</dt><dd>Віскоза Поліестер Фасон З воланами</dd></div><div><dt>Розмір</dt><dd>34/XS/42</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="спідниця з мериносової суміші uniqlo 1500 грн uniqlo 36 / s / 44і ще 1 spidnytsi спідниця з мериносової суміші uniqlo
+в наявності розмір хс та с , колір 57 olive
+
+опис:
+ребристий трикотаж
+еластична талія
+
+склад: 70% акрил, 30% вовна
+
+472549 міді спідниці спідниці хакі зелений акрил трикотаж вовна 34/xs/4236/s/44 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193586018-spidnicya-z-merinosovoyi-sumishi-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227874298_310_430" alt="Спідниця з мериносової суміші uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227874298_310_430" alt="Спідниця з мериносової суміші uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1500 грн</div>
                 <div class="product-title">Спідниця з мериносової суміші uniqlo</div>
-                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
+                <div class='product-meta'>Uniqlo • 36 / S / 44і ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227874372_310_430' alt='Спідниця з мериносової суміші uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227874374_310_430' alt='Спідниця з мериносової суміші uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227874377_310_430' alt='Спідниця з мериносової суміші uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227874378_310_430' alt='Спідниця з мериносової суміші uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227874382_310_430' alt='Спідниця з мериносової суміші uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спідниця з мериносової суміші UNIQLO<br>В наявності розмір ХС та С , колір 57 OLIVE<br><br>Опис:<br>ребристий трикотаж<br>еластична талія<br><br>Склад: 70% акрил, 30% вовна<br><br>472549</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Хакі Зелений</dd></div><div><dt>Матеріал</dt><dd>Акрил Трикотаж Вовна</dd></div><div><dt>Розмір</dt><dd>34/XS/4236/S/44</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card" data-search="плісована спідниця uniqlo 1200 грн uniqlo 34 / xs / 42 spidnytsi плісована спідниця uniqlo
+
+в наявності розмір с
+
+опис:
+колекція дизайнера клер вейт келлер
+плісирована спідниця
+з підкладкою
+матеріал який не мнеться
+абстрактний принт
+повністю еластичний пояс
+
+склад
+100% перероблений поліестер
+
+467639 міді спідниці спідниці білий чорний поліестер принт абстракція 34/xs/42 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193586262-plisovana-spidnicya-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227875792_310_430" alt="Плісована спідниця uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227875792_310_430" alt="Плісована спідниця uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1200 грн</div>
@@ -342,29 +435,30 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2227875852_310_430' alt='Плісована спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227875859_310_430' alt='Плісована спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227875867_310_430' alt='Плісована спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227875869_310_430' alt='Плісована спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2227875847_310_430' alt='Плісована спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298140870_310_430' alt='Плісована спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Плісована спідниця UNIQLO<br><br>В наявності розмір С<br><br>Опис:<br>колекція дизайнера Клер Вейт Келлер<br>плісирована спідниця<br>з підкладкою<br>матеріал який не мнеться<br>абстрактний принт<br>повністю еластичний пояс<br><br>Склад<br>100% перероблений поліестер<br><br>467639</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Білий Чорний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Принт Абстракція</dd></div><div><dt>Розмір</dt><dd>34/XS/42</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193586485-shifonova-spidnicya-uniqlo" target="_blank" rel="noopener">
-            <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2227877122_310_430" alt="Шифонова спідниця uniqlo">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1080 грн</div>
-                <div class="product-title">Шифонова спідниця uniqlo</div>
-                <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
-            </div>
-        </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
-    </div>
-    <div class="product-card hidden-card">
+    <div class="product-card" data-search="шифонова спідниця uniqlo 1300 грн  38 / m / 46 spidnytsi шифонова спідниця uniqlo
+в наявності розмір м (на бірці зазначений розмір л японський), колір 69 navy
+опис
+- легкий шифоновий матеріал оброблений тонкими складками, а поділ розрізаний для створення об&#x27;ємного вигляду.
+- еластичний пояс для легкого одягання та знімання.
+- подовжена модель
+
+склад: 100% поліестер
+
+484891 міді спідниці спідниці синій поліестер шифон 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193860497-shifonova-spidnicya-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2229606452_310_430" alt="Шифонова спідниця uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2229606452_310_430" alt="Шифонова спідниця uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1300 грн</div>
@@ -372,14 +466,30 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>38 / M / 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2229606472_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229606473_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229606477_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298140870_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298139884_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298124930_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Шифонова спідниця Uniqlo<br>В наявності розмір М (на бірці зазначений розмір Л японський), колір 69 NAVY<br>Опис<br>- Легкий шифоновий матеріал оброблений тонкими складками, а поділ розрізаний для створення об&#x27;ємного вигляду.<br>- Еластичний пояс для легкого одягання та знімання.<br>- Подовжена модель<br><br>Склад: 100% поліестер<br><br>484891</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Матеріал</dt><dd>Поліестер Шифон</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card" data-search="шифонова спідниця uniqlo 1300 грн uniqlo 38 / m / 46 spidnytsi шифонова спідниця uniqlo
+в наявності розмір м (на бірці зазначений розмір л японський), колір 57 olive
+опис
+- легкий шифоновий матеріал оброблений тонкими складками, а поділ розрізаний для створення об&#x27;ємного вигляду.
+- еластичний пояс для легкого одягання та знімання.
+- подовжена модель
+
+склад: 100% поліестер
+
+484890 міді спідниці спідниці хакі зелений поліестер шифон 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193860170-shifonova-spidnicya-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2229604060_310_430" alt="Шифонова спідниця uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2229604060_310_430" alt="Шифонова спідниця uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1300 грн</div>
@@ -387,14 +497,30 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2229604065_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229604062_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229604063_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229604058_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229604059_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229604064_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Шифонова спідниця Uniqlo<br>В наявності розмір М (на бірці зазначений розмір Л японський), колір 57 OLIVE<br>Опис<br>- Легкий шифоновий матеріал оброблений тонкими складками, а поділ розрізаний для створення об&#x27;ємного вигляду.<br>- Еластичний пояс для легкого одягання та знімання.<br>- Подовжена модель<br><br>Склад: 100% поліестер<br><br>484890</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Хакі Зелений</dd></div><div><dt>Матеріал</dt><dd>Поліестер Шифон</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card" data-search="шифонова спідниця uniqlo 1300 грн uniqlo 38 / m / 46 spidnytsi шифонова спідниця uniqlo
+в наявності розмір м (на бірці зазначений розмір л японський), колір чорний
+опис
+- легкий шифоновий матеріал оброблений тонкими складками, а поділ розрізаний для створення об&#x27;ємного вигляду.
+- еластичний пояс для легкого одягання та знімання.
+- подовжена модель
+
+склад: 100% поліестер
+
+484890 міді спідниці спідниці чорний поліестер шифон 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/193859795-shifonova-spidnicya-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2229602506_310_430" alt="Шифонова спідниця uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2229602506_310_430" alt="Шифонова спідниця uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1300 грн</div>
@@ -402,14 +528,30 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2229602507_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229602508_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229602509_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2152622936_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298140870_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2265997672_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Шифонова спідниця Uniqlo<br>В наявності розмір М (на бірці зазначений розмір Л японський), колір чорний<br>Опис<br>- Легкий шифоновий матеріал оброблений тонкими складками, а поділ розрізаний для створення об&#x27;ємного вигляду.<br>- Еластичний пояс для легкого одягання та знімання.<br>- Подовжена модель<br><br>Склад: 100% поліестер<br><br>484890</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Шифон</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card hidden-card">
+    <div class="product-card hidden-card" data-search="шифонова спідниця uniqlo 1300 грн uniqlo 38 / m / 46 spidnytsi шифонова спідниця uniqlo
+в наявності розмір м (на бірці зазначений розмір л японський), колір 37 brown
+опис
+- легкий шифоновий матеріал оброблений тонкими складками, а поділ розрізаний для створення об&#x27;ємного вигляду.
+- еластичний пояс для легкого одягання та знімання.
+- подовжена модель
+
+склад: 100% поліестер
+
+484890 довгі спідниці спідниці бордовий поліестер шифон 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
         <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/maksi/193859732-shifonova-spidnicya-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2229602119_310_430" alt="Шифонова спідниця uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2229602119_310_430" alt="Шифонова спідниця uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1300 грн</div>
@@ -417,6 +559,193 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2229602092_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229602093_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229602094_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229602095_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229602096_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2229602100_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Шифонова спідниця Uniqlo<br>В наявності розмір М (на бірці зазначений розмір Л японський), колір 37 BROWN<br>Опис<br>- Легкий шифоновий матеріал оброблений тонкими складками, а поділ розрізаний для створення об&#x27;ємного вигляду.<br>- Еластичний пояс для легкого одягання та знімання.<br>- Подовжена модель<br><br>Склад: 100% поліестер<br><br>484890</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Довгі спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Бордовий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Шифон</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="спідниця uniqlo 1150 грн uniqlo sі ще 1 spidnytsi спідниця uniqlo
+в наявності розмір с та л , колір 54 green
+
+опис:
+- текстурована крепова тканина прохолодна та зручна.
+- прозорий матеріал, частково підкладений.
+- мереживо між ярусами для легкої конструкції.
+- багаторівневий силует, приталений на талії з об’ємним подолом.
+склад: 100% бавовна
+
+467606, 468877 довгі спідниці спідниці зелений мереживо бавовна особливості крою приталена декор мереживо sl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/maksi/209109019-spidnicya-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298122924_310_430" alt="Спідниця uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1150 грн</div>
+                <div class="product-title">Спідниця uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298122987_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298122994_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298122999_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298123003_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298754421_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298140870_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спідниця uniqlo<br>В наявності розмір С та Л , колір 54 GREEN<br><br>Опис:<br>- Текстурована крепова тканина прохолодна та зручна.<br>- Прозорий матеріал, частково підкладений.<br>- Мереживо між ярусами для легкої конструкції.<br>- Багаторівневий силует, приталений на талії з об’ємним подолом.<br>Склад: 100% бавовна<br><br>467606, 468877</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Довгі спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Зелений</dd></div><div><dt>Матеріал</dt><dd>Мереживо Бавовна Особливості крою Приталена Декор Мереживо</dd></div><div><dt>Розмір</dt><dd>SL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="спідниця uniqlo 1150 грн uniqlo sі ще 1 spidnytsi спідниця uniqlo
+в наявності розмір с та м , колір 31 beige
+
+опис:
+- текстурована крепова тканина прохолодна та зручна.
+- прозорий матеріал, частково підкладений.
+- мереживо між ярусами для легкої конструкції.
+- багаторівневий силует, приталений на талії з об’ємним подолом.
+склад: 100% бавовна
+
+467606 довгі спідниці спідниці бежевий мереживо бавовна особливості крою приталена декор мереживо sm новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/maksi/209109115-spidnicya-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298123417_310_430" alt="Спідниця uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1150 грн</div>
+                <div class="product-title">Спідниця uniqlo</div>
+                <div class='product-meta'>Uniqlo • Sі ще 1</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298123490_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298123496_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298754421_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298140870_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298139884_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298124930_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спідниця uniqlo<br>В наявності розмір С та М , колір 31 BEIGE<br><br>Опис:<br>- Текстурована крепова тканина прохолодна та зручна.<br>- Прозорий матеріал, частково підкладений.<br>- Мереживо між ярусами для легкої конструкції.<br>- Багаторівневий силует, приталений на талії з об’ємним подолом.<br>Склад: 100% бавовна<br><br>467606</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Довгі спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Мереживо Бавовна Особливості крою Приталена Декор Мереживо</dd></div><div><dt>Розмір</dt><dd>SM</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="шифонова спідниця uniqlo 1050 грн uniqlo хs spidnytsi шифонова спідниця uniqlo
+в наявності розмір хс, колір 56 olive
+
+склад; верхній матеріал: 100% поліестер (100% перероблене поліестерне волокно) / підкладка: 100% поліестер (44% перероблене поліестерне волокно) / еластична частина: 90% поліестер, 10% спандекс
+
+469831 довгі спідниці спідниці хакі зелений поліестер спандекс шифон фасон з воланами хs новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/maksi/209109360-shifonova-spidnicya-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298124930_310_430" alt="Шифонова спідниця uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Шифонова спідниця uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХS</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298125018_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298125026_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298125119_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298140870_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298139884_310_430' alt='Шифонова спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Шифонова спідниця Uniqlo<br>В наявності розмір ХС, колір 56 OLIVE<br><br>Склад; Верхній матеріал: 100% поліестер (100% перероблене поліестерне волокно) / Підкладка: 100% поліестер (44% перероблене поліестерне волокно) / Еластична частина: 90% поліестер, 10% спандекс<br><br>469831</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Довгі спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Хакі Зелений</dd></div><div><dt>Матеріал</dt><dd>Поліестер Спандекс Шифон Фасон З воланами</dd></div><div><dt>Розмір</dt><dd>ХS</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="спідниця uniqlo 1050 грн uniqlo хsі ще 3 spidnytsi спідниця uniqlo
+в наявності розмір хс, м, л та хл, колір 69 navy
+
+опис:
+повітряна плісована тканина.
+довга довжина з еластичним поясом для легкої зміни одягу.
+
+склад: верхній матеріал: 100% поліестер - перероблене волокно/ підкладка: 56% поліестер, 44% поліестер - перероблене волокно/ еластична частина: 90% поліестер, 10% еластан
+
+472654 міді спідниці спідниці синій білий поліестер еластан фасон з воланами хsmlxl новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/209111626-spidnicya-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298139884_310_430" alt="Спідниця uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Спідниця uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХSі ще 3</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298140291_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298140280_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298140288_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298140290_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298754421_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298140870_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спідниця Uniqlo<br>В наявності розмір ХС, М, Л та ХЛ, колір 69 NAVY<br><br>Опис:<br>Повітряна плісована тканина.<br>Довга довжина з еластичним поясом для легкої зміни одягу.<br><br>Склад: Верхній матеріал: 100% поліестер - перероблене волокно/ Підкладка: 56% поліестер, 44% поліестер - перероблене волокно/ Еластична частина: 90% поліестер, 10% еластан<br><br>472654</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Синій Білий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Еластан Фасон З воланами</dd></div><div><dt>Розмір</dt><dd>ХSMLXL</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="спідниця uniqlo 1050 грн uniqlo m spidnytsi спідниця uniqlo
+в наявності розмір м, колір 52 green
+
+опис:
+повітряна плісована тканина.
+довга довжина з еластичним поясом для легкої зміни одягу.
+
+склад: верхній матеріал: 100% поліестер - перероблене волокно/ підкладка: 56% поліестер, 44% поліестер - перероблене волокно/ еластична частина: 90% поліестер, 10% еластан
+
+472654 міді спідниці спідниці зелений чорний поліестер еластан фасон з воланами m новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/midi/209111757-spidnicya-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298140870_310_430" alt="Спідниця uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Спідниця uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298141001_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298141011_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298141017_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298754421_310_430' alt='Спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Спідниця Uniqlo<br>В наявності розмір М, колір 52 GREEN<br><br>Опис:<br>Повітряна плісована тканина.<br>Довга довжина з еластичним поясом для легкої зміни одягу.<br><br>Склад: Верхній матеріал: 100% поліестер - перероблене волокно/ Підкладка: 56% поліестер, 44% поліестер - перероблене волокно/ Еластична частина: 90% поліестер, 10% еластан<br><br>472654</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Міді спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Зелений Чорний</dd></div><div><dt>Матеріал</dt><dd>Поліестер Еластан Фасон З воланами</dd></div><div><dt>Розмір</dt><dd>M</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card hidden-card" data-search="сатинова спідниця uniqlo 1050 грн uniqlo s spidnytsi сатинова спідниця uniqlo
+в наявності розмір с, колір 30 natural
+
+склад: 100% поліестер
+
+479012 довгі спідниці спідниці бежевий поліестер сатин s новий uniqlo-shop 5.0 (1272 оцінки)" data-initial-hidden='1'>
+        <a class="card-main-link" href="https://shafa.ua/uk/women/yubki/maksi/209219802-satinova-spidnicya-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298754421_310_430" alt="Сатинова спідниця uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Сатинова спідниця uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298754420_310_430' alt='Сатинова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298754265_310_430' alt='Сатинова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298754267_310_430' alt='Сатинова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298754419_310_430' alt='Сатинова спідниця uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298123417_310_430' alt='Сатинова спідниця uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Сатинова спідниця uniqlo<br>В наявності розмір С, колір 30 NATURAL<br><br>Склад: 100% поліестер<br><br>479012</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Довгі спідниці Спідниці</dd></div><div><dt>Колір</dt><dd>Бежевий</dd></div><div><dt>Матеріал</dt><dd>Поліестер Сатин</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
@@ -424,14 +753,36 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:11</div>
 </main>
 </div>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
 if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
+function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function filterProducts(input){
+const q=(input.value||'').trim().toLowerCase();
+const cards=Array.from(document.querySelectorAll('.product-card'));
+let shown=0;
+cards.forEach((card)=>{
+const matches=!q||(card.dataset.search||card.innerText).toLowerCase().includes(q);
+card.classList.toggle('is-hidden-by-search',!matches);
+if(q){
+card.classList.remove('hidden-card');
+card.style.display=matches?'flex':'none';
+}else{
+card.style.display='';
+if(card.dataset.initialHidden==='1'&&card.dataset.expanded!=='1')card.classList.add('hidden-card');
+}
+if(matches&&(q||!card.classList.contains('hidden-card')))shown++;
+});
+const btn=document.querySelector('.show-more-btn');
+if(btn)btn.style.display=q?'none':(document.querySelector('.hidden-card')?'inline-block':'none');
+updateSearchStatus(cards.length, q?shown:visibleProductCount());
+}
 </script>
 </body>
 </html>

@@ -23,6 +23,7 @@ padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
 border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
 .brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
 .brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.updated-at{margin:-8px 0 16px;padding:0 12px;color:var(--muted);font-size:12px;line-height:1.4;}
 .theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
 color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
 .menu-block{margin-bottom:18px;}
@@ -50,6 +51,11 @@ border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
 .telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
 padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.product-search-bar{display:flex;align-items:center;gap:12px;margin:0 0 18px;max-width:760px;}
+.product-search-input{width:min(520px,100%);border:1px solid var(--border);border-radius:14px;
+background:var(--panel-solid);color:var(--text);padding:13px 14px;font-size:15px;outline:none;}
+.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.search-status{color:var(--muted);font-size:13px;white-space:nowrap;}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
 .product-card{display:flex;flex-direction:column;background:var(--panel-solid);
 border:1px solid var(--border);border-radius:22px;overflow:hidden;
@@ -64,11 +70,21 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
 .product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
 .product-meta{font-size:13px;color:var(--muted);}
+.product-extra{margin:0 16px 14px;border-top:1px solid var(--border);padding-top:10px;}
+.product-extra summary{cursor:pointer;color:var(--accent);font-weight:800;font-size:14px;}
+.detail-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0;}
+.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:cover;border-radius:10px;background:var(--bg-soft);}
+.product-description{margin-top:10px;color:var(--text);font-size:13px;line-height:1.55;white-space:normal;}
+.product-attrs{display:grid;gap:7px;margin:10px 0 0;font-size:13px;}
+.product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
+.product-attrs dt{color:var(--muted);}
+.product-attrs dd{margin:0;color:var(--text);}
 .card-tg-btn{display:block;margin:0 16px 16px;
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
 padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
+.is-hidden-by-search{display:none!important;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -87,7 +103,9 @@ background:var(--panel-solid);color:var(--muted);}
 @media(max-width:1080px){
 .layout{grid-template-columns:1fr;}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
-.promo-card{flex-direction:column;text-align:center;}}
+.promo-card{flex-direction:column;text-align:center;}
+.product-search-bar{align-items:stretch;flex-direction:column;}
+.search-status{white-space:normal;}}
 </style>
 </head>
 <body>
@@ -100,8 +118,10 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:11</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -150,31 +170,133 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
+        
+            <div class="product-search-bar">
+                <input class="product-search-input" type="search"
+                       placeholder="Пошук на цій сторінці: назва, бренд, розмір..."
+                       oninput="filterProducts(this)" autocomplete="off">
+                <div class="search-status" data-total="3">Показано: 3 / 3</div>
+            </div>
         <div class="products-grid">
-    <div class="product-card">
-        <a class="card-main-link" href="https://shafa.ua/uk/men/rubashki/rubashki/190994297-bavovnyana-sorochka-uniqlo" target="_blank" rel="noopener">
+    <div class="product-card" data-search="вельветова верхня сорочка uniqlo 1010 грн uniqlo lі ще 1 sorochky-tenisky вельветова верхня сорочка uniqlo
+в наявності розмір м та л
+
+склад: 100% бавовна
+
+480295 сорочки сорочки та теніски застібка ґудзики комір з коміром принт без принту білий бавовна вельвет ml новий uniqlo-shop 5.0 (1272 оцінки)">
+        <a class="card-main-link" href="https://shafa.ua/uk/men/rubashki/rubashki/207488865-velvetova-verhnya-sorochka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2211979596_310_430" alt="Бавовняна сорочка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2290659171_310_430" alt="Вельветова верхня сорочка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">799 грн</div>
-                <div class="product-title">Бавовняна сорочка uniqlo</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48</div>
+                <div class="product-price">1010 грн</div>
+                <div class="product-title">Вельветова верхня сорочка uniqlo</div>
+                <div class='product-meta'>Uniqlo • Lі ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'></div>
+            <div class='product-description'>Вельветова верхня сорочка UNIQLO<br>В наявності розмір М та Л<br><br>Склад: 100% бавовна<br><br>480295</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та теніски Застібка Ґудзики Комір З коміром Принт Без принту</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Матеріал</dt><dd>Бавовна Вельвет</dd></div><div><dt>Розмір</dt><dd>ML</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card" data-search="бавовняна сорочка uniqlo 850 грн uniqlo l sorochky-tenisky бавовняна сорочка uniqlo
+в наявності розмір л, колір 50 light green
+
+
+опис:
+100% бавовняна тканина, виготовлена ​​з наддовгих бавовняних волокон, забезпечує приголомшливий колір та глянцевий блиск. товщина та щільність нитки спеціально підібрані для того, щоб підкреслити кожен візерунок та колір.
+викрійки ретельно вирівнюються вручну, щоб забезпечити симетричний візерунок на комірі, планці, рукавах та манжетах.
+ґудзики із заокругленими краями для легкого застібання.
+
+склад: 100% бавовна
+
+476015 сорочки сорочки та теніски застібка ґудзики салатовий бавовна l новий uniqlo-shop 5.0 (1272 оцінки)">
+        <a class="card-main-link" href="https://shafa.ua/uk/men/rubashki/rubashki/209182959-bavovnyana-sorochka-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298555635_310_430" alt="Бавовняна сорочка uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">850 грн</div>
+                <div class="product-title">Бавовняна сорочка uniqlo</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298555708_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2298555713_310_430' alt='Бавовняна сорочка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Бавовняна сорочка UNIQLO<br>В наявності розмір Л, колір 50 LIGHT GREEN<br><br><br>Опис:<br>100% бавовняна тканина, виготовлена ​​з наддовгих бавовняних волокон, забезпечує приголомшливий колір та глянцевий блиск. Товщина та щільність нитки спеціально підібрані для того, щоб підкреслити кожен візерунок та колір.<br>Викрійки ретельно вирівнюються вручну, щоб забезпечити симетричний візерунок на комірі, планці, рукавах та манжетах.<br>Ґудзики із заокругленими краями для легкого застібання.<br><br>Склад: 100% бавовна<br><br>476015</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та теніски Застібка Ґудзики</dd></div><div><dt>Колір</dt><dd>Салатовий</dd></div><div><dt>Матеріал</dt><dd>Бавовна</dd></div><div><dt>Розмір</dt><dd>L</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
+        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+            Замовити в Telegram (-10%)
+        </a>
+    </div>
+    <div class="product-card" data-search="універсальна сорочка оверсайз uniqlo 1050 грн uniqlo s sorochky-tenisky універсальна сорочка оверсайз uniqlo
+в наявності розмір с, колір чорний
+
+
+склад: 57% бавовна, 43% нейлон
+
+480652 сорочки сорочки та теніски чорний нейлон бавовна особливості крою оверсайз s новий uniqlo-shop 5.0 (1272 оцінки)">
+        <a class="card-main-link" href="https://shafa.ua/uk/men/rubashki/rubashki/209208284-universalna-sorochka-oversayz-uniqlo" target="_blank" rel="noopener">
+            <div class="product-image-wrap">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2298703251_310_430" alt="Універсальна сорочка оверсайз uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1050 грн</div>
+                <div class="product-title">Універсальна сорочка оверсайз uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
+            </div>
+        </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2298703249_310_430' alt='Універсальна сорочка оверсайз uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Універсальна сорочка оверсайз UNIQLO<br>В наявності розмір С, колір чорний<br><br><br>Склад: 57% бавовна, 43% нейлон<br><br>480652</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Сорочки Сорочки та теніски</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Матеріал</dt><dd>Нейлон Бавовна Особливості крою Оверсайз</dd></div><div><dt>Розмір</dt><dd>S</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div></div>
         
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:11</div>
 </main>
 </div>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
 if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
+function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function filterProducts(input){
+const q=(input.value||'').trim().toLowerCase();
+const cards=Array.from(document.querySelectorAll('.product-card'));
+let shown=0;
+cards.forEach((card)=>{
+const matches=!q||(card.dataset.search||card.innerText).toLowerCase().includes(q);
+card.classList.toggle('is-hidden-by-search',!matches);
+if(q){
+card.classList.remove('hidden-card');
+card.style.display=matches?'flex':'none';
+}else{
+card.style.display='';
+if(card.dataset.initialHidden==='1'&&card.dataset.expanded!=='1')card.classList.add('hidden-card');
+}
+if(matches&&(q||!card.classList.contains('hidden-card')))shown++;
+});
+const btn=document.querySelector('.show-more-btn');
+if(btn)btn.style.display=q?'none':(document.querySelector('.hidden-card')?'inline-block':'none');
+updateSearchStatus(cards.length, q?shown:visibleProductCount());
+}
 </script>
 </body>
 </html>

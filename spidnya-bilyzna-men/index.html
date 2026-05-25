@@ -23,6 +23,7 @@ padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
 border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
 .brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
 .brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.updated-at{margin:-8px 0 16px;padding:0 12px;color:var(--muted);font-size:12px;line-height:1.4;}
 .theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
 color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
 .menu-block{margin-bottom:18px;}
@@ -50,6 +51,11 @@ border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
 .telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
 padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.product-search-bar{display:flex;align-items:center;gap:12px;margin:0 0 18px;max-width:760px;}
+.product-search-input{width:min(520px,100%);border:1px solid var(--border);border-radius:14px;
+background:var(--panel-solid);color:var(--text);padding:13px 14px;font-size:15px;outline:none;}
+.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.search-status{color:var(--muted);font-size:13px;white-space:nowrap;}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
 .product-card{display:flex;flex-direction:column;background:var(--panel-solid);
 border:1px solid var(--border);border-radius:22px;overflow:hidden;
@@ -64,11 +70,21 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
 .product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
 .product-meta{font-size:13px;color:var(--muted);}
+.product-extra{margin:0 16px 14px;border-top:1px solid var(--border);padding-top:10px;}
+.product-extra summary{cursor:pointer;color:var(--accent);font-weight:800;font-size:14px;}
+.detail-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0;}
+.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:cover;border-radius:10px;background:var(--bg-soft);}
+.product-description{margin-top:10px;color:var(--text);font-size:13px;line-height:1.55;white-space:normal;}
+.product-attrs{display:grid;gap:7px;margin:10px 0 0;font-size:13px;}
+.product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
+.product-attrs dt{color:var(--muted);}
+.product-attrs dd{margin:0;color:var(--text);}
 .card-tg-btn{display:block;margin:0 16px 16px;
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
 padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
+.is-hidden-by-search{display:none!important;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -87,7 +103,9 @@ background:var(--panel-solid);color:var(--muted);}
 @media(max-width:1080px){
 .layout{grid-template-columns:1fr;}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
-.promo-card{flex-direction:column;text-align:center;}}
+.promo-card{flex-direction:column;text-align:center;}
+.product-search-bar{align-items:stretch;flex-direction:column;}
+.search-status{white-space:normal;}}
 </style>
 </head>
 <body>
@@ -100,8 +118,10 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:11</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -150,41 +170,105 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
+        
+            <div class="product-search-bar">
+                <input class="product-search-input" type="search"
+                       placeholder="Пошук на цій сторінці: назва, бренд, розмір..."
+                       oninput="filterProducts(this)" autocomplete="off">
+                <div class="search-status" data-total="3">Показано: 3 / 3</div>
+            </div>
         <div class="products-grid">
-    <div class="product-card">
+    <div class="product-card" data-search="чоловічий термогольф heattech uniqlo 850 грн uniqlo 40 / l / 48і ще 1 spidnya-bilyzna-men чоловічий термогольф heattech uniqlo
+в наявності розмір л та хл, колір чорний
+
+розмір л на ог 104/112
+розмір хл на ог 112/119
+
+опис:
+- високопродуктивний нижній одяг з функціями утримання тепла, теплопоглинання, швидковисихання, збереження форми, відведення вологи та дезодорування.
+- ультраеластична тканина, яка тягнеться разом з рухами вашого тіла.
+- виготовлена ​​з матеріалів, які роблять тканину м&#x27;якою та комфортною на дотик.
+- ідеально приталений крій залишається прихованим під верхніми шарами.
+- дизайн футболки з високим коміром ідеально підходить для нашарування
+
+склад: 39% поліестер, 32% акрил, 21% віскоза, 8% спандекс
+
+451863 термобілизна спідня білизна вид термофутболка бренд: uniqlo чорний 40/l/4842/xl/50 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/nizhnee-bele/termobele/193263129-cholovichiy-termogolf-heattech-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226012905_310_430" alt="Чоловічий термогольф heattech uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226012905_310_430" alt="Чоловічий термогольф heattech uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">850 грн</div>
                 <div class="product-title">Чоловічий термогольф heattech uniqlo</div>
-                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
+                <div class='product-meta'>Uniqlo • 40 / L / 48і ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2226013112_310_430' alt='Чоловічий термогольф heattech uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2226013114_310_430' alt='Чоловічий термогольф heattech uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2226013117_310_430' alt='Чоловічий термогольф heattech uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2226013933_310_430' alt='Чоловічий термогольф heattech uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Чоловічий термогольф HEATTECH UNIQLO<br>В наявності розмір Л та ХЛ, колір чорний<br><br>розмір Л на ОГ 104/112<br>розмір ХЛ на ОГ 112/119<br><br>Опис:<br>- Високопродуктивний нижній одяг з функціями УТРИМАННЯ ТЕПЛА, теплопоглинання, швидковисихання, збереження форми, відведення вологи та дезодорування.<br>- Ультраеластична тканина, яка тягнеться разом з рухами вашого тіла.<br>- Виготовлена ​​з матеріалів, які роблять тканину м&#x27;якою та комфортною на дотик.<br>- Ідеально приталений крій залишається прихованим під верхніми шарами.<br>- Дизайн футболки з високим коміром ідеально підходить для нашарування<br><br>Склад: 39% поліестер, 32% акрил, 21% віскоза, 8% спандекс<br><br>451863</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Термобілизна Спідня білизна Вид Термофутболка Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Розмір</dt><dd>40/L/4842/XL/50</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="чоловічий термогольф heattech uniqlo 850 грн  40 / l / 48і ще 2 spidnya-bilyzna-men чоловічий термогольф heattech uniqlo
+в наявності розмір л, хл та ххл, колір 08 dark gray
+розмір л на ог 104/112
+розмір хл на ог 112/119
+розмір ххл на ог 119/127
+
+опис:
+- високопродуктивний нижній одяг з функціями утримання тепла, теплопоглинання, швидковисихання, збереження форми, відведення вологи та дезодорування.
+- ультраеластична тканина, яка тягнеться разом з рухами вашого тіла.
+- виготовлена ​​з матеріалів, які роблять тканину м&#x27;якою та комфортною на дотик.
+- ідеально приталений крій залишається прихованим під верхніми шарами.
+- дизайн футболки з високим коміром ідеально підходить для нашарування
+
+склад: 39% поліестер, 32% акрил, 21% віскоза, 8% спандекс
+
+451863 термобілизна спідня білизна вид термофутболка сірий 40/l/4842/xl/5044/xxl/52 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/nizhnee-bele/termobele/193263251-cholovichiy-termogolf-heattech-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226013933_310_430" alt="Чоловічий термогольф heattech uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226013933_310_430" alt="Чоловічий термогольф heattech uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">850 грн</div>
                 <div class="product-title">Чоловічий термогольф heattech uniqlo</div>
-                <div class='product-meta'>40 / L / 48і ще 2</div>
+                <div class='product-meta'>40 / L / 48і ще 2</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2226014008_310_430' alt='Чоловічий термогольф heattech uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Чоловічий термогольф HEATTECH UNIQLO<br>В наявності розмір Л, ХЛ та ХХЛ, колір 08 DARK GRAY<br>розмір Л на ОГ 104/112<br>розмір ХЛ на ОГ 112/119<br>розмір ХХЛ на ОГ 119/127<br><br>Опис:<br>- Високопродуктивний нижній одяг з функціями УТРИМАННЯ ТЕПЛА, теплопоглинання, швидковисихання, збереження форми, відведення вологи та дезодорування.<br>- Ультраеластична тканина, яка тягнеться разом з рухами вашого тіла.<br>- Виготовлена ​​з матеріалів, які роблять тканину м&#x27;якою та комфортною на дотик.<br>- Ідеально приталений крій залишається прихованим під верхніми шарами.<br>- Дизайн футболки з високим коміром ідеально підходить для нашарування<br><br>Склад: 39% поліестер, 32% акрил, 21% віскоза, 8% спандекс<br><br>451863</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Термобілизна Спідня білизна Вид Термофутболка</dd></div><div><dt>Колір</dt><dd>Сірий</dd></div><div><dt>Розмір</dt><dd>40/L/4842/XL/5044/XXL/52</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="гольф heattech extra warm uniqlo 890 грн uniqlo 38 / m / 46 spidnya-bilyzna-men гольф heattech extra warm uniqlo
+в наявності розмір м , колір молочний
+
+
+опис:
+- «heattech cotton» з ультра-еластичною функцією.
+- з дезодоруючими властивостями.
+- м&#x27;яка бавовняна підкладка.
+- трохи коротші рукави залишаються прихованими під верхніми шарами.
+- чудовий варіант для багатошарового носіння.
+
+склад: 52% бавовна, 41% акрил, 7% спандекс
+
+453237 термобілизна спідня білизна бренд: uniqlo білий 38/m/46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/men/nizhnee-bele/termobele/193263613-golf-heattech-extra-warm-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226016162_310_430" alt="Гольф heattech extra warm uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2226016162_310_430" alt="Гольф heattech extra warm uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">890 грн</div>
@@ -192,19 +276,48 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2226016308_310_430' alt='Гольф heattech extra warm uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2226016309_310_430' alt='Гольф heattech extra warm uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2226016311_310_430' alt='Гольф heattech extra warm uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2226016312_310_430' alt='Гольф heattech extra warm uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2226016306_310_430' alt='Гольф heattech extra warm uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Гольф HEATTECH Extra Warm UNIQLO<br>В наявності розмір М , колір молочний<br><br><br>Опис:<br>- «HEATTECH Cotton» з ультра-еластичною функцією.<br>- З дезодоруючими властивостями.<br>- М&#x27;яка бавовняна підкладка.<br>- Трохи коротші рукави залишаються прихованими під верхніми шарами.<br>- Чудовий варіант для багатошарового носіння.<br><br>Склад: 52% бавовна, 41% акрил, 7% спандекс<br><br>453237</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Термобілизна Спідня білизна Бренд: Uniqlo</dd></div><div><dt>Колір</dt><dd>Білий</dd></div><div><dt>Розмір</dt><dd>38/M/46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div></div>
         
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:11</div>
 </main>
 </div>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
 if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
+function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function filterProducts(input){
+const q=(input.value||'').trim().toLowerCase();
+const cards=Array.from(document.querySelectorAll('.product-card'));
+let shown=0;
+cards.forEach((card)=>{
+const matches=!q||(card.dataset.search||card.innerText).toLowerCase().includes(q);
+card.classList.toggle('is-hidden-by-search',!matches);
+if(q){
+card.classList.remove('hidden-card');
+card.style.display=matches?'flex':'none';
+}else{
+card.style.display='';
+if(card.dataset.initialHidden==='1'&&card.dataset.expanded!=='1')card.classList.add('hidden-card');
+}
+if(matches&&(q||!card.classList.contains('hidden-card')))shown++;
+});
+const btn=document.querySelector('.show-more-btn');
+if(btn)btn.style.display=q?'none':(document.querySelector('.hidden-card')?'inline-block':'none');
+updateSearchStatus(cards.length, q?shown:visibleProductCount());
+}
 </script>
 </body>
 </html>

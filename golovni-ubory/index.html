@@ -23,6 +23,7 @@ padding:12px;border-radius:20px;background:rgba(255,255,255,.04);}
 border:2px solid rgba(225,29,72,.18);flex-shrink:0;background:white;}
 .brand-name{font-size:26px;font-weight:800;color:var(--accent);line-height:1;}
 .brand-sub{margin-top:6px;font-size:13px;color:var(--muted);}
+.updated-at{margin:-8px 0 16px;padding:0 12px;color:var(--muted);font-size:12px;line-height:1.4;}
 .theme-toggle{width:100%;border:1px solid var(--border);background:var(--panel-solid);
 color:var(--text);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:18px;margin-bottom:18px;}
 .menu-block{margin-bottom:18px;}
@@ -50,6 +51,11 @@ border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
 .telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
 padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.product-search-bar{display:flex;align-items:center;gap:12px;margin:0 0 18px;max-width:760px;}
+.product-search-input{width:min(520px,100%);border:1px solid var(--border);border-radius:14px;
+background:var(--panel-solid);color:var(--text);padding:13px 14px;font-size:15px;outline:none;}
+.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.search-status{color:var(--muted);font-size:13px;white-space:nowrap;}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
 .product-card{display:flex;flex-direction:column;background:var(--panel-solid);
 border:1px solid var(--border);border-radius:22px;overflow:hidden;
@@ -64,11 +70,21 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-price{font-size:24px;font-weight:800;margin-bottom:8px;}
 .product-title{font-size:15px;line-height:1.5;min-height:46px;margin-bottom:8px;}
 .product-meta{font-size:13px;color:var(--muted);}
+.product-extra{margin:0 16px 14px;border-top:1px solid var(--border);padding-top:10px;}
+.product-extra summary{cursor:pointer;color:var(--accent);font-weight:800;font-size:14px;}
+.detail-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0;}
+.detail-gallery img{width:100%;aspect-ratio:1/1.25;object-fit:cover;border-radius:10px;background:var(--bg-soft);}
+.product-description{margin-top:10px;color:var(--text);font-size:13px;line-height:1.55;white-space:normal;}
+.product-attrs{display:grid;gap:7px;margin:10px 0 0;font-size:13px;}
+.product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
+.product-attrs dt{color:var(--muted);}
+.product-attrs dd{margin:0;color:var(--text);}
 .card-tg-btn{display:block;margin:0 16px 16px;
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
 padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
 .card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
 .hidden-card{display:none;}
+.is-hidden-by-search{display:none!important;}
 .show-more-wrap{margin-top:30px;text-align:center;}
 .show-more-btn{border:none;background:linear-gradient(135deg,var(--accent),#fb7185);
 color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;}
@@ -87,7 +103,9 @@ background:var(--panel-solid);color:var(--muted);}
 @media(max-width:1080px){
 .layout{grid-template-columns:1fr;}
 .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
-.promo-card{flex-direction:column;text-align:center;}}
+.promo-card{flex-direction:column;text-align:center;}
+.product-search-bar{align-items:stretch;flex-direction:column;}
+.search-status{white-space:normal;}}
 </style>
 </head>
 <body>
@@ -100,8 +118,10 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
+    <div class='updated-at'>Оновлено: 25.05.2026 14:11</div>
     <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
     <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
+<li><a class='' href='/all/'>🛒 Всі товари</a></li>
 <li><a class='' href='/reviews/'>⭐ Відгуки покупців</a></li>
 <li><a class='' href='https://shafa.ua/uk/member/uniqlo-shop?sort=4' target='_blank' rel='noopener'>🌐 Shafa</a></li>
 <li><a class='' href='/olx/'>🌐 OLX</a></li>
@@ -150,26 +170,68 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="section-top">
             <h2>Товари розділу</h2>
         </div>
+        
+            <div class="product-search-bar">
+                <input class="product-search-input" type="search"
+                       placeholder="Пошук на цій сторінці: назва, бренд, розмір..."
+                       oninput="filterProducts(this)" autocomplete="off">
+                <div class="search-status" data-total="5">Показано: 5 / 5</div>
+            </div>
         <div class="products-grid">
-    <div class="product-card">
+    <div class="product-card" data-search="кепка uniqlo 450 грн uniqlo l / 58і ще 1 golovni-ubory кепка uniqlo
+в наявності колір чорний
+
+опис:
+- виготовлено з поліестеру та нейлону для м&#x27;якості.
+- термоформована конструкція зберігає форму.
+- можна прати в холодній воді.
+- захист від ультрафіолету (upf50+).
+- з&#x27;єднані шви для елегантного дизайну.
+- легко одягатися або скидати.
+- можна прати вручну.
+- upf50+.
+
+
+розмір
+
+обхват голови: ~ 58см, козирок: 7,60 см
+
+
+склад: 52% нейлон, 48% поліестер
+
+466905 бейсболки і кепки головні убори чорний l/5858 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/holovni-ubory/kepky/186751730-kepka-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2187295341_310_430" alt="Кепка uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2187295341_310_430" alt="Кепка uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">450 грн</div>
                 <div class="product-title">Кепка uniqlo</div>
-                <div class='product-meta'>Uniqlo • L / 58і ще 1</div>
+                <div class='product-meta'>Uniqlo • L / 58і ще 1</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2187295334_310_430' alt='Кепка uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2187295339_310_430' alt='Кепка uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Кепка UNIQLO<br>В наявності колір чорний<br><br>Опис:<br>- Виготовлено з поліестеру та нейлону для м&#x27;якості.<br>- Термоформована конструкція зберігає форму.<br>- Можна прати в холодній воді.<br>- Захист від ультрафіолету (UPF50+).<br>- З&#x27;єднані шви для елегантного дизайну.<br>- Легко одягатися або скидати.<br>- Можна прати вручну.<br>- UPF50+.<br><br><br>Розмір<br><br>Обхват голови: ~ 58см, Козирок: 7,60 см<br><br><br>Склад: 52% нейлон, 48% поліестер<br><br>466905</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Бейсболки і кепки Головні убори</dd></div><div><dt>Колір</dt><dd>Чорний</dd></div><div><dt>Розмір</dt><dd>L/5858</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="шапка heattech soufflé yarn uniqlo 650 грн uniqlo one size golovni-ubory теплий «heattech» з технологією теплопоглинання
+м‘яка пряжа “суфле” яка не колеться
+модель унісекс
+
+окружність 48см
+висота 21,5см
+
+471144 шапки головні убори хакі зелений onesize новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/holovni-ubory/shapky/190018712-shapka-heattech-souffle-yarn-uniqlo" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2206039880_310_430" alt="Шапка heattech soufflé yarn uniqlo">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2206039880_310_430" alt="Шапка heattech soufflé yarn uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">650 грн</div>
@@ -177,14 +239,36 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • One size</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/1400518467_310_430' alt='Шапка heattech soufflé yarn uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2162364226_310_430' alt='Шапка heattech soufflé yarn uniqlo' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/841349263_310_430' alt='Шапка heattech soufflé yarn uniqlo' loading='lazy' decoding='async'></div>
+            <div class='product-description'>теплий «HEATTECH» з технологією теплопоглинання<br>м‘яка пряжа “Суфле” яка не колеться<br>модель унісекс<br><br>окружність 48см<br>висота 21,5см<br><br>471144</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Шапки Головні убори</dd></div><div><dt>Колір</dt><dd>Хакі Зелений</dd></div><div><dt>Розмір</dt><dd>Onesize</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="шапка uniqlo 100% кашемір 1060 грн uniqlo 46 golovni-ubory шапка uniqlo 100% кашемір
+в наявності колір 42 yellow
+
+тепло і ніжне відчуття 100% найтоншого кашеміру. насолоджуйтеся розкішною текстурою.
+- 100% тонкий кашемір.
+- легкий, теплий і еластичний.
+- високоякісна текстура та чарівні кольори.
+- широкий ребристий край як акцент.
+
+обхват голови: 46 см, висота: 22 см
+
+
+склад:  кашемір 100%
+
+
+463423 шапки головні убори персиковий 46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/holovni-ubory/shapky/193985335-shapka-uniqlo-100-kashemir" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230395040_310_430" alt="Шапка uniqlo 100% кашемір">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230395040_310_430" alt="Шапка uniqlo 100% кашемір" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1060 грн</div>
@@ -192,14 +276,34 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2230400467_310_430' alt='Шапка uniqlo 100% кашемір' loading='lazy' decoding='async'><img src='https://image-thumbs.shafastatic.net/2230395507_310_430' alt='Шапка uniqlo 100% кашемір' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Шапка uniqlo 100% кашемір<br>В наявності колір 42 YELLOW<br><br>Тепло і ніжне відчуття 100% найтоншого кашеміру. Насолоджуйтеся розкішною текстурою.<br>- 100% тонкий кашемір.<br>- Легкий, теплий і еластичний.<br>- Високоякісна текстура та чарівні кольори.<br>- Широкий ребристий край як акцент.<br><br>Обхват голови: 46 см, висота: 22 см<br><br><br>Склад:  кашемір 100%<br><br><br>463423</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Шапки Головні убори</dd></div><div><dt>Колір</dt><dd>Персиковий</dd></div><div><dt>Розмір</dt><dd>46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="шапка uniqlo 100% кашемір 1060 грн uniqlo 46 golovni-ubory шапка uniqlo 100% кашемір
+в наявності колір 11 pink
+
+тепло і ніжне відчуття 100% найтоншого кашеміру. насолоджуйтеся розкішною текстурою.
+- 100% тонкий кашемір.
+- легкий, теплий і еластичний.
+- високоякісна текстура та чарівні кольори.
+- широкий ребристий край як акцент.
+
+обхват голови: 46 см, висота: 22 см
+
+склад: кашемір 100%
+
+463423 шапки головні убори рожевий 46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/holovni-ubory/shapky/193985383-shapka-uniqlo-100-kashemir" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230395507_310_430" alt="Шапка uniqlo 100% кашемір">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230395507_310_430" alt="Шапка uniqlo 100% кашемір" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1060 грн</div>
@@ -207,14 +311,32 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2230400467_310_430' alt='Шапка uniqlo 100% кашемір' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Шапка uniqlo 100% кашемір<br>В наявності колір 11 PINK<br><br>Тепло і ніжне відчуття 100% найтоншого кашеміру. Насолоджуйтеся розкішною текстурою.<br>- 100% тонкий кашемір.<br>- Легкий, теплий і еластичний.<br>- Високоякісна текстура та чарівні кольори.<br>- Широкий ребристий край як акцент.<br><br>Обхват голови: 46 см, висота: 22 см<br><br>Склад: кашемір 100%<br><br>463423</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Шапки Головні убори</dd></div><div><dt>Колір</dt><dd>Рожевий</dd></div><div><dt>Розмір</dt><dd>46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div>
-    <div class="product-card">
+    <div class="product-card" data-search="шапка uniqlo 100% кашемір колекція anya hindmarch 1100 грн uniqlo 46 golovni-ubory шапка uniqlo 100% кашемір колекція anya hindmarch
+в наявності колір 69 navy
+
+тепло і ніжне відчуття 100% найтоншого кашеміру. насолоджуйтеся розкішною текстурою.
+- 100% тонкий кашемір.
+- легкий, теплий і еластичний.
+- високоякісна текстура та чарівні кольори.
+- широкий ребристий край як акцент.
+
+обхват голови: 46 см, висота: 22 см
+
+склад: кашемір 100% шапки головні убори синій 46 новий uniqlo-shop 5.0 (1272 оцінки)">
         <a class="card-main-link" href="https://shafa.ua/uk/aksesuary/holovni-ubory/shapky/193986181-shapka-uniqlo-100-kashemir-kolekciya-anya-hindmarch" target="_blank" rel="noopener">
             <div class="product-image-wrap">
-                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230400467_310_430" alt="Шапка uniqlo 100% кашемір колекція anya hindmarch">
+                <img class="product-image" src="https://image-thumbs.shafastatic.net/2230400467_310_430" alt="Шапка uniqlo 100% кашемір колекція anya hindmarch" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1100 грн</div>
@@ -222,19 +344,48 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 46</div>
             </div>
         </a>
+        
+        <details class="product-extra">
+            <summary>Опис і характеристики</summary>
+            <div class='detail-gallery'><img src='https://image-thumbs.shafastatic.net/2230400528_310_430' alt='Шапка uniqlo 100% кашемір колекція anya hindmarch' loading='lazy' decoding='async'></div>
+            <div class='product-description'>Шапка uniqlo 100% кашемір колекція ANYA HINDMARCH<br>В наявності колір 69 NAVY<br><br>Тепло і ніжне відчуття 100% найтоншого кашеміру. Насолоджуйтеся розкішною текстурою.<br>- 100% тонкий кашемір.<br>- Легкий, теплий і еластичний.<br>- Високоякісна текстура та чарівні кольори.<br>- Широкий ребристий край як акцент.<br><br>Обхват голови: 46 см, висота: 22 см<br><br>Склад: кашемір 100%</div>
+            <dl class='product-attrs'><div><dt>Категорії</dt><dd>Шапки Головні убори</dd></div><div><dt>Колір</dt><dd>Синій</dd></div><div><dt>Розмір</dt><dd>46</dd></div><div><dt>Стан</dt><dd>Новий</dd></div><div><dt>Продавець</dt><dd>uniqlo-shop</dd></div><div><dt>Рейтинг</dt><dd>5.0 (1272 оцінки)</dd></div></dl>
+        </details>
         <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
             Замовити в Telegram (-10%)
         </a>
     </div></div>
         
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 14:11</div>
 </main>
 </div>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
 if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>el.style.display='flex');btn.style.display='none';}
+function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
+function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
+function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function filterProducts(input){
+const q=(input.value||'').trim().toLowerCase();
+const cards=Array.from(document.querySelectorAll('.product-card'));
+let shown=0;
+cards.forEach((card)=>{
+const matches=!q||(card.dataset.search||card.innerText).toLowerCase().includes(q);
+card.classList.toggle('is-hidden-by-search',!matches);
+if(q){
+card.classList.remove('hidden-card');
+card.style.display=matches?'flex':'none';
+}else{
+card.style.display='';
+if(card.dataset.initialHidden==='1'&&card.dataset.expanded!=='1')card.classList.add('hidden-card');
+}
+if(matches&&(q||!card.classList.contains('hidden-card')))shown++;
+});
+const btn=document.querySelector('.show-more-btn');
+if(btn)btn.style.display=q?'none':(document.querySelector('.hidden-card')?'inline-block':'none');
+updateSearchStatus(cards.length, q?shown:visibleProductCount());
+}
 </script>
 </body>
 </html>
