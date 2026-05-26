@@ -131,8 +131,12 @@ display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
 .chat-panel{width:min(100%,440px);max-height:min(760px,calc(100vh - 36px));display:flex;flex-direction:column;
 background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.28);overflow:hidden;}
 .chat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);}
+.chat-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:900;margin-bottom:5px;}
 .chat-title{font-weight:900;font-size:20px;line-height:1.2;}
 .chat-subtitle{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.35;}
+.chat-head-actions{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.chat-history-link{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px 11px;text-decoration:none;font-weight:800;font-size:13px;white-space:nowrap;}
+.chat-history-link:hover{border-color:var(--accent);color:var(--accent);}
 .chat-close{border:1px solid var(--border);background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:12px;cursor:pointer;font-size:22px;line-height:1;}
 .chat-body{padding:14px;display:grid;gap:12px;min-height:0;}
 .chat-auth{display:grid;gap:10px;}
@@ -156,6 +160,39 @@ background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;
 .chat-composer{display:grid;gap:8px;}
 .chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
 .chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.chat-page-root{max-width:1440px;margin:0 auto;animation:fadeUp .3s ease both;}
+.chat-page-top{max-width:780px;margin-bottom:18px;}
+.chat-page-panel{width:100%;max-height:none;min-height:calc(100vh - 150px);border-radius:22px;box-shadow:var(--shadow);}
+.chat-page-panel .chat-head{padding:20px 22px;}
+.chat-page-panel .chat-body{padding:0;gap:0;min-height:0;flex:1;}
+.chat-page-panel .chat-status{padding:10px 22px;border-bottom:1px solid var(--border);background:var(--bg);}
+.chat-page-panel .chat-auth{padding:22px;}
+.chat-page-panel .chat-workspace.active{display:grid;grid-template-columns:minmax(280px,360px) minmax(0,1fr);gap:0;min-height:560px;}
+.chat-history-panel{display:none;border-right:1px solid var(--border);background:var(--bg);padding:14px;gap:10px;align-content:start;min-width:0;}
+.chat-history-panel.active{display:grid;}
+.chat-history-title{font-size:16px;font-weight:900;}
+.chat-history-note{font-size:12px;color:var(--muted);line-height:1.4;}
+.chat-dialog-panel{display:grid;grid-template-rows:auto minmax(220px,1fr) auto;gap:12px;min-width:0;padding:14px;}
+.chat-page-panel .chat-dialog-panel{min-height:560px;}
+.chat-product-preview{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:16px;background:var(--bg);padding:10px;min-height:78px;}
+.chat-product-image{width:58px;height:58px;border-radius:12px;object-fit:contain;background:var(--panel-solid);border:1px solid var(--border);padding:3px;flex:0 0 58px;}
+.chat-product-info{min-width:0;display:grid;gap:4px;}
+.chat-product-name{color:var(--text);font-weight:900;text-decoration:none;line-height:1.25;overflow-wrap:anywhere;}
+a.chat-product-name:hover{color:var(--accent);}
+.chat-product-price{color:var(--muted);font-size:13px;font-weight:700;}
+.chat-product-empty,.chat-empty-state{color:var(--muted);font-size:13px;line-height:1.45;}
+.chat-thread-list{max-height:120px;overflow:auto;display:grid;gap:8px;}
+.chat-page-panel .chat-thread-list{max-height:calc(100vh - 290px);}
+.chat-thread-btn{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid var(--border);background:var(--panel-solid);color:var(--text);border-radius:14px;padding:9px;text-align:left;cursor:pointer;transition:.18s ease;}
+.chat-thread-btn:hover{border-color:var(--accent);transform:translateY(-1px);}
+.chat-thread-image{width:48px;height:48px;border-radius:12px;object-fit:contain;background:var(--bg-soft);border:1px solid var(--border);padding:2px;}
+.chat-thread-image.empty{display:none;}
+.chat-thread-body{min-width:0;display:grid;gap:2px;}
+.chat-thread-title{font-weight:900;font-size:13px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.chat-thread-meta,.chat-thread-last,.chat-thread-time{font-size:12px;color:var(--muted);line-height:1.3;}
+.chat-thread-last{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.chat-thread-time{white-space:nowrap;align-self:start;}
+.chat-page-panel .chat-messages{height:auto;min-height:0;}
 .detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
 .detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .detail-section summary::-webkit-details-marker{display:none;}
@@ -233,6 +270,13 @@ background:var(--panel-solid);color:var(--muted);}
 .detail-section{padding-top:14px;margin-top:14px;}
 .detail-actions{display:grid;grid-template-columns:1fr;}
 .detail-order-btn,.detail-chat-btn{width:100%;}
+.chat-page-panel{min-height:auto;}
+.chat-page-panel .chat-workspace.active{grid-template-columns:1fr;min-height:auto;}
+.chat-history-panel{border-right:none;border-bottom:1px solid var(--border);}
+.chat-page-panel .chat-thread-list{max-height:250px;}
+.chat-dialog-panel,.chat-page-panel .chat-dialog-panel{min-height:460px;}
+.chat-head{align-items:flex-start;}
+.chat-head-actions{flex-direction:column;align-items:flex-end;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
@@ -250,10 +294,15 @@ background:var(--panel-solid);color:var(--muted);}
 .promo-badge{width:78px;height:78px;font-size:20px;}
 .chat-overlay{padding:10px;align-items:stretch;}
 .chat-panel{width:100%;max-height:calc(100vh - 20px);border-radius:20px;}
+.chat-history-link{display:none;}
+.chat-dialog-panel{padding:10px;}
+.chat-product-preview{align-items:flex-start;}
+.chat-thread-btn{grid-template-columns:44px minmax(0,1fr);}
+.chat-thread-time{grid-column:2;}
 }
 </style>
 </head>
-<body>
+<body data-page-type="category">
 <div class="layout">
 <aside class="sidebar">
     <a class="brand" href="../">
@@ -263,13 +312,14 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 26.05.2026 12:19</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 13:11</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
     <nav class="desktop-catalog" aria-label="Каталог">
         <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'><img class='nav-icon' src='../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/chats/'><img class='nav-icon' src='../assets/icons/chat.png' alt=''><span>Чати</span></a></li>
 <li><a class='' href='/reviews/'><img class='nav-icon' src='../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
 <li><a class='' href='/olx/'><img class='nav-icon' src='../assets/icons/market.png' alt=''><span>OLX</span></a></li>
 </ul></div>
@@ -315,6 +365,7 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="mobile-catalog-body">
             <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'><img class='nav-icon' src='../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/chats/'><img class='nav-icon' src='../assets/icons/chat.png' alt=''><span>Чати</span></a></li>
 <li><a class='' href='/reviews/'><img class='nav-icon' src='../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
 <li><a class='' href='/olx/'><img class='nav-icon' src='../assets/icons/market.png' alt=''><span>OLX</span></a></li>
 </ul></div>
@@ -391,6 +442,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13316"
                     data-chat-product-name="Жіноче супермягкое бавовняне плаття трапецієподібної форми з экстратонкого бавовни"
                     data-chat-product-url="../product/13316/"
+                    data-chat-product-image="../assets/products/93354344/01-484080476.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -416,6 +469,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13315"
                     data-chat-product-name="Жіноче довге плаття bratop"
                     data-chat-product-url="../product/13315/"
+                    data-chat-product-image="../assets/products/100691185/01-561080989.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -441,6 +496,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13314"
                     data-chat-product-name="Жіноче довге плаття з бавовни мерсеризованного"
                     data-chat-product-url="../product/13314/"
+                    data-chat-product-image="../assets/products/100694820/01-561161059.jpg"
+                    data-chat-product-price="950 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -467,6 +524,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13313"
                     data-chat-product-name="Сукня mango"
                     data-chat-product-url="../product/13313/"
+                    data-chat-product-image="../assets/products/101010987/01-567067264.jpg"
+                    data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -492,6 +551,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13312"
                     data-chat-product-name="Колекція hana tajima для uniqlo"
                     data-chat-product-url="../product/13312/"
+                    data-chat-product-image="../assets/products/100685780/01-561003507.jpg"
+                    data-chat-product-price="950 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -517,6 +578,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13311"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13311/"
+                    data-chat-product-image="../assets/products/101061561/01-568011396.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -542,6 +605,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13310"
                     data-chat-product-name="Сукня-футболка оверсайз"
                     data-chat-product-url="../product/13310/"
+                    data-chat-product-image="../assets/products/101067095/01-568093894.jpg"
+                    data-chat-product-price="955 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -567,6 +632,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13309"
                     data-chat-product-name="Сукня uniqlo ines de la fressange"
                     data-chat-product-url="../product/13309/"
+                    data-chat-product-image="../assets/products/101075056/01-568162417.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -592,6 +659,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13308"
                     data-chat-product-name="Сукня uniqlo ines de la fressange"
                     data-chat-product-url="../product/13308/"
+                    data-chat-product-image="../assets/products/101075524/01-568166326.jpg"
+                    data-chat-product-price="1350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -617,6 +686,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13307"
                     data-chat-product-name="Жіноче плаття принцеса там.там"
                     data-chat-product-url="../product/13307/"
+                    data-chat-product-image="../assets/products/101075850/01-568169417.jpg"
+                    data-chat-product-price="600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -642,6 +713,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13306"
                     data-chat-product-name="Жіноче плаття з жоржету з перехресним вирізом"
                     data-chat-product-url="../product/13306/"
+                    data-chat-product-image="../assets/products/101076287/01-568174925.jpg"
+                    data-chat-product-price="1299 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -667,6 +740,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13305"
                     data-chat-product-name="Uniqlo жіноче плаття з принтом"
                     data-chat-product-url="../product/13305/"
+                    data-chat-product-image="../assets/products/101121447/01-568461913.jpg"
+                    data-chat-product-price="1199 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -692,6 +767,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13304"
                     data-chat-product-name="Жіноче плаття з драпіруванням (без рукавів)"
                     data-chat-product-url="../product/13304/"
+                    data-chat-product-image="../assets/products/101121904/01-568464680.jpg"
+                    data-chat-product-price="755 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -717,6 +794,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13303"
                     data-chat-product-name="Жіноче плаття"
                     data-chat-product-url="../product/13303/"
+                    data-chat-product-image="../assets/products/101122495/01-568467583.jpg"
+                    data-chat-product-price="699 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -742,6 +821,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13302"
                     data-chat-product-name="Жіноча бавовняна атласна сукня-сорочка"
                     data-chat-product-url="../product/13302/"
+                    data-chat-product-image="../assets/products/101146568/01-568601213.jpg"
+                    data-chat-product-price="1299 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -767,6 +848,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13301"
                     data-chat-product-name="Жіноча сукня-сорочка в клітку"
                     data-chat-product-url="../product/13301/"
+                    data-chat-product-image="../assets/products/101146837/01-568602633.jpg"
+                    data-chat-product-price="955 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -792,6 +875,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13300"
                     data-chat-product-name="Uniqlo жіноче плаття з вбудованим бра"
                     data-chat-product-url="../product/13300/"
+                    data-chat-product-image="../assets/products/101170595/01-568731152.jpg"
+                    data-chat-product-price="950 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -817,6 +902,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13299"
                     data-chat-product-name="Вишита спортивна сукня uniqlo mickey stans"
                     data-chat-product-url="../product/13299/"
+                    data-chat-product-image="../assets/products/101267015/01-569244575.jpg"
+                    data-chat-product-price="955 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -843,6 +930,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13298"
                     data-chat-product-name="Сукня"
                     data-chat-product-url="../product/13298/"
+                    data-chat-product-image="../assets/products/105868584/01-653505008.jpg"
+                    data-chat-product-price="668 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -875,6 +964,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13297"
                     data-chat-product-name="Жіноча сукня на шнурках"
                     data-chat-product-url="../product/13297/"
+                    data-chat-product-image="../assets/products/105869500/01-653523113.jpg"
+                    data-chat-product-price="949 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -909,6 +1000,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13296"
                     data-chat-product-name="Жіноча сукня з принтом з рукавом 3/4"
                     data-chat-product-url="../product/13296/"
+                    data-chat-product-image="../assets/products/142969898/01-1590539624.jpg"
+                    data-chat-product-price="1299 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -942,6 +1035,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13295"
                     data-chat-product-name="Жіноча сукня-сорочка з віскози"
                     data-chat-product-url="../product/13295/"
+                    data-chat-product-image="../assets/products/143111269/01-1598995517.png"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -973,6 +1068,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13294"
                     data-chat-product-name="Шикарна тепла сукня uniqlo"
                     data-chat-product-url="../product/13294/"
+                    data-chat-product-image="../assets/products/143112277/01-1599029501.png"
+                    data-chat-product-price="1499 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1006,6 +1103,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13293"
                     data-chat-product-name="Сукня жакардова (без рукавів) uniqlo"
                     data-chat-product-url="../product/13293/"
+                    data-chat-product-image="../assets/products/143123757/01-1599423430.jpg"
+                    data-chat-product-price="684 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1037,6 +1136,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13292"
                     data-chat-product-name="Жіноча сукня на бретелях з жоржету"
                     data-chat-product-url="../product/13292/"
+                    data-chat-product-image="../assets/products/143124841/01-1599456010.jpg"
+                    data-chat-product-price="1499 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1063,6 +1164,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13291"
                     data-chat-product-name="Супер платье uniqlo"
                     data-chat-product-url="../product/13291/"
+                    data-chat-product-image="../assets/products/143204361/01-2190823074.jpg"
+                    data-chat-product-price="1599 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1093,6 +1196,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13290"
                     data-chat-product-name="Сукня uniqlo,нова з бірками!"
                     data-chat-product-url="../product/13290/"
+                    data-chat-product-image="../assets/products/143207647/01-1604071570.jpg"
+                    data-chat-product-price="1299 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1123,6 +1228,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13289"
                     data-chat-product-name="Сукня uniqlo idlf з вишивкою,нова з бірками!"
                     data-chat-product-url="../product/13289/"
+                    data-chat-product-image="../assets/products/143221066/01-1604520962.jpg"
+                    data-chat-product-price="1299 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1149,6 +1256,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13288"
                     data-chat-product-name="Шифонова сукня uniqlo s sanderson"
                     data-chat-product-url="../product/13288/"
+                    data-chat-product-image="../assets/products/143223299/01-1604548225.jpg"
+                    data-chat-product-price="1399 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1174,6 +1283,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13287"
                     data-chat-product-name="Жіноча спортивна сукня з вовняної суміші (рукав 3/4) uniqlo"
                     data-chat-product-url="../product/13287/"
+                    data-chat-product-image="../assets/products/193257453/01-2225976446.jpg"
+                    data-chat-product-price="1900 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1207,6 +1318,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13286"
                     data-chat-product-name="Сукня uniqlo з пряжі суфле"
                     data-chat-product-url="../product/13286/"
+                    data-chat-product-image="../assets/products/199259368/01-2255121302.jpg"
+                    data-chat-product-price="1650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1240,6 +1353,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13285"
                     data-chat-product-name="Сукня uniqlo з пряжі суфле"
                     data-chat-product-url="../product/13285/"
+                    data-chat-product-image="../assets/products/199259655/01-2255123070.jpg"
+                    data-chat-product-price="1650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1265,6 +1380,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13284"
                     data-chat-product-name="Вільний сукню від модельєра крістоф лемер uniqlo"
                     data-chat-product-url="../product/13284/"
+                    data-chat-product-image="../assets/products/93119041/01-499050994.jpg"
+                    data-chat-product-price="1499 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1290,6 +1407,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13283"
                     data-chat-product-name="Сукня-комбінація з жоржету uniqlo"
                     data-chat-product-url="../product/13283/"
+                    data-chat-product-image="../assets/products/93352815/01-484063363.jpg"
+                    data-chat-product-price="750 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1315,6 +1434,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13282"
                     data-chat-product-name="Жіноче плаття з вишивкою (без рукавів) uniqlo"
                     data-chat-product-url="../product/13282/"
+                    data-chat-product-image="../assets/products/93354931/01-484085963.jpg"
+                    data-chat-product-price="1499 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1340,6 +1461,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13281"
                     data-chat-product-name="Жіноче плаття joy of fine print line cross"
                     data-chat-product-url="../product/13281/"
+                    data-chat-product-image="../assets/products/93862683/01-490249323.jpg"
+                    data-chat-product-price="1249 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1365,6 +1488,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13280"
                     data-chat-product-name="Жіноче шифонова сукня joy of print від uniqlo"
                     data-chat-product-url="../product/13280/"
+                    data-chat-product-image="../assets/products/93863091/01-490252420.jpg"
+                    data-chat-product-price="1349 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1390,6 +1515,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13279"
                     data-chat-product-name="Жіноче широке вовняне плаття 3d premium"
                     data-chat-product-url="../product/13279/"
+                    data-chat-product-image="../assets/products/94216749/01-494042712.jpg"
+                    data-chat-product-price="1499 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1415,6 +1542,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13278"
                     data-chat-product-name="Uniqlo u ідеальне повсякденне плаття"
                     data-chat-product-url="../product/13278/"
+                    data-chat-product-image="../assets/products/95025280/01-501099993.jpg"
+                    data-chat-product-price="895 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1440,6 +1569,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13277"
                     data-chat-product-name="Дуже гарне плаття uniqlo"
                     data-chat-product-url="../product/13277/"
+                    data-chat-product-image="../assets/products/100684537/01-560977998.jpg"
+                    data-chat-product-price="955 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1465,6 +1596,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13276"
                     data-chat-product-name="Сукня від паризького дизайнера крістофа лемера"
                     data-chat-product-url="../product/13276/"
+                    data-chat-product-image="../assets/products/100687506/01-561031227.jpg"
+                    data-chat-product-price="1490 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1497,6 +1630,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13275"
                     data-chat-product-name="Жіноче суперизящное бавовняне плаття"
                     data-chat-product-url="../product/13275/"
+                    data-chat-product-image="../assets/products/100692050/01-561090043.jpg"
+                    data-chat-product-price="1249 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1522,6 +1657,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13274"
                     data-chat-product-name="Жіноча сукня-сорочка з бавовни і льону"
                     data-chat-product-url="../product/13274/"
+                    data-chat-product-image="../assets/products/100873907/01-564517643.jpg"
+                    data-chat-product-price="1249 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1547,6 +1684,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13273"
                     data-chat-product-name="Вечірнє плаття mango limited edition"
                     data-chat-product-url="../product/13273/"
+                    data-chat-product-image="../assets/products/101011267/01-567071290.jpg"
+                    data-chat-product-price="1099 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1572,6 +1711,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13272"
                     data-chat-product-name="Шикарне плаття mango"
                     data-chat-product-url="../product/13272/"
+                    data-chat-product-image="../assets/products/101014745/01-567113196.jpg"
+                    data-chat-product-price="949 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1597,6 +1738,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13271"
                     data-chat-product-name="Uniqlo плаття women u a-line long-sleeve dress"
                     data-chat-product-url="../product/13271/"
+                    data-chat-product-image="../assets/products/101058149/01-567989191.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1622,6 +1765,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13270"
                     data-chat-product-name="Довге плаття uniqlo з начосом heattech"
                     data-chat-product-url="../product/13270/"
+                    data-chat-product-image="../assets/products/101074236/01-568155460.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1647,6 +1792,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13269"
                     data-chat-product-name="Жіноче плаття uniqlo"
                     data-chat-product-url="../product/13269/"
+                    data-chat-product-image="../assets/products/101074397/01-568156771.jpg"
+                    data-chat-product-price="955 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1672,6 +1819,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13268"
                     data-chat-product-name="Жіноче супермягкое бавовняне плаття трапецієподібної форми"
                     data-chat-product-url="../product/13268/"
+                    data-chat-product-image="../assets/products/101168329/01-568719142.jpg"
+                    data-chat-product-price="900 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1697,6 +1846,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13267"
                     data-chat-product-name="Жіноче плаття-блузка"
                     data-chat-product-url="../product/13267/"
+                    data-chat-product-image="../assets/products/101170060/01-568728406.jpg"
+                    data-chat-product-price="955 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1722,6 +1873,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13266"
                     data-chat-product-name="Сукня з крепу nwt uniqlo"
                     data-chat-product-url="../product/13266/"
+                    data-chat-product-image="../assets/products/101257044/01-569207927.jpg"
+                    data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1748,6 +1901,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13265"
                     data-chat-product-name="Жіноча сукня uniqlo"
                     data-chat-product-url="../product/13265/"
+                    data-chat-product-image="../assets/products/105402376/01-641772073.jpg"
+                    data-chat-product-price="849 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1779,6 +1934,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13264"
                     data-chat-product-name="Жіноча сукня з принтом на шнурках"
                     data-chat-product-url="../product/13264/"
+                    data-chat-product-image="../assets/products/105868785/01-653508640.jpg"
+                    data-chat-product-price="949 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1805,6 +1962,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13263"
                     data-chat-product-name="Сукня-світшот uniqlo! розмір xs s і m!"
                     data-chat-product-url="../product/13263/"
+                    data-chat-product-image="../assets/products/142924667/01-1586996812.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1836,6 +1995,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13262"
                     data-chat-product-name="Шикарна тепла сукня uniqlo"
                     data-chat-product-url="../product/13262/"
+                    data-chat-product-image="../assets/products/142969607/01-1590533281.jpg"
+                    data-chat-product-price="1499 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1864,6 +2025,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13261"
                     data-chat-product-name="Дуже красива сукня uniqlo"
                     data-chat-product-url="../product/13261/"
+                    data-chat-product-image="../assets/products/142988305/01-1590943518.jpg"
+                    data-chat-product-price="950 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1890,6 +2053,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13260"
                     data-chat-product-name="Дизайнерське плаття uniqlo"
                     data-chat-product-url="../product/13260/"
+                    data-chat-product-image="../assets/products/143127234/01-1599524097.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1920,6 +2085,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13259"
                     data-chat-product-name="Нова з бірками сукня uniqlo"
                     data-chat-product-url="../product/13259/"
+                    data-chat-product-image="../assets/products/143127590/01-1599530194.jpg"
+                    data-chat-product-price="1099 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1948,6 +2115,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13258"
                     data-chat-product-name="Жіноча сукня з перехресним вирізом!нова з бірками!uniqlo"
                     data-chat-product-url="../product/13258/"
+                    data-chat-product-image="../assets/products/143127935/01-1599540882.jpg"
+                    data-chat-product-price="999 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1973,6 +2142,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13257"
                     data-chat-product-name="Сукня-смугаста футболка з короткими рукавами і короткими рукавами u!нова з бірками!"
                     data-chat-product-url="../product/13257/"
+                    data-chat-product-image="../assets/products/143205721/01-1603998616.jpg"
+                    data-chat-product-price="1299 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2004,6 +2175,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13256"
                     data-chat-product-name="Т-плаття оверсайз!нова з бірками!uniqlo"
                     data-chat-product-url="../product/13256/"
+                    data-chat-product-image="../assets/products/143206248/01-1604021821.jpg"
+                    data-chat-product-price="1299 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2033,6 +2206,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13255"
                     data-chat-product-name="Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!"
                     data-chat-product-url="../product/13255/"
+                    data-chat-product-image="../assets/products/143540255/01-1618954585.jpg"
+                    data-chat-product-price="2600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2062,6 +2237,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13254"
                     data-chat-product-name="Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!"
                     data-chat-product-url="../product/13254/"
+                    data-chat-product-image="../assets/products/143540677/01-1618975454.jpg"
+                    data-chat-product-price="2600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2091,6 +2268,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13253"
                     data-chat-product-name="Сукня-кльош 3d преміум-класу новая с бирками!!100 процентная шерсть премиум класса!"
                     data-chat-product-url="../product/13253/"
+                    data-chat-product-image="../assets/products/143540898/01-1618988799.jpg"
+                    data-chat-product-price="2600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2121,6 +2300,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13252"
                     data-chat-product-name="Платье uniqlo,новое с бирками!"
                     data-chat-product-url="../product/13252/"
+                    data-chat-product-image="../assets/products/166721812/01--220380537.jpg"
+                    data-chat-product-price="1399 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2154,6 +2335,8 @@ a9 новий чорний 38 / m / 46 жіночий одяг плаття су
                     data-chat-product-id="13251"
                     data-chat-product-name="Uniqlo платье из мериносовой смеси с воротником-лодочкой и длинными рукавами"
                     data-chat-product-url="../product/13251/"
+                    data-chat-product-image="../assets/products/166962831/01--225510754.jpg"
+                    data-chat-product-price="1900 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2181,6 +2364,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13250"
                     data-chat-product-name="Длинное платье(короткий рукав) от uniqlo юникло"
                     data-chat-product-url="../product/13250/"
+                    data-chat-product-image="../assets/products/167616190/01--240811257.jpg"
+                    data-chat-product-price="1199 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2215,6 +2400,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13249"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13249/"
+                    data-chat-product-image="../assets/products/186347611/01-2184765112.webp"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2251,6 +2438,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13248"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13248/"
+                    data-chat-product-image="../assets/products/188738172/01-2198814539.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2287,6 +2476,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13247"
                     data-chat-product-name="Сукня з джерсі uniqlo"
                     data-chat-product-url="../product/13247/"
+                    data-chat-product-image="../assets/products/190238853/01-2207370925.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2330,6 +2521,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13246"
                     data-chat-product-name="Сукня з довгими рукавами з овечої вовни преміум-класу з круглим вирізом(u premium lambswool crew neck long-sleeve dress)"
                     data-chat-product-url="../product/13246/"
+                    data-chat-product-image="../assets/products/193258229/01-2225981233.png"
+                    data-chat-product-price="2100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2363,6 +2556,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13245"
                     data-chat-product-name="Сукня uniqlo з пряжі суфле"
                     data-chat-product-url="../product/13245/"
+                    data-chat-product-image="../assets/products/199259544/01-2255122427.jpg"
+                    data-chat-product-price="1650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2388,6 +2583,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13244"
                     data-chat-product-name="Uniqlo жіноче плаття"
                     data-chat-product-url="../product/13244/"
+                    data-chat-product-image="../assets/products/93352230/01-484057806.jpg"
+                    data-chat-product-price="1450 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2413,6 +2610,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13243"
                     data-chat-product-name="Плісироване сукню без рукавів) uniqlo"
                     data-chat-product-url="../product/13243/"
+                    data-chat-product-image="../assets/products/93356993/01-484100208.jpg"
+                    data-chat-product-price="1399 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2438,6 +2637,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13242"
                     data-chat-product-name="Стильне плаття uniqlo ines de la fressange"
                     data-chat-product-url="../product/13242/"
+                    data-chat-product-image="../assets/products/100694977/01-561162640.jpg"
+                    data-chat-product-price="1149 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2463,6 +2664,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13241"
                     data-chat-product-name="Ідеальне безшовне жіноче плаття uniqlo u 3d"
                     data-chat-product-url="../product/13241/"
+                    data-chat-product-image="../assets/products/101031928/01-567750024.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2488,6 +2691,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13240"
                     data-chat-product-name="Жіноча сукня-сорочка u"
                     data-chat-product-url="../product/13240/"
+                    data-chat-product-image="../assets/products/101168792/01-568721014.jpg"
+                    data-chat-product-price="1199 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2513,6 +2718,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13239"
                     data-chat-product-name="Жіноче супермягкое бавовняне плаття трапецієподібної форми"
                     data-chat-product-url="../product/13239/"
+                    data-chat-product-image="../assets/products/101171901/01-568738382.jpg"
+                    data-chat-product-price="955 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2542,6 +2749,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13238"
                     data-chat-product-name="Довга вельветова сукня-сорочка uniqlo юнікло"
                     data-chat-product-url="../product/13238/"
+                    data-chat-product-image="../assets/products/142968728/01-1590510465.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2570,6 +2779,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13237"
                     data-chat-product-name="Довга жіноча сукня в стилі сорочки з v-подібним вирізом"
                     data-chat-product-url="../product/13237/"
+                    data-chat-product-image="../assets/products/143125874/01-1599479629.jpg"
+                    data-chat-product-price="1299 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2603,6 +2814,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13236"
                     data-chat-product-name="Платье из мериноса с вырезом лодочкой"
                     data-chat-product-url="../product/13236/"
+                    data-chat-product-image="../assets/products/167616435/01--240820344.jpg"
+                    data-chat-product-price="1599 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2639,6 +2852,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13235"
                     data-chat-product-name="Сукня-сорочка з поясом uniqlo, розмір л"
                     data-chat-product-url="../product/13235/"
+                    data-chat-product-image="../assets/products/184641208/01-2173967324.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2674,6 +2889,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13234"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13234/"
+                    data-chat-product-image="../assets/products/187736276/01-2193406507.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2708,6 +2925,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13233"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13233/"
+                    data-chat-product-image="../assets/products/188075923/01-2195372097.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2743,6 +2962,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13232"
                     data-chat-product-name="Шерстяна сукня-трансформер від zara, розмір с"
                     data-chat-product-url="../product/13232/"
+                    data-chat-product-image="../assets/products/191893214/01-2217677504.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2782,6 +3003,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13231"
                     data-chat-product-name="Сукня з мериносової суміші uniqlo"
                     data-chat-product-url="../product/13231/"
+                    data-chat-product-image="../assets/products/191893639/01-2217680523.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2817,6 +3040,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13230"
                     data-chat-product-name="Сукня uniqlo з мериносової вовни"
                     data-chat-product-url="../product/13230/"
+                    data-chat-product-image="../assets/products/191894008/01-2217683355.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2853,6 +3078,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13229"
                     data-chat-product-name="Сукня souffle yarn uniqlo"
                     data-chat-product-url="../product/13229/"
+                    data-chat-product-image="../assets/products/191894166/01-2217684338.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2879,6 +3106,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13228"
                     data-chat-product-name="Сукня uniqlo з вовняної суміші(70% овечої вовни)"
                     data-chat-product-url="../product/13228/"
+                    data-chat-product-image="../assets/products/193243845/01-2225888914.png"
+                    data-chat-product-price="2400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2915,6 +3144,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13227"
                     data-chat-product-name="Сукня-кльош із суфле uniqlo"
                     data-chat-product-url="../product/13227/"
+                    data-chat-product-image="../assets/products/191894380/01-2217685588.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2951,6 +3182,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13226"
                     data-chat-product-name="Сукня з джерсі uniqlo"
                     data-chat-product-url="../product/13226/"
+                    data-chat-product-image="../assets/products/191894720/01-2217688016.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2987,6 +3220,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13225"
                     data-chat-product-name="Сукня souffle yarn uniqlo"
                     data-chat-product-url="../product/13225/"
+                    data-chat-product-image="../assets/products/191893483/01-2217679406.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3023,6 +3258,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13224"
                     data-chat-product-name="Сукня souffle yarn uniqlo"
                     data-chat-product-url="../product/13224/"
+                    data-chat-product-image="../assets/products/191893431/01-2217679040.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3062,6 +3299,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13223"
                     data-chat-product-name="Сукня-поло з вовни мериносу від uniqlo"
                     data-chat-product-url="../product/13223/"
+                    data-chat-product-image="../assets/products/191879331/01-2217577908.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3098,6 +3337,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13222"
                     data-chat-product-name="Джинсова сукня-сорочка uniqlo"
                     data-chat-product-url="../product/13222/"
+                    data-chat-product-image="../assets/products/209031595/01-2297784356.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3134,6 +3375,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13221"
                     data-chat-product-name="Джинсова сукня-сорочка uniqlo"
                     data-chat-product-url="../product/13221/"
+                    data-chat-product-image="../assets/products/209031711/01-2297785219.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3165,6 +3408,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13220"
                     data-chat-product-name="Сарафан з лляної суміші  uniqlo"
                     data-chat-product-url="../product/13220/"
+                    data-chat-product-image="../assets/products/209030705/01-2297778737.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3203,6 +3448,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13219"
                     data-chat-product-name="Сукня-сорочка з лляної суміші uniqlo"
                     data-chat-product-url="../product/13219/"
+                    data-chat-product-image="../assets/products/209033975/01-2297799113.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3240,6 +3487,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13218"
                     data-chat-product-name="Батистова сукня uniqlo"
                     data-chat-product-url="../product/13218/"
+                    data-chat-product-image="../assets/products/209032373/01-2297789250.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3281,6 +3530,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13217"
                     data-chat-product-name="Сукня uniqlo від дизайнерки клер вейт келлер"
                     data-chat-product-url="../product/13217/"
+                    data-chat-product-image="../assets/products/209032895/01-2297792166.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3318,6 +3569,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13216"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13216/"
+                    data-chat-product-image="../assets/products/209033224/01-2297794189.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3353,6 +3606,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13215"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13215/"
+                    data-chat-product-image="../assets/products/209033598/01-2297796444.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3390,6 +3645,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13214"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13214/"
+                    data-chat-product-image="../assets/products/209033861/01-2297798339.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3429,6 +3686,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13213"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13213/"
+                    data-chat-product-image="../assets/products/209035815/01-2297809981.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3464,6 +3723,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13212"
                     data-chat-product-name="Сукня uniqlo з 3d-в&#x27;язкою"
                     data-chat-product-url="../product/13212/"
+                    data-chat-product-image="../assets/products/209055237/01-2297901049.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3502,6 +3763,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13211"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13211/"
+                    data-chat-product-image="../assets/products/209055823/01-2297905107.jpg"
+                    data-chat-product-price="1450 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3538,6 +3801,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13210"
                     data-chat-product-name="Лляна сукня uniqlo"
                     data-chat-product-url="../product/13210/"
+                    data-chat-product-image="../assets/products/209092422/01-2298045657.jpg"
+                    data-chat-product-price="1480 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3574,6 +3839,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13209"
                     data-chat-product-name="Лляна сукня uniqlo"
                     data-chat-product-url="../product/13209/"
+                    data-chat-product-image="../assets/products/209093121/01-2298048438.jpg"
+                    data-chat-product-price="1480 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3611,6 +3878,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13208"
                     data-chat-product-name="Лляна сукня uniqlo преміум-серії uniqlo:c"
                     data-chat-product-url="../product/13208/"
+                    data-chat-product-image="../assets/products/209093573/01-2298050317.jpg"
+                    data-chat-product-price="1480 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3648,6 +3917,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13207"
                     data-chat-product-name="Лляна сукня uniqlo преміум-серії uniqlo:c"
                     data-chat-product-url="../product/13207/"
+                    data-chat-product-image="../assets/products/209093885/01-2298051400.jpg"
+                    data-chat-product-price="1480 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3684,6 +3955,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13206"
                     data-chat-product-name="Сукня з суміші льону uniqlo"
                     data-chat-product-url="../product/13206/"
+                    data-chat-product-image="../assets/products/209094826/01-2298055863.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3722,6 +3995,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13205"
                     data-chat-product-name="Сукня з v-подібним вирізом uniqlo"
                     data-chat-product-url="../product/13205/"
+                    data-chat-product-image="../assets/products/209108852/01-2298121680.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3761,6 +4036,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13204"
                     data-chat-product-name="Сукня balloon uniqlo"
                     data-chat-product-url="../product/13204/"
+                    data-chat-product-image="../assets/products/209032649/01-2297790766.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3800,6 +4077,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13203"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13203/"
+                    data-chat-product-image="../assets/products/209035499/01-2297808175.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3839,6 +4118,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13202"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13202/"
+                    data-chat-product-image="../assets/products/209035675/01-2297809116.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3870,6 +4151,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13201"
                     data-chat-product-name="Бавовняна сукня uniqlo"
                     data-chat-product-url="../product/13201/"
+                    data-chat-product-image="../assets/products/209036127/01-2297811607.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3901,6 +4184,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13200"
                     data-chat-product-name="Бавовняна сукня uniqlo"
                     data-chat-product-url="../product/13200/"
+                    data-chat-product-image="../assets/products/209036203/01-2297812217.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3939,6 +4224,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13199"
                     data-chat-product-name="Джинсова сукня-сорочка uniqlo"
                     data-chat-product-url="../product/13199/"
+                    data-chat-product-image="../assets/products/209031921/01-2297786463.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3974,6 +4261,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13198"
                     data-chat-product-name="Сукня з бавовни uniqlo"
                     data-chat-product-url="../product/13198/"
+                    data-chat-product-image="../assets/products/209051547/01-2297877903.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4010,6 +4299,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13197"
                     data-chat-product-name="Сукня з бавовни uniqlo"
                     data-chat-product-url="../product/13197/"
+                    data-chat-product-image="../assets/products/209051652/01-2297878608.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4044,6 +4335,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13196"
                     data-chat-product-name="Сукня з мерсеризованої бавовни uniqlo"
                     data-chat-product-url="../product/13196/"
+                    data-chat-product-image="../assets/products/209052236/01-2297881751.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4080,6 +4373,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13195"
                     data-chat-product-name="Сукня у рубчик uniqlo"
                     data-chat-product-url="../product/13195/"
+                    data-chat-product-image="../assets/products/209054495/01-2297896188.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4115,6 +4410,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13194"
                     data-chat-product-name="Сукня uniqlo з 3d-в&#x27;язкою"
                     data-chat-product-url="../product/13194/"
+                    data-chat-product-image="../assets/products/209054604/01-2297896788.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4153,6 +4450,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13193"
                     data-chat-product-name="Сукня uniqlo"
                     data-chat-product-url="../product/13193/"
+                    data-chat-product-image="../assets/products/209055548/01-2297903386.jpg"
+                    data-chat-product-price="1450 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4192,6 +4491,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13192"
                     data-chat-product-name="Легка бавовняна сукня uniqlo"
                     data-chat-product-url="../product/13192/"
+                    data-chat-product-image="../assets/products/209078971/01-2298001801.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4229,6 +4530,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13191"
                     data-chat-product-name="Бавовняна сукня uniqlo x jw anderson"
                     data-chat-product-url="../product/13191/"
+                    data-chat-product-image="../assets/products/209081011/01-2298007541.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4258,6 +4561,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13190"
                     data-chat-product-name="Сукня з вбудованим bra uniqlo"
                     data-chat-product-url="../product/13190/"
+                    data-chat-product-image="../assets/products/209084108/01-2298016086.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4295,6 +4600,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13189"
                     data-chat-product-name="Сукня crinkle cotton uniqlo"
                     data-chat-product-url="../product/13189/"
+                    data-chat-product-image="../assets/products/209087624/01-2298026312.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4332,6 +4639,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13188"
                     data-chat-product-name="Сукня crinkle cotton uniqlo"
                     data-chat-product-url="../product/13188/"
+                    data-chat-product-image="../assets/products/209088073/01-2298027851.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4371,6 +4680,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13187"
                     data-chat-product-name="Сукня з лляної суміші uniqlo"
                     data-chat-product-url="../product/13187/"
+                    data-chat-product-image="../assets/products/209090324/01-2298037212.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4407,6 +4718,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13186"
                     data-chat-product-name="Сукня з суміші льону uniqlo"
                     data-chat-product-url="../product/13186/"
+                    data-chat-product-image="../assets/products/209094497/01-2298054266.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4442,6 +4755,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13185"
                     data-chat-product-name="Сукня з об&#x27;ємними рукавами uniqlo"
                     data-chat-product-url="../product/13185/"
+                    data-chat-product-image="../assets/products/209095054/01-2298057135.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4477,6 +4792,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13184"
                     data-chat-product-name="Сукня з об&#x27;ємними рукавами uniqlo"
                     data-chat-product-url="../product/13184/"
+                    data-chat-product-image="../assets/products/209095233/01-2298058212.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4519,6 +4836,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13183"
                     data-chat-product-name="Елегантна шифонова сукня uniqlo:с"
                     data-chat-product-url="../product/13183/"
+                    data-chat-product-image="../assets/products/209095568/01-2298060092.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4562,6 +4881,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13182"
                     data-chat-product-name="Ультра-стречова сукня без рукавів airism uniqlo"
                     data-chat-product-url="../product/13182/"
+                    data-chat-product-image="../assets/products/209106948/01-2298109557.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4599,6 +4920,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13181"
                     data-chat-product-name="Сукня airism uniqlo"
                     data-chat-product-url="../product/13181/"
+                    data-chat-product-image="../assets/products/209107108/01-2298110581.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4636,6 +4959,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13180"
                     data-chat-product-name="Сукня airism uniqlo"
                     data-chat-product-url="../product/13180/"
+                    data-chat-product-image="../assets/products/209108311/01-2298118425.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4667,6 +4992,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13179"
                     data-chat-product-name="Сукня з бра uniqlo"
                     data-chat-product-url="../product/13179/"
+                    data-chat-product-image="../assets/products/209165986/01-2298448151.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4703,6 +5030,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13178"
                     data-chat-product-name="Сукня з бавовни uniqlo"
                     data-chat-product-url="../product/13178/"
+                    data-chat-product-image="../assets/products/209051316/01-2297876536.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4739,6 +5068,8 @@ uniqlo - марка признана «брендом повседневной �
                     data-chat-product-id="13177"
                     data-chat-product-name="Сукня з бавовни uniqlo"
                     data-chat-product-url="../product/13177/"
+                    data-chat-product-image="../assets/products/209051379/01-2297876755.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4773,6 +5104,8 @@ paul &amp; joe продовжує створювати стильні модел
                     data-chat-product-id="13176"
                     data-chat-product-name="Стильна жіноча сукня paul &amp; joe від uniqlo"
                     data-chat-product-url="../product/13176/"
+                    data-chat-product-image="../assets/products/209051876/01-2297879818.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4807,6 +5140,8 @@ paul &amp; joe продовжує створювати стильні модел
                     data-chat-product-id="13175"
                     data-chat-product-name="Стильна жіноча сукня paul &amp; joe від uniqlo"
                     data-chat-product-url="../product/13175/"
+                    data-chat-product-image="../assets/products/209051988/01-2297880419.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4844,6 +5179,8 @@ paul &amp; joe продовжує створювати стильні модел
                     data-chat-product-id="13174"
                     data-chat-product-name="Сукня  crinkle cotton uniqlo"
                     data-chat-product-url="../product/13174/"
+                    data-chat-product-image="../assets/products/209086297/01-2298022336.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4878,6 +5215,8 @@ paul &amp; joe продовжує створювати стильні модел
                     data-chat-product-id="13173"
                     data-chat-product-name="Сукня з об&#x27;ємними рукавами uniqlo"
                     data-chat-product-url="../product/13173/"
+                    data-chat-product-image="../assets/products/209090876/01-2298039907.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4915,6 +5254,8 @@ paul &amp; joe продовжує створювати стильні модел
                     data-chat-product-id="13172"
                     data-chat-product-name="Сукня airism uniqlo"
                     data-chat-product-url="../product/13172/"
+                    data-chat-product-image="../assets/products/209107673/01-2298114094.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4952,6 +5293,8 @@ paul &amp; joe продовжує створювати стильні модел
                     data-chat-product-id="13171"
                     data-chat-product-name="Сукня airism uniqlo"
                     data-chat-product-url="../product/13171/"
+                    data-chat-product-image="../assets/products/209107901/01-2298115595.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4982,6 +5325,8 @@ paul &amp; joe продовжує створювати стильні модел
                     data-chat-product-id="13170"
                     data-chat-product-name="Сукня з бра uniqlo"
                     data-chat-product-url="../product/13170/"
+                    data-chat-product-image="../assets/products/209166320/01-2298450352.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -5013,6 +5358,8 @@ paul &amp; joe продовжує створювати стильні модел
                     data-chat-product-id="13169"
                     data-chat-product-name="Сукня з суміші льону uniqlo"
                     data-chat-product-url="../product/13169/"
+                    data-chat-product-image="../assets/products/209167299/01-2298457288.jpg"
+                    data-chat-product-price="1450 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -5044,6 +5391,8 @@ paul &amp; joe продовжує створювати стильні модел
                     data-chat-product-id="13168"
                     data-chat-product-name="Сукня з лляної суміші uniqlo"
                     data-chat-product-url="../product/13168/"
+                    data-chat-product-image="../assets/products/209222222/01-2298769236.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -5081,6 +5430,8 @@ paul &amp; joe продовжує створювати стильні модел
                     data-chat-product-id="13008"
                     data-chat-product-name="Батистова сукня uniqlo"
                     data-chat-product-url="../product/13008/"
+                    data-chat-product-image="../assets/products/209032243/01-2297788494.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -5090,17 +5441,21 @@ paul &amp; joe продовжує створювати стильні модел
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 12:19</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 13:11</div>
 </main>
 </div>
 <div class="chat-overlay" id="chatOverlay" aria-hidden="true">
-    <section class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <section class="chat-panel" id="chatPanel" data-chat-surface="modal" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
         <div class="chat-head">
             <div>
+                <div class="chat-kicker">UniqLow chat</div>
                 <div class="chat-title" id="chatTitle">Чат з UniqLow</div>
-                <div class="chat-subtitle" id="chatSubtitle">Увійдіть через Google, щоб написати повідомлення.</div>
+                <div class="chat-subtitle" id="chatSubtitle">Історія діалогів, товар і повідомлення в одному місці.</div>
             </div>
-            <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">×</button>
+            <div class="chat-head-actions">
+                <a class="chat-history-link" href="/chats/">Всі чати</a>
+                <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">x</button>
+            </div>
         </div>
         <div class="chat-body">
             <div class="chat-auth" id="chatAuth">
@@ -5108,54 +5463,80 @@ paul &amp; joe продовжує створювати стильні модел
                 <div class="chat-warning">
                     Чат захищений Google-входом і правилами доступу. Не надсилайте номери карт, CVV, паролі або коди з SMS.
                 </div>
-                <div class="chat-status" id="chatStatus">Чат готується...</div>
             </div>
+            <div class="chat-status" id="chatStatus">Чат готується...</div>
             <div class="chat-workspace" id="chatWorkspace">
-                <div class="chat-owner-tools" id="chatOwnerTools">
-                    <div class="chat-status">Режим власника: показані останні діалоги покупців.</div>
+                <aside class="chat-history-panel" id="chatHistoryPanel">
+                    <div class="chat-history-title">Історія чатів</div>
+                    <div class="chat-history-note" id="chatHistoryNote">Останні діалоги з товарами.</div>
                     <div class="chat-thread-list" id="chatThreadList"></div>
-                </div>
-                <div class="chat-messages" id="chatMessages"></div>
-                <div class="chat-composer">
-                    <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
-                    <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
-                    <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
-                </div>
+                </aside>
+                <section class="chat-dialog-panel">
+                    <div class="chat-product-preview" id="chatProductPreview">
+                        <div class="chat-product-empty">Виберіть діалог або відкрийте чат з картки товару.</div>
+                    </div>
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-composer">
+                        <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
+                        <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
+                        <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
+                    </div>
+                </section>
             </div>
         </div>
     </section>
-</div>
-<script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
+</div><script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
 <script type="module">
 const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
 const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
 const firebaseConfig = chatConfig.firebase || {};
 const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
+const chatPageMode = Boolean(document.querySelector('.chat-page-root'));
 let chatAuth = null;
 let chatDb = null;
 let chatUser = null;
 let chatProvider = null;
 let chatProduct = {};
 let chatThreadId = '';
+let chatCurrentThread = null;
 let chatUnsubMessages = null;
 let chatUnsubThreads = null;
 let firebaseApi = null;
 
 const chatEl = (id) => document.getElementById(id);
+const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
 const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
-const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+const chatAbsoluteUrl = (value) => {
+    try { return value ? new URL(value, location.href).href : ''; }
+    catch { return ''; }
+};
+const chatTimeValue = (stamp) => {
+    if (!stamp) return 0;
+    if (typeof stamp.toMillis === 'function') return stamp.toMillis();
+    if (typeof stamp.seconds === 'number') return stamp.seconds * 1000;
+    return 0;
+};
+const chatFormatTime = (stamp) => {
+    const value = chatTimeValue(stamp);
+    if (!value) return '';
+    return new Intl.DateTimeFormat('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+};
 
 function openChatFromButton(btn) {
     chatProduct = {
         id: btn?.dataset.chatProductId || 'general',
         name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
         url: btn?.dataset.chatProductUrl || location.pathname,
+        image: btn?.dataset.chatProductImage || document.getElementById('productMainImage')?.getAttribute('src') || '',
+        price: btn?.dataset.chatProductPrice || '',
     };
     chatEl('chatOverlay')?.classList.add('open');
     chatEl('chatOverlay')?.setAttribute('aria-hidden', 'false');
-    chatEl('chatSubtitle').textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    const subtitle = chatEl('chatSubtitle');
+    if (subtitle) subtitle.textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    renderThreadProduct(chatProduct);
     prepareChat();
 }
 
@@ -5174,7 +5555,8 @@ async function prepareChat() {
     }
     try {
         await ensureFirebase();
-        chatStatus(chatUser ? 'Ви увійшли. Можна писати.' : 'Увійдіть через Google, щоб почати чат.');
+        if (chatUser) await startSignedChat();
+        else chatStatus('Увійдіть через Google, щоб бачити історію і писати повідомлення.');
     } catch (err) {
         chatStatus(`Чат не запустився: ${err.message || err}`);
     }
@@ -5194,19 +5576,44 @@ async function ensureFirebase() {
     firebaseApi.onAuthStateChanged(chatAuth, async (user) => {
         chatUser = user;
         updateChatAuthState();
-        if (user) {
-            if (chatIsOwner()) listenOwnerThreads();
-            else await openCustomerThread();
-        }
+        if (user) await startSignedChat();
+        else resetSignedChat();
     });
     return firebaseApi;
 }
 
+async function startSignedChat() {
+    updateChatAuthState();
+    if (chatIsOwner()) {
+        listenOwnerThreads();
+    } else if (chatPageMode) {
+        listenCustomerThreads();
+    } else if (chatProduct.id) {
+        await openCustomerThread();
+    }
+}
+
+function resetSignedChat() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    if (chatUnsubMessages) chatUnsubMessages();
+    chatUnsubThreads = null;
+    chatUnsubMessages = null;
+    chatThreadId = '';
+    chatCurrentThread = null;
+    chatEl('chatThreadList') && (chatEl('chatThreadList').innerHTML = '');
+    chatEl('chatMessages') && (chatEl('chatMessages').innerHTML = '');
+}
+
 function updateChatAuthState() {
     const signed = Boolean(chatUser);
-    chatEl('chatAuth').style.display = signed ? 'none' : 'grid';
-    chatEl('chatWorkspace').classList.toggle('active', signed);
-    chatEl('chatOwnerTools').classList.toggle('active', signed && chatIsOwner());
+    const auth = chatEl('chatAuth');
+    const workspace = chatEl('chatWorkspace');
+    const history = chatEl('chatHistoryPanel');
+    if (auth) auth.style.display = signed ? 'none' : 'grid';
+    if (workspace) workspace.classList.toggle('active', signed);
+    if (history) history.classList.toggle('active', signed && (chatPageMode || chatIsOwner()));
+    const note = chatEl('chatHistoryNote');
+    if (note && signed) note.textContent = chatIsOwner() ? 'Усі звернення покупців.' : 'Ваші діалоги з товарами.';
     if (signed) chatStatus(`Увійшли як ${chatUser.email}`);
 }
 
@@ -5227,17 +5634,23 @@ async function openCustomerThread() {
     if (!chatUser || !firebaseApi) return;
     chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
     const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
-    await firebaseApi.setDoc(threadRef, {
+    const payload = {
         customerUid: chatUser.uid,
         customerEmail: chatUser.email || '',
         customerName: chatUser.displayName || chatUser.email || '',
         ownerEmail: chatOwnerEmail,
         productId: chatProduct.id || 'general',
         productName: chatProduct.name || '',
-        productUrl: new URL(chatProduct.url || location.pathname, location.href).href,
+        productUrl: chatAbsoluteUrl(chatProduct.url || location.pathname),
+        productImage: chatAbsoluteUrl(chatProduct.image || ''),
+        productPrice: chatProduct.price || '',
         updatedAt: firebaseApi.serverTimestamp(),
         createdAt: firebaseApi.serverTimestamp(),
-    }, { merge: true });
+    };
+    await firebaseApi.setDoc(threadRef, payload, { merge: true });
+    chatCurrentThread = payload;
+    renderThreadProduct(payload);
+    renderSingleThreadButton(chatThreadId, payload);
     listenMessages(chatThreadId);
 }
 
@@ -5246,30 +5659,135 @@ function listenOwnerThreads() {
     const q = firebaseApi.query(
         firebaseApi.collection(chatDb, 'chatThreads'),
         firebaseApi.orderBy('updatedAt', 'desc'),
-        firebaseApi.limit(50)
+        firebaseApi.limit(100)
     );
     chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
-        const list = chatEl('chatThreadList');
-        list.innerHTML = '';
-        snap.forEach((docSnap) => {
-            const data = docSnap.data();
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = `chat-thread-btn${docSnap.id === chatThreadId ? ' active' : ''}`;
-            btn.dataset.threadId = docSnap.id;
-            btn.textContent = `${data.customerName || data.customerEmail || 'Покупець'} — ${data.productName || 'Загальний чат'}`;
-            btn.onclick = () => {
-                chatThreadId = docSnap.id;
-                document.querySelectorAll('.chat-thread-btn').forEach(el => el.classList.toggle('active', el.dataset.threadId === chatThreadId));
-                listenMessages(chatThreadId);
-            };
-            list.appendChild(btn);
-        });
-        if (!chatThreadId && snap.docs[0]) {
-            chatThreadId = snap.docs[0].id;
-            listenMessages(chatThreadId);
-        }
+        renderThreadList(snap.docs.map((docSnap) => ({ id: docSnap.id, data: docSnap.data() })));
     }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
+}
+
+function listenCustomerThreads() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads'),
+        firebaseApi.where('customerUid', '==', chatUser.uid),
+        firebaseApi.limit(100)
+    );
+    chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
+        const threads = snap.docs
+            .map((docSnap) => ({ id: docSnap.id, data: docSnap.data() }))
+            .sort((a, b) => chatTimeValue(b.data.updatedAt) - chatTimeValue(a.data.updatedAt));
+        renderThreadList(threads);
+    }, (err) => chatStatus(`Не вдалося прочитати ваші чати: ${err.message}`));
+}
+
+function renderThreadList(threads) {
+    const list = chatEl('chatThreadList');
+    if (!list) return;
+    list.innerHTML = '';
+    if (!threads.length) {
+        list.innerHTML = '<div class="chat-empty-state">Історія поки порожня. Відкрийте товар і натисніть "Чат".</div>';
+        renderThreadProduct(null);
+        chatEl('chatMessages') && (chatEl('chatMessages').innerHTML = '');
+        return;
+    }
+    threads.forEach((thread) => list.appendChild(createThreadButton(thread.id, thread.data)));
+    const selected = threads.find((thread) => thread.id === chatThreadId) || threads[0];
+    if (selected && selected.id !== chatThreadId) selectThread(selected.id, selected.data);
+    else if (selected) renderThreadProduct(selected.data);
+}
+
+function renderSingleThreadButton(threadId, data) {
+    const list = chatEl('chatThreadList');
+    const history = chatEl('chatHistoryPanel');
+    if (!list || !history || (!chatPageMode && !chatIsOwner())) return;
+    history.classList.add('active');
+    list.innerHTML = '';
+    list.appendChild(createThreadButton(threadId, data));
+    markActiveThread();
+}
+
+function createThreadButton(threadId, data) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chat-thread-btn';
+    btn.dataset.threadId = threadId;
+    const img = document.createElement('img');
+    img.className = 'chat-thread-image';
+    img.alt = '';
+    if (data.productImage) img.src = data.productImage;
+    else img.classList.add('empty');
+    const body = document.createElement('span');
+    body.className = 'chat-thread-body';
+    const title = document.createElement('span');
+    title.className = 'chat-thread-title';
+    title.textContent = data.productName || 'Загальний чат';
+    const meta = document.createElement('span');
+    meta.className = 'chat-thread-meta';
+    const customer = data.customerName || data.customerEmail || 'Покупець';
+    meta.textContent = chatIsOwner() ? customer : (data.productPrice || 'Без ціни');
+    const last = document.createElement('span');
+    last.className = 'chat-thread-last';
+    last.textContent = data.lastMessage || 'Новий діалог';
+    const time = document.createElement('span');
+    time.className = 'chat-thread-time';
+    time.textContent = chatFormatTime(data.updatedAt);
+    body.append(title, meta, last);
+    btn.append(img, body, time);
+    btn.onclick = () => selectThread(threadId, data);
+    return btn;
+}
+
+function selectThread(threadId, data) {
+    chatThreadId = threadId;
+    chatCurrentThread = data || {};
+    markActiveThread();
+    renderThreadProduct(chatCurrentThread);
+    listenMessages(threadId);
+}
+
+function markActiveThread() {
+    document.querySelectorAll('.chat-thread-btn').forEach((el) => {
+        el.classList.toggle('active', el.dataset.threadId === chatThreadId);
+    });
+}
+
+function renderThreadProduct(data) {
+    const preview = chatEl('chatProductPreview');
+    if (!preview) return;
+    const source = data || chatProduct || {};
+    preview.innerHTML = '';
+    if (!source.productName && !source.name) {
+        const empty = document.createElement('div');
+        empty.className = 'chat-product-empty';
+        empty.textContent = chatPageMode ? 'Виберіть діалог з історії.' : 'Товар буде прикріплений після відкриття чату.';
+        preview.appendChild(empty);
+        return;
+    }
+    const imageUrl = source.productImage || source.image || '';
+    const productUrl = source.productUrl || source.url || '';
+    if (imageUrl) {
+        const img = document.createElement('img');
+        img.className = 'chat-product-image';
+        img.src = chatAbsoluteUrl(imageUrl);
+        img.alt = source.productName || source.name || 'Товар';
+        preview.appendChild(img);
+    }
+    const info = document.createElement('div');
+    info.className = 'chat-product-info';
+    const name = document.createElement(productUrl ? 'a' : 'div');
+    name.className = 'chat-product-name';
+    name.textContent = source.productName || source.name || 'Товар';
+    if (productUrl) {
+        name.href = chatAbsoluteUrl(productUrl);
+        name.target = '_blank';
+        name.rel = 'noopener';
+    }
+    const price = document.createElement('div');
+    price.className = 'chat-product-price';
+    price.textContent = source.productPrice || source.price || 'Товар з каталогу';
+    info.append(name, price);
+    preview.appendChild(info);
 }
 
 function listenMessages(threadId) {
@@ -5277,18 +5795,22 @@ function listenMessages(threadId) {
     const q = firebaseApi.query(
         firebaseApi.collection(chatDb, 'chatThreads', threadId, 'messages'),
         firebaseApi.orderBy('createdAt', 'asc'),
-        firebaseApi.limit(120)
+        firebaseApi.limit(160)
     );
     chatUnsubMessages = firebaseApi.onSnapshot(q, (snap) => {
         const box = chatEl('chatMessages');
+        if (!box) return;
         box.innerHTML = '';
+        if (snap.empty) {
+            box.innerHTML = '<div class="chat-empty-state">Повідомлень ще немає. Напишіть перше повідомлення.</div>';
+        }
         snap.forEach((docSnap) => {
             const msg = docSnap.data();
             const row = document.createElement('div');
             row.className = `chat-message${msg.uid === chatUser?.uid ? ' mine' : ''}`;
             const meta = document.createElement('div');
             meta.className = 'chat-message-meta';
-            meta.textContent = msg.name || msg.email || 'Користувач';
+            meta.textContent = `${msg.name || msg.email || 'Користувач'}${chatFormatTime(msg.createdAt) ? ' • ' + chatFormatTime(msg.createdAt) : ''}`;
             const text = document.createElement('div');
             text.textContent = msg.text || '';
             row.append(meta, text);
@@ -5300,11 +5822,11 @@ function listenMessages(threadId) {
 
 async function sendChatMessage() {
     const input = chatEl('chatInput');
-    const text = chatClean(input.value);
+    const text = chatClean(input?.value);
     if (!text || !chatUser || !firebaseApi) return;
-    if (!chatThreadId && !chatIsOwner()) await openCustomerThread();
+    if (!chatThreadId && !chatIsOwner() && chatProduct.id) await openCustomerThread();
     if (!chatThreadId) {
-        chatStatus('Виберіть діалог покупця.');
+        chatStatus('Виберіть діалог або відкрийте чат з картки товару.');
         return;
     }
     chatEl('chatSendBtn').disabled = true;
@@ -5318,11 +5840,18 @@ async function sendChatMessage() {
             text,
             createdAt: firebaseApi.serverTimestamp(),
         });
-        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+        const update = {
             lastMessage: text.slice(0, 180),
             lastSender: role,
             updatedAt: firebaseApi.serverTimestamp(),
-        }, { merge: true });
+        };
+        if (!chatIsOwner() && chatProduct.id) {
+            update.productImage = chatAbsoluteUrl(chatProduct.image || '');
+            update.productPrice = chatProduct.price || '';
+            update.productName = chatProduct.name || '';
+            update.productUrl = chatAbsoluteUrl(chatProduct.url || location.pathname);
+        }
+        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
         input.value = '';
     } catch (err) {
         chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
@@ -5336,6 +5865,7 @@ chatEl('chatSendBtn')?.addEventListener('click', sendChatMessage);
 chatEl('chatInput')?.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) sendChatMessage();
 });
+if (chatPageMode) prepareChat();
 </script>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');

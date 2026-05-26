@@ -131,8 +131,12 @@ display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
 .chat-panel{width:min(100%,440px);max-height:min(760px,calc(100vh - 36px));display:flex;flex-direction:column;
 background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.28);overflow:hidden;}
 .chat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);}
+.chat-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:900;margin-bottom:5px;}
 .chat-title{font-weight:900;font-size:20px;line-height:1.2;}
 .chat-subtitle{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.35;}
+.chat-head-actions{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.chat-history-link{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px 11px;text-decoration:none;font-weight:800;font-size:13px;white-space:nowrap;}
+.chat-history-link:hover{border-color:var(--accent);color:var(--accent);}
 .chat-close{border:1px solid var(--border);background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:12px;cursor:pointer;font-size:22px;line-height:1;}
 .chat-body{padding:14px;display:grid;gap:12px;min-height:0;}
 .chat-auth{display:grid;gap:10px;}
@@ -156,6 +160,39 @@ background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;
 .chat-composer{display:grid;gap:8px;}
 .chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
 .chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.chat-page-root{max-width:1440px;margin:0 auto;animation:fadeUp .3s ease both;}
+.chat-page-top{max-width:780px;margin-bottom:18px;}
+.chat-page-panel{width:100%;max-height:none;min-height:calc(100vh - 150px);border-radius:22px;box-shadow:var(--shadow);}
+.chat-page-panel .chat-head{padding:20px 22px;}
+.chat-page-panel .chat-body{padding:0;gap:0;min-height:0;flex:1;}
+.chat-page-panel .chat-status{padding:10px 22px;border-bottom:1px solid var(--border);background:var(--bg);}
+.chat-page-panel .chat-auth{padding:22px;}
+.chat-page-panel .chat-workspace.active{display:grid;grid-template-columns:minmax(280px,360px) minmax(0,1fr);gap:0;min-height:560px;}
+.chat-history-panel{display:none;border-right:1px solid var(--border);background:var(--bg);padding:14px;gap:10px;align-content:start;min-width:0;}
+.chat-history-panel.active{display:grid;}
+.chat-history-title{font-size:16px;font-weight:900;}
+.chat-history-note{font-size:12px;color:var(--muted);line-height:1.4;}
+.chat-dialog-panel{display:grid;grid-template-rows:auto minmax(220px,1fr) auto;gap:12px;min-width:0;padding:14px;}
+.chat-page-panel .chat-dialog-panel{min-height:560px;}
+.chat-product-preview{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:16px;background:var(--bg);padding:10px;min-height:78px;}
+.chat-product-image{width:58px;height:58px;border-radius:12px;object-fit:contain;background:var(--panel-solid);border:1px solid var(--border);padding:3px;flex:0 0 58px;}
+.chat-product-info{min-width:0;display:grid;gap:4px;}
+.chat-product-name{color:var(--text);font-weight:900;text-decoration:none;line-height:1.25;overflow-wrap:anywhere;}
+a.chat-product-name:hover{color:var(--accent);}
+.chat-product-price{color:var(--muted);font-size:13px;font-weight:700;}
+.chat-product-empty,.chat-empty-state{color:var(--muted);font-size:13px;line-height:1.45;}
+.chat-thread-list{max-height:120px;overflow:auto;display:grid;gap:8px;}
+.chat-page-panel .chat-thread-list{max-height:calc(100vh - 290px);}
+.chat-thread-btn{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid var(--border);background:var(--panel-solid);color:var(--text);border-radius:14px;padding:9px;text-align:left;cursor:pointer;transition:.18s ease;}
+.chat-thread-btn:hover{border-color:var(--accent);transform:translateY(-1px);}
+.chat-thread-image{width:48px;height:48px;border-radius:12px;object-fit:contain;background:var(--bg-soft);border:1px solid var(--border);padding:2px;}
+.chat-thread-image.empty{display:none;}
+.chat-thread-body{min-width:0;display:grid;gap:2px;}
+.chat-thread-title{font-weight:900;font-size:13px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.chat-thread-meta,.chat-thread-last,.chat-thread-time{font-size:12px;color:var(--muted);line-height:1.3;}
+.chat-thread-last{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.chat-thread-time{white-space:nowrap;align-self:start;}
+.chat-page-panel .chat-messages{height:auto;min-height:0;}
 .detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
 .detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .detail-section summary::-webkit-details-marker{display:none;}
@@ -233,6 +270,13 @@ background:var(--panel-solid);color:var(--muted);}
 .detail-section{padding-top:14px;margin-top:14px;}
 .detail-actions{display:grid;grid-template-columns:1fr;}
 .detail-order-btn,.detail-chat-btn{width:100%;}
+.chat-page-panel{min-height:auto;}
+.chat-page-panel .chat-workspace.active{grid-template-columns:1fr;min-height:auto;}
+.chat-history-panel{border-right:none;border-bottom:1px solid var(--border);}
+.chat-page-panel .chat-thread-list{max-height:250px;}
+.chat-dialog-panel,.chat-page-panel .chat-dialog-panel{min-height:460px;}
+.chat-head{align-items:flex-start;}
+.chat-head-actions{flex-direction:column;align-items:flex-end;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
@@ -250,10 +294,15 @@ background:var(--panel-solid);color:var(--muted);}
 .promo-badge{width:78px;height:78px;font-size:20px;}
 .chat-overlay{padding:10px;align-items:stretch;}
 .chat-panel{width:100%;max-height:calc(100vh - 20px);border-radius:20px;}
+.chat-history-link{display:none;}
+.chat-dialog-panel{padding:10px;}
+.chat-product-preview{align-items:flex-start;}
+.chat-thread-btn{grid-template-columns:44px minmax(0,1fr);}
+.chat-thread-time{grid-column:2;}
 }
 </style>
 </head>
-<body>
+<body data-page-type="category">
 <div class="layout">
 <aside class="sidebar">
     <a class="brand" href="../">
@@ -263,13 +312,14 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 26.05.2026 12:19</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 13:11</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
     <nav class="desktop-catalog" aria-label="Каталог">
         <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'><img class='nav-icon' src='../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/chats/'><img class='nav-icon' src='../assets/icons/chat.png' alt=''><span>Чати</span></a></li>
 <li><a class='' href='/reviews/'><img class='nav-icon' src='../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
 <li><a class='' href='/olx/'><img class='nav-icon' src='../assets/icons/market.png' alt=''><span>OLX</span></a></li>
 </ul></div>
@@ -315,6 +365,7 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="mobile-catalog-body">
             <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'><img class='nav-icon' src='../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/chats/'><img class='nav-icon' src='../assets/icons/chat.png' alt=''><span>Чати</span></a></li>
 <li><a class='' href='/reviews/'><img class='nav-icon' src='../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
 <li><a class='' href='/olx/'><img class='nav-icon' src='../assets/icons/market.png' alt=''><span>OLX</span></a></li>
 </ul></div>
@@ -400,6 +451,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14086"
                     data-chat-product-name="Худі the message від uniqlo"
                     data-chat-product-url="../product/14086/"
+                    data-chat-product-image="../assets/products/166773511/01--221010926.png"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -431,6 +484,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14085"
                     data-chat-product-name="Чоловічий  вовняний светр з v-подібним вирізом"
                     data-chat-product-url="../product/14085/"
+                    data-chat-product-image="../assets/products/105255265/01-638471496.jpg"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -466,6 +521,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14084"
                     data-chat-product-name="Джемпер uniqlo зі 100% вовни мериноса"
                     data-chat-product-url="../product/14084/"
+                    data-chat-product-image="../assets/products/194414631/01-2232940627.jpg"
+                    data-chat-product-price="1450 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -491,6 +548,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14083"
                     data-chat-product-name="Чоловічий светр з бавовни та кашеміру в рубчик з v-подібним вирізом"
                     data-chat-product-url="../product/14083/"
+                    data-chat-product-image="../assets/products/100824740/01-563639344.jpg"
+                    data-chat-product-price="1449 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -521,6 +580,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14082"
                     data-chat-product-name="Чоловіча водолазка з вовни мериноса"
                     data-chat-product-url="../product/14082/"
+                    data-chat-product-image="../assets/products/100825136/01-563642424.jpg"
+                    data-chat-product-price="1249 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -546,6 +607,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14081"
                     data-chat-product-name="Чоловіча повсякденна худі з принтом pieter ceizer"
                     data-chat-product-url="../product/14081/"
+                    data-chat-product-image="../assets/products/101173918/01-568748876.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -571,6 +634,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14080"
                     data-chat-product-name="Чоловіча повсякденна худі urban walls"
                     data-chat-product-url="../product/14080/"
+                    data-chat-product-image="../assets/products/101182156/01-568794202.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -596,6 +661,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14079"
                     data-chat-product-name="Чоловіча повсякденна худі urban walls"
                     data-chat-product-url="../product/14079/"
+                    data-chat-product-image="../assets/products/101182211/01-568794445.jpg"
+                    data-chat-product-price="890 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -626,6 +693,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14078"
                     data-chat-product-name="Чоловічий вовняний кардиган із v-подібним вирізом"
                     data-chat-product-url="../product/14078/"
+                    data-chat-product-image="../assets/products/105402285/01-641768961.jpg"
+                    data-chat-product-price="1499 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -652,6 +721,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14077"
                     data-chat-product-name="Чоловічий повсякденний світшот disney mickey mouse art by andy worhol"
                     data-chat-product-url="../product/14077/"
+                    data-chat-product-image="../assets/products/105872352/01-653567490.webp"
+                    data-chat-product-price="1099 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -682,6 +753,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14076"
                     data-chat-product-name="Мужской повседневный свитшот с капюшоном"
                     data-chat-product-url="../product/14076/"
+                    data-chat-product-image="../assets/products/166961576/01--225451688.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -723,6 +796,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14075"
                     data-chat-product-name="Флісовий пуловер uniqlo, розмір с"
                     data-chat-product-url="../product/14075/"
+                    data-chat-product-image="../assets/products/183781777/01-2168601748.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -758,6 +833,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14074"
                     data-chat-product-name="Худі levis, розмір м"
                     data-chat-product-url="../product/14074/"
+                    data-chat-product-image="../assets/products/184955698/01-2175974185.png"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -794,6 +871,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14073"
                     data-chat-product-name="Світшот unisex uniqlo"
                     data-chat-product-url="../product/14073/"
+                    data-chat-product-image="../assets/products/184958428/01-2175990331.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -823,6 +902,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14072"
                     data-chat-product-name="Светр з овечої вовни uniqlo"
                     data-chat-product-url="../product/14072/"
+                    data-chat-product-image="../assets/products/193931341/01-2230057868.jpg"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -858,6 +939,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14071"
                     data-chat-product-name="Чоловічий мериносовий гольф uniqlo"
                     data-chat-product-url="../product/14071/"
+                    data-chat-product-image="../assets/products/193932600/01-2230065842.webp"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -888,6 +971,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14070"
                     data-chat-product-name="Светр uniqlo"
                     data-chat-product-url="../product/14070/"
+                    data-chat-product-image="../assets/products/196249307/01-2239838105.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -924,6 +1009,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14069"
                     data-chat-product-name="Флісовий кардиган uniqlo"
                     data-chat-product-url="../product/14069/"
+                    data-chat-product-image="../assets/products/199530355/01-2256628685.jpg"
+                    data-chat-product-price="1650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -960,6 +1047,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14068"
                     data-chat-product-name="Флісовий кардиган uniqlo"
                     data-chat-product-url="../product/14068/"
+                    data-chat-product-image="../assets/products/199530409/01-2256629053.jpg"
+                    data-chat-product-price="1650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -996,6 +1085,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14067"
                     data-chat-product-name="Джемпер uniqlo"
                     data-chat-product-url="../product/14067/"
+                    data-chat-product-image="../assets/products/199532536/01-2256641990.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1031,6 +1122,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14066"
                     data-chat-product-name="Джемпер uniqlo зі 100% вовни мериноса"
                     data-chat-product-url="../product/14066/"
+                    data-chat-product-image="../assets/products/194414498/01-2232939902.jpg"
+                    data-chat-product-price="1450 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1066,6 +1159,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14065"
                     data-chat-product-name="Лонгслів uniqlo з начосом"
                     data-chat-product-url="../product/14065/"
+                    data-chat-product-image="../assets/products/205691289/01-2282541897.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1104,6 +1199,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14064"
                     data-chat-product-name="Лонгслів airism uniqlo"
                     data-chat-product-url="../product/14064/"
+                    data-chat-product-image="../assets/products/205694174/01-2282555187.jpg"
+                    data-chat-product-price="900 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1139,6 +1236,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14063"
                     data-chat-product-name="Лонгслів uniqlo"
                     data-chat-product-url="../product/14063/"
+                    data-chat-product-image="../assets/products/205694824/01-2282558074.jpg"
+                    data-chat-product-price="900 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1164,6 +1263,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14062"
                     data-chat-product-name="Светр uniqlo з мериносової вовни s"
                     data-chat-product-url="../product/14062/"
+                    data-chat-product-image="../assets/products/93860126/01-490212297.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1189,6 +1290,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14061"
                     data-chat-product-name="Rise again by verdy толстовка з капюшоном"
                     data-chat-product-url="../product/14061/"
+                    data-chat-product-image="../assets/products/101175123/01-568755533.jpg"
+                    data-chat-product-price="920 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1214,6 +1317,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="14060"
                     data-chat-product-name="Чоловічий повсякденний топ disney mickey mouse art by andy warhol"
                     data-chat-product-url="../product/14060/"
+                    data-chat-product-image="../assets/products/101175371/01-568756316.jpg"
+                    data-chat-product-price="990 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1242,6 +1347,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14059"
                     data-chat-product-name="Чоловіче повсякденне худі urban walls"
                     data-chat-product-url="../product/14059/"
+                    data-chat-product-image="../assets/products/105869095/01-653515978.jpg"
+                    data-chat-product-price="1166 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1278,6 +1385,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14058"
                     data-chat-product-name="Светр з візерунком aran від uniqlo"
                     data-chat-product-url="../product/14058/"
+                    data-chat-product-image="../assets/products/171264889/01--343378453.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1307,6 +1416,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14057"
                     data-chat-product-name="Светр з овечої вовни uniqlo"
                     data-chat-product-url="../product/14057/"
+                    data-chat-product-image="../assets/products/193931516/01-2230060045.jpg"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1341,6 +1452,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14056"
                     data-chat-product-name="Джемпер  uniqlo 100% вовни мериносу"
                     data-chat-product-url="../product/14056/"
+                    data-chat-product-image="../assets/products/194060370/01-2230847578.jpg"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1371,6 +1484,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14055"
                     data-chat-product-name="Светр uniqlo"
                     data-chat-product-url="../product/14055/"
+                    data-chat-product-image="../assets/products/196246725/01-2239827210.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1405,6 +1520,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14054"
                     data-chat-product-name="Флісова кофта унісекс uniqlo"
                     data-chat-product-url="../product/14054/"
+                    data-chat-product-image="../assets/products/197574586/01-2246933014.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1446,6 +1563,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14053"
                     data-chat-product-name="Худі uniqlo"
                     data-chat-product-url="../product/14053/"
+                    data-chat-product-image="../assets/products/199259849/01-2255124220.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1481,6 +1600,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14052"
                     data-chat-product-name="Лонгслів uniqlo з начосом"
                     data-chat-product-url="../product/14052/"
+                    data-chat-product-image="../assets/products/205690016/01-2282538137.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1516,6 +1637,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14051"
                     data-chat-product-name="Лонгслів uniqlo з начосом"
                     data-chat-product-url="../product/14051/"
+                    data-chat-product-image="../assets/products/205690274/01-2282538897.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1553,6 +1676,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14050"
                     data-chat-product-name="Лонгслів uniqlo"
                     data-chat-product-url="../product/14050/"
+                    data-chat-product-image="../assets/products/205692154/01-2282545635.jpg"
+                    data-chat-product-price="820 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1589,6 +1714,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14049"
                     data-chat-product-name="Лонгслів uniqlo з флісу"
                     data-chat-product-url="../product/14049/"
+                    data-chat-product-image="../assets/products/205692755/01-2282548642.jpg"
+                    data-chat-product-price="899 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1621,6 +1748,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14048"
                     data-chat-product-name="Толстовка dry uniqlo, розмір м"
                     data-chat-product-url="../product/14048/"
+                    data-chat-product-image="../assets/products/181600792/01-2155322902.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1658,6 +1787,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14047"
                     data-chat-product-name="3d-в&#x27;язаний светр uniqlo, розмір м"
                     data-chat-product-url="../product/14047/"
+                    data-chat-product-image="../assets/products/182016243/01-2157852842.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1686,6 +1817,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14046"
                     data-chat-product-name="Світшот ut archive louvre graphic uniqlo"
                     data-chat-product-url="../product/14046/"
+                    data-chat-product-image="../assets/products/184956791/01-2175980558.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1714,6 +1847,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14045"
                     data-chat-product-name="Світшот ut archive louvre graphic uniqlo"
                     data-chat-product-url="../product/14045/"
+                    data-chat-product-image="../assets/products/184957325/01-2175983750.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1752,6 +1887,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14044"
                     data-chat-product-name="Светр fair isle із пряжі суфле (jw anderson) uniqlo"
                     data-chat-product-url="../product/14044/"
+                    data-chat-product-image="../assets/products/191657212/01-2216149967.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1789,6 +1926,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14043"
                     data-chat-product-name="Флісовий пуловер uniqlo"
                     data-chat-product-url="../product/14043/"
+                    data-chat-product-image="../assets/products/192165399/01-2219385800.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1826,6 +1965,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14042"
                     data-chat-product-name="Флісовий пуловер uniqlo"
                     data-chat-product-url="../product/14042/"
+                    data-chat-product-image="../assets/products/192165516/01-2219386429.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1862,6 +2003,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14041"
                     data-chat-product-name="Флісова кофта унісекс uniqlo"
                     data-chat-product-url="../product/14041/"
+                    data-chat-product-image="../assets/products/192167563/01-2219399476.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1901,6 +2044,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14040"
                     data-chat-product-name="Флісова кофта унісекс uniqlo"
                     data-chat-product-url="../product/14040/"
+                    data-chat-product-image="../assets/products/192167781/01-2219400978.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1940,6 +2085,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14039"
                     data-chat-product-name="Флісова кофта унісекс uniqlo"
                     data-chat-product-url="../product/14039/"
+                    data-chat-product-image="../assets/products/192167903/01-2219401809.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1976,6 +2123,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14038"
                     data-chat-product-name="Флісовий кардиган uniqlo"
                     data-chat-product-url="../product/14038/"
+                    data-chat-product-image="../assets/products/193932812/01-2230067073.jpg"
+                    data-chat-product-price="1650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2006,6 +2155,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14037"
                     data-chat-product-name="Толстовка з колекції moma uniqlo"
                     data-chat-product-url="../product/14037/"
+                    data-chat-product-image="../assets/products/205192124/01-2281283073.jpg"
+                    data-chat-product-price="1080 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2041,6 +2192,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14036"
                     data-chat-product-name="Лонгслів uniqlo з начосом"
                     data-chat-product-url="../product/14036/"
+                    data-chat-product-image="../assets/products/205689363/01-2282536211.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2079,6 +2232,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14035"
                     data-chat-product-name="Лонгслів airism uniqlo"
                     data-chat-product-url="../product/14035/"
+                    data-chat-product-image="../assets/products/205693884/01-2282553835.jpg"
+                    data-chat-product-price="900 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2117,6 +2272,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14034"
                     data-chat-product-name="Лонгслів airism uniqlo"
                     data-chat-product-url="../product/14034/"
+                    data-chat-product-image="../assets/products/205694406/01-2282556229.jpg"
+                    data-chat-product-price="900 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2152,6 +2309,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14033"
                     data-chat-product-name="Лонгслів uniqlo з начосом"
                     data-chat-product-url="../product/14033/"
+                    data-chat-product-image="../assets/products/205691030/01-2282540925.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2183,6 +2342,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14032"
                     data-chat-product-name="Лонгслів  uniqlo"
                     data-chat-product-url="../product/14032/"
+                    data-chat-product-image="../assets/products/205695155/01-2282559481.jpg"
+                    data-chat-product-price="900 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2219,6 +2380,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14031"
                     data-chat-product-name="Флісова кофта uniqlo"
                     data-chat-product-url="../product/14031/"
+                    data-chat-product-image="../assets/products/206579633/01-2286623079.jpg"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2259,6 +2422,8 @@ urban walls, серія робіт художників, які активно �
                     data-chat-product-id="14030"
                     data-chat-product-name="Ультрастрейч dry-ex худі uniqlo"
                     data-chat-product-url="../product/14030/"
+                    data-chat-product-image="../assets/products/208562937/01-2295295900.jpg"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2268,17 +2433,21 @@ urban walls, серія робіт художників, які активно �
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 12:19</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 13:11</div>
 </main>
 </div>
 <div class="chat-overlay" id="chatOverlay" aria-hidden="true">
-    <section class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <section class="chat-panel" id="chatPanel" data-chat-surface="modal" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
         <div class="chat-head">
             <div>
+                <div class="chat-kicker">UniqLow chat</div>
                 <div class="chat-title" id="chatTitle">Чат з UniqLow</div>
-                <div class="chat-subtitle" id="chatSubtitle">Увійдіть через Google, щоб написати повідомлення.</div>
+                <div class="chat-subtitle" id="chatSubtitle">Історія діалогів, товар і повідомлення в одному місці.</div>
             </div>
-            <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">×</button>
+            <div class="chat-head-actions">
+                <a class="chat-history-link" href="/chats/">Всі чати</a>
+                <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">x</button>
+            </div>
         </div>
         <div class="chat-body">
             <div class="chat-auth" id="chatAuth">
@@ -2286,54 +2455,80 @@ urban walls, серія робіт художників, які активно �
                 <div class="chat-warning">
                     Чат захищений Google-входом і правилами доступу. Не надсилайте номери карт, CVV, паролі або коди з SMS.
                 </div>
-                <div class="chat-status" id="chatStatus">Чат готується...</div>
             </div>
+            <div class="chat-status" id="chatStatus">Чат готується...</div>
             <div class="chat-workspace" id="chatWorkspace">
-                <div class="chat-owner-tools" id="chatOwnerTools">
-                    <div class="chat-status">Режим власника: показані останні діалоги покупців.</div>
+                <aside class="chat-history-panel" id="chatHistoryPanel">
+                    <div class="chat-history-title">Історія чатів</div>
+                    <div class="chat-history-note" id="chatHistoryNote">Останні діалоги з товарами.</div>
                     <div class="chat-thread-list" id="chatThreadList"></div>
-                </div>
-                <div class="chat-messages" id="chatMessages"></div>
-                <div class="chat-composer">
-                    <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
-                    <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
-                    <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
-                </div>
+                </aside>
+                <section class="chat-dialog-panel">
+                    <div class="chat-product-preview" id="chatProductPreview">
+                        <div class="chat-product-empty">Виберіть діалог або відкрийте чат з картки товару.</div>
+                    </div>
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-composer">
+                        <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
+                        <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
+                        <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
+                    </div>
+                </section>
             </div>
         </div>
     </section>
-</div>
-<script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
+</div><script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
 <script type="module">
 const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
 const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
 const firebaseConfig = chatConfig.firebase || {};
 const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
+const chatPageMode = Boolean(document.querySelector('.chat-page-root'));
 let chatAuth = null;
 let chatDb = null;
 let chatUser = null;
 let chatProvider = null;
 let chatProduct = {};
 let chatThreadId = '';
+let chatCurrentThread = null;
 let chatUnsubMessages = null;
 let chatUnsubThreads = null;
 let firebaseApi = null;
 
 const chatEl = (id) => document.getElementById(id);
+const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
 const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
-const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+const chatAbsoluteUrl = (value) => {
+    try { return value ? new URL(value, location.href).href : ''; }
+    catch { return ''; }
+};
+const chatTimeValue = (stamp) => {
+    if (!stamp) return 0;
+    if (typeof stamp.toMillis === 'function') return stamp.toMillis();
+    if (typeof stamp.seconds === 'number') return stamp.seconds * 1000;
+    return 0;
+};
+const chatFormatTime = (stamp) => {
+    const value = chatTimeValue(stamp);
+    if (!value) return '';
+    return new Intl.DateTimeFormat('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+};
 
 function openChatFromButton(btn) {
     chatProduct = {
         id: btn?.dataset.chatProductId || 'general',
         name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
         url: btn?.dataset.chatProductUrl || location.pathname,
+        image: btn?.dataset.chatProductImage || document.getElementById('productMainImage')?.getAttribute('src') || '',
+        price: btn?.dataset.chatProductPrice || '',
     };
     chatEl('chatOverlay')?.classList.add('open');
     chatEl('chatOverlay')?.setAttribute('aria-hidden', 'false');
-    chatEl('chatSubtitle').textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    const subtitle = chatEl('chatSubtitle');
+    if (subtitle) subtitle.textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    renderThreadProduct(chatProduct);
     prepareChat();
 }
 
@@ -2352,7 +2547,8 @@ async function prepareChat() {
     }
     try {
         await ensureFirebase();
-        chatStatus(chatUser ? 'Ви увійшли. Можна писати.' : 'Увійдіть через Google, щоб почати чат.');
+        if (chatUser) await startSignedChat();
+        else chatStatus('Увійдіть через Google, щоб бачити історію і писати повідомлення.');
     } catch (err) {
         chatStatus(`Чат не запустився: ${err.message || err}`);
     }
@@ -2372,19 +2568,44 @@ async function ensureFirebase() {
     firebaseApi.onAuthStateChanged(chatAuth, async (user) => {
         chatUser = user;
         updateChatAuthState();
-        if (user) {
-            if (chatIsOwner()) listenOwnerThreads();
-            else await openCustomerThread();
-        }
+        if (user) await startSignedChat();
+        else resetSignedChat();
     });
     return firebaseApi;
 }
 
+async function startSignedChat() {
+    updateChatAuthState();
+    if (chatIsOwner()) {
+        listenOwnerThreads();
+    } else if (chatPageMode) {
+        listenCustomerThreads();
+    } else if (chatProduct.id) {
+        await openCustomerThread();
+    }
+}
+
+function resetSignedChat() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    if (chatUnsubMessages) chatUnsubMessages();
+    chatUnsubThreads = null;
+    chatUnsubMessages = null;
+    chatThreadId = '';
+    chatCurrentThread = null;
+    chatEl('chatThreadList') && (chatEl('chatThreadList').innerHTML = '');
+    chatEl('chatMessages') && (chatEl('chatMessages').innerHTML = '');
+}
+
 function updateChatAuthState() {
     const signed = Boolean(chatUser);
-    chatEl('chatAuth').style.display = signed ? 'none' : 'grid';
-    chatEl('chatWorkspace').classList.toggle('active', signed);
-    chatEl('chatOwnerTools').classList.toggle('active', signed && chatIsOwner());
+    const auth = chatEl('chatAuth');
+    const workspace = chatEl('chatWorkspace');
+    const history = chatEl('chatHistoryPanel');
+    if (auth) auth.style.display = signed ? 'none' : 'grid';
+    if (workspace) workspace.classList.toggle('active', signed);
+    if (history) history.classList.toggle('active', signed && (chatPageMode || chatIsOwner()));
+    const note = chatEl('chatHistoryNote');
+    if (note && signed) note.textContent = chatIsOwner() ? 'Усі звернення покупців.' : 'Ваші діалоги з товарами.';
     if (signed) chatStatus(`Увійшли як ${chatUser.email}`);
 }
 
@@ -2405,17 +2626,23 @@ async function openCustomerThread() {
     if (!chatUser || !firebaseApi) return;
     chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
     const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
-    await firebaseApi.setDoc(threadRef, {
+    const payload = {
         customerUid: chatUser.uid,
         customerEmail: chatUser.email || '',
         customerName: chatUser.displayName || chatUser.email || '',
         ownerEmail: chatOwnerEmail,
         productId: chatProduct.id || 'general',
         productName: chatProduct.name || '',
-        productUrl: new URL(chatProduct.url || location.pathname, location.href).href,
+        productUrl: chatAbsoluteUrl(chatProduct.url || location.pathname),
+        productImage: chatAbsoluteUrl(chatProduct.image || ''),
+        productPrice: chatProduct.price || '',
         updatedAt: firebaseApi.serverTimestamp(),
         createdAt: firebaseApi.serverTimestamp(),
-    }, { merge: true });
+    };
+    await firebaseApi.setDoc(threadRef, payload, { merge: true });
+    chatCurrentThread = payload;
+    renderThreadProduct(payload);
+    renderSingleThreadButton(chatThreadId, payload);
     listenMessages(chatThreadId);
 }
 
@@ -2424,30 +2651,135 @@ function listenOwnerThreads() {
     const q = firebaseApi.query(
         firebaseApi.collection(chatDb, 'chatThreads'),
         firebaseApi.orderBy('updatedAt', 'desc'),
-        firebaseApi.limit(50)
+        firebaseApi.limit(100)
     );
     chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
-        const list = chatEl('chatThreadList');
-        list.innerHTML = '';
-        snap.forEach((docSnap) => {
-            const data = docSnap.data();
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = `chat-thread-btn${docSnap.id === chatThreadId ? ' active' : ''}`;
-            btn.dataset.threadId = docSnap.id;
-            btn.textContent = `${data.customerName || data.customerEmail || 'Покупець'} — ${data.productName || 'Загальний чат'}`;
-            btn.onclick = () => {
-                chatThreadId = docSnap.id;
-                document.querySelectorAll('.chat-thread-btn').forEach(el => el.classList.toggle('active', el.dataset.threadId === chatThreadId));
-                listenMessages(chatThreadId);
-            };
-            list.appendChild(btn);
-        });
-        if (!chatThreadId && snap.docs[0]) {
-            chatThreadId = snap.docs[0].id;
-            listenMessages(chatThreadId);
-        }
+        renderThreadList(snap.docs.map((docSnap) => ({ id: docSnap.id, data: docSnap.data() })));
     }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
+}
+
+function listenCustomerThreads() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads'),
+        firebaseApi.where('customerUid', '==', chatUser.uid),
+        firebaseApi.limit(100)
+    );
+    chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
+        const threads = snap.docs
+            .map((docSnap) => ({ id: docSnap.id, data: docSnap.data() }))
+            .sort((a, b) => chatTimeValue(b.data.updatedAt) - chatTimeValue(a.data.updatedAt));
+        renderThreadList(threads);
+    }, (err) => chatStatus(`Не вдалося прочитати ваші чати: ${err.message}`));
+}
+
+function renderThreadList(threads) {
+    const list = chatEl('chatThreadList');
+    if (!list) return;
+    list.innerHTML = '';
+    if (!threads.length) {
+        list.innerHTML = '<div class="chat-empty-state">Історія поки порожня. Відкрийте товар і натисніть "Чат".</div>';
+        renderThreadProduct(null);
+        chatEl('chatMessages') && (chatEl('chatMessages').innerHTML = '');
+        return;
+    }
+    threads.forEach((thread) => list.appendChild(createThreadButton(thread.id, thread.data)));
+    const selected = threads.find((thread) => thread.id === chatThreadId) || threads[0];
+    if (selected && selected.id !== chatThreadId) selectThread(selected.id, selected.data);
+    else if (selected) renderThreadProduct(selected.data);
+}
+
+function renderSingleThreadButton(threadId, data) {
+    const list = chatEl('chatThreadList');
+    const history = chatEl('chatHistoryPanel');
+    if (!list || !history || (!chatPageMode && !chatIsOwner())) return;
+    history.classList.add('active');
+    list.innerHTML = '';
+    list.appendChild(createThreadButton(threadId, data));
+    markActiveThread();
+}
+
+function createThreadButton(threadId, data) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chat-thread-btn';
+    btn.dataset.threadId = threadId;
+    const img = document.createElement('img');
+    img.className = 'chat-thread-image';
+    img.alt = '';
+    if (data.productImage) img.src = data.productImage;
+    else img.classList.add('empty');
+    const body = document.createElement('span');
+    body.className = 'chat-thread-body';
+    const title = document.createElement('span');
+    title.className = 'chat-thread-title';
+    title.textContent = data.productName || 'Загальний чат';
+    const meta = document.createElement('span');
+    meta.className = 'chat-thread-meta';
+    const customer = data.customerName || data.customerEmail || 'Покупець';
+    meta.textContent = chatIsOwner() ? customer : (data.productPrice || 'Без ціни');
+    const last = document.createElement('span');
+    last.className = 'chat-thread-last';
+    last.textContent = data.lastMessage || 'Новий діалог';
+    const time = document.createElement('span');
+    time.className = 'chat-thread-time';
+    time.textContent = chatFormatTime(data.updatedAt);
+    body.append(title, meta, last);
+    btn.append(img, body, time);
+    btn.onclick = () => selectThread(threadId, data);
+    return btn;
+}
+
+function selectThread(threadId, data) {
+    chatThreadId = threadId;
+    chatCurrentThread = data || {};
+    markActiveThread();
+    renderThreadProduct(chatCurrentThread);
+    listenMessages(threadId);
+}
+
+function markActiveThread() {
+    document.querySelectorAll('.chat-thread-btn').forEach((el) => {
+        el.classList.toggle('active', el.dataset.threadId === chatThreadId);
+    });
+}
+
+function renderThreadProduct(data) {
+    const preview = chatEl('chatProductPreview');
+    if (!preview) return;
+    const source = data || chatProduct || {};
+    preview.innerHTML = '';
+    if (!source.productName && !source.name) {
+        const empty = document.createElement('div');
+        empty.className = 'chat-product-empty';
+        empty.textContent = chatPageMode ? 'Виберіть діалог з історії.' : 'Товар буде прикріплений після відкриття чату.';
+        preview.appendChild(empty);
+        return;
+    }
+    const imageUrl = source.productImage || source.image || '';
+    const productUrl = source.productUrl || source.url || '';
+    if (imageUrl) {
+        const img = document.createElement('img');
+        img.className = 'chat-product-image';
+        img.src = chatAbsoluteUrl(imageUrl);
+        img.alt = source.productName || source.name || 'Товар';
+        preview.appendChild(img);
+    }
+    const info = document.createElement('div');
+    info.className = 'chat-product-info';
+    const name = document.createElement(productUrl ? 'a' : 'div');
+    name.className = 'chat-product-name';
+    name.textContent = source.productName || source.name || 'Товар';
+    if (productUrl) {
+        name.href = chatAbsoluteUrl(productUrl);
+        name.target = '_blank';
+        name.rel = 'noopener';
+    }
+    const price = document.createElement('div');
+    price.className = 'chat-product-price';
+    price.textContent = source.productPrice || source.price || 'Товар з каталогу';
+    info.append(name, price);
+    preview.appendChild(info);
 }
 
 function listenMessages(threadId) {
@@ -2455,18 +2787,22 @@ function listenMessages(threadId) {
     const q = firebaseApi.query(
         firebaseApi.collection(chatDb, 'chatThreads', threadId, 'messages'),
         firebaseApi.orderBy('createdAt', 'asc'),
-        firebaseApi.limit(120)
+        firebaseApi.limit(160)
     );
     chatUnsubMessages = firebaseApi.onSnapshot(q, (snap) => {
         const box = chatEl('chatMessages');
+        if (!box) return;
         box.innerHTML = '';
+        if (snap.empty) {
+            box.innerHTML = '<div class="chat-empty-state">Повідомлень ще немає. Напишіть перше повідомлення.</div>';
+        }
         snap.forEach((docSnap) => {
             const msg = docSnap.data();
             const row = document.createElement('div');
             row.className = `chat-message${msg.uid === chatUser?.uid ? ' mine' : ''}`;
             const meta = document.createElement('div');
             meta.className = 'chat-message-meta';
-            meta.textContent = msg.name || msg.email || 'Користувач';
+            meta.textContent = `${msg.name || msg.email || 'Користувач'}${chatFormatTime(msg.createdAt) ? ' • ' + chatFormatTime(msg.createdAt) : ''}`;
             const text = document.createElement('div');
             text.textContent = msg.text || '';
             row.append(meta, text);
@@ -2478,11 +2814,11 @@ function listenMessages(threadId) {
 
 async function sendChatMessage() {
     const input = chatEl('chatInput');
-    const text = chatClean(input.value);
+    const text = chatClean(input?.value);
     if (!text || !chatUser || !firebaseApi) return;
-    if (!chatThreadId && !chatIsOwner()) await openCustomerThread();
+    if (!chatThreadId && !chatIsOwner() && chatProduct.id) await openCustomerThread();
     if (!chatThreadId) {
-        chatStatus('Виберіть діалог покупця.');
+        chatStatus('Виберіть діалог або відкрийте чат з картки товару.');
         return;
     }
     chatEl('chatSendBtn').disabled = true;
@@ -2496,11 +2832,18 @@ async function sendChatMessage() {
             text,
             createdAt: firebaseApi.serverTimestamp(),
         });
-        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+        const update = {
             lastMessage: text.slice(0, 180),
             lastSender: role,
             updatedAt: firebaseApi.serverTimestamp(),
-        }, { merge: true });
+        };
+        if (!chatIsOwner() && chatProduct.id) {
+            update.productImage = chatAbsoluteUrl(chatProduct.image || '');
+            update.productPrice = chatProduct.price || '';
+            update.productName = chatProduct.name || '';
+            update.productUrl = chatAbsoluteUrl(chatProduct.url || location.pathname);
+        }
+        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
         input.value = '';
     } catch (err) {
         chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
@@ -2514,6 +2857,7 @@ chatEl('chatSendBtn')?.addEventListener('click', sendChatMessage);
 chatEl('chatInput')?.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) sendChatMessage();
 });
+if (chatPageMode) prepareChat();
 </script>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');

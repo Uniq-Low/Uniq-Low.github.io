@@ -131,8 +131,12 @@ display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
 .chat-panel{width:min(100%,440px);max-height:min(760px,calc(100vh - 36px));display:flex;flex-direction:column;
 background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.28);overflow:hidden;}
 .chat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);}
+.chat-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:900;margin-bottom:5px;}
 .chat-title{font-weight:900;font-size:20px;line-height:1.2;}
 .chat-subtitle{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.35;}
+.chat-head-actions{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.chat-history-link{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px 11px;text-decoration:none;font-weight:800;font-size:13px;white-space:nowrap;}
+.chat-history-link:hover{border-color:var(--accent);color:var(--accent);}
 .chat-close{border:1px solid var(--border);background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:12px;cursor:pointer;font-size:22px;line-height:1;}
 .chat-body{padding:14px;display:grid;gap:12px;min-height:0;}
 .chat-auth{display:grid;gap:10px;}
@@ -156,6 +160,39 @@ background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;
 .chat-composer{display:grid;gap:8px;}
 .chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
 .chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.chat-page-root{max-width:1440px;margin:0 auto;animation:fadeUp .3s ease both;}
+.chat-page-top{max-width:780px;margin-bottom:18px;}
+.chat-page-panel{width:100%;max-height:none;min-height:calc(100vh - 150px);border-radius:22px;box-shadow:var(--shadow);}
+.chat-page-panel .chat-head{padding:20px 22px;}
+.chat-page-panel .chat-body{padding:0;gap:0;min-height:0;flex:1;}
+.chat-page-panel .chat-status{padding:10px 22px;border-bottom:1px solid var(--border);background:var(--bg);}
+.chat-page-panel .chat-auth{padding:22px;}
+.chat-page-panel .chat-workspace.active{display:grid;grid-template-columns:minmax(280px,360px) minmax(0,1fr);gap:0;min-height:560px;}
+.chat-history-panel{display:none;border-right:1px solid var(--border);background:var(--bg);padding:14px;gap:10px;align-content:start;min-width:0;}
+.chat-history-panel.active{display:grid;}
+.chat-history-title{font-size:16px;font-weight:900;}
+.chat-history-note{font-size:12px;color:var(--muted);line-height:1.4;}
+.chat-dialog-panel{display:grid;grid-template-rows:auto minmax(220px,1fr) auto;gap:12px;min-width:0;padding:14px;}
+.chat-page-panel .chat-dialog-panel{min-height:560px;}
+.chat-product-preview{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:16px;background:var(--bg);padding:10px;min-height:78px;}
+.chat-product-image{width:58px;height:58px;border-radius:12px;object-fit:contain;background:var(--panel-solid);border:1px solid var(--border);padding:3px;flex:0 0 58px;}
+.chat-product-info{min-width:0;display:grid;gap:4px;}
+.chat-product-name{color:var(--text);font-weight:900;text-decoration:none;line-height:1.25;overflow-wrap:anywhere;}
+a.chat-product-name:hover{color:var(--accent);}
+.chat-product-price{color:var(--muted);font-size:13px;font-weight:700;}
+.chat-product-empty,.chat-empty-state{color:var(--muted);font-size:13px;line-height:1.45;}
+.chat-thread-list{max-height:120px;overflow:auto;display:grid;gap:8px;}
+.chat-page-panel .chat-thread-list{max-height:calc(100vh - 290px);}
+.chat-thread-btn{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid var(--border);background:var(--panel-solid);color:var(--text);border-radius:14px;padding:9px;text-align:left;cursor:pointer;transition:.18s ease;}
+.chat-thread-btn:hover{border-color:var(--accent);transform:translateY(-1px);}
+.chat-thread-image{width:48px;height:48px;border-radius:12px;object-fit:contain;background:var(--bg-soft);border:1px solid var(--border);padding:2px;}
+.chat-thread-image.empty{display:none;}
+.chat-thread-body{min-width:0;display:grid;gap:2px;}
+.chat-thread-title{font-weight:900;font-size:13px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.chat-thread-meta,.chat-thread-last,.chat-thread-time{font-size:12px;color:var(--muted);line-height:1.3;}
+.chat-thread-last{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.chat-thread-time{white-space:nowrap;align-self:start;}
+.chat-page-panel .chat-messages{height:auto;min-height:0;}
 .detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
 .detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .detail-section summary::-webkit-details-marker{display:none;}
@@ -233,6 +270,13 @@ background:var(--panel-solid);color:var(--muted);}
 .detail-section{padding-top:14px;margin-top:14px;}
 .detail-actions{display:grid;grid-template-columns:1fr;}
 .detail-order-btn,.detail-chat-btn{width:100%;}
+.chat-page-panel{min-height:auto;}
+.chat-page-panel .chat-workspace.active{grid-template-columns:1fr;min-height:auto;}
+.chat-history-panel{border-right:none;border-bottom:1px solid var(--border);}
+.chat-page-panel .chat-thread-list{max-height:250px;}
+.chat-dialog-panel,.chat-page-panel .chat-dialog-panel{min-height:460px;}
+.chat-head{align-items:flex-start;}
+.chat-head-actions{flex-direction:column;align-items:flex-end;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
@@ -250,10 +294,15 @@ background:var(--panel-solid);color:var(--muted);}
 .promo-badge{width:78px;height:78px;font-size:20px;}
 .chat-overlay{padding:10px;align-items:stretch;}
 .chat-panel{width:100%;max-height:calc(100vh - 20px);border-radius:20px;}
+.chat-history-link{display:none;}
+.chat-dialog-panel{padding:10px;}
+.chat-product-preview{align-items:flex-start;}
+.chat-thread-btn{grid-template-columns:44px minmax(0,1fr);}
+.chat-thread-time{grid-column:2;}
 }
 </style>
 </head>
-<body>
+<body data-page-type="category">
 <div class="layout">
 <aside class="sidebar">
     <a class="brand" href="../">
@@ -263,13 +312,14 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 26.05.2026 12:19</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 13:11</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
     <nav class="desktop-catalog" aria-label="Каталог">
         <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'><img class='nav-icon' src='../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/chats/'><img class='nav-icon' src='../assets/icons/chat.png' alt=''><span>Чати</span></a></li>
 <li><a class='' href='/reviews/'><img class='nav-icon' src='../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
 <li><a class='' href='/olx/'><img class='nav-icon' src='../assets/icons/market.png' alt=''><span>OLX</span></a></li>
 </ul></div>
@@ -315,6 +365,7 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="mobile-catalog-body">
             <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'><img class='nav-icon' src='../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/chats/'><img class='nav-icon' src='../assets/icons/chat.png' alt=''><span>Чати</span></a></li>
 <li><a class='' href='/reviews/'><img class='nav-icon' src='../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
 <li><a class='' href='/olx/'><img class='nav-icon' src='../assets/icons/market.png' alt=''><span>OLX</span></a></li>
 </ul></div>
@@ -391,6 +442,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13956"
                     data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!"
                     data-chat-product-url="../product/13956/"
+                    data-chat-product-image="../assets/products/94918252/01-500097894.jpg"
+                    data-chat-product-price="300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -416,6 +469,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13955"
                     data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка"
                     data-chat-product-url="../product/13955/"
+                    data-chat-product-image="../assets/products/94919229/01-500111511.jpg"
+                    data-chat-product-price="300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -441,6 +496,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13954"
                     data-chat-product-name="Minions світшот"
                     data-chat-product-url="../product/13954/"
+                    data-chat-product-image="../assets/products/101362065/01-569795172.jpg"
+                    data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -466,6 +523,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13953"
                     data-chat-product-name="Uniqlo акція!3 футболки -знижка!дитяча футболка з принтом!"
                     data-chat-product-url="../product/13953/"
+                    data-chat-product-image="../assets/products/94913252/01-500052113.jpg"
+                    data-chat-product-price="300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -491,6 +550,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13952"
                     data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!"
                     data-chat-product-url="../product/13952/"
+                    data-chat-product-image="../assets/products/94914960/01-500069997.jpg"
+                    data-chat-product-price="290 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -516,6 +577,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13951"
                     data-chat-product-name="Шорти uniqlo"
                     data-chat-product-url="../product/13951/"
+                    data-chat-product-image="../assets/products/93674613/01-487972342.jpg"
+                    data-chat-product-price="600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -547,6 +610,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13950"
                     data-chat-product-name="Футболка smithsonian uniqlo"
                     data-chat-product-url="../product/13950/"
+                    data-chat-product-image="../assets/products/163254264/01--126062441.webp"
+                    data-chat-product-price="250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -573,6 +638,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13949"
                     data-chat-product-name="Детская одежда one piece ut (футболка с принтом/короткие рукава)"
                     data-chat-product-url="../product/13949/"
+                    data-chat-product-image="../assets/products/166753599/01--220655055.jpg"
+                    data-chat-product-price="250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -605,6 +672,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13948"
                     data-chat-product-name="М&#x27;який, легкий і теплий дитячий пуховик. uniqlo"
                     data-chat-product-url="../product/13948/"
+                    data-chat-product-image="../assets/products/176548765/01--626750246.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -637,6 +706,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13947"
                     data-chat-product-name="Найтепліша дитяча куртка uniqlo"
                     data-chat-product-url="../product/13947/"
+                    data-chat-product-image="../assets/products/193942110/01-2230128495.jpg"
+                    data-chat-product-price="1999 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -665,6 +736,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13946"
                     data-chat-product-name="Зимовий пуховик zara"
                     data-chat-product-url="../product/13946/"
+                    data-chat-product-image="../assets/products/194122226/01-2231222882.jpg"
+                    data-chat-product-price="1990 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -690,6 +763,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13945"
                     data-chat-product-name="Crocs kids&#x27; fun lab star wars clog"
                     data-chat-product-url="../product/13945/"
+                    data-chat-product-image="../assets/products/96699309/01-514636233.jpg"
+                    data-chat-product-price="900 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -722,6 +797,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13944"
                     data-chat-product-name="Дитяча легка куртка warm padded"
                     data-chat-product-url="../product/13944/"
+                    data-chat-product-image="../assets/products/100283185/01-553463315.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -764,6 +841,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13943"
                     data-chat-product-name="Куртка-парка uniqlo, яку можна прати"
                     data-chat-product-url="../product/13943/"
+                    data-chat-product-image="../assets/products/170978005/01--332275230.png"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -798,6 +877,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13942"
                     data-chat-product-name="Флісова кофта унісекс uniqlo"
                     data-chat-product-url="../product/13942/"
+                    data-chat-product-image="../assets/products/188916538/01-2199771428.jpg"
+                    data-chat-product-price="950 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -833,6 +914,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13941"
                     data-chat-product-name="Футболка-поло dry pique color block uniqlo"
                     data-chat-product-url="../product/13941/"
+                    data-chat-product-image="../assets/products/190996209/01-2211990911.jpg"
+                    data-chat-product-price="270 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -867,6 +950,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13940"
                     data-chat-product-name="Утеплений жилет з капюшоном від mango"
                     data-chat-product-url="../product/13940/"
+                    data-chat-product-image="../assets/products/192149426/01-2219281803.jpg"
+                    data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -905,6 +990,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13939"
                     data-chat-product-name="Дитячі  черевики  geox new savage, устілка 25,5 см"
                     data-chat-product-url="../product/13939/"
+                    data-chat-product-image="../assets/products/196603092/01-2241503355.webp"
+                    data-chat-product-price="2100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -930,6 +1017,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13938"
                     data-chat-product-name="Черевики ecco 728513"
                     data-chat-product-url="../product/13938/"
+                    data-chat-product-image="../assets/products/74484858/01-332903663.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -955,6 +1044,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13937"
                     data-chat-product-name="Зимова двостороння куртка zara"
                     data-chat-product-url="../product/13937/"
+                    data-chat-product-image="../assets/products/101014300/01-567107546.jpg"
+                    data-chat-product-price="949 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -985,6 +1076,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13936"
                     data-chat-product-name="Футболка з аніме-зображенням one piece 25th ut uniqlo"
                     data-chat-product-url="../product/13936/"
+                    data-chat-product-image="../assets/products/189244889/01-2201625313.jpg"
+                    data-chat-product-price="250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1020,6 +1113,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13935"
                     data-chat-product-name="Футболка-поло dry pique color block uniqlo"
                     data-chat-product-url="../product/13935/"
+                    data-chat-product-image="../assets/products/190996344/01-2211991851.jpg"
+                    data-chat-product-price="270 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1060,6 +1155,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13934"
                     data-chat-product-name="Кросівки puma palermo ps kids &quot;lapis lazuli-bright&quot;"
                     data-chat-product-url="../product/13934/"
+                    data-chat-product-image="../assets/products/200717111/01-2263028518.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1095,6 +1192,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13933"
                     data-chat-product-name="Кросівки geox spherica"
                     data-chat-product-url="../product/13933/"
+                    data-chat-product-image="../assets/products/201087669/01-2265101849.jpg"
+                    data-chat-product-price="2100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1120,6 +1219,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13932"
                     data-chat-product-name="Ціна знижена!!туфлі magnum active duty шкіра 35 євро розмір"
                     data-chat-product-url="../product/13932/"
+                    data-chat-product-image="../assets/products/74484091/01-332900076.jpg"
+                    data-chat-product-price="450 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1145,6 +1246,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13931"
                     data-chat-product-name="Нова фірмова зимова куртка topolino"
                     data-chat-product-url="../product/13931/"
+                    data-chat-product-image="../assets/products/78650482/01-355369697.jpg"
+                    data-chat-product-price="600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1188,6 +1291,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13930"
                     data-chat-product-name="Дитячий airism ультраеластичний костюм uniqlo на зріст 164см"
                     data-chat-product-url="../product/13930/"
+                    data-chat-product-image="../assets/products/208497205/01-2294957149.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1227,6 +1332,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13929"
                     data-chat-product-name="Босоніжки merrell hydro blaze , устілка 23 см"
                     data-chat-product-url="../product/13929/"
+                    data-chat-product-image="../assets/products/208827387/01-2296687759.jpg"
+                    data-chat-product-price="1130 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1257,6 +1364,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13928"
                     data-chat-product-name="Дитячі шорти uniqlo"
                     data-chat-product-url="../product/13928/"
+                    data-chat-product-image="../assets/products/209133554/01-2298262325.jpg"
+                    data-chat-product-price="350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1294,6 +1403,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13927"
                     data-chat-product-name="Легкі шорти з еластичної саржі uniqlo"
                     data-chat-product-url="../product/13927/"
+                    data-chat-product-image="../assets/products/209151082/01-2298356763.jpg"
+                    data-chat-product-price="250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1324,6 +1435,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13926"
                     data-chat-product-name="Дитячий світшот з серії  &quot;губка боб квадратні штани&quot; від uniqlo"
                     data-chat-product-url="../product/13926/"
+                    data-chat-product-image="../assets/products/209130151/01-2298243070.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1354,6 +1467,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13925"
                     data-chat-product-name="Футболка-поло dry pique uniqlo"
                     data-chat-product-url="../product/13925/"
+                    data-chat-product-image="../assets/products/209130878/01-2298247330.jpg"
+                    data-chat-product-price="350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1384,6 +1499,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13924"
                     data-chat-product-name="Дитяча футболка губка боб uniqlo"
                     data-chat-product-url="../product/13924/"
+                    data-chat-product-image="../assets/products/209131300/01-2298249968.jpg"
+                    data-chat-product-price="250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1414,6 +1531,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13923"
                     data-chat-product-name="Дитячі шорти uniqlo"
                     data-chat-product-url="../product/13923/"
+                    data-chat-product-image="../assets/products/209132026/01-2298253529.jpg"
+                    data-chat-product-price="350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1444,6 +1563,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13922"
                     data-chat-product-name="Дитячі шорти uniqlo"
                     data-chat-product-url="../product/13922/"
+                    data-chat-product-image="../assets/products/209136986/01-2298280982.jpg"
+                    data-chat-product-price="350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1475,6 +1596,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13921"
                     data-chat-product-name="Дитячі штани-карго parachute uniqlo"
                     data-chat-product-url="../product/13921/"
+                    data-chat-product-image="../assets/products/209138565/01-2298288192.jpg"
+                    data-chat-product-price="680 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1505,6 +1628,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13920"
                     data-chat-product-name="Дитяча худі з ультрафіолетовим захистом airism uniqlo"
                     data-chat-product-url="../product/13920/"
+                    data-chat-product-image="../assets/products/209139691/01-2298295240.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1544,6 +1669,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13919"
                     data-chat-product-name="Дитячі шорти з тканини dry-ex від uniqlo"
                     data-chat-product-url="../product/13919/"
+                    data-chat-product-image="../assets/products/209141429/01-2298305362.jpg"
+                    data-chat-product-price="250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1583,6 +1710,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13918"
                     data-chat-product-name="Дитячі шорти з тканини dry-ex від uniqlo"
                     data-chat-product-url="../product/13918/"
+                    data-chat-product-image="../assets/products/209142127/01-2298309133.jpg"
+                    data-chat-product-price="250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1622,6 +1751,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13917"
                     data-chat-product-name="Дитячі шорти з тканини dry-ex від uniqlo"
                     data-chat-product-url="../product/13917/"
+                    data-chat-product-image="../assets/products/209142971/01-2298313494.jpg"
+                    data-chat-product-price="250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1658,6 +1789,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13916"
                     data-chat-product-name="Штани-джоггери ultra stretch dry-ex uniqlo"
                     data-chat-product-url="../product/13916/"
+                    data-chat-product-image="../assets/products/209151328/01-2298358437.jpg"
+                    data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1694,6 +1827,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13915"
                     data-chat-product-name="Штани-джоггери ultra stretch dry-ex uniqlo"
                     data-chat-product-url="../product/13915/"
+                    data-chat-product-image="../assets/products/209151692/01-2298360776.jpg"
+                    data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1724,6 +1859,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13914"
                     data-chat-product-name="Лонгслив zara"
                     data-chat-product-url="../product/13914/"
+                    data-chat-product-image="../assets/products/209152253/01-2298364336.jpg"
+                    data-chat-product-price="501 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1756,6 +1893,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13913"
                     data-chat-product-name="Дитячий світшот  kaws + warhol від uniqlo"
                     data-chat-product-url="../product/13913/"
+                    data-chat-product-image="../assets/products/209125748/01-2298224099.jpg"
+                    data-chat-product-price="820 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1788,6 +1927,8 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                     data-chat-product-id="13912"
                     data-chat-product-name="Дитячий світшот kaws + warhol від uniqlo"
                     data-chat-product-url="../product/13912/"
+                    data-chat-product-image="../assets/products/209126040/01-2298226233.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1797,17 +1938,21 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 12:19</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 13:11</div>
 </main>
 </div>
 <div class="chat-overlay" id="chatOverlay" aria-hidden="true">
-    <section class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <section class="chat-panel" id="chatPanel" data-chat-surface="modal" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
         <div class="chat-head">
             <div>
+                <div class="chat-kicker">UniqLow chat</div>
                 <div class="chat-title" id="chatTitle">Чат з UniqLow</div>
-                <div class="chat-subtitle" id="chatSubtitle">Увійдіть через Google, щоб написати повідомлення.</div>
+                <div class="chat-subtitle" id="chatSubtitle">Історія діалогів, товар і повідомлення в одному місці.</div>
             </div>
-            <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">×</button>
+            <div class="chat-head-actions">
+                <a class="chat-history-link" href="/chats/">Всі чати</a>
+                <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">x</button>
+            </div>
         </div>
         <div class="chat-body">
             <div class="chat-auth" id="chatAuth">
@@ -1815,54 +1960,80 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class="chat-warning">
                     Чат захищений Google-входом і правилами доступу. Не надсилайте номери карт, CVV, паролі або коди з SMS.
                 </div>
-                <div class="chat-status" id="chatStatus">Чат готується...</div>
             </div>
+            <div class="chat-status" id="chatStatus">Чат готується...</div>
             <div class="chat-workspace" id="chatWorkspace">
-                <div class="chat-owner-tools" id="chatOwnerTools">
-                    <div class="chat-status">Режим власника: показані останні діалоги покупців.</div>
+                <aside class="chat-history-panel" id="chatHistoryPanel">
+                    <div class="chat-history-title">Історія чатів</div>
+                    <div class="chat-history-note" id="chatHistoryNote">Останні діалоги з товарами.</div>
                     <div class="chat-thread-list" id="chatThreadList"></div>
-                </div>
-                <div class="chat-messages" id="chatMessages"></div>
-                <div class="chat-composer">
-                    <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
-                    <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
-                    <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
-                </div>
+                </aside>
+                <section class="chat-dialog-panel">
+                    <div class="chat-product-preview" id="chatProductPreview">
+                        <div class="chat-product-empty">Виберіть діалог або відкрийте чат з картки товару.</div>
+                    </div>
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-composer">
+                        <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
+                        <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
+                        <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
+                    </div>
+                </section>
             </div>
         </div>
     </section>
-</div>
-<script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
+</div><script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
 <script type="module">
 const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
 const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
 const firebaseConfig = chatConfig.firebase || {};
 const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
+const chatPageMode = Boolean(document.querySelector('.chat-page-root'));
 let chatAuth = null;
 let chatDb = null;
 let chatUser = null;
 let chatProvider = null;
 let chatProduct = {};
 let chatThreadId = '';
+let chatCurrentThread = null;
 let chatUnsubMessages = null;
 let chatUnsubThreads = null;
 let firebaseApi = null;
 
 const chatEl = (id) => document.getElementById(id);
+const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
 const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
-const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+const chatAbsoluteUrl = (value) => {
+    try { return value ? new URL(value, location.href).href : ''; }
+    catch { return ''; }
+};
+const chatTimeValue = (stamp) => {
+    if (!stamp) return 0;
+    if (typeof stamp.toMillis === 'function') return stamp.toMillis();
+    if (typeof stamp.seconds === 'number') return stamp.seconds * 1000;
+    return 0;
+};
+const chatFormatTime = (stamp) => {
+    const value = chatTimeValue(stamp);
+    if (!value) return '';
+    return new Intl.DateTimeFormat('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+};
 
 function openChatFromButton(btn) {
     chatProduct = {
         id: btn?.dataset.chatProductId || 'general',
         name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
         url: btn?.dataset.chatProductUrl || location.pathname,
+        image: btn?.dataset.chatProductImage || document.getElementById('productMainImage')?.getAttribute('src') || '',
+        price: btn?.dataset.chatProductPrice || '',
     };
     chatEl('chatOverlay')?.classList.add('open');
     chatEl('chatOverlay')?.setAttribute('aria-hidden', 'false');
-    chatEl('chatSubtitle').textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    const subtitle = chatEl('chatSubtitle');
+    if (subtitle) subtitle.textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    renderThreadProduct(chatProduct);
     prepareChat();
 }
 
@@ -1881,7 +2052,8 @@ async function prepareChat() {
     }
     try {
         await ensureFirebase();
-        chatStatus(chatUser ? 'Ви увійшли. Можна писати.' : 'Увійдіть через Google, щоб почати чат.');
+        if (chatUser) await startSignedChat();
+        else chatStatus('Увійдіть через Google, щоб бачити історію і писати повідомлення.');
     } catch (err) {
         chatStatus(`Чат не запустився: ${err.message || err}`);
     }
@@ -1901,19 +2073,44 @@ async function ensureFirebase() {
     firebaseApi.onAuthStateChanged(chatAuth, async (user) => {
         chatUser = user;
         updateChatAuthState();
-        if (user) {
-            if (chatIsOwner()) listenOwnerThreads();
-            else await openCustomerThread();
-        }
+        if (user) await startSignedChat();
+        else resetSignedChat();
     });
     return firebaseApi;
 }
 
+async function startSignedChat() {
+    updateChatAuthState();
+    if (chatIsOwner()) {
+        listenOwnerThreads();
+    } else if (chatPageMode) {
+        listenCustomerThreads();
+    } else if (chatProduct.id) {
+        await openCustomerThread();
+    }
+}
+
+function resetSignedChat() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    if (chatUnsubMessages) chatUnsubMessages();
+    chatUnsubThreads = null;
+    chatUnsubMessages = null;
+    chatThreadId = '';
+    chatCurrentThread = null;
+    chatEl('chatThreadList') && (chatEl('chatThreadList').innerHTML = '');
+    chatEl('chatMessages') && (chatEl('chatMessages').innerHTML = '');
+}
+
 function updateChatAuthState() {
     const signed = Boolean(chatUser);
-    chatEl('chatAuth').style.display = signed ? 'none' : 'grid';
-    chatEl('chatWorkspace').classList.toggle('active', signed);
-    chatEl('chatOwnerTools').classList.toggle('active', signed && chatIsOwner());
+    const auth = chatEl('chatAuth');
+    const workspace = chatEl('chatWorkspace');
+    const history = chatEl('chatHistoryPanel');
+    if (auth) auth.style.display = signed ? 'none' : 'grid';
+    if (workspace) workspace.classList.toggle('active', signed);
+    if (history) history.classList.toggle('active', signed && (chatPageMode || chatIsOwner()));
+    const note = chatEl('chatHistoryNote');
+    if (note && signed) note.textContent = chatIsOwner() ? 'Усі звернення покупців.' : 'Ваші діалоги з товарами.';
     if (signed) chatStatus(`Увійшли як ${chatUser.email}`);
 }
 
@@ -1934,17 +2131,23 @@ async function openCustomerThread() {
     if (!chatUser || !firebaseApi) return;
     chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
     const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
-    await firebaseApi.setDoc(threadRef, {
+    const payload = {
         customerUid: chatUser.uid,
         customerEmail: chatUser.email || '',
         customerName: chatUser.displayName || chatUser.email || '',
         ownerEmail: chatOwnerEmail,
         productId: chatProduct.id || 'general',
         productName: chatProduct.name || '',
-        productUrl: new URL(chatProduct.url || location.pathname, location.href).href,
+        productUrl: chatAbsoluteUrl(chatProduct.url || location.pathname),
+        productImage: chatAbsoluteUrl(chatProduct.image || ''),
+        productPrice: chatProduct.price || '',
         updatedAt: firebaseApi.serverTimestamp(),
         createdAt: firebaseApi.serverTimestamp(),
-    }, { merge: true });
+    };
+    await firebaseApi.setDoc(threadRef, payload, { merge: true });
+    chatCurrentThread = payload;
+    renderThreadProduct(payload);
+    renderSingleThreadButton(chatThreadId, payload);
     listenMessages(chatThreadId);
 }
 
@@ -1953,30 +2156,135 @@ function listenOwnerThreads() {
     const q = firebaseApi.query(
         firebaseApi.collection(chatDb, 'chatThreads'),
         firebaseApi.orderBy('updatedAt', 'desc'),
-        firebaseApi.limit(50)
+        firebaseApi.limit(100)
     );
     chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
-        const list = chatEl('chatThreadList');
-        list.innerHTML = '';
-        snap.forEach((docSnap) => {
-            const data = docSnap.data();
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = `chat-thread-btn${docSnap.id === chatThreadId ? ' active' : ''}`;
-            btn.dataset.threadId = docSnap.id;
-            btn.textContent = `${data.customerName || data.customerEmail || 'Покупець'} — ${data.productName || 'Загальний чат'}`;
-            btn.onclick = () => {
-                chatThreadId = docSnap.id;
-                document.querySelectorAll('.chat-thread-btn').forEach(el => el.classList.toggle('active', el.dataset.threadId === chatThreadId));
-                listenMessages(chatThreadId);
-            };
-            list.appendChild(btn);
-        });
-        if (!chatThreadId && snap.docs[0]) {
-            chatThreadId = snap.docs[0].id;
-            listenMessages(chatThreadId);
-        }
+        renderThreadList(snap.docs.map((docSnap) => ({ id: docSnap.id, data: docSnap.data() })));
     }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
+}
+
+function listenCustomerThreads() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads'),
+        firebaseApi.where('customerUid', '==', chatUser.uid),
+        firebaseApi.limit(100)
+    );
+    chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
+        const threads = snap.docs
+            .map((docSnap) => ({ id: docSnap.id, data: docSnap.data() }))
+            .sort((a, b) => chatTimeValue(b.data.updatedAt) - chatTimeValue(a.data.updatedAt));
+        renderThreadList(threads);
+    }, (err) => chatStatus(`Не вдалося прочитати ваші чати: ${err.message}`));
+}
+
+function renderThreadList(threads) {
+    const list = chatEl('chatThreadList');
+    if (!list) return;
+    list.innerHTML = '';
+    if (!threads.length) {
+        list.innerHTML = '<div class="chat-empty-state">Історія поки порожня. Відкрийте товар і натисніть "Чат".</div>';
+        renderThreadProduct(null);
+        chatEl('chatMessages') && (chatEl('chatMessages').innerHTML = '');
+        return;
+    }
+    threads.forEach((thread) => list.appendChild(createThreadButton(thread.id, thread.data)));
+    const selected = threads.find((thread) => thread.id === chatThreadId) || threads[0];
+    if (selected && selected.id !== chatThreadId) selectThread(selected.id, selected.data);
+    else if (selected) renderThreadProduct(selected.data);
+}
+
+function renderSingleThreadButton(threadId, data) {
+    const list = chatEl('chatThreadList');
+    const history = chatEl('chatHistoryPanel');
+    if (!list || !history || (!chatPageMode && !chatIsOwner())) return;
+    history.classList.add('active');
+    list.innerHTML = '';
+    list.appendChild(createThreadButton(threadId, data));
+    markActiveThread();
+}
+
+function createThreadButton(threadId, data) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chat-thread-btn';
+    btn.dataset.threadId = threadId;
+    const img = document.createElement('img');
+    img.className = 'chat-thread-image';
+    img.alt = '';
+    if (data.productImage) img.src = data.productImage;
+    else img.classList.add('empty');
+    const body = document.createElement('span');
+    body.className = 'chat-thread-body';
+    const title = document.createElement('span');
+    title.className = 'chat-thread-title';
+    title.textContent = data.productName || 'Загальний чат';
+    const meta = document.createElement('span');
+    meta.className = 'chat-thread-meta';
+    const customer = data.customerName || data.customerEmail || 'Покупець';
+    meta.textContent = chatIsOwner() ? customer : (data.productPrice || 'Без ціни');
+    const last = document.createElement('span');
+    last.className = 'chat-thread-last';
+    last.textContent = data.lastMessage || 'Новий діалог';
+    const time = document.createElement('span');
+    time.className = 'chat-thread-time';
+    time.textContent = chatFormatTime(data.updatedAt);
+    body.append(title, meta, last);
+    btn.append(img, body, time);
+    btn.onclick = () => selectThread(threadId, data);
+    return btn;
+}
+
+function selectThread(threadId, data) {
+    chatThreadId = threadId;
+    chatCurrentThread = data || {};
+    markActiveThread();
+    renderThreadProduct(chatCurrentThread);
+    listenMessages(threadId);
+}
+
+function markActiveThread() {
+    document.querySelectorAll('.chat-thread-btn').forEach((el) => {
+        el.classList.toggle('active', el.dataset.threadId === chatThreadId);
+    });
+}
+
+function renderThreadProduct(data) {
+    const preview = chatEl('chatProductPreview');
+    if (!preview) return;
+    const source = data || chatProduct || {};
+    preview.innerHTML = '';
+    if (!source.productName && !source.name) {
+        const empty = document.createElement('div');
+        empty.className = 'chat-product-empty';
+        empty.textContent = chatPageMode ? 'Виберіть діалог з історії.' : 'Товар буде прикріплений після відкриття чату.';
+        preview.appendChild(empty);
+        return;
+    }
+    const imageUrl = source.productImage || source.image || '';
+    const productUrl = source.productUrl || source.url || '';
+    if (imageUrl) {
+        const img = document.createElement('img');
+        img.className = 'chat-product-image';
+        img.src = chatAbsoluteUrl(imageUrl);
+        img.alt = source.productName || source.name || 'Товар';
+        preview.appendChild(img);
+    }
+    const info = document.createElement('div');
+    info.className = 'chat-product-info';
+    const name = document.createElement(productUrl ? 'a' : 'div');
+    name.className = 'chat-product-name';
+    name.textContent = source.productName || source.name || 'Товар';
+    if (productUrl) {
+        name.href = chatAbsoluteUrl(productUrl);
+        name.target = '_blank';
+        name.rel = 'noopener';
+    }
+    const price = document.createElement('div');
+    price.className = 'chat-product-price';
+    price.textContent = source.productPrice || source.price || 'Товар з каталогу';
+    info.append(name, price);
+    preview.appendChild(info);
 }
 
 function listenMessages(threadId) {
@@ -1984,18 +2292,22 @@ function listenMessages(threadId) {
     const q = firebaseApi.query(
         firebaseApi.collection(chatDb, 'chatThreads', threadId, 'messages'),
         firebaseApi.orderBy('createdAt', 'asc'),
-        firebaseApi.limit(120)
+        firebaseApi.limit(160)
     );
     chatUnsubMessages = firebaseApi.onSnapshot(q, (snap) => {
         const box = chatEl('chatMessages');
+        if (!box) return;
         box.innerHTML = '';
+        if (snap.empty) {
+            box.innerHTML = '<div class="chat-empty-state">Повідомлень ще немає. Напишіть перше повідомлення.</div>';
+        }
         snap.forEach((docSnap) => {
             const msg = docSnap.data();
             const row = document.createElement('div');
             row.className = `chat-message${msg.uid === chatUser?.uid ? ' mine' : ''}`;
             const meta = document.createElement('div');
             meta.className = 'chat-message-meta';
-            meta.textContent = msg.name || msg.email || 'Користувач';
+            meta.textContent = `${msg.name || msg.email || 'Користувач'}${chatFormatTime(msg.createdAt) ? ' • ' + chatFormatTime(msg.createdAt) : ''}`;
             const text = document.createElement('div');
             text.textContent = msg.text || '';
             row.append(meta, text);
@@ -2007,11 +2319,11 @@ function listenMessages(threadId) {
 
 async function sendChatMessage() {
     const input = chatEl('chatInput');
-    const text = chatClean(input.value);
+    const text = chatClean(input?.value);
     if (!text || !chatUser || !firebaseApi) return;
-    if (!chatThreadId && !chatIsOwner()) await openCustomerThread();
+    if (!chatThreadId && !chatIsOwner() && chatProduct.id) await openCustomerThread();
     if (!chatThreadId) {
-        chatStatus('Виберіть діалог покупця.');
+        chatStatus('Виберіть діалог або відкрийте чат з картки товару.');
         return;
     }
     chatEl('chatSendBtn').disabled = true;
@@ -2025,11 +2337,18 @@ async function sendChatMessage() {
             text,
             createdAt: firebaseApi.serverTimestamp(),
         });
-        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+        const update = {
             lastMessage: text.slice(0, 180),
             lastSender: role,
             updatedAt: firebaseApi.serverTimestamp(),
-        }, { merge: true });
+        };
+        if (!chatIsOwner() && chatProduct.id) {
+            update.productImage = chatAbsoluteUrl(chatProduct.image || '');
+            update.productPrice = chatProduct.price || '';
+            update.productName = chatProduct.name || '';
+            update.productUrl = chatAbsoluteUrl(chatProduct.url || location.pathname);
+        }
+        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
         input.value = '';
     } catch (err) {
         chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
@@ -2043,6 +2362,7 @@ chatEl('chatSendBtn')?.addEventListener('click', sendChatMessage);
 chatEl('chatInput')?.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) sendChatMessage();
 });
+if (chatPageMode) prepareChat();
 </script>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');

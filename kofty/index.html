@@ -131,8 +131,12 @@ display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
 .chat-panel{width:min(100%,440px);max-height:min(760px,calc(100vh - 36px));display:flex;flex-direction:column;
 background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.28);overflow:hidden;}
 .chat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);}
+.chat-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:900;margin-bottom:5px;}
 .chat-title{font-weight:900;font-size:20px;line-height:1.2;}
 .chat-subtitle{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.35;}
+.chat-head-actions{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.chat-history-link{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px 11px;text-decoration:none;font-weight:800;font-size:13px;white-space:nowrap;}
+.chat-history-link:hover{border-color:var(--accent);color:var(--accent);}
 .chat-close{border:1px solid var(--border);background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:12px;cursor:pointer;font-size:22px;line-height:1;}
 .chat-body{padding:14px;display:grid;gap:12px;min-height:0;}
 .chat-auth{display:grid;gap:10px;}
@@ -156,6 +160,39 @@ background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;
 .chat-composer{display:grid;gap:8px;}
 .chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
 .chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.chat-page-root{max-width:1440px;margin:0 auto;animation:fadeUp .3s ease both;}
+.chat-page-top{max-width:780px;margin-bottom:18px;}
+.chat-page-panel{width:100%;max-height:none;min-height:calc(100vh - 150px);border-radius:22px;box-shadow:var(--shadow);}
+.chat-page-panel .chat-head{padding:20px 22px;}
+.chat-page-panel .chat-body{padding:0;gap:0;min-height:0;flex:1;}
+.chat-page-panel .chat-status{padding:10px 22px;border-bottom:1px solid var(--border);background:var(--bg);}
+.chat-page-panel .chat-auth{padding:22px;}
+.chat-page-panel .chat-workspace.active{display:grid;grid-template-columns:minmax(280px,360px) minmax(0,1fr);gap:0;min-height:560px;}
+.chat-history-panel{display:none;border-right:1px solid var(--border);background:var(--bg);padding:14px;gap:10px;align-content:start;min-width:0;}
+.chat-history-panel.active{display:grid;}
+.chat-history-title{font-size:16px;font-weight:900;}
+.chat-history-note{font-size:12px;color:var(--muted);line-height:1.4;}
+.chat-dialog-panel{display:grid;grid-template-rows:auto minmax(220px,1fr) auto;gap:12px;min-width:0;padding:14px;}
+.chat-page-panel .chat-dialog-panel{min-height:560px;}
+.chat-product-preview{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:16px;background:var(--bg);padding:10px;min-height:78px;}
+.chat-product-image{width:58px;height:58px;border-radius:12px;object-fit:contain;background:var(--panel-solid);border:1px solid var(--border);padding:3px;flex:0 0 58px;}
+.chat-product-info{min-width:0;display:grid;gap:4px;}
+.chat-product-name{color:var(--text);font-weight:900;text-decoration:none;line-height:1.25;overflow-wrap:anywhere;}
+a.chat-product-name:hover{color:var(--accent);}
+.chat-product-price{color:var(--muted);font-size:13px;font-weight:700;}
+.chat-product-empty,.chat-empty-state{color:var(--muted);font-size:13px;line-height:1.45;}
+.chat-thread-list{max-height:120px;overflow:auto;display:grid;gap:8px;}
+.chat-page-panel .chat-thread-list{max-height:calc(100vh - 290px);}
+.chat-thread-btn{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid var(--border);background:var(--panel-solid);color:var(--text);border-radius:14px;padding:9px;text-align:left;cursor:pointer;transition:.18s ease;}
+.chat-thread-btn:hover{border-color:var(--accent);transform:translateY(-1px);}
+.chat-thread-image{width:48px;height:48px;border-radius:12px;object-fit:contain;background:var(--bg-soft);border:1px solid var(--border);padding:2px;}
+.chat-thread-image.empty{display:none;}
+.chat-thread-body{min-width:0;display:grid;gap:2px;}
+.chat-thread-title{font-weight:900;font-size:13px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.chat-thread-meta,.chat-thread-last,.chat-thread-time{font-size:12px;color:var(--muted);line-height:1.3;}
+.chat-thread-last{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.chat-thread-time{white-space:nowrap;align-self:start;}
+.chat-page-panel .chat-messages{height:auto;min-height:0;}
 .detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
 .detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .detail-section summary::-webkit-details-marker{display:none;}
@@ -233,6 +270,13 @@ background:var(--panel-solid);color:var(--muted);}
 .detail-section{padding-top:14px;margin-top:14px;}
 .detail-actions{display:grid;grid-template-columns:1fr;}
 .detail-order-btn,.detail-chat-btn{width:100%;}
+.chat-page-panel{min-height:auto;}
+.chat-page-panel .chat-workspace.active{grid-template-columns:1fr;min-height:auto;}
+.chat-history-panel{border-right:none;border-bottom:1px solid var(--border);}
+.chat-page-panel .chat-thread-list{max-height:250px;}
+.chat-dialog-panel,.chat-page-panel .chat-dialog-panel{min-height:460px;}
+.chat-head{align-items:flex-start;}
+.chat-head-actions{flex-direction:column;align-items:flex-end;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
@@ -250,10 +294,15 @@ background:var(--panel-solid);color:var(--muted);}
 .promo-badge{width:78px;height:78px;font-size:20px;}
 .chat-overlay{padding:10px;align-items:stretch;}
 .chat-panel{width:100%;max-height:calc(100vh - 20px);border-radius:20px;}
+.chat-history-link{display:none;}
+.chat-dialog-panel{padding:10px;}
+.chat-product-preview{align-items:flex-start;}
+.chat-thread-btn{grid-template-columns:44px minmax(0,1fr);}
+.chat-thread-time{grid-column:2;}
 }
 </style>
 </head>
-<body>
+<body data-page-type="category">
 <div class="layout">
 <aside class="sidebar">
     <a class="brand" href="../">
@@ -263,13 +312,14 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 26.05.2026 12:19</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 13:11</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
     <nav class="desktop-catalog" aria-label="Каталог">
         <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'><img class='nav-icon' src='../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/chats/'><img class='nav-icon' src='../assets/icons/chat.png' alt=''><span>Чати</span></a></li>
 <li><a class='' href='/reviews/'><img class='nav-icon' src='../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
 <li><a class='' href='/olx/'><img class='nav-icon' src='../assets/icons/market.png' alt=''><span>OLX</span></a></li>
 </ul></div>
@@ -315,6 +365,7 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="mobile-catalog-body">
             <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'><img class='nav-icon' src='../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/chats/'><img class='nav-icon' src='../assets/icons/chat.png' alt=''><span>Чати</span></a></li>
 <li><a class='' href='/reviews/'><img class='nav-icon' src='../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
 <li><a class='' href='/olx/'><img class='nav-icon' src='../assets/icons/market.png' alt=''><span>OLX</span></a></li>
 </ul></div>
@@ -403,6 +454,8 @@ fleece full-zip jacket
                     data-chat-product-id="13588"
                     data-chat-product-name="Флісова кофта унісекс uniqlo"
                     data-chat-product-url="../product/13588/"
+                    data-chat-product-image="../assets/products/179497385/01--854571570.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -438,6 +491,8 @@ fleece full-zip jacket
                     data-chat-product-id="13587"
                     data-chat-product-name="Кардиган souffle uniqlo"
                     data-chat-product-url="../product/13587/"
+                    data-chat-product-image="../assets/products/191660482/01-2216170837.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -473,6 +528,8 @@ fleece full-zip jacket
                     data-chat-product-id="13586"
                     data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
                     data-chat-product-url="../product/13586/"
+                    data-chat-product-image="../assets/products/184923891/01-2175777627.png"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -512,6 +569,8 @@ fleece full-zip jacket
                     data-chat-product-id="13585"
                     data-chat-product-name="3d-в&#x27;язаний светр uniqlo"
                     data-chat-product-url="../product/13585/"
+                    data-chat-product-image="../assets/products/191656535/01-2216145992.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -547,6 +606,8 @@ fleece full-zip jacket
                     data-chat-product-id="13584"
                     data-chat-product-name="Кардиган з суміші вовни uniqlo"
                     data-chat-product-url="../product/13584/"
+                    data-chat-product-image="../assets/products/189083758/01-2200688547.jpg"
+                    data-chat-product-price="1750 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -585,6 +646,8 @@ fleece full-zip jacket
                     data-chat-product-id="13583"
                     data-chat-product-name="Флісовий пуловер uniqlo"
                     data-chat-product-url="../product/13583/"
+                    data-chat-product-image="../assets/products/192165043/01-2219383245.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -619,6 +682,8 @@ fleece full-zip jacket
                     data-chat-product-id="13582"
                     data-chat-product-name="Светр з пряжі soufflé uniqlo"
                     data-chat-product-url="../product/13582/"
+                    data-chat-product-image="../assets/products/197212594/01-2244914592.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -645,6 +710,8 @@ fleece full-zip jacket
                     data-chat-product-id="13581"
                     data-chat-product-name="Женские повседневные топы women in movies"
                     data-chat-product-url="../product/13581/"
+                    data-chat-product-image="../assets/products/166767197/01--220903392.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -671,6 +738,8 @@ fleece full-zip jacket
                     data-chat-product-id="13580"
                     data-chat-product-name="Светр з активним v-подібним вирізом(у складі вовна)"
                     data-chat-product-url="../product/13580/"
+                    data-chat-product-image="../assets/products/105401979/01-641760146.jpg"
+                    data-chat-product-price="1000 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -704,6 +773,8 @@ fleece full-zip jacket
                     data-chat-product-id="13579"
                     data-chat-product-name="Жіночий  вовняний светр з великим лацканом"
                     data-chat-product-url="../product/13579/"
+                    data-chat-product-image="../assets/products/105402861/01-641789013.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -729,6 +800,8 @@ fleece full-zip jacket
                     data-chat-product-id="13578"
                     data-chat-product-name="Жіноча еластична куртка повсякденна dry з капюшоном"
                     data-chat-product-url="../product/13578/"
+                    data-chat-product-image="../assets/products/101174083/01-568749746.jpg"
+                    data-chat-product-price="1610 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -760,6 +833,8 @@ fleece full-zip jacket
                     data-chat-product-id="13577"
                     data-chat-product-name="Жіноча повсякденна толстовка з капюшоном"
                     data-chat-product-url="../product/13577/"
+                    data-chat-product-image="../assets/products/101176044/01-568760138.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -792,6 +867,8 @@ fleece full-zip jacket
                     data-chat-product-id="13576"
                     data-chat-product-name="Шерстяна туніка «lamb blend mock neck tunic»"
                     data-chat-product-url="../product/13576/"
+                    data-chat-product-image="../assets/products/105255525/01-638479092.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -824,6 +901,8 @@ fleece full-zip jacket
                     data-chat-product-id="13575"
                     data-chat-product-name="Вовняна туніка «lamb blend mock neck tunic»"
                     data-chat-product-url="../product/13575/"
+                    data-chat-product-image="../assets/products/105255635/01-638481105.jpg"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -857,6 +936,8 @@ fleece full-zip jacket
                     data-chat-product-id="13574"
                     data-chat-product-name="Жіночий  вовняний светр з великим лацканом"
                     data-chat-product-url="../product/13574/"
+                    data-chat-product-image="../assets/products/105256307/01-638494227.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -882,6 +963,8 @@ fleece full-zip jacket
                     data-chat-product-id="13573"
                     data-chat-product-name="Толстовка від uniqlo"
                     data-chat-product-url="../product/13573/"
+                    data-chat-product-image="../assets/products/105257010/01-638509910.jpg"
+                    data-chat-product-price="890 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -908,6 +991,8 @@ fleece full-zip jacket
                     data-chat-product-id="13572"
                     data-chat-product-name="Жіночий жаккардовий светр інес"
                     data-chat-product-url="../product/13572/"
+                    data-chat-product-image="../assets/products/105257378/01-638521310.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -939,6 +1024,8 @@ fleece full-zip jacket
                     data-chat-product-id="13571"
                     data-chat-product-name="Жіноча водолазка з ворсом heattech (з довгим рукавом)"
                     data-chat-product-url="../product/13571/"
+                    data-chat-product-image="../assets/products/105401484/01-641754377.jpg"
+                    data-chat-product-price="800 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -965,6 +1052,8 @@ fleece full-zip jacket
                     data-chat-product-id="13570"
                     data-chat-product-name="Меланжева вовняна туніка uniqlo xs"
                     data-chat-product-url="../product/13570/"
+                    data-chat-product-image="../assets/products/105402107/01-641761518.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -998,6 +1087,8 @@ fleece full-zip jacket
                     data-chat-product-id="13569"
                     data-chat-product-name="Жіночий вовняний светр з великим лацканом"
                     data-chat-product-url="../product/13569/"
+                    data-chat-product-image="../assets/products/105402741/01-641782861.webp"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1023,6 +1114,8 @@ fleece full-zip jacket
                     data-chat-product-id="13568"
                     data-chat-product-name="Жіночий кардиган з круглим вирізом uniqlo"
                     data-chat-product-url="../product/13568/"
+                    data-chat-product-image="../assets/products/105403488/01-641801918.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1048,6 +1141,8 @@ fleece full-zip jacket
                     data-chat-product-id="13567"
                     data-chat-product-name="Светр uniqlo 3d 100 мериносової вовни extra fine merino wool"
                     data-chat-product-url="../product/13567/"
+                    data-chat-product-image="../assets/products/105431779/01-642746347.webp"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1074,6 +1169,8 @@ fleece full-zip jacket
                     data-chat-product-id="13566"
                     data-chat-product-name="Жіночий пуловер hoodie sprz ny"
                     data-chat-product-url="../product/13566/"
+                    data-chat-product-image="../assets/products/105869205/01-653518462.webp"
+                    data-chat-product-price="1166 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1105,6 +1202,8 @@ fleece full-zip jacket
                     data-chat-product-id="13565"
                     data-chat-product-name="Жіноча широка футболка в смужку"
                     data-chat-product-url="../product/13565/"
+                    data-chat-product-image="../assets/products/105870401/01-653534763.jpg"
+                    data-chat-product-price="899 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1131,6 +1230,8 @@ fleece full-zip jacket
                     data-chat-product-id="13564"
                     data-chat-product-name="Пуловер ca memories (з довгим рукавом)"
                     data-chat-product-url="../product/13564/"
+                    data-chat-product-image="../assets/products/105872061/01-653561202.jpg"
+                    data-chat-product-price="990 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1160,6 +1261,8 @@ fleece full-zip jacket
                     data-chat-product-id="13563"
                     data-chat-product-name="Свитер uniqlo"
                     data-chat-product-url="../product/13563/"
+                    data-chat-product-image="../assets/products/142986900/01-1590898045.jpg"
+                    data-chat-product-price="950 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1196,6 +1299,8 @@ fleece full-zip jacket
                     data-chat-product-id="13562"
                     data-chat-product-name="Жіночий светр із v-подібним вирізом із мериноса"
                     data-chat-product-url="../product/13562/"
+                    data-chat-product-image="../assets/products/143107304/01-1598834327.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1224,6 +1329,8 @@ fleece full-zip jacket
                     data-chat-product-id="13561"
                     data-chat-product-name="Жіночий пухнастий светр з широкими рукавами шерсть альпаки"
                     data-chat-product-url="../product/13561/"
+                    data-chat-product-image="../assets/products/143107749/01-1598847032.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1254,6 +1361,8 @@ fleece full-zip jacket
                     data-chat-product-id="13560"
                     data-chat-product-name="Жіночий  светр у смужку з мериноса"
                     data-chat-product-url="../product/13560/"
+                    data-chat-product-image="../assets/products/143571907/01-1620831288.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1292,6 +1401,8 @@ fleece full-zip jacket
                     data-chat-product-id="13559"
                     data-chat-product-name="Водолазка uniqlo"
                     data-chat-product-url="../product/13559/"
+                    data-chat-product-image="../assets/products/186133181/01-2183421227.jpg"
+                    data-chat-product-price="799 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1328,6 +1439,8 @@ fleece full-zip jacket
                     data-chat-product-id="13558"
                     data-chat-product-name="Кардиган uniqlo"
                     data-chat-product-url="../product/13558/"
+                    data-chat-product-image="../assets/products/191705263/01-2216442059.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1361,6 +1474,8 @@ fleece full-zip jacket
                     data-chat-product-id="13557"
                     data-chat-product-name="Гольф светр uniqlo 100% вовна мериноса"
                     data-chat-product-url="../product/13557/"
+                    data-chat-product-image="../assets/products/193257952/01-2225979454.jpg"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1396,6 +1511,8 @@ fleece full-zip jacket
                     data-chat-product-id="13556"
                     data-chat-product-name="Лонгслів airism uniqlo"
                     data-chat-product-url="../product/13556/"
+                    data-chat-product-image="../assets/products/193264830/01-2226024057.jpg"
+                    data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1433,6 +1550,8 @@ fleece full-zip jacket
                     data-chat-product-id="13555"
                     data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
                     data-chat-product-url="../product/13555/"
+                    data-chat-product-image="../assets/products/193269735/01-2226054735.jpg"
+                    data-chat-product-price="875 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1470,6 +1589,8 @@ fleece full-zip jacket
                     data-chat-product-id="13554"
                     data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
                     data-chat-product-url="../product/13554/"
+                    data-chat-product-image="../assets/products/193270164/01-2226057571.jpg"
+                    data-chat-product-price="875 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1510,6 +1631,8 @@ fleece full-zip jacket
                     data-chat-product-id="13553"
                     data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
                     data-chat-product-url="../product/13553/"
+                    data-chat-product-image="../assets/products/193329101/01-2226397332.jpg"
+                    data-chat-product-price="875 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1550,6 +1673,8 @@ fleece full-zip jacket
                     data-chat-product-id="13552"
                     data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
                     data-chat-product-url="../product/13552/"
+                    data-chat-product-image="../assets/products/193329168/01-2226397764.jpg"
+                    data-chat-product-price="875 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1590,6 +1715,8 @@ fleece full-zip jacket
                     data-chat-product-id="13551"
                     data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
                     data-chat-product-url="../product/13551/"
+                    data-chat-product-image="../assets/products/193329242/01-2226398241.jpg"
+                    data-chat-product-price="875 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1630,6 +1757,8 @@ fleece full-zip jacket
                     data-chat-product-id="13550"
                     data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
                     data-chat-product-url="../product/13550/"
+                    data-chat-product-image="../assets/products/193329311/01-2226398639.jpg"
+                    data-chat-product-price="875 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1666,6 +1795,8 @@ fleece full-zip jacket
                     data-chat-product-id="13549"
                     data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
                     data-chat-product-url="../product/13549/"
+                    data-chat-product-image="../assets/products/193329604/01-2226400490.jpg"
+                    data-chat-product-price="875 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1700,6 +1831,8 @@ fleece full-zip jacket
                     data-chat-product-id="13548"
                     data-chat-product-name="Светр fair isle uniqlo"
                     data-chat-product-url="../product/13548/"
+                    data-chat-product-image="../assets/products/194911849/01-2235417765.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1730,6 +1863,8 @@ fleece full-zip jacket
                     data-chat-product-id="13547"
                     data-chat-product-name="Жилет uniqlo"
                     data-chat-product-url="../product/13547/"
+                    data-chat-product-image="../assets/products/196247323/01-2239829363.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1765,6 +1900,8 @@ fleece full-zip jacket
                     data-chat-product-id="13546"
                     data-chat-product-name="Cветр з вовни мериноса uniqlo"
                     data-chat-product-url="../product/13546/"
+                    data-chat-product-image="../assets/products/196249611/01-2239839469.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1799,6 +1936,8 @@ fleece full-zip jacket
                     data-chat-product-id="13545"
                     data-chat-product-name="Светр з пряжі soufflé uniqlo"
                     data-chat-product-url="../product/13545/"
+                    data-chat-product-image="../assets/products/197213432/01-2244917805.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1838,6 +1977,8 @@ fleece full-zip jacket
                     data-chat-product-id="13544"
                     data-chat-product-name="3d-в&#x27;язаний светр uniqlo"
                     data-chat-product-url="../product/13544/"
+                    data-chat-product-image="../assets/products/191656637/01-2216146501.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1873,6 +2014,8 @@ fleece full-zip jacket
                     data-chat-product-id="13543"
                     data-chat-product-name="Пухнастий флісовий кардиган uniqlo"
                     data-chat-product-url="../product/13543/"
+                    data-chat-product-image="../assets/products/194414226/01-2232938190.jpg"
+                    data-chat-product-price="1650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1907,6 +2050,8 @@ fleece full-zip jacket
                     data-chat-product-id="13542"
                     data-chat-product-name="Флісовий гольф heattech uniqlo"
                     data-chat-product-url="../product/13542/"
+                    data-chat-product-image="../assets/products/200729998/01-2263118526.png"
+                    data-chat-product-price="950 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1932,6 +2077,8 @@ fleece full-zip jacket
                     data-chat-product-id="13541"
                     data-chat-product-name="Жіноча водолазка з камвольної вовни мериноса uniqlo"
                     data-chat-product-url="../product/13541/"
+                    data-chat-product-image="../assets/products/93850328/01-490120087.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1958,6 +2105,8 @@ fleece full-zip jacket
                     data-chat-product-id="13540"
                     data-chat-product-name="Жіночий светр з круглим вирізом з вовни мериноса uniqlo"
                     data-chat-product-url="../product/13540/"
+                    data-chat-product-image="../assets/products/93859965/01-490210294.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1984,6 +2133,8 @@ fleece full-zip jacket
                     data-chat-product-id="13539"
                     data-chat-product-name="Жіноче худі в стилі кежуал verdy"
                     data-chat-product-url="../product/13539/"
+                    data-chat-product-image="../assets/products/101174563/01-568750803.jpg"
+                    data-chat-product-price="920 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2009,6 +2160,8 @@ fleece full-zip jacket
                     data-chat-product-id="13538"
                     data-chat-product-name="Жіночий светр з круглим вирізом з мериноса"
                     data-chat-product-url="../product/13538/"
+                    data-chat-product-image="../assets/products/105401790/01-641757449.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2037,6 +2190,8 @@ fleece full-zip jacket
                     data-chat-product-id="13537"
                     data-chat-product-name="Об&#x27;ємний світшот від uniqlo"
                     data-chat-product-url="../product/13537/"
+                    data-chat-product-image="../assets/products/124337675/01-1094600864.jpg"
+                    data-chat-product-price="1149 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2065,6 +2220,8 @@ fleece full-zip jacket
                     data-chat-product-id="13536"
                     data-chat-product-name="Светр меланж вовна"
                     data-chat-product-url="../product/13536/"
+                    data-chat-product-image="../assets/products/143109072/01-1598909800.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2093,6 +2250,8 @@ fleece full-zip jacket
                     data-chat-product-id="13535"
                     data-chat-product-name="Новий свитер uniqlo14% шерсть, 10% альпака"
                     data-chat-product-url="../product/13535/"
+                    data-chat-product-image="../assets/products/143571266/01-1620788041.jpg"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2119,6 +2278,8 @@ fleece full-zip jacket
                     data-chat-product-id="13534"
                     data-chat-product-name="Свитшот с графиком женщин rise again от verdy ut"
                     data-chat-product-url="../product/13534/"
+                    data-chat-product-image="../assets/products/166764104/01--220824506.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2155,6 +2316,8 @@ fleece full-zip jacket
                     data-chat-product-id="13533"
                     data-chat-product-name="Водолазка з флісу heattech uniqlo"
                     data-chat-product-url="../product/13533/"
+                    data-chat-product-image="../assets/products/182848689/01-2162882538.jpg"
+                    data-chat-product-price="880 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2190,6 +2353,8 @@ fleece full-zip jacket
                     data-chat-product-id="13532"
                     data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
                     data-chat-product-url="../product/13532/"
+                    data-chat-product-image="../assets/products/184924030/01-2175778515.webp"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2228,6 +2393,8 @@ fleece full-zip jacket
                     data-chat-product-id="13531"
                     data-chat-product-name="Лонгслів smooth uniqlo"
                     data-chat-product-url="../product/13531/"
+                    data-chat-product-image="../assets/products/186055657/01-2182934037.jpg"
+                    data-chat-product-price="799 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2262,6 +2429,8 @@ fleece full-zip jacket
                     data-chat-product-id="13530"
                     data-chat-product-name="Лонгслів оверсайз uniqlo"
                     data-chat-product-url="../product/13530/"
+                    data-chat-product-image="../assets/products/186133043/01-2183420613.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2296,6 +2465,8 @@ fleece full-zip jacket
                     data-chat-product-id="13529"
                     data-chat-product-name="Худі the message uniqlo"
                     data-chat-product-url="../product/13529/"
+                    data-chat-product-image="../assets/products/174027809/01--486394105.png"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2331,6 +2502,8 @@ fleece full-zip jacket
                     data-chat-product-id="13528"
                     data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
                     data-chat-product-url="../product/13528/"
+                    data-chat-product-image="../assets/products/190021623/01-2206058055.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2369,6 +2542,8 @@ fleece full-zip jacket
                     data-chat-product-id="13527"
                     data-chat-product-name="Светр fair isle із пряжі суфле (jw anderson) uniqlo"
                     data-chat-product-url="../product/13527/"
+                    data-chat-product-image="../assets/products/191657266/01-2216150428.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2406,6 +2581,8 @@ fleece full-zip jacket
                     data-chat-product-id="13526"
                     data-chat-product-name="М&#x27;який флісовий лонгслів uniqlo"
                     data-chat-product-url="../product/13526/"
+                    data-chat-product-image="../assets/products/194415075/01-2232943531.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2440,6 +2617,8 @@ fleece full-zip jacket
                     data-chat-product-id="13525"
                     data-chat-product-name="Светр uniqlo з візерунком argyle"
                     data-chat-product-url="../product/13525/"
+                    data-chat-product-image="../assets/products/196246125/01-2239824744.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2470,6 +2649,8 @@ fleece full-zip jacket
                     data-chat-product-id="13524"
                     data-chat-product-name="Светр uniqlo"
                     data-chat-product-url="../product/13524/"
+                    data-chat-product-image="../assets/products/196659788/01-2241853709.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2503,6 +2684,8 @@ fleece full-zip jacket
                     data-chat-product-id="13523"
                     data-chat-product-name="Светр з пряжі soufflé uniqlo"
                     data-chat-product-url="../product/13523/"
+                    data-chat-product-image="../assets/products/197213854/01-2244919832.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2541,6 +2724,8 @@ fleece full-zip jacket
                     data-chat-product-id="13522"
                     data-chat-product-name="Cветр з вовни мериноса uniqlo"
                     data-chat-product-url="../product/13522/"
+                    data-chat-product-image="../assets/products/191651735/01-2216115843.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2571,6 +2756,8 @@ fleece full-zip jacket
                     data-chat-product-id="13521"
                     data-chat-product-name="Джемпер-поло з вовняної суміші uniqlo"
                     data-chat-product-url="../product/13521/"
+                    data-chat-product-image="../assets/products/198921080/01-2253388926.jpg"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2601,6 +2788,8 @@ fleece full-zip jacket
                     data-chat-product-id="13520"
                     data-chat-product-name="Кардиган з вовни uniqlo"
                     data-chat-product-url="../product/13520/"
+                    data-chat-product-image="../assets/products/198921457/01-2253391277.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2631,6 +2820,8 @@ fleece full-zip jacket
                     data-chat-product-id="13519"
                     data-chat-product-name="Светр uniqlo"
                     data-chat-product-url="../product/13519/"
+                    data-chat-product-image="../assets/products/199258825/01-2255117931.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2661,6 +2852,8 @@ fleece full-zip jacket
                     data-chat-product-id="13518"
                     data-chat-product-name="Пуловер з мериносової вовни uniqlo"
                     data-chat-product-url="../product/13518/"
+                    data-chat-product-image="../assets/products/197668506/01-2247452690.jpg"
+                    data-chat-product-price="900 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2695,6 +2888,8 @@ fleece full-zip jacket
                     data-chat-product-id="13517"
                     data-chat-product-name="Жіноча худі heattech на шерпі від uniqlo"
                     data-chat-product-url="../product/13517/"
+                    data-chat-product-image="../assets/products/140823381/01-1497093058.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2731,6 +2926,8 @@ crew neck sweatshirt
                     data-chat-product-id="13516"
                     data-chat-product-name="Світшот uniqlo"
                     data-chat-product-url="../product/13516/"
+                    data-chat-product-image="../assets/products/184957866/01-2175987167.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2765,6 +2962,8 @@ crew neck sweatshirt
                     data-chat-product-id="13515"
                     data-chat-product-name="Худі uniqlo з колекції ut archive"
                     data-chat-product-url="../product/13515/"
+                    data-chat-product-image="../assets/products/184957466/01-2175984860.webp"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2799,6 +2998,8 @@ crew neck sweatshirt
                     data-chat-product-id="13514"
                     data-chat-product-name="3d-в&#x27;язаний светр зі змішаної вовни мериноса uniqlo"
                     data-chat-product-url="../product/13514/"
+                    data-chat-product-image="../assets/products/190309288/01-2207808360.webp"
+                    data-chat-product-price="1300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2837,6 +3038,8 @@ crew neck sweatshirt
                     data-chat-product-id="13513"
                     data-chat-product-name="Cветр з вовни мериноса uniqlo"
                     data-chat-product-url="../product/13513/"
+                    data-chat-product-image="../assets/products/191650979/01-2216111569.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2875,6 +3078,8 @@ crew neck sweatshirt
                     data-chat-product-id="13512"
                     data-chat-product-name="Светр з візерунком aran від uniqlo"
                     data-chat-product-url="../product/13512/"
+                    data-chat-product-image="../assets/products/191654163/01-2216130801.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2907,6 +3112,8 @@ crew neck sweatshirt
                     data-chat-product-id="13511"
                     data-chat-product-name="Толстовка zara, розмір л"
                     data-chat-product-url="../product/13511/"
+                    data-chat-product-image="../assets/products/191654304/01-2216131420.jpg"
+                    data-chat-product-price="750 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2942,6 +3149,8 @@ crew neck sweatshirt
                     data-chat-product-id="13510"
                     data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
                     data-chat-product-url="../product/13510/"
+                    data-chat-product-image="../assets/products/191895532/01-2217693895.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -2977,6 +3186,8 @@ crew neck sweatshirt
                     data-chat-product-id="13509"
                     data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
                     data-chat-product-url="../product/13509/"
+                    data-chat-product-image="../assets/products/192112290/01-2219049642.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3012,6 +3223,8 @@ crew neck sweatshirt
                     data-chat-product-id="13508"
                     data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
                     data-chat-product-url="../product/13508/"
+                    data-chat-product-image="../assets/products/192112511/01-2219050776.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3037,6 +3250,8 @@ crew neck sweatshirt
                     data-chat-product-id="13507"
                     data-chat-product-name="Гольф uniqlo из 100% мериносовой шерсти"
                     data-chat-product-url="../product/13507/"
+                    data-chat-product-image="../assets/products/192113092/01-2219054031.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3072,6 +3287,8 @@ crew neck sweatshirt
                     data-chat-product-id="13506"
                     data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
                     data-chat-product-url="../product/13506/"
+                    data-chat-product-image="../assets/products/192113258/01-2219054981.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3110,6 +3327,8 @@ crew neck sweatshirt
                     data-chat-product-id="13505"
                     data-chat-product-name="Кардиган uniqlo"
                     data-chat-product-url="../product/13505/"
+                    data-chat-product-image="../assets/products/192111898/01-2219047511.jpg"
+                    data-chat-product-price="1450 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3145,6 +3364,8 @@ crew neck sweatshirt
                     data-chat-product-id="13504"
                     data-chat-product-name="Светр з пряжі soufflé uniqlo"
                     data-chat-product-url="../product/13504/"
+                    data-chat-product-image="../assets/products/190238426/01-2207367994.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3182,6 +3403,8 @@ crew neck sweatshirt
                     data-chat-product-id="13503"
                     data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
                     data-chat-product-url="../product/13503/"
+                    data-chat-product-image="../assets/products/193267629/01-2226041790.jpg"
+                    data-chat-product-price="875 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3216,6 +3439,8 @@ crew neck sweatshirt
                     data-chat-product-id="13502"
                     data-chat-product-name="Светр fair isle uniqlo"
                     data-chat-product-url="../product/13502/"
+                    data-chat-product-image="../assets/products/194910863/01-2235413824.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3250,6 +3475,8 @@ crew neck sweatshirt
                     data-chat-product-id="13501"
                     data-chat-product-name="Светр uniqlo з візерунком argyle"
                     data-chat-product-url="../product/13501/"
+                    data-chat-product-image="../assets/products/196638744/01-2241721993.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3285,6 +3512,8 @@ crew neck sweatshirt
                     data-chat-product-id="13500"
                     data-chat-product-name="Cветр з вовни мериноса uniqlo"
                     data-chat-product-url="../product/13500/"
+                    data-chat-product-image="../assets/products/197025662/01-2243679856.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3319,6 +3548,8 @@ crew neck sweatshirt
                     data-chat-product-id="13499"
                     data-chat-product-name="Светр з пряжі soufflé uniqlo"
                     data-chat-product-url="../product/13499/"
+                    data-chat-product-image="../assets/products/197211864/01-2244912509.png"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3353,6 +3584,8 @@ crew neck sweatshirt
                     data-chat-product-id="13498"
                     data-chat-product-name="Светр з пряжі soufflé uniqlo"
                     data-chat-product-url="../product/13498/"
+                    data-chat-product-image="../assets/products/197213237/01-2244919880.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3392,6 +3625,8 @@ crew neck sweatshirt
                     data-chat-product-id="13497"
                     data-chat-product-name="Светр із вовни мериноса uniqlo"
                     data-chat-product-url="../product/13497/"
+                    data-chat-product-image="../assets/products/191654607/01-2216133265.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3427,6 +3662,8 @@ crew neck sweatshirt
                     data-chat-product-id="13496"
                     data-chat-product-name="Cветр з вовни мериноса uniqlo"
                     data-chat-product-url="../product/13496/"
+                    data-chat-product-image="../assets/products/191652929/01-2216123116.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3465,6 +3702,8 @@ crew neck sweatshirt
                     data-chat-product-id="13495"
                     data-chat-product-name="Cветр з вовни мериноса uniqlo"
                     data-chat-product-url="../product/13495/"
+                    data-chat-product-image="../assets/products/191651364/01-2216113492.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3503,6 +3742,8 @@ crew neck sweatshirt
                     data-chat-product-id="13494"
                     data-chat-product-name="Cветр з вовни мериноса uniqlo"
                     data-chat-product-url="../product/13494/"
+                    data-chat-product-image="../assets/products/191651476/01-2216114440.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3541,6 +3782,8 @@ crew neck sweatshirt
                     data-chat-product-id="13493"
                     data-chat-product-name="Cветр з вовни мериноса uniqlo"
                     data-chat-product-url="../product/13493/"
+                    data-chat-product-image="../assets/products/191651178/01-2216112300.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3571,6 +3814,8 @@ crew neck sweatshirt
                     data-chat-product-id="13492"
                     data-chat-product-name="Светр uniqlo"
                     data-chat-product-url="../product/13492/"
+                    data-chat-product-image="../assets/products/199258912/01-2255118399.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3606,6 +3851,8 @@ crew neck sweatshirt
                     data-chat-product-id="13491"
                     data-chat-product-name="Cветр з вовни мериноса uniqlo"
                     data-chat-product-url="../product/13491/"
+                    data-chat-product-image="../assets/products/193932965/01-2230068197.jpg"
+                    data-chat-product-price="1350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3636,6 +3883,8 @@ crew neck sweatshirt
                     data-chat-product-id="13490"
                     data-chat-product-name="Светр-поло uniqlo"
                     data-chat-product-url="../product/13490/"
+                    data-chat-product-image="../assets/products/206580644/01-2286628258.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3674,6 +3923,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13489"
                     data-chat-product-name="Лонгслів оверсайз uniqlo"
                     data-chat-product-url="../product/13489/"
+                    data-chat-product-image="../assets/products/207540745/01-2290872425.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3714,6 +3965,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13488"
                     data-chat-product-name="Худі uniqlo"
                     data-chat-product-url="../product/13488/"
+                    data-chat-product-image="../assets/products/208450083/01-2294694681.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3745,6 +3998,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13487"
                     data-chat-product-name="Лонгслів бавовняний uniqlo"
                     data-chat-product-url="../product/13487/"
+                    data-chat-product-image="../assets/products/208496877/01-2294955256.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3778,6 +4033,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13486"
                     data-chat-product-name="Гольф heattech uniqlo"
                     data-chat-product-url="../product/13486/"
+                    data-chat-product-image="../assets/products/208497904/01-2294961423.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3818,6 +4075,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13485"
                     data-chat-product-name="Худі uniqlo"
                     data-chat-product-url="../product/13485/"
+                    data-chat-product-image="../assets/products/208450148/01-2294695119.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3848,6 +4107,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13484"
                     data-chat-product-name="Лонгслів бавовняний uniqlo"
                     data-chat-product-url="../product/13484/"
+                    data-chat-product-image="../assets/products/208553452/01-2295240156.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3887,6 +4148,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13483"
                     data-chat-product-name="Лонгслів uniqlo"
                     data-chat-product-url="../product/13483/"
+                    data-chat-product-image="../assets/products/208496594/01-2294953590.jpg"
+                    data-chat-product-price="750 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3917,6 +4180,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13482"
                     data-chat-product-name="Лонгслів uniqlo"
                     data-chat-product-url="../product/13482/"
+                    data-chat-product-image="../assets/products/208499861/01-2294973469.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3947,6 +4212,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13481"
                     data-chat-product-name="Светр-кокон без рукавів uniqlo"
                     data-chat-product-url="../product/13481/"
+                    data-chat-product-image="../assets/products/208563188/01-2295297334.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -3977,6 +4244,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13480"
                     data-chat-product-name="Кардиган merino uniqlo"
                     data-chat-product-url="../product/13480/"
+                    data-chat-product-image="../assets/products/208642801/01-2295757843.jpg"
+                    data-chat-product-price="1250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4009,6 +4278,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13479"
                     data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
                     data-chat-product-url="../product/13479/"
+                    data-chat-product-image="../assets/products/209221102/01-2298762561.jpg"
+                    data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4039,6 +4310,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13478"
                     data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
                     data-chat-product-url="../product/13478/"
+                    data-chat-product-image="../assets/products/209203142/01-2298673978.jpg"
+                    data-chat-product-price="1350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4069,6 +4342,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13477"
                     data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
                     data-chat-product-url="../product/13477/"
+                    data-chat-product-image="../assets/products/209205191/01-2298686079.jpg"
+                    data-chat-product-price="1350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4099,6 +4374,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13476"
                     data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
                     data-chat-product-url="../product/13476/"
+                    data-chat-product-image="../assets/products/209203630/01-2298676851.jpg"
+                    data-chat-product-price="1350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4129,6 +4406,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13475"
                     data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
                     data-chat-product-url="../product/13475/"
+                    data-chat-product-image="../assets/products/209204780/01-2298683913.jpg"
+                    data-chat-product-price="1350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4157,6 +4436,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13474"
                     data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
                     data-chat-product-url="../product/13474/"
+                    data-chat-product-image="../assets/products/209203385/01-2298675328.jpg"
+                    data-chat-product-price="1350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4190,6 +4471,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13473"
                     data-chat-product-name="Кардиган-поло uniqlo"
                     data-chat-product-url="../product/13473/"
+                    data-chat-product-image="../assets/products/209205470/01-2298687720.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4220,6 +4503,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13472"
                     data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
                     data-chat-product-url="../product/13472/"
+                    data-chat-product-image="../assets/products/209203283/01-2298674805.jpg"
+                    data-chat-product-price="1350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4250,6 +4535,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13471"
                     data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
                     data-chat-product-url="../product/13471/"
+                    data-chat-product-image="../assets/products/209205037/01-2298685216.jpg"
+                    data-chat-product-price="1350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4284,6 +4571,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13470"
                     data-chat-product-name="Кардиган-поло uniqlo"
                     data-chat-product-url="../product/13470/"
+                    data-chat-product-image="../assets/products/209205641/01-2298688670.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4317,6 +4606,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13469"
                     data-chat-product-name="Акція! кардиган zara, розмір с"
                     data-chat-product-url="../product/13469/"
+                    data-chat-product-image="../assets/products/209205805/01-2298689631.jpg"
+                    data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4347,6 +4638,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13468"
                     data-chat-product-name="Пухнастий флісовий кардиган uniqlo"
                     data-chat-product-url="../product/13468/"
+                    data-chat-product-image="../assets/products/209220053/01-2298755877.jpg"
+                    data-chat-product-price="1200 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4377,6 +4670,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13467"
                     data-chat-product-name="Флісовий лонгслів з коміром на блискавці  heattech uniqlo"
                     data-chat-product-url="../product/13467/"
+                    data-chat-product-image="../assets/products/209220205/01-2298756671.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4407,6 +4702,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13466"
                     data-chat-product-name="Кардиган uniqlo"
                     data-chat-product-url="../product/13466/"
+                    data-chat-product-image="../assets/products/209205418/01-2298687194.jpg"
+                    data-chat-product-price="1050 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4440,6 +4737,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13465"
                     data-chat-product-name="Кардиган-поло uniqlo"
                     data-chat-product-url="../product/13465/"
+                    data-chat-product-image="../assets/products/209205577/01-2298688281.jpg"
+                    data-chat-product-price="1010 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4471,6 +4770,8 @@ smooth cotton oversized t-shirt
                     data-chat-product-id="13002"
                     data-chat-product-name="Худі на блискавці uniqlo"
                     data-chat-product-url="../product/13002/"
+                    data-chat-product-image="../assets/products/209220525/01-2298758628.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -4480,17 +4781,21 @@ smooth cotton oversized t-shirt
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 12:19</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 13:11</div>
 </main>
 </div>
 <div class="chat-overlay" id="chatOverlay" aria-hidden="true">
-    <section class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <section class="chat-panel" id="chatPanel" data-chat-surface="modal" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
         <div class="chat-head">
             <div>
+                <div class="chat-kicker">UniqLow chat</div>
                 <div class="chat-title" id="chatTitle">Чат з UniqLow</div>
-                <div class="chat-subtitle" id="chatSubtitle">Увійдіть через Google, щоб написати повідомлення.</div>
+                <div class="chat-subtitle" id="chatSubtitle">Історія діалогів, товар і повідомлення в одному місці.</div>
             </div>
-            <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">×</button>
+            <div class="chat-head-actions">
+                <a class="chat-history-link" href="/chats/">Всі чати</a>
+                <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">x</button>
+            </div>
         </div>
         <div class="chat-body">
             <div class="chat-auth" id="chatAuth">
@@ -4498,54 +4803,80 @@ smooth cotton oversized t-shirt
                 <div class="chat-warning">
                     Чат захищений Google-входом і правилами доступу. Не надсилайте номери карт, CVV, паролі або коди з SMS.
                 </div>
-                <div class="chat-status" id="chatStatus">Чат готується...</div>
             </div>
+            <div class="chat-status" id="chatStatus">Чат готується...</div>
             <div class="chat-workspace" id="chatWorkspace">
-                <div class="chat-owner-tools" id="chatOwnerTools">
-                    <div class="chat-status">Режим власника: показані останні діалоги покупців.</div>
+                <aside class="chat-history-panel" id="chatHistoryPanel">
+                    <div class="chat-history-title">Історія чатів</div>
+                    <div class="chat-history-note" id="chatHistoryNote">Останні діалоги з товарами.</div>
                     <div class="chat-thread-list" id="chatThreadList"></div>
-                </div>
-                <div class="chat-messages" id="chatMessages"></div>
-                <div class="chat-composer">
-                    <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
-                    <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
-                    <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
-                </div>
+                </aside>
+                <section class="chat-dialog-panel">
+                    <div class="chat-product-preview" id="chatProductPreview">
+                        <div class="chat-product-empty">Виберіть діалог або відкрийте чат з картки товару.</div>
+                    </div>
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-composer">
+                        <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
+                        <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
+                        <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
+                    </div>
+                </section>
             </div>
         </div>
     </section>
-</div>
-<script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
+</div><script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
 <script type="module">
 const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
 const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
 const firebaseConfig = chatConfig.firebase || {};
 const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
+const chatPageMode = Boolean(document.querySelector('.chat-page-root'));
 let chatAuth = null;
 let chatDb = null;
 let chatUser = null;
 let chatProvider = null;
 let chatProduct = {};
 let chatThreadId = '';
+let chatCurrentThread = null;
 let chatUnsubMessages = null;
 let chatUnsubThreads = null;
 let firebaseApi = null;
 
 const chatEl = (id) => document.getElementById(id);
+const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
 const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
-const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+const chatAbsoluteUrl = (value) => {
+    try { return value ? new URL(value, location.href).href : ''; }
+    catch { return ''; }
+};
+const chatTimeValue = (stamp) => {
+    if (!stamp) return 0;
+    if (typeof stamp.toMillis === 'function') return stamp.toMillis();
+    if (typeof stamp.seconds === 'number') return stamp.seconds * 1000;
+    return 0;
+};
+const chatFormatTime = (stamp) => {
+    const value = chatTimeValue(stamp);
+    if (!value) return '';
+    return new Intl.DateTimeFormat('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+};
 
 function openChatFromButton(btn) {
     chatProduct = {
         id: btn?.dataset.chatProductId || 'general',
         name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
         url: btn?.dataset.chatProductUrl || location.pathname,
+        image: btn?.dataset.chatProductImage || document.getElementById('productMainImage')?.getAttribute('src') || '',
+        price: btn?.dataset.chatProductPrice || '',
     };
     chatEl('chatOverlay')?.classList.add('open');
     chatEl('chatOverlay')?.setAttribute('aria-hidden', 'false');
-    chatEl('chatSubtitle').textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    const subtitle = chatEl('chatSubtitle');
+    if (subtitle) subtitle.textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    renderThreadProduct(chatProduct);
     prepareChat();
 }
 
@@ -4564,7 +4895,8 @@ async function prepareChat() {
     }
     try {
         await ensureFirebase();
-        chatStatus(chatUser ? 'Ви увійшли. Можна писати.' : 'Увійдіть через Google, щоб почати чат.');
+        if (chatUser) await startSignedChat();
+        else chatStatus('Увійдіть через Google, щоб бачити історію і писати повідомлення.');
     } catch (err) {
         chatStatus(`Чат не запустився: ${err.message || err}`);
     }
@@ -4584,19 +4916,44 @@ async function ensureFirebase() {
     firebaseApi.onAuthStateChanged(chatAuth, async (user) => {
         chatUser = user;
         updateChatAuthState();
-        if (user) {
-            if (chatIsOwner()) listenOwnerThreads();
-            else await openCustomerThread();
-        }
+        if (user) await startSignedChat();
+        else resetSignedChat();
     });
     return firebaseApi;
 }
 
+async function startSignedChat() {
+    updateChatAuthState();
+    if (chatIsOwner()) {
+        listenOwnerThreads();
+    } else if (chatPageMode) {
+        listenCustomerThreads();
+    } else if (chatProduct.id) {
+        await openCustomerThread();
+    }
+}
+
+function resetSignedChat() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    if (chatUnsubMessages) chatUnsubMessages();
+    chatUnsubThreads = null;
+    chatUnsubMessages = null;
+    chatThreadId = '';
+    chatCurrentThread = null;
+    chatEl('chatThreadList') && (chatEl('chatThreadList').innerHTML = '');
+    chatEl('chatMessages') && (chatEl('chatMessages').innerHTML = '');
+}
+
 function updateChatAuthState() {
     const signed = Boolean(chatUser);
-    chatEl('chatAuth').style.display = signed ? 'none' : 'grid';
-    chatEl('chatWorkspace').classList.toggle('active', signed);
-    chatEl('chatOwnerTools').classList.toggle('active', signed && chatIsOwner());
+    const auth = chatEl('chatAuth');
+    const workspace = chatEl('chatWorkspace');
+    const history = chatEl('chatHistoryPanel');
+    if (auth) auth.style.display = signed ? 'none' : 'grid';
+    if (workspace) workspace.classList.toggle('active', signed);
+    if (history) history.classList.toggle('active', signed && (chatPageMode || chatIsOwner()));
+    const note = chatEl('chatHistoryNote');
+    if (note && signed) note.textContent = chatIsOwner() ? 'Усі звернення покупців.' : 'Ваші діалоги з товарами.';
     if (signed) chatStatus(`Увійшли як ${chatUser.email}`);
 }
 
@@ -4617,17 +4974,23 @@ async function openCustomerThread() {
     if (!chatUser || !firebaseApi) return;
     chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
     const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
-    await firebaseApi.setDoc(threadRef, {
+    const payload = {
         customerUid: chatUser.uid,
         customerEmail: chatUser.email || '',
         customerName: chatUser.displayName || chatUser.email || '',
         ownerEmail: chatOwnerEmail,
         productId: chatProduct.id || 'general',
         productName: chatProduct.name || '',
-        productUrl: new URL(chatProduct.url || location.pathname, location.href).href,
+        productUrl: chatAbsoluteUrl(chatProduct.url || location.pathname),
+        productImage: chatAbsoluteUrl(chatProduct.image || ''),
+        productPrice: chatProduct.price || '',
         updatedAt: firebaseApi.serverTimestamp(),
         createdAt: firebaseApi.serverTimestamp(),
-    }, { merge: true });
+    };
+    await firebaseApi.setDoc(threadRef, payload, { merge: true });
+    chatCurrentThread = payload;
+    renderThreadProduct(payload);
+    renderSingleThreadButton(chatThreadId, payload);
     listenMessages(chatThreadId);
 }
 
@@ -4636,30 +4999,135 @@ function listenOwnerThreads() {
     const q = firebaseApi.query(
         firebaseApi.collection(chatDb, 'chatThreads'),
         firebaseApi.orderBy('updatedAt', 'desc'),
-        firebaseApi.limit(50)
+        firebaseApi.limit(100)
     );
     chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
-        const list = chatEl('chatThreadList');
-        list.innerHTML = '';
-        snap.forEach((docSnap) => {
-            const data = docSnap.data();
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = `chat-thread-btn${docSnap.id === chatThreadId ? ' active' : ''}`;
-            btn.dataset.threadId = docSnap.id;
-            btn.textContent = `${data.customerName || data.customerEmail || 'Покупець'} — ${data.productName || 'Загальний чат'}`;
-            btn.onclick = () => {
-                chatThreadId = docSnap.id;
-                document.querySelectorAll('.chat-thread-btn').forEach(el => el.classList.toggle('active', el.dataset.threadId === chatThreadId));
-                listenMessages(chatThreadId);
-            };
-            list.appendChild(btn);
-        });
-        if (!chatThreadId && snap.docs[0]) {
-            chatThreadId = snap.docs[0].id;
-            listenMessages(chatThreadId);
-        }
+        renderThreadList(snap.docs.map((docSnap) => ({ id: docSnap.id, data: docSnap.data() })));
     }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
+}
+
+function listenCustomerThreads() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads'),
+        firebaseApi.where('customerUid', '==', chatUser.uid),
+        firebaseApi.limit(100)
+    );
+    chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
+        const threads = snap.docs
+            .map((docSnap) => ({ id: docSnap.id, data: docSnap.data() }))
+            .sort((a, b) => chatTimeValue(b.data.updatedAt) - chatTimeValue(a.data.updatedAt));
+        renderThreadList(threads);
+    }, (err) => chatStatus(`Не вдалося прочитати ваші чати: ${err.message}`));
+}
+
+function renderThreadList(threads) {
+    const list = chatEl('chatThreadList');
+    if (!list) return;
+    list.innerHTML = '';
+    if (!threads.length) {
+        list.innerHTML = '<div class="chat-empty-state">Історія поки порожня. Відкрийте товар і натисніть "Чат".</div>';
+        renderThreadProduct(null);
+        chatEl('chatMessages') && (chatEl('chatMessages').innerHTML = '');
+        return;
+    }
+    threads.forEach((thread) => list.appendChild(createThreadButton(thread.id, thread.data)));
+    const selected = threads.find((thread) => thread.id === chatThreadId) || threads[0];
+    if (selected && selected.id !== chatThreadId) selectThread(selected.id, selected.data);
+    else if (selected) renderThreadProduct(selected.data);
+}
+
+function renderSingleThreadButton(threadId, data) {
+    const list = chatEl('chatThreadList');
+    const history = chatEl('chatHistoryPanel');
+    if (!list || !history || (!chatPageMode && !chatIsOwner())) return;
+    history.classList.add('active');
+    list.innerHTML = '';
+    list.appendChild(createThreadButton(threadId, data));
+    markActiveThread();
+}
+
+function createThreadButton(threadId, data) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chat-thread-btn';
+    btn.dataset.threadId = threadId;
+    const img = document.createElement('img');
+    img.className = 'chat-thread-image';
+    img.alt = '';
+    if (data.productImage) img.src = data.productImage;
+    else img.classList.add('empty');
+    const body = document.createElement('span');
+    body.className = 'chat-thread-body';
+    const title = document.createElement('span');
+    title.className = 'chat-thread-title';
+    title.textContent = data.productName || 'Загальний чат';
+    const meta = document.createElement('span');
+    meta.className = 'chat-thread-meta';
+    const customer = data.customerName || data.customerEmail || 'Покупець';
+    meta.textContent = chatIsOwner() ? customer : (data.productPrice || 'Без ціни');
+    const last = document.createElement('span');
+    last.className = 'chat-thread-last';
+    last.textContent = data.lastMessage || 'Новий діалог';
+    const time = document.createElement('span');
+    time.className = 'chat-thread-time';
+    time.textContent = chatFormatTime(data.updatedAt);
+    body.append(title, meta, last);
+    btn.append(img, body, time);
+    btn.onclick = () => selectThread(threadId, data);
+    return btn;
+}
+
+function selectThread(threadId, data) {
+    chatThreadId = threadId;
+    chatCurrentThread = data || {};
+    markActiveThread();
+    renderThreadProduct(chatCurrentThread);
+    listenMessages(threadId);
+}
+
+function markActiveThread() {
+    document.querySelectorAll('.chat-thread-btn').forEach((el) => {
+        el.classList.toggle('active', el.dataset.threadId === chatThreadId);
+    });
+}
+
+function renderThreadProduct(data) {
+    const preview = chatEl('chatProductPreview');
+    if (!preview) return;
+    const source = data || chatProduct || {};
+    preview.innerHTML = '';
+    if (!source.productName && !source.name) {
+        const empty = document.createElement('div');
+        empty.className = 'chat-product-empty';
+        empty.textContent = chatPageMode ? 'Виберіть діалог з історії.' : 'Товар буде прикріплений після відкриття чату.';
+        preview.appendChild(empty);
+        return;
+    }
+    const imageUrl = source.productImage || source.image || '';
+    const productUrl = source.productUrl || source.url || '';
+    if (imageUrl) {
+        const img = document.createElement('img');
+        img.className = 'chat-product-image';
+        img.src = chatAbsoluteUrl(imageUrl);
+        img.alt = source.productName || source.name || 'Товар';
+        preview.appendChild(img);
+    }
+    const info = document.createElement('div');
+    info.className = 'chat-product-info';
+    const name = document.createElement(productUrl ? 'a' : 'div');
+    name.className = 'chat-product-name';
+    name.textContent = source.productName || source.name || 'Товар';
+    if (productUrl) {
+        name.href = chatAbsoluteUrl(productUrl);
+        name.target = '_blank';
+        name.rel = 'noopener';
+    }
+    const price = document.createElement('div');
+    price.className = 'chat-product-price';
+    price.textContent = source.productPrice || source.price || 'Товар з каталогу';
+    info.append(name, price);
+    preview.appendChild(info);
 }
 
 function listenMessages(threadId) {
@@ -4667,18 +5135,22 @@ function listenMessages(threadId) {
     const q = firebaseApi.query(
         firebaseApi.collection(chatDb, 'chatThreads', threadId, 'messages'),
         firebaseApi.orderBy('createdAt', 'asc'),
-        firebaseApi.limit(120)
+        firebaseApi.limit(160)
     );
     chatUnsubMessages = firebaseApi.onSnapshot(q, (snap) => {
         const box = chatEl('chatMessages');
+        if (!box) return;
         box.innerHTML = '';
+        if (snap.empty) {
+            box.innerHTML = '<div class="chat-empty-state">Повідомлень ще немає. Напишіть перше повідомлення.</div>';
+        }
         snap.forEach((docSnap) => {
             const msg = docSnap.data();
             const row = document.createElement('div');
             row.className = `chat-message${msg.uid === chatUser?.uid ? ' mine' : ''}`;
             const meta = document.createElement('div');
             meta.className = 'chat-message-meta';
-            meta.textContent = msg.name || msg.email || 'Користувач';
+            meta.textContent = `${msg.name || msg.email || 'Користувач'}${chatFormatTime(msg.createdAt) ? ' • ' + chatFormatTime(msg.createdAt) : ''}`;
             const text = document.createElement('div');
             text.textContent = msg.text || '';
             row.append(meta, text);
@@ -4690,11 +5162,11 @@ function listenMessages(threadId) {
 
 async function sendChatMessage() {
     const input = chatEl('chatInput');
-    const text = chatClean(input.value);
+    const text = chatClean(input?.value);
     if (!text || !chatUser || !firebaseApi) return;
-    if (!chatThreadId && !chatIsOwner()) await openCustomerThread();
+    if (!chatThreadId && !chatIsOwner() && chatProduct.id) await openCustomerThread();
     if (!chatThreadId) {
-        chatStatus('Виберіть діалог покупця.');
+        chatStatus('Виберіть діалог або відкрийте чат з картки товару.');
         return;
     }
     chatEl('chatSendBtn').disabled = true;
@@ -4708,11 +5180,18 @@ async function sendChatMessage() {
             text,
             createdAt: firebaseApi.serverTimestamp(),
         });
-        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+        const update = {
             lastMessage: text.slice(0, 180),
             lastSender: role,
             updatedAt: firebaseApi.serverTimestamp(),
-        }, { merge: true });
+        };
+        if (!chatIsOwner() && chatProduct.id) {
+            update.productImage = chatAbsoluteUrl(chatProduct.image || '');
+            update.productPrice = chatProduct.price || '';
+            update.productName = chatProduct.name || '';
+            update.productUrl = chatAbsoluteUrl(chatProduct.url || location.pathname);
+        }
+        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
         input.value = '';
     } catch (err) {
         chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
@@ -4726,6 +5205,7 @@ chatEl('chatSendBtn')?.addEventListener('click', sendChatMessage);
 chatEl('chatInput')?.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) sendChatMessage();
 });
+if (chatPageMode) prepareChat();
 </script>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');

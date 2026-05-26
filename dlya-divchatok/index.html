@@ -131,8 +131,12 @@ display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
 .chat-panel{width:min(100%,440px);max-height:min(760px,calc(100vh - 36px));display:flex;flex-direction:column;
 background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.28);overflow:hidden;}
 .chat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);}
+.chat-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:900;margin-bottom:5px;}
 .chat-title{font-weight:900;font-size:20px;line-height:1.2;}
 .chat-subtitle{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.35;}
+.chat-head-actions{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.chat-history-link{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px 11px;text-decoration:none;font-weight:800;font-size:13px;white-space:nowrap;}
+.chat-history-link:hover{border-color:var(--accent);color:var(--accent);}
 .chat-close{border:1px solid var(--border);background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:12px;cursor:pointer;font-size:22px;line-height:1;}
 .chat-body{padding:14px;display:grid;gap:12px;min-height:0;}
 .chat-auth{display:grid;gap:10px;}
@@ -156,6 +160,39 @@ background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;
 .chat-composer{display:grid;gap:8px;}
 .chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
 .chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.chat-page-root{max-width:1440px;margin:0 auto;animation:fadeUp .3s ease both;}
+.chat-page-top{max-width:780px;margin-bottom:18px;}
+.chat-page-panel{width:100%;max-height:none;min-height:calc(100vh - 150px);border-radius:22px;box-shadow:var(--shadow);}
+.chat-page-panel .chat-head{padding:20px 22px;}
+.chat-page-panel .chat-body{padding:0;gap:0;min-height:0;flex:1;}
+.chat-page-panel .chat-status{padding:10px 22px;border-bottom:1px solid var(--border);background:var(--bg);}
+.chat-page-panel .chat-auth{padding:22px;}
+.chat-page-panel .chat-workspace.active{display:grid;grid-template-columns:minmax(280px,360px) minmax(0,1fr);gap:0;min-height:560px;}
+.chat-history-panel{display:none;border-right:1px solid var(--border);background:var(--bg);padding:14px;gap:10px;align-content:start;min-width:0;}
+.chat-history-panel.active{display:grid;}
+.chat-history-title{font-size:16px;font-weight:900;}
+.chat-history-note{font-size:12px;color:var(--muted);line-height:1.4;}
+.chat-dialog-panel{display:grid;grid-template-rows:auto minmax(220px,1fr) auto;gap:12px;min-width:0;padding:14px;}
+.chat-page-panel .chat-dialog-panel{min-height:560px;}
+.chat-product-preview{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:16px;background:var(--bg);padding:10px;min-height:78px;}
+.chat-product-image{width:58px;height:58px;border-radius:12px;object-fit:contain;background:var(--panel-solid);border:1px solid var(--border);padding:3px;flex:0 0 58px;}
+.chat-product-info{min-width:0;display:grid;gap:4px;}
+.chat-product-name{color:var(--text);font-weight:900;text-decoration:none;line-height:1.25;overflow-wrap:anywhere;}
+a.chat-product-name:hover{color:var(--accent);}
+.chat-product-price{color:var(--muted);font-size:13px;font-weight:700;}
+.chat-product-empty,.chat-empty-state{color:var(--muted);font-size:13px;line-height:1.45;}
+.chat-thread-list{max-height:120px;overflow:auto;display:grid;gap:8px;}
+.chat-page-panel .chat-thread-list{max-height:calc(100vh - 290px);}
+.chat-thread-btn{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid var(--border);background:var(--panel-solid);color:var(--text);border-radius:14px;padding:9px;text-align:left;cursor:pointer;transition:.18s ease;}
+.chat-thread-btn:hover{border-color:var(--accent);transform:translateY(-1px);}
+.chat-thread-image{width:48px;height:48px;border-radius:12px;object-fit:contain;background:var(--bg-soft);border:1px solid var(--border);padding:2px;}
+.chat-thread-image.empty{display:none;}
+.chat-thread-body{min-width:0;display:grid;gap:2px;}
+.chat-thread-title{font-weight:900;font-size:13px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.chat-thread-meta,.chat-thread-last,.chat-thread-time{font-size:12px;color:var(--muted);line-height:1.3;}
+.chat-thread-last{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.chat-thread-time{white-space:nowrap;align-self:start;}
+.chat-page-panel .chat-messages{height:auto;min-height:0;}
 .detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
 .detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .detail-section summary::-webkit-details-marker{display:none;}
@@ -233,6 +270,13 @@ background:var(--panel-solid);color:var(--muted);}
 .detail-section{padding-top:14px;margin-top:14px;}
 .detail-actions{display:grid;grid-template-columns:1fr;}
 .detail-order-btn,.detail-chat-btn{width:100%;}
+.chat-page-panel{min-height:auto;}
+.chat-page-panel .chat-workspace.active{grid-template-columns:1fr;min-height:auto;}
+.chat-history-panel{border-right:none;border-bottom:1px solid var(--border);}
+.chat-page-panel .chat-thread-list{max-height:250px;}
+.chat-dialog-panel,.chat-page-panel .chat-dialog-panel{min-height:460px;}
+.chat-head{align-items:flex-start;}
+.chat-head-actions{flex-direction:column;align-items:flex-end;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
@@ -250,10 +294,15 @@ background:var(--panel-solid);color:var(--muted);}
 .promo-badge{width:78px;height:78px;font-size:20px;}
 .chat-overlay{padding:10px;align-items:stretch;}
 .chat-panel{width:100%;max-height:calc(100vh - 20px);border-radius:20px;}
+.chat-history-link{display:none;}
+.chat-dialog-panel{padding:10px;}
+.chat-product-preview{align-items:flex-start;}
+.chat-thread-btn{grid-template-columns:44px minmax(0,1fr);}
+.chat-thread-time{grid-column:2;}
 }
 </style>
 </head>
-<body>
+<body data-page-type="category">
 <div class="layout">
 <aside class="sidebar">
     <a class="brand" href="../">
@@ -263,13 +312,14 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 26.05.2026 12:19</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 13:11</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
     <nav class="desktop-catalog" aria-label="Каталог">
         <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'><img class='nav-icon' src='../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/chats/'><img class='nav-icon' src='../assets/icons/chat.png' alt=''><span>Чати</span></a></li>
 <li><a class='' href='/reviews/'><img class='nav-icon' src='../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
 <li><a class='' href='/olx/'><img class='nav-icon' src='../assets/icons/market.png' alt=''><span>OLX</span></a></li>
 </ul></div>
@@ -315,6 +365,7 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="mobile-catalog-body">
             <div class='menu-block'><div class='menu-title'>Навігація</div><ul>
 <li><a class='' href='/all/'><img class='nav-icon' src='../assets/icons/products.png' alt=''><span>Всі товари</span></a></li>
+<li><a class='' href='/chats/'><img class='nav-icon' src='../assets/icons/chat.png' alt=''><span>Чати</span></a></li>
 <li><a class='' href='/reviews/'><img class='nav-icon' src='../assets/icons/reviews.png' alt=''><span>Відгуки покупців</span></a></li>
 <li><a class='' href='/olx/'><img class='nav-icon' src='../assets/icons/market.png' alt=''><span>OLX</span></a></li>
 </ul></div>
@@ -391,6 +442,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13811"
                     data-chat-product-name="Штани з ультраэластичных легінсів для дівчаток uniqlo"
                     data-chat-product-url="../product/13811/"
+                    data-chat-product-image="../assets/products/93671762/01-487943517.jpg"
+                    data-chat-product-price="400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -416,6 +469,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13810"
                     data-chat-product-name="Уникло красуня дісней футболка!"
                     data-chat-product-url="../product/13810/"
+                    data-chat-product-image="../assets/products/94919598/01-500114889.jpg"
+                    data-chat-product-price="300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -441,6 +496,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13809"
                     data-chat-product-name="Mango лосини"
                     data-chat-product-url="../product/13809/"
+                    data-chat-product-image="../assets/products/101014866/01-567114663.jpg"
+                    data-chat-product-price="355 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -466,6 +523,8 @@ background:var(--panel-solid);color:var(--muted);}
                     data-chat-product-id="13808"
                     data-chat-product-name="Сукня без рукавів uniqlo"
                     data-chat-product-url="../product/13808/"
+                    data-chat-product-image="../assets/products/101360427/01-569785805.jpg"
+                    data-chat-product-price="350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -492,6 +551,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13807"
                     data-chat-product-name="Темно-сині з  м флісовим утіпленням легінси nwt gymboree warm and fuzzy toddler north star party"
                     data-chat-product-url="../product/13807/"
+                    data-chat-product-image="../assets/products/105426457/01-642629511.jpg"
+                    data-chat-product-price="299 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -517,6 +578,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13806"
                     data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка"
                     data-chat-product-url="../product/13806/"
+                    data-chat-product-image="../assets/products/94919416/01-500112713.jpg"
+                    data-chat-product-price="300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -542,6 +605,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13805"
                     data-chat-product-name="Дитячий светр з круглим вирізом peanuts"
                     data-chat-product-url="../product/13805/"
+                    data-chat-product-image="../assets/products/101360533/01-569786272.jpg"
+                    data-chat-product-price="550 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -567,6 +632,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13804"
                     data-chat-product-name="Сукня з об&#x27;єднання ємними рукавами girls з мерсеризованої бавовни"
                     data-chat-product-url="../product/13804/"
+                    data-chat-product-image="../assets/products/101360621/01-569786789.jpg"
+                    data-chat-product-price="550 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -592,6 +659,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13803"
                     data-chat-product-name="Дитяча сітчаста толстовка airism з ультрафіолетовим вирізом"
                     data-chat-product-url="../product/13803/"
+                    data-chat-product-image="../assets/products/101360744/01-569787567.jpg"
+                    data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -617,6 +686,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13802"
                     data-chat-product-name="Дитяча колекція disney светр з круглим вирізом"
                     data-chat-product-url="../product/13802/"
+                    data-chat-product-image="../assets/products/101361095/01-569790052.jpg"
+                    data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -642,6 +713,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13801"
                     data-chat-product-name="Кардиган дитячий"
                     data-chat-product-url="../product/13801/"
+                    data-chat-product-image="../assets/products/101361212/01-569790554.jpg"
+                    data-chat-product-price="400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -669,6 +742,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13800"
                     data-chat-product-name="Угг bearpaw brady black"
                     data-chat-product-url="../product/13800/"
+                    data-chat-product-image="../assets/products/142917201/01-1586695422.jpg"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -694,6 +769,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13799"
                     data-chat-product-name="Сукня-футболка з круглим вирізом і короткими рукавами для дівчаток uniqlo"
                     data-chat-product-url="../product/13799/"
+                    data-chat-product-image="../assets/products/93670936/01-487937396.jpg"
+                    data-chat-product-price="500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -719,6 +796,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13798"
                     data-chat-product-name="Kids kaws x sesame street ut (футболка з коротким рукавом) 9-10 ,11-12"
                     data-chat-product-url="../product/13798/"
+                    data-chat-product-image="../assets/products/94914867/01-500069520.jpg"
+                    data-chat-product-price="410 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -744,6 +823,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13797"
                     data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!"
                     data-chat-product-url="../product/13797/"
+                    data-chat-product-image="../assets/products/94915216/01-500072024.jpg"
+                    data-chat-product-price="290 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -769,6 +850,8 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
                     data-chat-product-id="13796"
                     data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!"
                     data-chat-product-url="../product/13796/"
+                    data-chat-product-image="../assets/products/94918363/01-500099826.jpg"
+                    data-chat-product-price="300 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -795,6 +878,8 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
                     data-chat-product-id="13795"
                     data-chat-product-name="Пижама для девочки carters"
                     data-chat-product-url="../product/13795/"
+                    data-chat-product-image="../assets/products/105464366/01-643296650.jpg"
+                    data-chat-product-price="590 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -837,6 +922,8 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
                     data-chat-product-id="13794"
                     data-chat-product-name="Зимові черевики merrell thermo rhea waterproof boot,"
                     data-chat-product-url="../product/13794/"
+                    data-chat-product-image="../assets/products/193484389/01-2227290636.jpg"
+                    data-chat-product-price="2800 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -862,6 +949,8 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
                     data-chat-product-id="13793"
                     data-chat-product-name="Дитяча піжама"
                     data-chat-product-url="../product/13793/"
+                    data-chat-product-image="../assets/products/101360227/01-569784490.jpg"
+                    data-chat-product-price="600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -887,6 +976,8 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
                     data-chat-product-id="13792"
                     data-chat-product-name="Дитяча піжама"
                     data-chat-product-url="../product/13792/"
+                    data-chat-product-image="../assets/products/101360323/01-569785066.jpg"
+                    data-chat-product-price="600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -912,6 +1003,8 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
                     data-chat-product-id="13791"
                     data-chat-product-name="Кросівки puma «clyde»"
                     data-chat-product-url="../product/13791/"
+                    data-chat-product-image="../assets/products/73486457/01-327670230.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -937,6 +1030,8 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
                     data-chat-product-id="13790"
                     data-chat-product-name="Crocs ralen clog k fuchsia pink girls size j1 roomy fit"
                     data-chat-product-url="../product/13790/"
+                    data-chat-product-image="../assets/products/96700601/01-514652886.jpg"
+                    data-chat-product-price="750 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -962,6 +1057,8 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
                     data-chat-product-id="13789"
                     data-chat-product-name="Дитяче флісове пальто uniqlo blocktech"
                     data-chat-product-url="../product/13789/"
+                    data-chat-product-image="../assets/products/105416412/01-642499440.jpg"
+                    data-chat-product-price="800 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -988,6 +1085,8 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
                     data-chat-product-id="13788"
                     data-chat-product-name="Колекція теплого домашнього одягу"
                     data-chat-product-url="../product/13788/"
+                    data-chat-product-image="../assets/products/105462608/01-643267499.webp"
+                    data-chat-product-price="750 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1014,6 +1113,8 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
                     data-chat-product-id="13787"
                     data-chat-product-name="Ugg bearpaw emma tall black boots"
                     data-chat-product-url="../product/13787/"
+                    data-chat-product-image="../assets/products/142917955/01-1586724763.jpg"
+                    data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1040,6 +1141,8 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
                     data-chat-product-id="13786"
                     data-chat-product-name="Теплий  пуховик для дівчаток uniqlo"
                     data-chat-product-url="../product/13786/"
+                    data-chat-product-image="../assets/products/192089118/01-2218909693.jpg"
+                    data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1069,6 +1172,8 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
                     data-chat-product-id="13785"
                     data-chat-product-name="Куртка uniqlo дитяча"
                     data-chat-product-url="../product/13785/"
+                    data-chat-product-image="../assets/products/192118373/01-2219084220.jpg"
+                    data-chat-product-price="999 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1101,6 +1206,8 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
                     data-chat-product-id="13784"
                     data-chat-product-name="Кросівки under armour kids youth 4y  assert 9"
                     data-chat-product-url="../product/13784/"
+                    data-chat-product-image="../assets/products/200718804/01-2263034446.webp"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1126,6 +1233,8 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
                     data-chat-product-id="13783"
                     data-chat-product-name="Курточка gymboree 4 роки"
                     data-chat-product-url="../product/13783/"
+                    data-chat-product-image="../assets/products/102891587/01-587363593.jpg"
+                    data-chat-product-price="640 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1152,6 +1261,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13782"
                     data-chat-product-name="Колекція теплого домашнього одягу"
                     data-chat-product-url="../product/13782/"
+                    data-chat-product-image="../assets/products/105462481/01-643265114.webp"
+                    data-chat-product-price="800 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1181,6 +1292,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13781"
                     data-chat-product-name="Зимові черевики columbia ice maiden shorty snow boot"
                     data-chat-product-url="../product/13781/"
+                    data-chat-product-image="../assets/products/193480444/01-2227266804.webp"
+                    data-chat-product-price="1990 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1206,6 +1319,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13780"
                     data-chat-product-name="Зимовий мерехтливе пальто matalan на дівчинку 6 років і 5 років"
                     data-chat-product-url="../product/13780/"
+                    data-chat-product-image="../assets/products/74467240/01-332809090.jpg"
+                    data-chat-product-price="700 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1231,6 +1346,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13779"
                     data-chat-product-name="Двустороння куртка 116 зріст c&amp;a"
                     data-chat-product-url="../product/13779/"
+                    data-chat-product-image="../assets/products/103516007/01-598270235.jpg"
+                    data-chat-product-price="697 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1258,6 +1375,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13778"
                     data-chat-product-name="Лонгслив для дівчинки zara"
                     data-chat-product-url="../product/13778/"
+                    data-chat-product-image="../assets/products/170558077/01--320876822.jpg"
+                    data-chat-product-price="250 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1295,6 +1414,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13777"
                     data-chat-product-name="М&#x27;яка пухнаста флісова кофта uniqlo"
                     data-chat-product-url="../product/13777/"
+                    data-chat-product-image="../assets/products/186752530/01-2187300193.jpg"
+                    data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1332,6 +1453,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13776"
                     data-chat-product-name="Черевики skechers synergy - collab"
                     data-chat-product-url="../product/13776/"
+                    data-chat-product-image="../assets/products/192057803/01-2218709887.jpg"
+                    data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1365,6 +1488,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13775"
                     data-chat-product-name="Дитяча куртка пуховик zara"
                     data-chat-product-url="../product/13775/"
+                    data-chat-product-image="../assets/products/194120433/01-2231212411.jpg"
+                    data-chat-product-price="1990 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1390,6 +1515,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13774"
                     data-chat-product-name="Дитяча куртка-пуховик gio oversized для дівчаток urban republic 5-6 років"
                     data-chat-product-url="../product/13774/"
+                    data-chat-product-image="../assets/products/74467896/01-332812443.jpg"
+                    data-chat-product-price="550 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1415,6 +1542,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13773"
                     data-chat-product-name="Carter&#x27;s чоботи"
                     data-chat-product-url="../product/13773/"
+                    data-chat-product-image="../assets/products/142920855/01-1586833844.jpg"
+                    data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1440,6 +1569,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13772"
                     data-chat-product-name="Жилетка gymboree 4 роки"
                     data-chat-product-url="../product/13772/"
+                    data-chat-product-image="../assets/products/101838265/01-578346126.jpg"
+                    data-chat-product-price="350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1465,6 +1596,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13771"
                     data-chat-product-name="Резиновые сапоги carter’s"
                     data-chat-product-url="../product/13771/"
+                    data-chat-product-image="../assets/products/142920995/01-1586843336.jpg"
+                    data-chat-product-price="600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1501,6 +1634,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13770"
                     data-chat-product-name="Термолонгслів uniqlo heattech extra warm, розмір 11/12 років"
                     data-chat-product-url="../product/13770/"
+                    data-chat-product-image="../assets/products/193891769/01-2229802106.jpg"
+                    data-chat-product-price="500 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1526,6 +1661,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13769"
                     data-chat-product-name="Пальто uniqlo флісова непродуваемое windproof 7-8 років"
                     data-chat-product-url="../product/13769/"
+                    data-chat-product-image="../assets/products/101011855/01-567078997.jpg"
+                    data-chat-product-price="600 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1553,6 +1690,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13768"
                     data-chat-product-name="Сабо crocs classic terry cloth clog"
                     data-chat-product-url="../product/13768/"
+                    data-chat-product-image="../assets/products/208870284/01-2296910453.webp"
+                    data-chat-product-price="1150 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1583,6 +1722,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13767"
                     data-chat-product-name="Дитячі штани штани з лляної суміші uniqlo"
                     data-chat-product-url="../product/13767/"
+                    data-chat-product-image="../assets/products/209137433/01-2298283967.jpg"
+                    data-chat-product-price="510 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1615,6 +1756,8 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                     data-chat-product-id="13766"
                     data-chat-product-name="Дитяча сукня uniqlo"
                     data-chat-product-url="../product/13766/"
+                    data-chat-product-image="../assets/products/209128307/01-2298234896.jpg"
+                    data-chat-product-price="520 грн"
                     onclick="openChatFromButton(this)">
                 <span class="chat-icon" aria-hidden="true"></span>
                 Чат
@@ -1624,17 +1767,21 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 12:19</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 13:11</div>
 </main>
 </div>
 <div class="chat-overlay" id="chatOverlay" aria-hidden="true">
-    <section class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <section class="chat-panel" id="chatPanel" data-chat-surface="modal" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
         <div class="chat-head">
             <div>
+                <div class="chat-kicker">UniqLow chat</div>
                 <div class="chat-title" id="chatTitle">Чат з UniqLow</div>
-                <div class="chat-subtitle" id="chatSubtitle">Увійдіть через Google, щоб написати повідомлення.</div>
+                <div class="chat-subtitle" id="chatSubtitle">Історія діалогів, товар і повідомлення в одному місці.</div>
             </div>
-            <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">×</button>
+            <div class="chat-head-actions">
+                <a class="chat-history-link" href="/chats/">Всі чати</a>
+                <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">x</button>
+            </div>
         </div>
         <div class="chat-body">
             <div class="chat-auth" id="chatAuth">
@@ -1642,54 +1789,80 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
                 <div class="chat-warning">
                     Чат захищений Google-входом і правилами доступу. Не надсилайте номери карт, CVV, паролі або коди з SMS.
                 </div>
-                <div class="chat-status" id="chatStatus">Чат готується...</div>
             </div>
+            <div class="chat-status" id="chatStatus">Чат готується...</div>
             <div class="chat-workspace" id="chatWorkspace">
-                <div class="chat-owner-tools" id="chatOwnerTools">
-                    <div class="chat-status">Режим власника: показані останні діалоги покупців.</div>
+                <aside class="chat-history-panel" id="chatHistoryPanel">
+                    <div class="chat-history-title">Історія чатів</div>
+                    <div class="chat-history-note" id="chatHistoryNote">Останні діалоги з товарами.</div>
                     <div class="chat-thread-list" id="chatThreadList"></div>
-                </div>
-                <div class="chat-messages" id="chatMessages"></div>
-                <div class="chat-composer">
-                    <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
-                    <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
-                    <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
-                </div>
+                </aside>
+                <section class="chat-dialog-panel">
+                    <div class="chat-product-preview" id="chatProductPreview">
+                        <div class="chat-product-empty">Виберіть діалог або відкрийте чат з картки товару.</div>
+                    </div>
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-composer">
+                        <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
+                        <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
+                        <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
+                    </div>
+                </section>
             </div>
         </div>
     </section>
-</div>
-<script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
+</div><script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
 <script type="module">
 const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
 const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
 const firebaseConfig = chatConfig.firebase || {};
 const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
+const chatPageMode = Boolean(document.querySelector('.chat-page-root'));
 let chatAuth = null;
 let chatDb = null;
 let chatUser = null;
 let chatProvider = null;
 let chatProduct = {};
 let chatThreadId = '';
+let chatCurrentThread = null;
 let chatUnsubMessages = null;
 let chatUnsubThreads = null;
 let firebaseApi = null;
 
 const chatEl = (id) => document.getElementById(id);
+const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
 const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
-const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+const chatAbsoluteUrl = (value) => {
+    try { return value ? new URL(value, location.href).href : ''; }
+    catch { return ''; }
+};
+const chatTimeValue = (stamp) => {
+    if (!stamp) return 0;
+    if (typeof stamp.toMillis === 'function') return stamp.toMillis();
+    if (typeof stamp.seconds === 'number') return stamp.seconds * 1000;
+    return 0;
+};
+const chatFormatTime = (stamp) => {
+    const value = chatTimeValue(stamp);
+    if (!value) return '';
+    return new Intl.DateTimeFormat('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+};
 
 function openChatFromButton(btn) {
     chatProduct = {
         id: btn?.dataset.chatProductId || 'general',
         name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
         url: btn?.dataset.chatProductUrl || location.pathname,
+        image: btn?.dataset.chatProductImage || document.getElementById('productMainImage')?.getAttribute('src') || '',
+        price: btn?.dataset.chatProductPrice || '',
     };
     chatEl('chatOverlay')?.classList.add('open');
     chatEl('chatOverlay')?.setAttribute('aria-hidden', 'false');
-    chatEl('chatSubtitle').textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    const subtitle = chatEl('chatSubtitle');
+    if (subtitle) subtitle.textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    renderThreadProduct(chatProduct);
     prepareChat();
 }
 
@@ -1708,7 +1881,8 @@ async function prepareChat() {
     }
     try {
         await ensureFirebase();
-        chatStatus(chatUser ? 'Ви увійшли. Можна писати.' : 'Увійдіть через Google, щоб почати чат.');
+        if (chatUser) await startSignedChat();
+        else chatStatus('Увійдіть через Google, щоб бачити історію і писати повідомлення.');
     } catch (err) {
         chatStatus(`Чат не запустився: ${err.message || err}`);
     }
@@ -1728,19 +1902,44 @@ async function ensureFirebase() {
     firebaseApi.onAuthStateChanged(chatAuth, async (user) => {
         chatUser = user;
         updateChatAuthState();
-        if (user) {
-            if (chatIsOwner()) listenOwnerThreads();
-            else await openCustomerThread();
-        }
+        if (user) await startSignedChat();
+        else resetSignedChat();
     });
     return firebaseApi;
 }
 
+async function startSignedChat() {
+    updateChatAuthState();
+    if (chatIsOwner()) {
+        listenOwnerThreads();
+    } else if (chatPageMode) {
+        listenCustomerThreads();
+    } else if (chatProduct.id) {
+        await openCustomerThread();
+    }
+}
+
+function resetSignedChat() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    if (chatUnsubMessages) chatUnsubMessages();
+    chatUnsubThreads = null;
+    chatUnsubMessages = null;
+    chatThreadId = '';
+    chatCurrentThread = null;
+    chatEl('chatThreadList') && (chatEl('chatThreadList').innerHTML = '');
+    chatEl('chatMessages') && (chatEl('chatMessages').innerHTML = '');
+}
+
 function updateChatAuthState() {
     const signed = Boolean(chatUser);
-    chatEl('chatAuth').style.display = signed ? 'none' : 'grid';
-    chatEl('chatWorkspace').classList.toggle('active', signed);
-    chatEl('chatOwnerTools').classList.toggle('active', signed && chatIsOwner());
+    const auth = chatEl('chatAuth');
+    const workspace = chatEl('chatWorkspace');
+    const history = chatEl('chatHistoryPanel');
+    if (auth) auth.style.display = signed ? 'none' : 'grid';
+    if (workspace) workspace.classList.toggle('active', signed);
+    if (history) history.classList.toggle('active', signed && (chatPageMode || chatIsOwner()));
+    const note = chatEl('chatHistoryNote');
+    if (note && signed) note.textContent = chatIsOwner() ? 'Усі звернення покупців.' : 'Ваші діалоги з товарами.';
     if (signed) chatStatus(`Увійшли як ${chatUser.email}`);
 }
 
@@ -1761,17 +1960,23 @@ async function openCustomerThread() {
     if (!chatUser || !firebaseApi) return;
     chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
     const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
-    await firebaseApi.setDoc(threadRef, {
+    const payload = {
         customerUid: chatUser.uid,
         customerEmail: chatUser.email || '',
         customerName: chatUser.displayName || chatUser.email || '',
         ownerEmail: chatOwnerEmail,
         productId: chatProduct.id || 'general',
         productName: chatProduct.name || '',
-        productUrl: new URL(chatProduct.url || location.pathname, location.href).href,
+        productUrl: chatAbsoluteUrl(chatProduct.url || location.pathname),
+        productImage: chatAbsoluteUrl(chatProduct.image || ''),
+        productPrice: chatProduct.price || '',
         updatedAt: firebaseApi.serverTimestamp(),
         createdAt: firebaseApi.serverTimestamp(),
-    }, { merge: true });
+    };
+    await firebaseApi.setDoc(threadRef, payload, { merge: true });
+    chatCurrentThread = payload;
+    renderThreadProduct(payload);
+    renderSingleThreadButton(chatThreadId, payload);
     listenMessages(chatThreadId);
 }
 
@@ -1780,30 +1985,135 @@ function listenOwnerThreads() {
     const q = firebaseApi.query(
         firebaseApi.collection(chatDb, 'chatThreads'),
         firebaseApi.orderBy('updatedAt', 'desc'),
-        firebaseApi.limit(50)
+        firebaseApi.limit(100)
     );
     chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
-        const list = chatEl('chatThreadList');
-        list.innerHTML = '';
-        snap.forEach((docSnap) => {
-            const data = docSnap.data();
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = `chat-thread-btn${docSnap.id === chatThreadId ? ' active' : ''}`;
-            btn.dataset.threadId = docSnap.id;
-            btn.textContent = `${data.customerName || data.customerEmail || 'Покупець'} — ${data.productName || 'Загальний чат'}`;
-            btn.onclick = () => {
-                chatThreadId = docSnap.id;
-                document.querySelectorAll('.chat-thread-btn').forEach(el => el.classList.toggle('active', el.dataset.threadId === chatThreadId));
-                listenMessages(chatThreadId);
-            };
-            list.appendChild(btn);
-        });
-        if (!chatThreadId && snap.docs[0]) {
-            chatThreadId = snap.docs[0].id;
-            listenMessages(chatThreadId);
-        }
+        renderThreadList(snap.docs.map((docSnap) => ({ id: docSnap.id, data: docSnap.data() })));
     }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
+}
+
+function listenCustomerThreads() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads'),
+        firebaseApi.where('customerUid', '==', chatUser.uid),
+        firebaseApi.limit(100)
+    );
+    chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
+        const threads = snap.docs
+            .map((docSnap) => ({ id: docSnap.id, data: docSnap.data() }))
+            .sort((a, b) => chatTimeValue(b.data.updatedAt) - chatTimeValue(a.data.updatedAt));
+        renderThreadList(threads);
+    }, (err) => chatStatus(`Не вдалося прочитати ваші чати: ${err.message}`));
+}
+
+function renderThreadList(threads) {
+    const list = chatEl('chatThreadList');
+    if (!list) return;
+    list.innerHTML = '';
+    if (!threads.length) {
+        list.innerHTML = '<div class="chat-empty-state">Історія поки порожня. Відкрийте товар і натисніть "Чат".</div>';
+        renderThreadProduct(null);
+        chatEl('chatMessages') && (chatEl('chatMessages').innerHTML = '');
+        return;
+    }
+    threads.forEach((thread) => list.appendChild(createThreadButton(thread.id, thread.data)));
+    const selected = threads.find((thread) => thread.id === chatThreadId) || threads[0];
+    if (selected && selected.id !== chatThreadId) selectThread(selected.id, selected.data);
+    else if (selected) renderThreadProduct(selected.data);
+}
+
+function renderSingleThreadButton(threadId, data) {
+    const list = chatEl('chatThreadList');
+    const history = chatEl('chatHistoryPanel');
+    if (!list || !history || (!chatPageMode && !chatIsOwner())) return;
+    history.classList.add('active');
+    list.innerHTML = '';
+    list.appendChild(createThreadButton(threadId, data));
+    markActiveThread();
+}
+
+function createThreadButton(threadId, data) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chat-thread-btn';
+    btn.dataset.threadId = threadId;
+    const img = document.createElement('img');
+    img.className = 'chat-thread-image';
+    img.alt = '';
+    if (data.productImage) img.src = data.productImage;
+    else img.classList.add('empty');
+    const body = document.createElement('span');
+    body.className = 'chat-thread-body';
+    const title = document.createElement('span');
+    title.className = 'chat-thread-title';
+    title.textContent = data.productName || 'Загальний чат';
+    const meta = document.createElement('span');
+    meta.className = 'chat-thread-meta';
+    const customer = data.customerName || data.customerEmail || 'Покупець';
+    meta.textContent = chatIsOwner() ? customer : (data.productPrice || 'Без ціни');
+    const last = document.createElement('span');
+    last.className = 'chat-thread-last';
+    last.textContent = data.lastMessage || 'Новий діалог';
+    const time = document.createElement('span');
+    time.className = 'chat-thread-time';
+    time.textContent = chatFormatTime(data.updatedAt);
+    body.append(title, meta, last);
+    btn.append(img, body, time);
+    btn.onclick = () => selectThread(threadId, data);
+    return btn;
+}
+
+function selectThread(threadId, data) {
+    chatThreadId = threadId;
+    chatCurrentThread = data || {};
+    markActiveThread();
+    renderThreadProduct(chatCurrentThread);
+    listenMessages(threadId);
+}
+
+function markActiveThread() {
+    document.querySelectorAll('.chat-thread-btn').forEach((el) => {
+        el.classList.toggle('active', el.dataset.threadId === chatThreadId);
+    });
+}
+
+function renderThreadProduct(data) {
+    const preview = chatEl('chatProductPreview');
+    if (!preview) return;
+    const source = data || chatProduct || {};
+    preview.innerHTML = '';
+    if (!source.productName && !source.name) {
+        const empty = document.createElement('div');
+        empty.className = 'chat-product-empty';
+        empty.textContent = chatPageMode ? 'Виберіть діалог з історії.' : 'Товар буде прикріплений після відкриття чату.';
+        preview.appendChild(empty);
+        return;
+    }
+    const imageUrl = source.productImage || source.image || '';
+    const productUrl = source.productUrl || source.url || '';
+    if (imageUrl) {
+        const img = document.createElement('img');
+        img.className = 'chat-product-image';
+        img.src = chatAbsoluteUrl(imageUrl);
+        img.alt = source.productName || source.name || 'Товар';
+        preview.appendChild(img);
+    }
+    const info = document.createElement('div');
+    info.className = 'chat-product-info';
+    const name = document.createElement(productUrl ? 'a' : 'div');
+    name.className = 'chat-product-name';
+    name.textContent = source.productName || source.name || 'Товар';
+    if (productUrl) {
+        name.href = chatAbsoluteUrl(productUrl);
+        name.target = '_blank';
+        name.rel = 'noopener';
+    }
+    const price = document.createElement('div');
+    price.className = 'chat-product-price';
+    price.textContent = source.productPrice || source.price || 'Товар з каталогу';
+    info.append(name, price);
+    preview.appendChild(info);
 }
 
 function listenMessages(threadId) {
@@ -1811,18 +2121,22 @@ function listenMessages(threadId) {
     const q = firebaseApi.query(
         firebaseApi.collection(chatDb, 'chatThreads', threadId, 'messages'),
         firebaseApi.orderBy('createdAt', 'asc'),
-        firebaseApi.limit(120)
+        firebaseApi.limit(160)
     );
     chatUnsubMessages = firebaseApi.onSnapshot(q, (snap) => {
         const box = chatEl('chatMessages');
+        if (!box) return;
         box.innerHTML = '';
+        if (snap.empty) {
+            box.innerHTML = '<div class="chat-empty-state">Повідомлень ще немає. Напишіть перше повідомлення.</div>';
+        }
         snap.forEach((docSnap) => {
             const msg = docSnap.data();
             const row = document.createElement('div');
             row.className = `chat-message${msg.uid === chatUser?.uid ? ' mine' : ''}`;
             const meta = document.createElement('div');
             meta.className = 'chat-message-meta';
-            meta.textContent = msg.name || msg.email || 'Користувач';
+            meta.textContent = `${msg.name || msg.email || 'Користувач'}${chatFormatTime(msg.createdAt) ? ' • ' + chatFormatTime(msg.createdAt) : ''}`;
             const text = document.createElement('div');
             text.textContent = msg.text || '';
             row.append(meta, text);
@@ -1834,11 +2148,11 @@ function listenMessages(threadId) {
 
 async function sendChatMessage() {
     const input = chatEl('chatInput');
-    const text = chatClean(input.value);
+    const text = chatClean(input?.value);
     if (!text || !chatUser || !firebaseApi) return;
-    if (!chatThreadId && !chatIsOwner()) await openCustomerThread();
+    if (!chatThreadId && !chatIsOwner() && chatProduct.id) await openCustomerThread();
     if (!chatThreadId) {
-        chatStatus('Виберіть діалог покупця.');
+        chatStatus('Виберіть діалог або відкрийте чат з картки товару.');
         return;
     }
     chatEl('chatSendBtn').disabled = true;
@@ -1852,11 +2166,18 @@ async function sendChatMessage() {
             text,
             createdAt: firebaseApi.serverTimestamp(),
         });
-        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+        const update = {
             lastMessage: text.slice(0, 180),
             lastSender: role,
             updatedAt: firebaseApi.serverTimestamp(),
-        }, { merge: true });
+        };
+        if (!chatIsOwner() && chatProduct.id) {
+            update.productImage = chatAbsoluteUrl(chatProduct.image || '');
+            update.productPrice = chatProduct.price || '';
+            update.productName = chatProduct.name || '';
+            update.productUrl = chatAbsoluteUrl(chatProduct.url || location.pathname);
+        }
+        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
         input.value = '';
     } catch (err) {
         chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
@@ -1870,6 +2191,7 @@ chatEl('chatSendBtn')?.addEventListener('click', sendChatMessage);
 chatEl('chatInput')?.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) sendChatMessage();
 });
+if (chatPageMode) prepareChat();
 </script>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
