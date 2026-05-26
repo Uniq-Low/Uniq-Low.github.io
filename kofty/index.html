@@ -89,10 +89,14 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
 .product-attrs dt{color:var(--muted);}
 .product-attrs dd{margin:0;color:var(--text);}
-.card-tg-btn{display:block;margin:0 16px 16px;
-background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
-padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
-.card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
+.card-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 16px 16px;}
+.card-action-btn{min-height:42px;border:none;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;
+display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.card-tg-btn{background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;}
+.card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);gap:7px;}
+.card-tg-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
+.chat-icon{width:18px;height:18px;border:2px solid currentColor;border-radius:7px;display:inline-block;position:relative;flex:0 0 18px;}
+.chat-icon::after{content:"";position:absolute;left:2px;bottom:-5px;width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:var(--panel-solid);transform:skew(-18deg);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
 .product-detail-page{max-width:1500px;margin:0 auto;animation:fadeUp .3s ease both;}
@@ -113,10 +117,45 @@ body.dark .product-detail-info{background:rgba(17,24,39,.88);}
 .product-detail-info h1{font-size:clamp(26px,3.2vw,42px);line-height:1.12;margin:0 0 12px;letter-spacing:0;overflow-wrap:anywhere;}
 .detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
 .detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
-.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+.detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+.detail-order-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+text-decoration:none;border-radius:14px;font-weight:800;padding:13px 22px;transition:.18s ease;}
+.detail-order-btn{
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
-font-weight:800;padding:13px 22px;margin-bottom:24px;box-shadow:0 14px 30px rgba(34,158,217,.24);transition:.18s ease;}
-.detail-order-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.32);}
+box-shadow:0 14px 30px rgba(34,158,217,.24);}
+.detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);gap:8px;cursor:pointer;}
+.detail-order-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
+.chat-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.48);backdrop-filter:blur(8px);
+display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
+.chat-overlay.open{display:flex;}
+.chat-panel{width:min(100%,440px);max-height:min(760px,calc(100vh - 36px));display:flex;flex-direction:column;
+background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.28);overflow:hidden;}
+.chat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);}
+.chat-title{font-weight:900;font-size:20px;line-height:1.2;}
+.chat-subtitle{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.35;}
+.chat-close{border:1px solid var(--border);background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:12px;cursor:pointer;font-size:22px;line-height:1;}
+.chat-body{padding:14px;display:grid;gap:12px;min-height:0;}
+.chat-auth{display:grid;gap:10px;}
+.chat-google-btn,.chat-send-btn{border:none;border-radius:14px;padding:12px 14px;font-weight:800;cursor:pointer;}
+.chat-google-btn{background:var(--text);color:var(--panel-solid);}
+.chat-send-btn{background:var(--accent);color:white;}
+.chat-send-btn:disabled{opacity:.55;cursor:not-allowed;}
+.chat-warning{font-size:12px;line-height:1.45;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:10px;}
+.chat-status{font-size:13px;color:var(--muted);line-height:1.4;}
+.chat-workspace{display:none;gap:12px;min-height:0;}
+.chat-workspace.active{display:grid;}
+.chat-owner-tools{display:none;gap:8px;}
+.chat-owner-tools.active{display:grid;grid-template-columns:1fr;}
+.chat-thread-list{max-height:120px;overflow:auto;display:grid;gap:6px;}
+.chat-thread-btn{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px;text-align:left;cursor:pointer;}
+.chat-thread-btn.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.chat-messages{height:min(42vh,330px);overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--bg);padding:10px;display:flex;flex-direction:column;gap:8px;}
+.chat-message{max-width:86%;border-radius:16px;padding:9px 11px;background:var(--panel-solid);border:1px solid var(--border);line-height:1.45;overflow-wrap:anywhere;}
+.chat-message.mine{margin-left:auto;background:var(--accent);color:white;border-color:transparent;}
+.chat-message-meta{font-size:11px;opacity:.72;margin-bottom:3px;}
+.chat-composer{display:grid;gap:8px;}
+.chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
+.chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
 .detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
 .detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .detail-section summary::-webkit-details-marker{display:none;}
@@ -182,7 +221,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-info{padding:12px;}
 .product-price{font-size:20px;}
 .product-title{font-size:14px;min-height:0;}
-.card-tg-btn{margin:0 12px 12px;font-size:13px;padding:11px 8px;}
+.card-actions{margin:0 12px 12px;grid-template-columns:1fr;}
+.card-action-btn{font-size:13px;padding:11px 8px;}
 .product-detail-layout{gap:14px;}
 .product-thumbs{padding-bottom:6px;scroll-snap-type:x mandatory;}
 .product-thumb{min-width:74px;scroll-snap-align:start;}
@@ -191,7 +231,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-detail-info h1{font-size:clamp(23px,7vw,31px);}
 .detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
 .detail-section{padding-top:14px;margin-top:14px;}
-.detail-order-btn{width:100%;}
+.detail-actions{display:grid;grid-template-columns:1fr;}
+.detail-order-btn,.detail-chat-btn{width:100%;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
@@ -207,6 +248,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-thumb{min-width:68px;}
 .promo-card{padding:18px;border-radius:20px;}
 .promo-badge{width:78px;height:78px;font-size:20px;}
+.chat-overlay{padding:10px;align-items:stretch;}
+.chat-panel{width:100%;max-height:calc(100vh - 20px);border-radius:20px;}
 }
 </style>
 </head>
@@ -220,7 +263,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 23:47</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 11:40</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -352,9 +395,19 @@ fleece full-zip jacket
                 <div class='product-meta'>40 /  L / 48, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13588"
+                    data-chat-product-name="Флісова кофта унісекс uniqlo"
+                    data-chat-product-url="../product/13588/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="кардиган souffle uniqlo 1300 грн  m kofty кардиган souffle uniqlo
 в наявності розмір м, колір 10 pink
@@ -377,9 +430,19 @@ fleece full-zip jacket
                 <div class='product-meta'>M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13587"
+                    data-chat-product-name="Кардиган souffle uniqlo"
+                    data-chat-product-url="../product/13587/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="гольф uniqlo із 100% мериносової вовни 1200 грн  l kofty гольф uniqlo із 100% мериносової вовни
 в наявності розмір л, колір 71 purple
@@ -402,9 +465,19 @@ fleece full-zip jacket
                 <div class='product-meta'>L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13586"
+                    data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
+                    data-chat-product-url="../product/13586/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="3d-в&#x27;язаний светр uniqlo 1400 грн  38 / m / 46 kofty 3d-в&#x27;язаний светр uniqlo
 в наявності розмір м, колір чорний
@@ -431,9 +504,19 @@ fleece full-zip jacket
                 <div class='product-meta'>38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13585"
+                    data-chat-product-name="3d-в&#x27;язаний светр uniqlo"
+                    data-chat-product-url="../product/13585/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="кардиган з суміші вовни uniqlo 1750 грн  38 / m / 46 kofty кардиган з суміші вовни uniqlo
 в наявності розмір м, колір 34 braun
@@ -456,9 +539,19 @@ fleece full-zip jacket
                 <div class='product-meta'>38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13584"
+                    data-chat-product-name="Кардиган з суміші вовни uniqlo"
+                    data-chat-product-url="../product/13584/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="флісовий пуловер uniqlo 1300 грн  xl kofty флісовий пуловер uniqlo
 в наявності розмір хл, колір 57 olive
@@ -484,9 +577,19 @@ fleece full-zip jacket
                 <div class='product-meta'>XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13583"
+                    data-chat-product-name="Флісовий пуловер uniqlo"
+                    data-chat-product-url="../product/13583/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="светр з пряжі soufflé uniqlo 1700 грн  36 / s / 44 kofty светр з пряжі soufflé uniqlo
 в наявності розмір с, колір 01 off white
@@ -508,9 +611,19 @@ fleece full-zip jacket
                 <div class='product-meta'>36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13582"
+                    data-chat-product-name="Светр з пряжі soufflé uniqlo"
+                    data-chat-product-url="../product/13582/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="женские повседневные топы women in movies 1200 грн uniqlo 36 / s / 44 kofty женские повседневные топы women in movies
 427987-62ф новий рожевий 36 / s / 44 жіночий одяг кофти світшоти">
@@ -524,9 +637,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13581"
+                    data-chat-product-name="Женские повседневные топы women in movies"
+                    data-chat-product-url="../product/13581/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="светр з активним v-подібним вирізом(у складі вовна) 1000 грн uniqlo 34 / xs / 42 kofty светр з активним v-подібним вирізом
 402570-a26 новий сірий 34 / xs / 42 жіночий одяг кофти светри">
@@ -540,9 +663,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13580"
+                    data-chat-product-name="Светр з активним v-подібним вирізом(у складі вовна)"
+                    data-chat-product-url="../product/13580/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіночий  вовняний светр з великим лацканом 1100 грн uniqlo 36 / s / 44 kofty виготовлений з ультратонкого матеріалу преміум-класу із суміші вовни. пухнастий і гнучкий светр з лацканами по сезону.
 ・стильний дизайн 2way із заниженими плечами та лацканами цього сезону.
@@ -563,9 +696,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13579"
+                    data-chat-product-name="Жіночий  вовняний светр з великим лацканом"
+                    data-chat-product-url="../product/13579/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіноча еластична куртка повсякденна dry з капюшоном 1610 грн uniqlo 40 /  l / 48 kofty високоякісна куртка з капюшоном, швидковисихаюча і еластична. свіжий стиль, відповідний для виходу в світ. ・еластичний матеріал з гарною рухливістю, функцією поглинання поту та швидкого сушіння. ・тривимірний крій, природно повторює лінії тіла. ・еластичний матеріал середньої товщини для помірно спортивного образу. ・скатертина виготовлена з гладкого матеріалу з прихованою лінією тиску, її можна носити під час занять спортом і прогулянок. ・якщо капюшон не надітий, тривимірний розріз зберігається. 401096-a6 новий білий 40 /  l / 48 жіночий одяг кофти толстовки">
         <a class="card-main-link" href="../product/13578/">
@@ -578,9 +721,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13578"
+                    data-chat-product-name="Жіноча еластична куртка повсякденна dry з капюшоном"
+                    data-chat-product-url="../product/13578/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіноча повсякденна толстовка з капюшоном 1400 грн uniqlo 40 /  l / 48 kofty свободный топ с капюшоном, незаменимый в моде. ведущий модельер кристоф лемэр возглавляет команду дизайнеров, состоящую из представителей элиты со всего мира, которые создают модные модели в парижском центре исследований и разработок и переопределяют восприятие людьми одежды.
 ・топ из спортивного материала с капюшоном.
@@ -599,9 +752,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13577"
+                    data-chat-product-name="Жіноча повсякденна толстовка з капюшоном"
+                    data-chat-product-url="../product/13577/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="шерстяна туніка «lamb blend mock neck tunic» 1500 грн uniqlo 34 / xs / 42 kofty невимушена туніка «lamb blend mock neck tunic» (2990 ієн без урахування податку) є чудовою річчю з чудовою еластичністю та збереженням тепла.
 
@@ -621,9 +784,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13576"
+                    data-chat-product-name="Шерстяна туніка «lamb blend mock neck tunic»"
+                    data-chat-product-url="../product/13576/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="вовняна туніка «lamb blend mock neck tunic» 1600 грн uniqlo 36 / s / 44 kofty невимушена туніка «lamb blend mock neck tunic» (2990 року без урахування податку) є чудовою річчю з чудовою еластичністю та збереженням тепла.
 
@@ -643,9 +816,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13575"
+                    data-chat-product-name="Вовняна туніка «lamb blend mock neck tunic»"
+                    data-chat-product-url="../product/13575/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночий  вовняний светр з великим лацканом 1300 грн uniqlo 38 / m / 46 kofty виготовлений з ультратонкого матеріалу преміум-класу із суміші вовни. пухнастий і гнучкий светр з лацканами по сезону.
 ・стильний дизайн 2way із заниженими плечами та лацканами цього сезону.
@@ -666,9 +849,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13574"
+                    data-chat-product-name="Жіночий  вовняний светр з великим лацканом"
+                    data-chat-product-url="../product/13574/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="толстовка від uniqlo 890 грн uniqlo 36 / s / 44 kofty толстовка від uniql********** новий сірий 36 / s / 44 жіночий одяг кофти світшоти" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13573/">
@@ -681,9 +874,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13573"
+                    data-chat-product-name="Толстовка від uniqlo"
+                    data-chat-product-url="../product/13573/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночий жаккардовий светр інес 1400 грн uniqlo 38 / m / 46 kofty жіночий жаккардовий светр інес
 403185-a26 новий синій 38 / m / 46 жіночий одяг кофти светри" data-initial-hidden='1'>
@@ -697,9 +900,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13572"
+                    data-chat-product-name="Жіночий жаккардовий светр інес"
+                    data-chat-product-url="../product/13572/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіноча водолазка з ворсом heattech (з довгим рукавом) 800 грн uniqlo 34 / xs / 42 kofty матеріал heattech із функцією утримання тепла та теплозберігає x пухнаста та тепла футболка з ворсом!
 ・heattech та щетина 2 основні термоматеріали поєднані в одному.
@@ -718,9 +931,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13571"
+                    data-chat-product-name="Жіноча водолазка з ворсом heattech (з довгим рукавом)"
+                    data-chat-product-url="../product/13571/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="меланжева вовняна туніка uniqlo xs 1400 грн uniqlo 34 / xs / 42 kofty uniqlo (uniqlo) — бренд повсякденного одягу швидкої моди з японії. цей різнокольоровий вовняний светр uniqlo 401711 виготовлений зі 100% вовни, доповнений сумішшю вовни ягняти з довгим волокном, зручний і теплий, вільного крою, v-подібного вирізу, повсякденний і універсальний.
 401711-a27 новий зелений 34 / xs / 42 жіночий одяг кофти светри" data-initial-hidden='1'>
@@ -734,9 +957,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13570"
+                    data-chat-product-name="Меланжева вовняна туніка uniqlo xs"
+                    data-chat-product-url="../product/13570/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночий вовняний светр з великим лацканом 1100 грн uniqlo 34 / xs / 42 kofty виготовлений з ультратонкого матеріалу преміум-класу із суміші вовни. пухнастий і гнучкий светр з лацканами по сезону.
 ・стильний дизайн 2way із заниженими плечами та лацканами цього сезону.
@@ -757,9 +990,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13569"
+                    data-chat-product-name="Жіночий вовняний светр з великим лацканом"
+                    data-chat-product-url="../product/13569/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночий кардиган з круглим вирізом uniqlo 1100 грн uniqlo 34 / xs / 42 kofty цей жіночий мериносовий свитер з круглим вирізом uniqlo 181864a26 виготовлений із мериносової шерсті товщиною 19,5 мікрон, м&#x27;який і блискучий, має круглу горловину та простий фасон, підходить для жінок, яким не подобаються світри середнього розміру з високим та нитки, щоб підходити. вигин людського тіла, що робить його більш зручним у носінні, і цей одяг був спеціально оброблений, щоб запобігти сколюванню, що робить його більш міцним. новий зелений 34 / xs / 42 жіночий одяг кофти кардигани" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13568/">
@@ -772,9 +1015,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13568"
+                    data-chat-product-name="Жіночий кардиган з круглим вирізом uniqlo"
+                    data-chat-product-url="../product/13568/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр uniqlo 3d 100 мериносової вовни extra fine merino wool 1500 грн uniqlo 34 / xs / 42, 36 / s / 44 kofty безшовний цілісний светр з рельєфним трикотажем для створення відчуття приталеного силуету. спеціальна техніка контурного в&#x27;язання створює безшовну обробку. трикотаж в широку рубчик додає ефектний фактурний вид. комір з коміром-стійкою додає стильний акцент. прекрасно працює сам по собі або в багатошарових стилях. наша команда на чолі з крістофом лемэром надала цю колекцію інноваційних основ. m 403741-43 с-a27 новий червоний 34 / xs / 42, 36 / s / 44 жіночий одяг кофти светри" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13567/">
@@ -787,9 +1040,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13567"
+                    data-chat-product-name="Светр uniqlo 3d 100 мериносової вовни extra fine merino wool"
+                    data-chat-product-url="../product/13567/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночий пуловер hoodie sprz ny 1166 грн uniqlo 38 / m / 46 kofty жіночий пуловер hoodie sprz ny
 402010-a29 новий чорний 38 / m / 46 жіночий одяг кофти світшоти" data-initial-hidden='1'>
@@ -803,9 +1066,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13566"
+                    data-chat-product-name="Жіночий пуловер hoodie sprz ny"
+                    data-chat-product-url="../product/13566/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіноча широка футболка в смужку 899 грн uniqlo 36 / s / 44 kofty пухкі рукави, новий дизайн! 7-точковий дизайн рукава можна носити як окремо, так і з шарами для зручності носіння.
 ・твердий матеріал tianzhu, який можна носити окремо, нелегко бути надто прозорим.
@@ -824,9 +1097,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13565"
+                    data-chat-product-name="Жіноча широка футболка в смужку"
+                    data-chat-product-url="../product/13565/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="пуловер ca memories (з довгим рукавом) 990 грн uniqlo 40 /  l / 48 kofty пуловер ca memories (з довгим рукавом)
 403383-a29 новий сірий 40 /  l / 48 жіночий одяг кофти світшоти" data-initial-hidden='1'>
@@ -840,9 +1123,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13564"
+                    data-chat-product-name="Пуловер ca memories (з довгим рукавом)"
+                    data-chat-product-url="../product/13564/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="свитер uniqlo 950 грн uniqlo 34 / xs / 42 kofty колекція, яка революціонізує базовий одяг, представлена ​​вам командою дизайнерів під керівництвом крістофа лемера з паризького ательє.
 ・зовнішній матеріал — проста бавовна, а підкладка — з пофарбованої касурі нитки.
@@ -859,9 +1152,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13563"
+                    data-chat-product-name="Свитер uniqlo"
+                    data-chat-product-url="../product/13563/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночий светр із v-подібним вирізом із мериноса 1400 грн uniqlo 38 / m / 46 kofty лише високоякісне ультратонке вовняне волокно може створити гарну текстуру! дизайн v-подібного вирізу може продемонструвати красиві лінії плечей і шиї.
 ・удосконалення цього сезону: тонший шов на комірі непомітний і може поєднуватися з різними стилями.
@@ -885,9 +1188,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13562"
+                    data-chat-product-name="Жіночий светр із v-подібним вирізом із мериноса"
+                    data-chat-product-url="../product/13562/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночий пухнастий светр з широкими рукавами шерсть альпаки 1400 грн uniqlo 36 / s / 44 kofty барвисті змішані кольори та широкий дизайн рукавів вражають. просто і красиво. команда паризьких дизайнерів під керівництвом крістофа лемера використовує інноваційні матеріали та дизайн, які відображають «сезонний стиль», щоб запустити нову серію lifewear.
 ・виготовлений із довговолокнистої високоякісної вовни альпаки.
@@ -903,9 +1216,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13561"
+                    data-chat-product-name="Жіночий пухнастий светр з широкими рукавами шерсть альпаки"
+                    data-chat-product-url="../product/13561/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночий  светр у смужку з мериноса 1400 грн uniqlo 36 / s / 44 kofty якісний светр приталеного фасону. на рукавах додані лінії, щоб продемонструвати спортивний стиль!
 ・це широко використовується та є синонімом паризького стилю. спільна серія з інес фарсанкі.
@@ -923,9 +1246,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13560"
+                    data-chat-product-name="Жіночий  светр у смужку з мериноса"
+                    data-chat-product-url="../product/13560/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="водолазка uniqlo 799 грн uniqlo 40 /  l / 48 kofty водолазка uniqlo
 в наявності розмір л, колір білий
@@ -951,9 +1284,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13559"
+                    data-chat-product-name="Водолазка uniqlo"
+                    data-chat-product-url="../product/13559/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кардиган uniqlo 1300 грн uniqlo m kofty кардиган uniqlo
 в наявності розмір м, колір 03 grey
@@ -977,9 +1320,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13558"
+                    data-chat-product-name="Кардиган uniqlo"
+                    data-chat-product-url="../product/13558/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="гольф светр uniqlo 100% вовна мериноса 1600 грн uniqlo 42 /  xl / 50 kofty 00% extra fine merino turtleneck jumper
 гладка та глянцева ультратонка шерсть мериноса. стійкий до скатування та зберігає свою чудову текстуру.
@@ -1000,9 +1353,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13557"
+                    data-chat-product-name="Гольф светр uniqlo 100% вовна мериноса"
+                    data-chat-product-url="../product/13557/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="лонгслів airism uniqlo 650 грн uniqlo хs kofty лонгслів airism uniqlo
 в наявності розмір хс, колір чорний
@@ -1025,9 +1388,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13556"
+                    data-chat-product-name="Лонгслів airism uniqlo"
+                    data-chat-product-url="../product/13556/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="термолонгслів uniqlo heattech extra warm 875 грн uniqlo 34 / xs / 42, 40 /  l / 48, 42 /  xl / 50 kofty термолонгслів uniqlo heattech extra warm
 в наявності: розмір хс, л та хл, колір 47 yellow
@@ -1052,9 +1425,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 40 /  L / 48, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13555"
+                    data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
+                    data-chat-product-url="../product/13555/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="термолонгслів uniqlo heattech extra warm 875 грн uniqlo 34 / xs / 42, 36 / s / 44, 38 / m / 46, 40 /  l / 48 kofty термолонгслів uniqlo heattech extra warm
 в наявності: розмір хс, с, м та л , колір 57 olive
@@ -1079,9 +1462,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44, 38 / M / 46, 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13554"
+                    data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
+                    data-chat-product-url="../product/13554/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="термолонгслів uniqlo heattech extra warm 875 грн uniqlo 34 / xs / 42, 36 / s / 44, 38 / m / 46, 42 /  xl / 50 kofty термолонгслів uniqlo heattech extra warm
 в наявності:
@@ -1109,9 +1502,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44, 38 / M / 46, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13553"
+                    data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
+                    data-chat-product-url="../product/13553/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="термолонгслів uniqlo heattech extra warm 875 грн uniqlo 34 / xs / 42, 38 / m / 46, 40 /  l / 48, 42 /  xl / 50 kofty термолонгслів uniqlo heattech extra warm
 в наявності:
@@ -1139,9 +1542,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 38 / M / 46, 40 /  L / 48, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13552"
+                    data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
+                    data-chat-product-url="../product/13552/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="термолонгслів uniqlo heattech extra warm 875 грн uniqlo 34 / xs / 42, 36 / s / 44, 38 / m / 46, 40 /  l / 48, 42 /  xl / 50 kofty термолонгслів uniqlo heattech extra warm
 в наявності:
@@ -1169,9 +1582,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44, 38 / M / 46, 40 /  L / 48, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13551"
+                    data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
+                    data-chat-product-url="../product/13551/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="термолонгслів uniqlo heattech extra warm 875 грн uniqlo 42 /  xl / 50 kofty ермолонгслів uniqlo heattech extra warm
 в наявності:
@@ -1199,9 +1622,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13550"
+                    data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
+                    data-chat-product-url="../product/13550/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="термолонгслів uniqlo heattech extra warm 875 грн uniqlo 38 / m / 46 kofty термолонгслів uniqlo heattech extra warm
 в наявності розмір м
@@ -1225,9 +1658,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13549"
+                    data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
+                    data-chat-product-url="../product/13549/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр fair isle uniqlo 1700 грн uniqlo 38 / m / 46, 40 /  l / 48, 42 /  xl / 50, 44 / xxl / 52 kofty светр fair isle uniqlo
 в наявності розмір м,л, хл та ххл, колір 19 wine
@@ -1249,9 +1692,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46, 40 /  L / 48, 42 /  XL / 50, 44 / XXL / 52</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13548"
+                    data-chat-product-name="Светр fair isle uniqlo"
+                    data-chat-product-url="../product/13548/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жилет uniqlo 1200 грн uniqlo 38 / m / 46 kofty жилет uniqlo
 в наявності розмір м, колір темно-синій
@@ -1269,9 +1722,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13547"
+                    data-chat-product-name="Жилет uniqlo"
+                    data-chat-product-url="../product/13547/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="cветр з вовни мериноса uniqlo 1400 грн uniqlo 40 /  l / 48, 42 /  xl / 50 kofty cветр з вовни мериноса uniqlo
 в наявності розмір л та хл, колір 32 beige
@@ -1294,9 +1757,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 40 /  L / 48, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13546"
+                    data-chat-product-name="Cветр з вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13546/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр з пряжі soufflé uniqlo 1700 грн uniqlo 38 / m / 46 kofty светр з пряжі soufflé uniqlo
 в наявності розмір м, колір 08 dark grey
@@ -1318,9 +1791,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13545"
+                    data-chat-product-name="Светр з пряжі soufflé uniqlo"
+                    data-chat-product-url="../product/13545/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="3d-в&#x27;язаний светр uniqlo 1400 грн uniqlo 38 / m / 46 kofty 3d-в&#x27;язаний светр uniqlo
 в наявності розмір м, колір 67 blue
@@ -1347,9 +1830,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13544"
+                    data-chat-product-name="3d-в&#x27;язаний светр uniqlo"
+                    data-chat-product-url="../product/13544/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="пухнастий флісовий кардиган uniqlo 1650 грн uniqlo 34 / xs / 42, 36 / s / 44, 38 / m / 46, 40 /  l / 48 kofty пухнастий флісовий кардиган uniqlo
 в наявності розмір хс, с, м та л, колір 11 pink
@@ -1372,9 +1865,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44, 38 / M / 46, 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13543"
+                    data-chat-product-name="Пухнастий флісовий кардиган uniqlo"
+                    data-chat-product-url="../product/13543/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="флісовий гольф heattech uniqlo 950 грн uniqlo s, m kofty флісовий гольф heattech uniqlo
 в наявності розмір с та м
@@ -1396,9 +1899,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13542"
+                    data-chat-product-name="Флісовий гольф heattech uniqlo"
+                    data-chat-product-url="../product/13542/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіноча водолазка з камвольної вовни мериноса uniqlo 1400 грн uniqlo 36 / s / 44 kofty ніжний та вишуканий светр з високим коміром з 100% вовни з високою текстурою. покриває шию для комфорту і тепла. -100% високоякісна мериносова вовна товщиною 19,5 мікрон. ・можна прати в машині, легко прати в пральній машині, легко чистити і обслуговувати. 418670-58 новий зелений 36 / s / 44 жіночий одяг кофти водолазки" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13541/">
@@ -1411,9 +1924,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13541"
+                    data-chat-product-name="Жіноча водолазка з камвольної вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13541/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночий светр з круглим вирізом з вовни мериноса uniqlo 1300 грн uniqlo 38 / m / 46 kofty виготовлений з 100% тонкої вовни, тонкої і красивої в&#x27;язки. базовий дизайн з круглим вирізом, тому його можна комбінувати з іншими нарядами на свій розсуд. -100% високоякісна мериносова вовна товщиною 19,5 мікрон. ・модель можна прати в пральній машині, що спрощує догляд. ・елегантне і глянсове поєднання кольорів також підходить для свіжого і чистого прикраси. носити 418668-58
 повернення не має! новий рожевий 38 / m / 46 жіночий одяг кофти светри" data-initial-hidden='1'>
@@ -1427,9 +1950,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13540"
+                    data-chat-product-name="Жіночий светр з круглим вирізом з вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13540/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіноче худі в стилі кежуал verdy 920 грн uniqlo 36 / s / 44 kofty rise again by verdy запустила такі проекти, як girls don&#x27;t cry і wasted youth, а також є графічним дизайнером vk design works. зараз живе в токіо, в основному займається вуличною сценою. його графічне творчість і типографіка повні грайливості, яка знаходить відгук у більшості людей вдома і за кордоном. ・дизайнер verdy: «я хотел поделиться своими творениями с большим количеством людей, поэтому я принял участие в этом сотрудничестве. одна из творческих тем, break the mold, означает быть смелым, чтобы бросать вызов новым вещам, и это то, чего я обычно придерживаюсь. кроме того, другие творения также содержат много случайных мыслей в моей повседневной жизни».
 424568 новий білий 36 / s / 44 жіночий одяг кофти толстовки" data-initial-hidden='1'>
@@ -1443,9 +1976,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13539"
+                    data-chat-product-name="Жіноче худі в стилі кежуал verdy"
+                    data-chat-product-url="../product/13539/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночий светр з круглим вирізом з мериноса 1200 грн uniqlo 34 / xs / 42, 36 / s / 44 kofty цей жіночий мериносовий светр з круглим вирізом uniqlo 173605a26 виготовлений із мериносової вовни товщиною 19,5 мікрон, м’який і блискучий, має круглу горловину та простий фасон, підходить для жінок, яким не подобаються светри середнього розміру з високим горлом, манжети та край мають нитки, щоб підходити. вигин людського тіла, що робить його більш зручним у носінні, і цей одяг був спеціально оброблений, щоб запобігти сколюванню, що робить його більш міцним. новий кораловий 34 / xs / 42, 36 / s / 44 жіночий одяг кофти светри" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13538/">
@@ -1458,9 +2001,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13538"
+                    data-chat-product-name="Жіночий светр з круглим вирізом з мериноса"
+                    data-chat-product-url="../product/13538/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="об&#x27;ємний світшот від uniqlo 1149 грн uniqlo 34 / xs / 42, 36 / s / 44 kofty мега модний об&#x27;ємний світшот у розмірі хс!
 основна частина: 100% бавовна/рубчик: 78% бавовна, 22% поліестер.
@@ -1476,9 +2029,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13537"
+                    data-chat-product-name="Об&#x27;ємний світшот від uniqlo"
+                    data-chat-product-url="../product/13537/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр меланж вовна 1100 грн uniqlo 34 / xs / 42, 36 / s / 44 kofty uniqlo серія uniqlo u светр з круглим вирізом із змішаної вовни, виготовлений з 62% овечої вовни, товстої в&#x27;язки, гарної форми, багатого поєднання кольорів.
 420988-46
@@ -1494,9 +2057,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13536"
+                    data-chat-product-name="Светр меланж вовна"
+                    data-chat-product-url="../product/13536/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="новий свитер uniqlo14% шерсть, 10% альпака 1300 грн uniqlo 38 / m / 46 kofty матеріал
 
@@ -1512,9 +2085,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13535"
+                    data-chat-product-name="Новий свитер uniqlo14% шерсть, 10% альпака"
+                    data-chat-product-url="../product/13535/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="свитшот с графиком женщин rise again от verdy ut 1400 грн uniqlo 36 / s / 44 kofty свитшот с графиком женщин rise again от verdy ut
 424570-62a новий чорний 36 / s / 44 жіночий одяг кофти світшоти" data-initial-hidden='1'>
@@ -1528,9 +2111,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13534"
+                    data-chat-product-name="Свитшот с графиком женщин rise again от verdy ut"
+                    data-chat-product-url="../product/13534/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="водолазка з флісу heattech uniqlo 880 грн uniqlo s kofty водолазка з флісу heattech uniqlo
 
@@ -1554,9 +2147,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13533"
+                    data-chat-product-name="Водолазка з флісу heattech uniqlo"
+                    data-chat-product-url="../product/13533/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="гольф uniqlo із 100% мериносової вовни 1200 грн uniqlo хs kofty гольф uniqlo із 100% мериносової вовни
 в наявності розмір хс, колір 29 dark orange
@@ -1579,9 +2182,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13532"
+                    data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
+                    data-chat-product-url="../product/13532/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="лонгслів smooth uniqlo 799 грн uniqlo 38 / m / 46 kofty лонгслів smooth uniqlo
 в наявності розмір  м, колір чорний
@@ -1607,9 +2220,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13531"
+                    data-chat-product-name="Лонгслів smooth uniqlo"
+                    data-chat-product-url="../product/13531/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="лонгслів оверсайз uniqlo 1010 грн uniqlo 36 / s / 44, 38 / m / 46 kofty лонгслів оверсайз uniqlo
 в наявності розмір с та м, колір білий
@@ -1631,9 +2254,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13530"
+                    data-chat-product-name="Лонгслів оверсайз uniqlo"
+                    data-chat-product-url="../product/13530/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="худі the message uniqlo 1200 грн uniqlo 34 / xs / 42, 36 / s / 44, 38 / m / 46 kofty худі the message від uniqlo
 в наявності розмір xs, s та м по чоловічій сітці, на жіночу буде с, м та л відповідно
@@ -1655,9 +2288,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44, 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13529"
+                    data-chat-product-name="Худі the message uniqlo"
+                    data-chat-product-url="../product/13529/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="гольф uniqlo із 100% мериносової вовни 1200 грн uniqlo xl kofty гольф uniqlo із 100% мериносової вовни
 в наявності розмір  хл, колір 12 pink
@@ -1680,9 +2323,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13528"
+                    data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
+                    data-chat-product-url="../product/13528/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр fair isle із пряжі суфле (jw anderson) uniqlo 1400 грн uniqlo 40 /  l / 48 kofty светр fair isle із пряжі суфле (jw anderson) uniqlo, розмір л
 
@@ -1708,9 +2361,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13527"
+                    data-chat-product-name="Светр fair isle із пряжі суфле (jw anderson) uniqlo"
+                    data-chat-product-url="../product/13527/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="м&#x27;який флісовий лонгслів uniqlo 850 грн uniqlo 36 / s / 44, 38 / m / 46, 42 /  xl / 50 kofty м&#x27;який флісовий лонгслів uniqlo
 в наявності розмір с, м та хл
@@ -1735,9 +2398,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13526"
+                    data-chat-product-name="М&#x27;який флісовий лонгслів uniqlo"
+                    data-chat-product-url="../product/13526/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр uniqlo з візерунком argyle 1700 грн uniqlo 38 / m / 46, 40 /  l / 48 kofty светр uniqlo з візерунком argyle
 в наявності розмір м та л
@@ -1759,9 +2432,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46, 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13525"
+                    data-chat-product-name="Светр uniqlo з візерунком argyle"
+                    data-chat-product-url="../product/13525/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр uniqlo 1700 грн uniqlo 38 / m / 46, 42 /  xl / 50 kofty светр uniqlo
 в наявності розмір м та хл
@@ -1779,9 +2462,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13524"
+                    data-chat-product-name="Светр uniqlo"
+                    data-chat-product-url="../product/13524/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр з пряжі soufflé uniqlo 1700 грн uniqlo 36 / s / 44, 38 / m / 46, 40 /  l / 48, 42 /  xl / 50 kofty светр з пряжі soufflé uniqlo
 в наявності розмір с, м, л та хл, колір 67 blue
@@ -1802,9 +2495,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46, 40 /  L / 48, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13523"
+                    data-chat-product-name="Светр з пряжі soufflé uniqlo"
+                    data-chat-product-url="../product/13523/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="cветр з вовни мериноса uniqlo 1200 грн uniqlo 36 / s / 44 kofty cветр з вовни мериноса uniqlo
 в наявності: розмір с, колір 65 blue
@@ -1830,9 +2533,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13522"
+                    data-chat-product-name="Cветр з вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13522/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="джемпер-поло з вовняної суміші uniqlo 1600 грн uniqlo 38 / m / 46, 40 /  l / 48 kofty джемпер-поло з вовняної суміші uniqlo
 в наявності розмір м та л, колір 57 olive
@@ -1850,9 +2563,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 38 / M / 46, 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13521"
+                    data-chat-product-name="Джемпер-поло з вовняної суміші uniqlo"
+                    data-chat-product-url="../product/13521/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кардиган з вовни uniqlo 1400 грн uniqlo 36 / s / 44 kofty кардиган з вовни uniqlo
 в наявності розмір с, колір чорний
@@ -1870,9 +2593,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13520"
+                    data-chat-product-name="Кардиган з вовни uniqlo"
+                    data-chat-product-url="../product/13520/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр uniqlo 1400 грн uniqlo 36 / s / 44, 38 / m / 46 kofty светр uniqlo
 в наявності розмір с та м
@@ -1890,9 +2623,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13519"
+                    data-chat-product-name="Светр uniqlo"
+                    data-chat-product-url="../product/13519/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="пуловер з мериносової вовни uniqlo 900 грн uniqlo 40 /  l / 48, 42 /  xl / 50 kofty пуловер з мериносової вовни uniqlo
 в наявності розмір л та хл
@@ -1910,9 +2653,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 40 /  L / 48, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13518"
+                    data-chat-product-name="Пуловер з мериносової вовни uniqlo"
+                    data-chat-product-url="../product/13518/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіноча худі heattech на шерпі від uniqlo 1500 грн uniqlo 36 / s / 44 kofty худі heattech на шерпі від uniqlo
 в наявності:
@@ -1934,9 +2687,19 @@ fleece full-zip jacket
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13517"
+                    data-chat-product-name="Жіноча худі heattech на шерпі від uniqlo"
+                    data-chat-product-url="../product/13517/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="світшот uniqlo 850 грн uniqlo 34 / xs / 42 kofty світшот uniqlo
 в наявності розмір хс. колір чорний
@@ -1960,9 +2723,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13516"
+                    data-chat-product-name="Світшот uniqlo"
+                    data-chat-product-url="../product/13516/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="худі uniqlo з колекції ut archive 1050 грн uniqlo 34 / xs / 42, 36 / s / 44 kofty худі uniqlo з колекції ut archive
 в наявності розмір хс - чоловічий, модель унісекс, тому підійде на жіночу с
@@ -1984,9 +2757,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13515"
+                    data-chat-product-name="Худі uniqlo з колекції ut archive"
+                    data-chat-product-url="../product/13515/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="3d-в&#x27;язаний светр зі змішаної вовни мериноса uniqlo 1300 грн uniqlo 36 / s / 44 kofty 3d-в&#x27;язаний светр зі змішаної вовни мериноса uniqlo
 в наявності розмір с, колір темно-синій
@@ -2008,9 +2791,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13514"
+                    data-chat-product-name="3d-в&#x27;язаний светр зі змішаної вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13514/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="cветр з вовни мериноса uniqlo 1200 грн uniqlo 36 / s / 44 kofty cветр з вовни мериноса uniqlo
 в наявності: розмір с, колір 19 wine
@@ -2036,9 +2829,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13513"
+                    data-chat-product-name="Cветр з вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13513/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр з візерунком aran від uniqlo 1400 грн uniqlo 34 / xs / 42, 36 / s / 44 kofty светр з візерунком aran від uniqlo
 в наявності: розмір хс  (светр з чоловічого розділу, модель унісекс, тому раджу брати на розмір менше)
@@ -2064,9 +2867,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13512"
+                    data-chat-product-name="Светр з візерунком aran від uniqlo"
+                    data-chat-product-url="../product/13512/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="толстовка zara, розмір л 750 грн zara 40 /  l / 48 kofty толстовка zara, розмір л
 толстовка з круглим вирізом та довгими рукавами реглан.
@@ -2086,9 +2899,19 @@ crew neck sweatshirt
                 <div class='product-meta'>ZARA • 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13511"
+                    data-chat-product-name="Толстовка zara, розмір л"
+                    data-chat-product-url="../product/13511/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="гольф uniqlo із 100% мериносової вовни 1010 грн uniqlo 34 / xs / 42, 36 / s / 44 kofty гольф uniqlo із 100% мериносової вовни
 в наявності розмір хс, с та хл
@@ -2111,9 +2934,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13510"
+                    data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
+                    data-chat-product-url="../product/13510/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="гольф uniqlo із 100% мериносової вовни 1010 грн uniqlo 34 / xs / 42, 36 / s / 44 kofty гольф uniqlo із 100% мериносової вовни
 в наявності розмір хс, с
@@ -2136,9 +2969,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13509"
+                    data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
+                    data-chat-product-url="../product/13509/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="гольф uniqlo із 100% мериносової вовни 1200 грн uniqlo l kofty гольф uniqlo із 100% мериносової вовни
 в наявності розмір  л
@@ -2161,9 +3004,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13508"
+                    data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
+                    data-chat-product-url="../product/13508/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="гольф uniqlo из 100% мериносовой шерсти 1200 грн uniqlo l, xl kofty  " data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13507/">
@@ -2176,9 +3029,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13507"
+                    data-chat-product-name="Гольф uniqlo из 100% мериносовой шерсти"
+                    data-chat-product-url="../product/13507/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="гольф uniqlo із 100% мериносової вовни 1200 грн uniqlo xl kofty гольф uniqlo із 100% мериносової вовни
 в наявності розмір хл, колір 14 red
@@ -2201,9 +3064,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13506"
+                    data-chat-product-name="Гольф uniqlo із 100% мериносової вовни"
+                    data-chat-product-url="../product/13506/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кардиган uniqlo 1450 грн uniqlo 40 /  l / 48 kofty кардиган uniqlo
 в наявності розмір л
@@ -2229,9 +3102,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13505"
+                    data-chat-product-name="Кардиган uniqlo"
+                    data-chat-product-url="../product/13505/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр з пряжі soufflé uniqlo 1200 грн uniqlo s, m kofty светр з пряжі soufflé uniqlo
 в наявності розмір с, м
@@ -2254,9 +3137,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13504"
+                    data-chat-product-name="Светр з пряжі soufflé uniqlo"
+                    data-chat-product-url="../product/13504/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="термолонгслів uniqlo heattech extra warm 875 грн uniqlo s, m, l kofty термолонгслів uniqlo heattech extra warm
 в наявності: розмір с, м, л, колір молочний
@@ -2281,9 +3174,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • S, M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13503"
+                    data-chat-product-name="Термолонгслів uniqlo heattech extra warm"
+                    data-chat-product-url="../product/13503/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр fair isle uniqlo 1700 грн uniqlo 36 / s / 44, 38 / m / 46, 40 /  l / 48, 42 /  xl / 50, 44 / xxl / 52 kofty светр fair isle uniqlo
 в наявності розмір с,м,л, хл та ххл, колір білий
@@ -2305,9 +3208,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46, 40 /  L / 48, 42 /  XL / 50, 44 / XXL / 52</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13502"
+                    data-chat-product-name="Светр fair isle uniqlo"
+                    data-chat-product-url="../product/13502/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр uniqlo з візерунком argyle 1700 грн uniqlo 36 / s / 44, 38 / m / 46, 40 /  l / 48, 42 /  xl / 50 kofty светр uniqlo з візерунком argyle
 в наявності розмір с, м, л та хл
@@ -2329,9 +3242,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46, 40 /  L / 48, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13501"
+                    data-chat-product-name="Светр uniqlo з візерунком argyle"
+                    data-chat-product-url="../product/13501/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="cветр з вовни мериноса uniqlo 1200 грн uniqlo 34 / xs / 42, 36 / s / 44 kofty cветр з вовни мериноса uniqlo
 в наявності розмір хс та с, колір 53 green
@@ -2354,9 +3277,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13500"
+                    data-chat-product-name="Cветр з вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13500/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр з пряжі soufflé uniqlo 1700 грн uniqlo 36 / s / 44, 38 / m / 46, 40 /  l / 48 kofty светр з пряжі soufflé uniqlo
 в наявності розмір с, м та л, колір 31 beige
@@ -2378,9 +3311,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46, 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13499"
+                    data-chat-product-name="Светр з пряжі soufflé uniqlo"
+                    data-chat-product-url="../product/13499/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр з пряжі soufflé uniqlo 1700 грн uniqlo 38 / m / 46, 42 /  xl / 50 kofty светр з пряжі soufflé uniqlo
 в наявності розмір м та хл, колір 50 light green
@@ -2402,9 +3345,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 38 / M / 46, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13498"
+                    data-chat-product-name="Светр з пряжі soufflé uniqlo"
+                    data-chat-product-url="../product/13498/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр із вовни мериноса uniqlo 1100 грн uniqlo хs, s, m kofty светр із вовни мериноса uniqlo
 в наявності розмір хс, с, м , колір 68 blue
@@ -2431,9 +3384,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • ХS, S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13497"
+                    data-chat-product-name="Светр із вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13497/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="cветр з вовни мериноса uniqlo 1200 грн uniqlo 36 / s / 44 kofty cветр з вовни мериноса uniqlo
 в наявності розмір с, колір 12 pink
@@ -2456,9 +3419,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13496"
+                    data-chat-product-name="Cветр з вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13496/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="cветр з вовни мериноса uniqlo 1200 грн uniqlo m, l kofty cветр з вовни мериноса uniqlo
 в наявності: розмір м, л, колір 01 off white
@@ -2484,9 +3457,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13495"
+                    data-chat-product-name="Cветр з вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13495/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="cветр з вовни мериноса uniqlo 1200 грн uniqlo 36 / s / 44, 38 / m / 46 kofty cветр з вовни мериноса uniqlo
 в наявності: розмір с та м, колір 04 gray
@@ -2512,9 +3495,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13494"
+                    data-chat-product-name="Cветр з вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13494/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="cветр з вовни мериноса uniqlo 1200 грн uniqlo 36 / s / 44, 38 / m / 46 kofty cветр з вовни мериноса uniqlo
 в наявності: розмір с та м , колір 09 black
@@ -2540,9 +3533,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13493"
+                    data-chat-product-name="Cветр з вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13493/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр uniqlo 1400 грн uniqlo 36 / s / 44, 38 / m / 46 kofty светр uniqlo
 в наявності розмір с  та м
@@ -2560,9 +3563,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13492"
+                    data-chat-product-name="Светр uniqlo"
+                    data-chat-product-url="../product/13492/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="cветр з вовни мериноса uniqlo 1350 грн uniqlo m, l, xl kofty cветр з вовни мериноса uniqlo
 в наявності розмір м, л, хл, колір 10 pink
@@ -2585,9 +3598,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • M, L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13491"
+                    data-chat-product-name="Cветр з вовни мериноса uniqlo"
+                    data-chat-product-url="../product/13491/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр-поло uniqlo 1100 грн uniqlo l kofty светр-поло uniqlo
 в наявності розмір л, колір 35 braun
@@ -2605,9 +3628,19 @@ crew neck sweatshirt
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13490"
+                    data-chat-product-name="Светр-поло uniqlo"
+                    data-chat-product-url="../product/13490/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="лонгслів оверсайз uniqlo 1010 грн uniqlo хs, m kofty лонгслів оверсайз uniqlo
 в наявності розмір хс та м
@@ -2633,9 +3666,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • ХS, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13489"
+                    data-chat-product-name="Лонгслів оверсайз uniqlo"
+                    data-chat-product-url="../product/13489/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="худі uniqlo 1100 грн uniqlo xl kofty худі uniqlo
 в наявності розмір хл, колір 33 khaki
@@ -2663,9 +3706,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13488"
+                    data-chat-product-name="Худі uniqlo"
+                    data-chat-product-url="../product/13488/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="лонгслів бавовняний uniqlo 1010 грн uniqlo l kofty лонгслів бавовняний uniqlo
 в наявності розмір л, колір 63 blue
@@ -2684,9 +3737,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13487"
+                    data-chat-product-name="Лонгслів бавовняний uniqlo"
+                    data-chat-product-url="../product/13487/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="гольф heattech uniqlo 850 грн uniqlo хs kofty гольф heattech uniqlo
 в наявності розмір хс, колір 19 wine
@@ -2707,9 +3770,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13486"
+                    data-chat-product-name="Гольф heattech uniqlo"
+                    data-chat-product-url="../product/13486/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="худі uniqlo 1100 грн uniqlo xl kofty худі uniqlo
 в наявності розмір хл, колір 06 gray
@@ -2737,9 +3810,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13485"
+                    data-chat-product-name="Худі uniqlo"
+                    data-chat-product-url="../product/13485/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="лонгслів бавовняний uniqlo 1010 грн uniqlo m, l kofty лонгслів бавовняний uniqlo
 в наявності розмір м та л, колір чорний
@@ -2757,9 +3840,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13484"
+                    data-chat-product-name="Лонгслів бавовняний uniqlo"
+                    data-chat-product-url="../product/13484/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="лонгслів uniqlo 750 грн uniqlo хs kofty лонгслів uniqlo
 в наявності розмір хс, колір білий
@@ -2786,9 +3879,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13483"
+                    data-chat-product-name="Лонгслів uniqlo"
+                    data-chat-product-url="../product/13483/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="лонгслів uniqlo 850 грн uniqlo хs kofty лонгслів uniqlo
 в наявності розмір хс, колір 32 beige
@@ -2806,9 +3909,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13482"
+                    data-chat-product-name="Лонгслів uniqlo"
+                    data-chat-product-url="../product/13482/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="светр-кокон без рукавів uniqlo 1010 грн uniqlo s kofty светр-кокон без рукавів uniqlo
 в наявності розмір с, колір чорний
@@ -2826,9 +3939,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13481"
+                    data-chat-product-name="Светр-кокон без рукавів uniqlo"
+                    data-chat-product-url="../product/13481/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кардиган merino uniqlo 1250 грн uniqlo m kofty кардиган merino uniqlo
 в наявності розмір м, колір 57 olive
@@ -2846,9 +3969,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13480"
+                    data-chat-product-name="Кардиган merino uniqlo"
+                    data-chat-product-url="../product/13480/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняний светр 3d в&#x27;язки uniqlo 1100 грн  хs, s kofty бавовняний светр 3d в&#x27;язки uniqlo
 в наявності розмір хс та с , колір 57 olive
@@ -2868,9 +4001,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>ХS, S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13479"
+                    data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
+                    data-chat-product-url="../product/13479/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняний светр 3d в&#x27;язки uniqlo 1350 грн uniqlo s, m, xxl kofty бавовняний светр 3d в&#x27;язки uniqlo
 в наявності розмір с,м та ххл, колір 01 off white
@@ -2888,9 +4031,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • S, M, XXL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13478"
+                    data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
+                    data-chat-product-url="../product/13478/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняний светр 3d в&#x27;язки uniqlo 1350 грн uniqlo xl kofty бавовняний светр 3d в&#x27;язки uniqlo
 в наявності розмір хл, колір 01 off white
@@ -2908,9 +4061,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13477"
+                    data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
+                    data-chat-product-url="../product/13477/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняний светр 3d в&#x27;язки uniqlo 1350 грн uniqlo m kofty бавовняний светр 3d в&#x27;язки uniqlo
 в наявності розмір м, колір 69 navy
@@ -2928,9 +4091,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13476"
+                    data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
+                    data-chat-product-url="../product/13476/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняний светр 3d в&#x27;язки uniqlo 1350 грн uniqlo m kofty бавовняний светр 3d в&#x27;язки uniqlo
 в наявності розмір м, колір 01 off white
@@ -2948,9 +4121,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13475"
+                    data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
+                    data-chat-product-url="../product/13475/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняний светр 3d в&#x27;язки uniqlo 1350 грн uniqlo m, l, xl kofty бавовняний светр 3d в&#x27;язки uniqlo
 в наявності розмір м, л та хл, колір 09 black
@@ -2966,9 +4149,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • M, L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13474"
+                    data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
+                    data-chat-product-url="../product/13474/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кардиган-поло uniqlo 1010 грн uniqlo l kofty кардиган-поло uniqlo
 в наявності розмір л, колір 57 olive
@@ -2989,9 +4182,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13473"
+                    data-chat-product-name="Кардиган-поло uniqlo"
+                    data-chat-product-url="../product/13473/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняний светр 3d в&#x27;язки uniqlo 1350 грн uniqlo l, xl kofty бавовняний светр 3d в&#x27;язки uniqlo
 в наявності розмір л та хл, колір 00 white
@@ -3009,9 +4212,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13472"
+                    data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
+                    data-chat-product-url="../product/13472/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняний светр 3d в&#x27;язки uniqlo 1350 грн uniqlo s kofty бавовняний светр 3d в&#x27;язки uniqlo
 в наявності розмір с, колір 31 beige
@@ -3029,9 +4242,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13471"
+                    data-chat-product-name="Бавовняний светр 3d в&#x27;язки uniqlo"
+                    data-chat-product-url="../product/13471/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кардиган-поло uniqlo 1010 грн uniqlo l kofty кардиган-поло uniqlo
 в наявності розмір л, колір чорний
@@ -3053,9 +4276,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13470"
+                    data-chat-product-name="Кардиган-поло uniqlo"
+                    data-chat-product-url="../product/13470/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="акція! кардиган zara, розмір с 650 грн zara s kofty акція!
 кардиган zara по ціні футболки!!!
@@ -3076,9 +4309,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>ZARA • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13469"
+                    data-chat-product-name="Акція! кардиган zara, розмір с"
+                    data-chat-product-url="../product/13469/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="пухнастий флісовий кардиган uniqlo 1200 грн uniqlo l kofty пухнастий флісовий кардиган uniqlo
 в наявності розмір л, колір 17 red
@@ -3096,9 +4339,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13468"
+                    data-chat-product-name="Пухнастий флісовий кардиган uniqlo"
+                    data-chat-product-url="../product/13468/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="флісовий лонгслів з коміром на блискавці  heattech uniqlo 1010 грн uniqlo s kofty флісовий лонгслів з коміром на блискавці  heattech uniqlo
 в наявності розмір с, колір 68 blue
@@ -3116,9 +4369,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13467"
+                    data-chat-product-name="Флісовий лонгслів з коміром на блискавці  heattech uniqlo"
+                    data-chat-product-url="../product/13467/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кардиган uniqlo 1050 грн uniqlo l, xl kofty кардиган uniqlo
 в наявності розмір л та хл, колір чорний
@@ -3136,9 +4399,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13466"
+                    data-chat-product-name="Кардиган uniqlo"
+                    data-chat-product-url="../product/13466/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кардиган-поло uniqlo 1010 грн uniqlo m, l kofty кардиган-поло uniqlo
 в наявності розмір м та л, колір білий
@@ -3159,9 +4432,19 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13465"
+                    data-chat-product-name="Кардиган-поло uniqlo"
+                    data-chat-product-url="../product/13465/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="худі на блискавці uniqlo 1500 грн uniqlo m, l kofty худі на блискавці uniqlo
 в наявності розмір м та л, колір 39 dark brown
@@ -3180,16 +4463,270 @@ smooth cotton oversized t-shirt
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13002"
+                    data-chat-product-name="Худі на блискавці uniqlo"
+                    data-chat-product-url="../product/13002/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div></div>
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 23:47</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 11:40</div>
 </main>
 </div>
+<div class="chat-overlay" id="chatOverlay" aria-hidden="true">
+    <section class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+        <div class="chat-head">
+            <div>
+                <div class="chat-title" id="chatTitle">Чат з UniqLow</div>
+                <div class="chat-subtitle" id="chatSubtitle">Увійдіть через Google, щоб написати повідомлення.</div>
+            </div>
+            <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">×</button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-auth" id="chatAuth">
+                <button class="chat-google-btn" type="button" id="chatGoogleBtn">Увійти через Google</button>
+                <div class="chat-warning">
+                    Чат захищений Google-входом і правилами доступу. Не надсилайте номери карт, CVV, паролі або коди з SMS.
+                </div>
+                <div class="chat-status" id="chatStatus">Чат готується...</div>
+            </div>
+            <div class="chat-workspace" id="chatWorkspace">
+                <div class="chat-owner-tools" id="chatOwnerTools">
+                    <div class="chat-status">Режим власника: показані останні діалоги покупців.</div>
+                    <div class="chat-thread-list" id="chatThreadList"></div>
+                </div>
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-composer">
+                    <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
+                    <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
+                    <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "", "authDomain": "", "projectId": "", "appId": ""}, "sdkVersion": "10.12.5"}</script>
+<script type="module">
+const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
+const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
+const firebaseConfig = chatConfig.firebase || {};
+const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
+let chatAuth = null;
+let chatDb = null;
+let chatUser = null;
+let chatProvider = null;
+let chatProduct = {};
+let chatThreadId = '';
+let chatUnsubMessages = null;
+let chatUnsubThreads = null;
+let firebaseApi = null;
+
+const chatEl = (id) => document.getElementById(id);
+const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
+const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
+const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
+const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+
+function openChatFromButton(btn) {
+    chatProduct = {
+        id: btn?.dataset.chatProductId || 'general',
+        name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
+        url: btn?.dataset.chatProductUrl || location.pathname,
+    };
+    chatEl('chatOverlay')?.classList.add('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'false');
+    chatEl('chatSubtitle').textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    prepareChat();
+}
+
+function closeChat() {
+    chatEl('chatOverlay')?.classList.remove('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'true');
+}
+
+window.openChatFromButton = openChatFromButton;
+window.closeChat = closeChat;
+
+async function prepareChat() {
+    if (!chatHasConfig) {
+        chatStatus('Чат ще не підключений. Додайте Firebase config у test.py і опублікуйте сайт.');
+        return;
+    }
+    try {
+        await ensureFirebase();
+        chatStatus(chatUser ? 'Ви увійшли. Можна писати.' : 'Увійдіть через Google, щоб почати чат.');
+    } catch (err) {
+        chatStatus(`Чат не запустився: ${err.message || err}`);
+    }
+}
+
+async function ensureFirebase() {
+    if (firebaseApi) return firebaseApi;
+    const version = chatConfig.sdkVersion || '10.12.5';
+    const appMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-app.js`);
+    const authMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-auth.js`);
+    const storeMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-firestore.js`);
+    const app = appMod.initializeApp(firebaseConfig);
+    chatAuth = authMod.getAuth(app);
+    chatDb = storeMod.getFirestore(app);
+    chatProvider = new authMod.GoogleAuthProvider();
+    firebaseApi = { ...authMod, ...storeMod };
+    firebaseApi.onAuthStateChanged(chatAuth, async (user) => {
+        chatUser = user;
+        updateChatAuthState();
+        if (user) {
+            if (chatIsOwner()) listenOwnerThreads();
+            else await openCustomerThread();
+        }
+    });
+    return firebaseApi;
+}
+
+function updateChatAuthState() {
+    const signed = Boolean(chatUser);
+    chatEl('chatAuth').style.display = signed ? 'none' : 'grid';
+    chatEl('chatWorkspace').classList.toggle('active', signed);
+    chatEl('chatOwnerTools').classList.toggle('active', signed && chatIsOwner());
+    if (signed) chatStatus(`Увійшли як ${chatUser.email}`);
+}
+
+async function signInChat() {
+    if (!chatHasConfig) {
+        chatStatus('Потрібно додати Firebase config перед тестом чату.');
+        return;
+    }
+    await ensureFirebase();
+    try {
+        await firebaseApi.signInWithPopup(chatAuth, chatProvider);
+    } catch (err) {
+        await firebaseApi.signInWithRedirect(chatAuth, chatProvider);
+    }
+}
+
+async function openCustomerThread() {
+    if (!chatUser || !firebaseApi) return;
+    chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
+    const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
+    await firebaseApi.setDoc(threadRef, {
+        customerUid: chatUser.uid,
+        customerEmail: chatUser.email || '',
+        customerName: chatUser.displayName || chatUser.email || '',
+        ownerEmail: chatOwnerEmail,
+        productId: chatProduct.id || 'general',
+        productName: chatProduct.name || '',
+        productUrl: new URL(chatProduct.url || location.pathname, location.href).href,
+        updatedAt: firebaseApi.serverTimestamp(),
+        createdAt: firebaseApi.serverTimestamp(),
+    }, { merge: true });
+    listenMessages(chatThreadId);
+}
+
+function listenOwnerThreads() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads'),
+        firebaseApi.orderBy('updatedAt', 'desc'),
+        firebaseApi.limit(50)
+    );
+    chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
+        const list = chatEl('chatThreadList');
+        list.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const data = docSnap.data();
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `chat-thread-btn${docSnap.id === chatThreadId ? ' active' : ''}`;
+            btn.dataset.threadId = docSnap.id;
+            btn.textContent = `${data.customerName || data.customerEmail || 'Покупець'} — ${data.productName || 'Загальний чат'}`;
+            btn.onclick = () => {
+                chatThreadId = docSnap.id;
+                document.querySelectorAll('.chat-thread-btn').forEach(el => el.classList.toggle('active', el.dataset.threadId === chatThreadId));
+                listenMessages(chatThreadId);
+            };
+            list.appendChild(btn);
+        });
+        if (!chatThreadId && snap.docs[0]) {
+            chatThreadId = snap.docs[0].id;
+            listenMessages(chatThreadId);
+        }
+    }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
+}
+
+function listenMessages(threadId) {
+    if (chatUnsubMessages) chatUnsubMessages();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads', threadId, 'messages'),
+        firebaseApi.orderBy('createdAt', 'asc'),
+        firebaseApi.limit(120)
+    );
+    chatUnsubMessages = firebaseApi.onSnapshot(q, (snap) => {
+        const box = chatEl('chatMessages');
+        box.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const msg = docSnap.data();
+            const row = document.createElement('div');
+            row.className = `chat-message${msg.uid === chatUser?.uid ? ' mine' : ''}`;
+            const meta = document.createElement('div');
+            meta.className = 'chat-message-meta';
+            meta.textContent = msg.name || msg.email || 'Користувач';
+            const text = document.createElement('div');
+            text.textContent = msg.text || '';
+            row.append(meta, text);
+            box.appendChild(row);
+        });
+        box.scrollTop = box.scrollHeight;
+    }, (err) => chatStatus(`Не вдалося прочитати повідомлення: ${err.message}`));
+}
+
+async function sendChatMessage() {
+    const input = chatEl('chatInput');
+    const text = chatClean(input.value);
+    if (!text || !chatUser || !firebaseApi) return;
+    if (!chatThreadId && !chatIsOwner()) await openCustomerThread();
+    if (!chatThreadId) {
+        chatStatus('Виберіть діалог покупця.');
+        return;
+    }
+    chatEl('chatSendBtn').disabled = true;
+    try {
+        const role = chatIsOwner() ? 'owner' : 'customer';
+        await firebaseApi.addDoc(firebaseApi.collection(chatDb, 'chatThreads', chatThreadId, 'messages'), {
+            uid: chatUser.uid,
+            email: chatUser.email || '',
+            name: chatUser.displayName || chatUser.email || '',
+            role,
+            text,
+            createdAt: firebaseApi.serverTimestamp(),
+        });
+        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+            lastMessage: text.slice(0, 180),
+            lastSender: role,
+            updatedAt: firebaseApi.serverTimestamp(),
+        }, { merge: true });
+        input.value = '';
+    } catch (err) {
+        chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
+    } finally {
+        chatEl('chatSendBtn').disabled = false;
+    }
+}
+
+chatEl('chatGoogleBtn')?.addEventListener('click', signInChat);
+chatEl('chatSendBtn')?.addEventListener('click', sendChatMessage);
+chatEl('chatInput')?.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) sendChatMessage();
+});
+</script>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}

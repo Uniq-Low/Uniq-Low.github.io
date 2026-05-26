@@ -89,10 +89,14 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
 .product-attrs dt{color:var(--muted);}
 .product-attrs dd{margin:0;color:var(--text);}
-.card-tg-btn{display:block;margin:0 16px 16px;
-background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
-padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
-.card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
+.card-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 16px 16px;}
+.card-action-btn{min-height:42px;border:none;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;
+display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.card-tg-btn{background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;}
+.card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);gap:7px;}
+.card-tg-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
+.chat-icon{width:18px;height:18px;border:2px solid currentColor;border-radius:7px;display:inline-block;position:relative;flex:0 0 18px;}
+.chat-icon::after{content:"";position:absolute;left:2px;bottom:-5px;width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:var(--panel-solid);transform:skew(-18deg);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
 .product-detail-page{max-width:1500px;margin:0 auto;animation:fadeUp .3s ease both;}
@@ -113,10 +117,45 @@ body.dark .product-detail-info{background:rgba(17,24,39,.88);}
 .product-detail-info h1{font-size:clamp(26px,3.2vw,42px);line-height:1.12;margin:0 0 12px;letter-spacing:0;overflow-wrap:anywhere;}
 .detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
 .detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
-.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+.detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+.detail-order-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+text-decoration:none;border-radius:14px;font-weight:800;padding:13px 22px;transition:.18s ease;}
+.detail-order-btn{
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
-font-weight:800;padding:13px 22px;margin-bottom:24px;box-shadow:0 14px 30px rgba(34,158,217,.24);transition:.18s ease;}
-.detail-order-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.32);}
+box-shadow:0 14px 30px rgba(34,158,217,.24);}
+.detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);gap:8px;cursor:pointer;}
+.detail-order-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
+.chat-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.48);backdrop-filter:blur(8px);
+display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
+.chat-overlay.open{display:flex;}
+.chat-panel{width:min(100%,440px);max-height:min(760px,calc(100vh - 36px));display:flex;flex-direction:column;
+background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.28);overflow:hidden;}
+.chat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);}
+.chat-title{font-weight:900;font-size:20px;line-height:1.2;}
+.chat-subtitle{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.35;}
+.chat-close{border:1px solid var(--border);background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:12px;cursor:pointer;font-size:22px;line-height:1;}
+.chat-body{padding:14px;display:grid;gap:12px;min-height:0;}
+.chat-auth{display:grid;gap:10px;}
+.chat-google-btn,.chat-send-btn{border:none;border-radius:14px;padding:12px 14px;font-weight:800;cursor:pointer;}
+.chat-google-btn{background:var(--text);color:var(--panel-solid);}
+.chat-send-btn{background:var(--accent);color:white;}
+.chat-send-btn:disabled{opacity:.55;cursor:not-allowed;}
+.chat-warning{font-size:12px;line-height:1.45;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:10px;}
+.chat-status{font-size:13px;color:var(--muted);line-height:1.4;}
+.chat-workspace{display:none;gap:12px;min-height:0;}
+.chat-workspace.active{display:grid;}
+.chat-owner-tools{display:none;gap:8px;}
+.chat-owner-tools.active{display:grid;grid-template-columns:1fr;}
+.chat-thread-list{max-height:120px;overflow:auto;display:grid;gap:6px;}
+.chat-thread-btn{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px;text-align:left;cursor:pointer;}
+.chat-thread-btn.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.chat-messages{height:min(42vh,330px);overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--bg);padding:10px;display:flex;flex-direction:column;gap:8px;}
+.chat-message{max-width:86%;border-radius:16px;padding:9px 11px;background:var(--panel-solid);border:1px solid var(--border);line-height:1.45;overflow-wrap:anywhere;}
+.chat-message.mine{margin-left:auto;background:var(--accent);color:white;border-color:transparent;}
+.chat-message-meta{font-size:11px;opacity:.72;margin-bottom:3px;}
+.chat-composer{display:grid;gap:8px;}
+.chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
+.chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
 .detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
 .detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .detail-section summary::-webkit-details-marker{display:none;}
@@ -182,7 +221,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-info{padding:12px;}
 .product-price{font-size:20px;}
 .product-title{font-size:14px;min-height:0;}
-.card-tg-btn{margin:0 12px 12px;font-size:13px;padding:11px 8px;}
+.card-actions{margin:0 12px 12px;grid-template-columns:1fr;}
+.card-action-btn{font-size:13px;padding:11px 8px;}
 .product-detail-layout{gap:14px;}
 .product-thumbs{padding-bottom:6px;scroll-snap-type:x mandatory;}
 .product-thumb{min-width:74px;scroll-snap-align:start;}
@@ -191,7 +231,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-detail-info h1{font-size:clamp(23px,7vw,31px);}
 .detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
 .detail-section{padding-top:14px;margin-top:14px;}
-.detail-order-btn{width:100%;}
+.detail-actions{display:grid;grid-template-columns:1fr;}
+.detail-order-btn,.detail-chat-btn{width:100%;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
@@ -207,6 +248,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-thumb{min-width:68px;}
 .promo-card{padding:18px;border-radius:20px;}
 .promo-badge{width:78px;height:78px;font-size:20px;}
+.chat-overlay{padding:10px;align-items:stretch;}
+.chat-panel{width:100%;max-height:calc(100vh - 20px);border-radius:20px;}
 }
 </style>
 </head>
@@ -220,7 +263,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 23:47</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 11:40</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -355,9 +398,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13765"
+                    data-chat-product-name="Штани smart uniqlo"
+                    data-chat-product-url="../product/13765/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="джинси вінтаж levis 501 ct селвидж 1900 грн  25 / xs shtany-shorty джинси levis 501 ct новий блакитний 25 / xs жіночий одяг штани та шорти джинси">
         <a class="card-main-link" href="../product/13764/">
@@ -370,9 +423,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>25 / XS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13764"
+                    data-chat-product-name="Джинси вінтаж levis 501 ct селвидж"
+                    data-chat-product-url="../product/13764/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="спідниця-шорти uniqlo 800 грн  40 /  l / 48, 42 /  xl / 50 shtany-shorty спідниця-шорти uniqlo
 в наявності розмір л та хл, колір чорний
@@ -397,9 +460,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>40 /  L / 48, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13763"
+                    data-chat-product-name="Спідниця-шорти uniqlo"
+                    data-chat-product-url="../product/13763/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="шорти uniqlo 699 грн  38 / m / 46 shtany-shorty шорти uniqlo
 в наявності розмір м
@@ -425,9 +498,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13762"
+                    data-chat-product-name="Шорти uniqlo"
+                    data-chat-product-url="../product/13762/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="легкі широкі штани uniqlo 1010 грн  36 / s / 44 shtany-shorty легкі широкі штани uniqlo
 в наявності розмір с
@@ -450,9 +533,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13761"
+                    data-chat-product-name="Легкі широкі штани uniqlo"
+                    data-chat-product-url="../product/13761/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="елегантні брюки uniqlo, розмір с, м та л 1200 грн  s, m, l shtany-shorty елегантні брюки uniqlo
 в наявності  розмір с та л, колір 31 beige
@@ -476,9 +569,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>S, M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13760"
+                    data-chat-product-name="Елегантні брюки uniqlo, розмір с, м та л"
+                    data-chat-product-url="../product/13760/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="брюки широкі uniqlo, розмір хл 1200 грн  42 /  xl / 50 shtany-shorty брюки широкі uniqlo
 в наявності розмір хл, колір білий
@@ -502,9 +605,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13759"
+                    data-chat-product-name="Брюки широкі uniqlo, розмір хл"
+                    data-chat-product-url="../product/13759/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="укорочені жіночі атласні штани 800 грн uniqlo 38 / m / 46 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вигини, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 404663-a20 новий білий 38 / m / 46 жіночий одяг штани та шорти брюки укорочені повсякденний">
         <a class="card-main-link" href="../product/13758/">
@@ -517,9 +630,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13758"
+                    data-chat-product-name="Укорочені жіночі атласні штани"
+                    data-chat-product-url="../product/13758/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="710 super skinny women&#x27;s jeans w25l28 1000 грн levi&#x27;s 25 / xs shtany-shorty наші фірмові крою &quot;lot 700&quot; - це ідеальні приголомшливі фасони, створені, щоб лестити, утримувати і піднімати - весь день, кожен день. один з наших бестселерів, надлегка модель 710 super skinny ідеально підкреслює вашу фігуру. у нього найтонша штанина в нашій колекції для чіткого силуету. стиль # 177780171 новий блакитний 25 / xs жіночий одяг штани та шорти джинси">
         <a class="card-main-link" href="../product/13757/">
@@ -532,9 +655,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Levi&#x27;s • 25 / XS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13757"
+                    data-chat-product-name="710 super skinny women&#x27;s jeans w25l28"
+                    data-chat-product-url="../product/13757/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="джинсові шорти zara 34 розмір 650 грн zara 34 / xs / 42 shtany-shorty джинсові шорти zara новий синій 34 / xs / 42 жіночий одяг штани та шорти шорти">
         <a class="card-main-link" href="../product/13756/">
@@ -547,9 +680,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>ZARA • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13756"
+                    data-chat-product-name="Джинсові шорти zara 34 розмір"
+                    data-chat-product-url="../product/13756/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіночі укорочені широкі брюки в стилі драп 750 грн uniqlo 36 / s / 44 shtany-shorty легкі і еластичні широкі штани. почуття моди і сезонності. ・ висока талія і широкий крій для стильного образу. ・легкий і гладкий матеріал, що демонструє сезонність. ・ вертикально і горизонтально розтягується матеріал, розтягується в двох напрямках, зручний в носінні. ・ еластичний ремінь і бічна блискавка для більш зручного носіння. ・не мнеться після прання, простий у догляді. ・ можна носити з топом з того ж матеріалу. 400555-a20 новий чорний 36 / s / 44 жіночий одяг штани та шорти брюки укорочені">
         <a class="card-main-link" href="../product/13755/">
@@ -562,9 +705,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13755"
+                    data-chat-product-name="Жіночі укорочені широкі брюки в стилі драп"
+                    data-chat-product-url="../product/13755/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіночі укорочені атласні штани ezy 790 грн uniqlo 36 / s / 44 shtany-shorty чудова розтяжність, м&#x27;яка посадка, зручність і простота в шкарпетці!демонструє елегантний блиск і підкреслює жіночність. ・атласний бавовняний матеріал з елегантним блиском. ・гнучкий і блискучий, він не занадто облягає ногу, демонструючи гарний крій. ・в комплект входить петля для ременя, що дозволяє легко регулювати розмір за допомогою ременя. ・еластичні та зручні кишені. ・довжина стегна трохи широка, щоб білизна не було видно при нахилі. 411972-а20 новий бордовий 36 / s / 44 жіночий одяг штани та шорти брюки укорочені">
         <a class="card-main-link" href="../product/13754/">
@@ -577,9 +730,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13754"
+                    data-chat-product-name="Жіночі укорочені атласні штани ezy"
+                    data-chat-product-url="../product/13754/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="уникло жіночі атласні штани до щитка 800 грн uniqlo 36 / s / 44 shtany-shorty уникло жіночі атласні штани до щитка 199104 -a20 новий коричневий 36 / s / 44 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13753/">
@@ -592,9 +755,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13753"
+                    data-chat-product-name="Уникло жіночі атласні штани до щитка"
+                    data-chat-product-url="../product/13753/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 800 грн uniqlo 36 / s / 44, 38 / m / 46 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вигини, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 404663-a20 новий кораловий 36 / s / 44, 38 / m / 46 жіночий одяг штани та шорти брюки укорочені повсякденний" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13752/">
@@ -607,9 +780,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13752"
+                    data-chat-product-name="Укорочені жіночі атласні штани"
+                    data-chat-product-url="../product/13752/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 700 грн uniqlo 34 / xs / 42 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вігіні, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 180834-a20 новий бордовий 34 / xs / 42 жіночий одяг штани та шорти брюки укорочені повсякденний" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13751/">
@@ -622,9 +805,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13751"
+                    data-chat-product-name="Укорочені жіночі атласні штани"
+                    data-chat-product-url="../product/13751/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 800 грн uniqlo 38 / m / 46 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вигини, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 404663-a20 новий бежевий 38 / m / 46 жіночий одяг штани та шорти брюки укорочені повсякденний" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13750/">
@@ -637,9 +830,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13750"
+                    data-chat-product-name="Укорочені жіночі атласні штани"
+                    data-chat-product-url="../product/13750/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі брюки 800 грн uniqlo 36 / s / 44 shtany-shorty класичні брюки ines з 100% бавовни кольору хакі. ・з інес., яку любили і використовували багато людей поза часом і покоління, і яка є синонімом паризького стилю. продукція бренду fasanqi для корпоративного співробітництва. ・класичні брюки ines кольору хакі! 407139-а20 новий бежевий 36 / s / 44 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13749/">
@@ -652,9 +855,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13749"
+                    data-chat-product-name="Жіночі брюки"
+                    data-chat-product-url="../product/13749/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="модні жіночі брюки-банджі uniqlo 900 грн uniqlo 34 / xs / 42 shtany-shorty ці модні жіночі брюки-банджі uniqlo 400558 виготовлені з 96% поліестеру , який легко розтягується для свободи рухів. модель з високою талією і драпірованою текстурою проста і універсальна для повсякденного образу. 400558-а20 новий чорний 34 / xs / 42 жіночий одяг штани та шорти брюки повсякденний" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13748/">
@@ -667,9 +880,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13748"
+                    data-chat-product-name="Модні жіночі брюки-банджі uniqlo"
+                    data-chat-product-url="../product/13748/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі брюки 790 грн uniqlo 34 / xs / 42 shtany-shorty класичні брюки ines з 100% бавовни кольору хакі. ・з інес., яку любили і використовували багато людей поза часом і покоління, і яка є синонімом паризького стилю. продукція бренду fasanqi для корпоративного співробітництва. ・класичні брюки ines кольору хакі! 407139-а20 новий бежевий 34 / xs / 42 жіночий одяг штани та шорти брюки класичні" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13747/">
@@ -682,9 +905,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13747"
+                    data-chat-product-name="Жіночі брюки"
+                    data-chat-product-url="../product/13747/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі брюки 800 грн uniqlo 42 /  xl / 50 shtany-shorty виготовлений зі 100% віскози, такий же гладкою і приємною на дотик, як шкіра. -100% віскоза, повсякденні штани з драпіруванням, м&#x27;які і зручні, як шкіра. 407981-a20 новий білий, синій 42 /  xl / 50 жіночий одяг штани та шорти брюки повсякденний" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13746/">
@@ -697,9 +930,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13746"
+                    data-chat-product-name="Жіночі брюки"
+                    data-chat-product-url="../product/13746/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="укорочені розкльошені джинси 24 розмір 550 грн uniqlo one size shtany-shorty колекція, створена командою паризьких дизайнерів на чолі з крістофом лемером, в якій представлена нова одяг lifewear з інноваційних матеріалів і дизайну, що дозволяє відчути атмосферу справжнього. - силует із завищеною талією, що облягає талію і стегна, і розкльошені низом. - справжня джинсова тканина з 100% бавовни вагою 12 унцій. 421244-а20 новий чорний one size жіночий одяг штани та шорти брюки укорочені" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13745/">
@@ -712,9 +955,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • One size</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13745"
+                    data-chat-product-name="Укорочені розкльошені джинси 24 розмір"
+                    data-chat-product-url="../product/13745/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі легінси-штани uniqlo smart 700 грн uniqlo 34 / xs / 42 shtany-shorty our leggings pants feature all-way stretch for гладеньке comfort. form-fitting skinny cut creates feminine, гладеньке lines. /// 82% бавовна, 12% поліестер, 6% спандекс machine wash cold, gentle cycle imported
 413147-a20 новий зелений 34 / xs / 42 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
@@ -728,9 +981,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13744"
+                    data-chat-product-name="Жіночі легінси-штани uniqlo smart"
+                    data-chat-product-url="../product/13744/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі стрейч повсякденні штани dry 1049 грн uniqlo 38 / m / 46 shtany-shorty високоефективні штани, які швидко сохнуть і еластичні. він виглядає як еластичний матеріал, який зручний і легкий у носінні!
 ・він має хорошу рухливість і еластичний матеріал, додаючи функції поглинання поту та швидкого висихання.
@@ -749,9 +1012,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13743"
+                    data-chat-product-name="Жіночі стрейч повсякденні штани dry"
+                    data-chat-product-url="../product/13743/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі бавовняні прямі штани 1049 грн uniqlo 36 / s / 44 shtany-shorty штани нового крою.
 ・за межами часів і поколінь він широко використовується та є синонімом паризького стилю. серія спільної роботи інес фасанш.
@@ -769,9 +1042,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13742"
+                    data-chat-product-name="Жіночі бавовняні прямі штани"
+                    data-chat-product-url="../product/13742/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі плісировані штани з високою талією 1349 грн uniqlo 38 / m / 46 shtany-shorty команда під керівництвом крістофа лемера, привезена до вас зі своєї паризької студії, перетворює основи в інноваційну колекцію uniqlo u.
 ・товсте бавовняне полотно, що демонструє стиль роботи.
@@ -790,9 +1073,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13741"
+                    data-chat-product-name="Жіночі плісировані штани з високою талією"
+                    data-chat-product-url="../product/13741/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="легінси extra stretch uniqlo 500 грн uniqlo 38 / m / 46, 40 /  l / 48 shtany-shorty легінси extra stretch uniqlo
 в наявності розмір м та л, колір рожевий
@@ -816,9 +1109,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46, 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13740"
+                    data-chat-product-name="Легінси extra stretch uniqlo"
+                    data-chat-product-url="../product/13740/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани smart ankle uniqlo 1010 грн uniqlo 38 / m / 46 shtany-shorty штани smart ankle uniqlo
 в наявності розмір м колір 02 light gray
@@ -846,9 +1149,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13739"
+                    data-chat-product-name="Штани smart ankle uniqlo"
+                    data-chat-product-url="../product/13739/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="джинси легінси uniqlo ultra stretch denim 890 грн uniqlo 36 / s / 44 shtany-shorty ці жіночі джинси uniqloвиготовлені з еластичної бавовняної суміші та мають класичний прямий силует для універсального та простого образу.
  411152 -102ann новий синій 36 / s / 44 жіночий одяг штани та шорти лосіни та легінси бавовна" data-initial-hidden='1'>
@@ -862,9 +1175,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13738"
+                    data-chat-product-name="Джинси легінси uniqlo ultra stretch denim"
+                    data-chat-product-url="../product/13738/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі джинси 710 super skinny 850 грн levi&#x27;s 28 / m shtany-shorty ваші бездоганні джинси, які ідеально підходять, утримують і підводять - весь день, кожен день. один з наших найпопулярніших дизайнів, innovation super skinny пропонує новий рівень форми, тому що наша спеціальна технологія flawlessfx вплетена в джинсову тканину. підсумок: ви будете виглядати приголомшливо ще довше. 177800028 новий блакитний 28 / m жіночий одяг штани та шорти джинси" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13737/">
@@ -877,9 +1200,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Levi&#x27;s • 28 / M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13737"
+                    data-chat-product-name="Жіночі джинси 710 super skinny"
+                    data-chat-product-url="../product/13737/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="джинси levis 501ct w26l32 нові 2500 грн levi&#x27;s 26 / s shtany-shorty жіночі джинси levi&#x27;s 501 ct cali cool nwt style 178040002 новий синій 26 / s жіночий одяг штани та шорти джинси" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13736/">
@@ -892,9 +1225,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Levi&#x27;s • 26 / S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13736"
+                    data-chat-product-name="Джинси levis 501ct w26l32 нові"
+                    data-chat-product-url="../product/13736/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="джинси levis 711 skinny 188810219 cheap thrill 25w x 30l 1200 грн levi&#x27;s 25 / xs shtany-shorty ******** женщинам брюки джинсы
 джинсы levis 711 skinny 188810219 cheap thrill 26w x 30l1 фото
@@ -931,9 +1274,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Levi&#x27;s • 25 / XS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13735"
+                    data-chat-product-name="Джинси levis 711 skinny 188810219 cheap thrill 25w x 30l"
+                    data-chat-product-url="../product/13735/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="джинси levis 311 розмір 27-34 2100 грн levi&#x27;s 27 / s shtany-shorty наші формують джинси, розроблені для розгладження і поліпшення форми, роблять ваш животик стрункішою, піднімають сидіння і подовжують ноги. модель 311 shaping skinny дуже зручна і дуже лестна, доповнено ідеальної обтягує штаниною, яку ви захочете носити кожен день, і технологією схуднення, яка робить саме те, що вона говорить. технологія схуднення живота стиль # 196260047 новий синій 27 / s жіночий одяг штани та шорти джинси" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13734/">
@@ -946,9 +1299,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Levi&#x27;s • 27 / S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13734"
+                    data-chat-product-name="Джинси levis 311 розмір 27-34"
+                    data-chat-product-url="../product/13734/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі вовняні штани ezy (в смужку) uniqlo 980 грн uniqlo 36 / s / 44 shtany-shorty вовняні штани з елегантною текстурою і теплом. еластичний і еластичний на талії, зручний і простий у використанні! ・нове оновлення цього сезону вже тут!нове оновлення, без шипів на шкірі, щільна текстура. ・еластичний пояс полегшує надягання штанів. 412668-52 новий синій 36 / s / 44 жіночий одяг штани та шорти брюки у смужку" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13733/">
@@ -961,9 +1324,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13733"
+                    data-chat-product-name="Жіночі вовняні штани ezy (в смужку) uniqlo"
+                    data-chat-product-url="../product/13733/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="серія колаборацій з інес фасанж,жіночі бавовняні штани uniqlo 750 грн uniqlo 34 / xs / 42 shtany-shorty ・серія колаборацій з інес фасанж, яка виходить за межі епох і поколінь, улюблена публікою і є синонімом паризького стилю. ・випраний і виготовлений з повсякденного бавовняного матеріалу кольору хакі. ・змінено на прямий крій, що підходить для всіх. ・передня пряжка зроблена з лямки, що додає моделі яскравий вигляд. 416083-57 новий синій 34 / xs / 42 жіночий одяг штани та шорти брюки повсякденний" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13732/">
@@ -976,9 +1349,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13732"
+                    data-chat-product-name="Серія колаборацій з інес фасанж,жіночі бавовняні штани uniqlo"
+                    data-chat-product-url="../product/13732/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани-джоггеры з драпіруванням і принтом uniqlo 900 грн uniqlo 38 / m / 46 shtany-shorty широкі штани з елегантною драпіруванням ідеально підходять для носіння вдома і на прогулянці. 441634-58 новий синій 38 / m / 46 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13731/">
@@ -991,9 +1374,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13731"
+                    data-chat-product-name="Штани-джоггеры з драпіруванням і принтом uniqlo"
+                    data-chat-product-url="../product/13731/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="uniqlo жіночі широкі кюлоти 650 грн uniqlo 34 / xs / 42 shtany-shorty ці широкі жіночі укорочені брюки uniqlo 404262 виготовлені з сумішевої тканини, що складається з 50% поліестеру і 50% віскози, високоякісної текстури, зручні в носінні, плісированою обробки спереду, пухнастого тривимірного зображення, більш драпірованого, пояс з d-образної пряжкою, шикарний і елегантний, він може додати родзинки фігурі, довжиною у сім пунктів, освіжаючий і акуратний, ще більше підкреслює елегантні лінії ніг. 404262-58 новий бежевий 34 / xs / 42 жіночий одяг штани та шорти брюки кюлоти" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13730/">
@@ -1006,9 +1399,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13730"
+                    data-chat-product-name="Uniqlo жіночі широкі кюлоти"
+                    data-chat-product-url="../product/13730/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="модні жіночі брюки-банджі uniqlo 800 грн uniqlo 36 / s / 44 shtany-shorty ці модні жіночі брюки-банджі uniqlo 400558 виготовлені з 96% поліестеру , який легко розтягується для свободи рухів. модель з високою талією і драпірованою текстурою проста і універсальна для повсякденного образу. 400558-а20 новий бордовий 36 / s / 44 жіночий одяг штани та шорти брюки повсякденний" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13729/">
@@ -1021,9 +1424,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13729"
+                    data-chat-product-name="Модні жіночі брюки-банджі uniqlo"
+                    data-chat-product-url="../product/13729/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 900 грн uniqlo 40 /  l / 48 shtany-shorty укорочені брюки з легкими і акуратними ступнями. випромінює елегантний блиск, підходить для роботи і відпочинку. ・свіжий і невимушений дизайн, яскраве словосполучення. ・показує глянцеві матеріали і має гарний дизайн. 408662-a20 новий синій 40 /  l / 48 жіночий одяг штани та шорти брюки укорочені" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13728/">
@@ -1036,9 +1449,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13728"
+                    data-chat-product-name="Укорочені жіночі атласні штани"
+                    data-chat-product-url="../product/13728/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="уникло жіночі атласні штани 700 грн uniqlo 36 / s / 44, 38 / m / 46 shtany-shorty укорочені брюки з легкими і акуратними ступнями. випромінює елегантний блиск, підходить для роботи і відпочинку. ・свіжий і невимушений дизайн, яскраве словосполучення. ・показує глянцеві матеріали і має гарний дизайн. 408662-a20 новий сріблястий 36 / s / 44, 38 / m / 46 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13727/">
@@ -1051,9 +1474,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13727"
+                    data-chat-product-name="Уникло жіночі атласні штани"
+                    data-chat-product-url="../product/13727/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі укорочені брюки smart style 800 грн uniqlo 36 / s / 44 shtany-shorty стиль підходить як для дому, так і для прогулянок. ・ключовий момент оновлення в цьому сезоні! змініть еластичну криву талії для більш зручної посадки для всіх типів статури. ・ключовий момент оновлення в цьому сезоні! передня частина довша на 1,5 см, а низ штанів не так легко сповзає вниз при присіданні. ・ключовий момент оновлення в цьому сезоні! передбачені додаткові шлевкі для зручного регулювання талії ременем. ・ключовий момент оновлення в цьому сезоні! оновіть обгортку кишені до еластичної тканини, щоб було легше рухатися. ・це змішане волокно з поліефірного волокна віскози, якому надається форма, за яким легко доглядати після прання. ・схожий на шерсть матеріал з помірною драпіруванням підходить для офіційних заходів. ・підходить для носіння з топами з бавовни, еластичної тканини та інших матеріалів або з футболками в стилі кежуал. 404660-a20 новий білий 36 / s / 44 жіночий одяг штани та шорти брюки укорочені" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13726/">
@@ -1066,9 +1499,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13726"
+                    data-chat-product-name="Жіночі укорочені брюки smart style"
+                    data-chat-product-url="../product/13726/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі повсякденні штани 950 грн uniqlo 36 / s / 44 shtany-shorty зовнішній вигляд акуратний і щедрий, але він не надто розкриває лінії ніг, що дуже привабливо. не тільки вдома, а й на вулиці.
 ・він має правильну товщину одягу, і нелегко показати лінії ніг.поверхня м&#x27;яка на дотик, а форма дуже красива.
@@ -1085,9 +1528,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13725"
+                    data-chat-product-name="Жіночі повсякденні штани"
+                    data-chat-product-url="../product/13725/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани легінси 1049 грн uniqlo 38 / m / 46 shtany-shorty скільки він розтягується на 360°, він не перешкоджає руху будь-якої ноги, дозволяючи вам рухатися легко.
 - приталений худий силует створює красиві жіночі ніжки.
@@ -1103,9 +1556,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13724"
+                    data-chat-product-name="Штани легінси"
+                    data-chat-product-url="../product/13724/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі вовняні штани ezy 1350 грн uniqlo 36 / s / 44 shtany-shorty вовняні штани з елегантною текстурою і відмінним теплом
 412666-46l новий чорний 36 / s / 44 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
@@ -1119,9 +1582,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13723"
+                    data-chat-product-name="Жіночі вовняні штани ezy"
+                    data-chat-product-url="../product/13723/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="широкі плісировані штани uniqlo 1700 грн uniqlo s shtany-shorty uniqlo та comptoir des cotonniers представляють капсульну колекцію осінь/зима 2023 року, яка наповнена сучасною та жіночою привабливістю. насолоджуйтесь м’якими натуральними тканинами вишуканих відтінків у поєднанні з щоденним комфортом lifewear. відчуйте мистецтво невимушеної привабливості з шикарним французьким відтінком у власному гардеробі.
 
@@ -1148,9 +1621,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13722"
+                    data-chat-product-name="Широкі плісировані штани uniqlo"
+                    data-chat-product-url="../product/13722/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани smart uniqlo 1200 грн uniqlo l shtany-shorty штани smart uniqlo
 в наявності розмір л, колір білий
@@ -1178,9 +1661,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13721"
+                    data-chat-product-name="Штани smart uniqlo"
+                    data-chat-product-url="../product/13721/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="вовняні жіночі брюки uniqlo 1350 грн uniqlo 38 / m / 46, 40 /  l / 48 shtany-shorty вовняні жіночі брюки uniqlo
 в наявності розмір 29 та 30 колір чорний
@@ -1202,9 +1695,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 38 / M / 46, 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13720"
+                    data-chat-product-name="Вовняні жіночі брюки uniqlo"
+                    data-chat-product-url="../product/13720/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="фланелеві штани uniqlo 1010 грн uniqlo хs, s shtany-shorty фланелеві штани uniqlo
 в наявності розмір хс, с, колір 37 brown
@@ -1226,9 +1729,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • ХS, S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13719"
+                    data-chat-product-name="Фланелеві штани uniqlo"
+                    data-chat-product-url="../product/13719/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="джинси wide straight uniqlo 1050 грн uniqlo 25 shtany-shorty джинси wide straight uniqlo
 в наявності:
@@ -1253,9 +1766,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 25</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13718"
+                    data-chat-product-name="Джинси wide straight uniqlo"
+                    data-chat-product-url="../product/13718/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="levi&#x27;s® premium жіночі джинси 501®, розмір 28*28 1650 грн levi&#x27;s 28 / m shtany-shorty levi&#x27;s® premium жіночі джинси 501®
 в наявності розмір 28, довжина 28
@@ -1284,9 +1807,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Levi&#x27;s • 28 / M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13717"
+                    data-chat-product-name="Levi&#x27;s® premium жіночі джинси 501®, розмір 28*28"
+                    data-chat-product-url="../product/13717/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="еластичні укорочені легінси з високою посадкою uniqlo 550 грн uniqlo 38 / m / 46, 40 /  l / 48 shtany-shorty еластичні укорочені легінси uniqlo
 в наявності розмір м та л, колір рожевий
@@ -1311,9 +1844,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 38 / M / 46, 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13716"
+                    data-chat-product-name="Еластичні укорочені легінси з високою посадкою uniqlo"
+                    data-chat-product-url="../product/13716/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="теплі штани на підкладці heattech uniqlo, розмір ххл 1800 грн uniqlo xxl shtany-shorty теплі штани на підкладці heattech uniqlo
 в наявності розмір ххл, колір 58 dark green
@@ -1338,9 +1881,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • XXL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13715"
+                    data-chat-product-name="Теплі штани на підкладці heattech uniqlo, розмір ххл"
+                    data-chat-product-url="../product/13715/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="широкі плісировані штани uniqlo 1700 грн uniqlo l shtany-shorty uniqlo та comptoir des cotonniers представляють капсульну колекцію осінь/зима 2023 року, яка наповнена сучасною та жіночою привабливістю. насолоджуйтесь м’якими натуральними тканинами вишуканих відтінків у поєднанні з щоденним комфортом lifewear. відчуйте мистецтво невимушеної привабливості з шикарним французьким відтінком у власному гардеробі.
 
@@ -1367,9 +1920,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13714"
+                    data-chat-product-name="Широкі плісировані штани uniqlo"
+                    data-chat-product-url="../product/13714/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани smart ankle uniqlo 1200 грн uniqlo l shtany-shorty штани smart ankle uniqlo
 в наявності розмір л, колір 34 brown
@@ -1399,9 +1962,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13713"
+                    data-chat-product-name="Штани smart ankle uniqlo"
+                    data-chat-product-url="../product/13713/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="елегантні штани uniqlo 1010 грн uniqlo 38 / m / 46 shtany-shorty елегантні штани uniqlo
 в наявності розмір м колір 71 purple
@@ -1432,9 +2005,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13712"
+                    data-chat-product-name="Елегантні штани uniqlo"
+                    data-chat-product-url="../product/13712/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="атласові прямі штани з драпірованням uniqlo 650 грн uniqlo 38 / m / 46 shtany-shorty атласові прямі штани з драпірованням uniqlo
 в наявності розмір м
@@ -1460,9 +2043,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13711"
+                    data-chat-product-name="Атласові прямі штани з драпірованням uniqlo"
+                    data-chat-product-url="../product/13711/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="фланелеві штани uniqlo 1010 грн uniqlo 40 /  l / 48 shtany-shorty фланелеві штани uniqlo
 в наявності розмір л
@@ -1483,9 +2076,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13710"
+                    data-chat-product-name="Фланелеві штани uniqlo"
+                    data-chat-product-url="../product/13710/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="акція! шорти high rise uniqlo 650 грн uniqlo 34 / xs / 42, 36 / s / 44, 38 / m / 46 shtany-shorty акція! шорти high rise uniqlo
 в наявності розмір 26 та 27
@@ -1508,9 +2111,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44, 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13709"
+                    data-chat-product-name="Акція! шорти high rise uniqlo"
+                    data-chat-product-url="../product/13709/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="льняні бавовняні штани uniqlo 1200 грн uniqlo 40 /  l / 48 shtany-shorty льняні бавовняні штани uniqlo
 в наявності розмір л
@@ -1540,9 +2153,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13708"
+                    data-chat-product-name="Льняні бавовняні штани uniqlo"
+                    data-chat-product-url="../product/13708/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="шорти uniqlo disney in blue easy 690 грн uniqlo 36 / s / 44 shtany-shorty шорти uniqlo disney in blue easy
 в наявності розмір с
@@ -1558,9 +2181,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13707"
+                    data-chat-product-name="Шорти uniqlo disney in blue easy"
+                    data-chat-product-url="../product/13707/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="широкі штани airsense uniqlo 1200 грн uniqlo xl, xxl shtany-shorty широкі штани airsense uniqlo
 в наявності розмір ххл та хл колір 31 beige
@@ -1584,9 +2217,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • XL, XXL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13706"
+                    data-chat-product-name="Широкі штани airsense uniqlo"
+                    data-chat-product-url="../product/13706/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="вовняні жіночі брюки uniqlo 1350 грн uniqlo 36 / s / 44, 38 / m / 46 shtany-shorty вовняні жіночі брюки uniqlo
 в наявності розмір 28 та 29 колір 69 navy
@@ -1608,9 +2251,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 36 / S / 44, 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13705"
+                    data-chat-product-name="Вовняні жіночі брюки uniqlo"
+                    data-chat-product-url="../product/13705/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="фланелеві штани uniqlo 1010 грн uniqlo хs, s, m shtany-shorty фланелеві штани uniqlo
  в наявності розмір хс, с та м, колір 38 dark brown
@@ -1632,9 +2285,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • ХS, S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13704"
+                    data-chat-product-name="Фланелеві штани uniqlo"
+                    data-chat-product-url="../product/13704/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани з лляної суміші easy uniqlo 1200 грн uniqlo s, m, l shtany-shorty штани з лляної суміші easy uniqlo
 в наявності розмір с, м та л
@@ -1660,9 +2323,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • S, M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13703"
+                    data-chat-product-name="Штани з лляної суміші easy uniqlo"
+                    data-chat-product-url="../product/13703/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняні штани uniqlo 1200 грн uniqlo m, l shtany-shorty бавовняні штани uniqlo
 в наявності розмір 10 (w30/w31), колір 31 beige
@@ -1680,9 +2353,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13702"
+                    data-chat-product-name="Бавовняні штани uniqlo"
+                    data-chat-product-url="../product/13702/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани uniqlo 1100 грн uniqlo m shtany-shorty штани uniqlo
 в наявності розмір м колір 08 dark gray
@@ -1704,9 +2387,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13701"
+                    data-chat-product-name="Штани uniqlo"
+                    data-chat-product-url="../product/13701/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="льняні бавовняні звужені штани uniqlo 1500 грн uniqlo m shtany-shorty льняні бавовняні звужені штани uniqlo
 в наявності розмір м, колір 55 green
@@ -1724,9 +2417,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13700"
+                    data-chat-product-name="Льняні бавовняні звужені штани uniqlo"
+                    data-chat-product-url="../product/13700/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="фланелеві брюки uniqlo 1050 грн uniqlo m shtany-shorty фланелеві брюки uniqlo
 в наявності розмір м, колір чорний
@@ -1744,9 +2447,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13699"
+                    data-chat-product-name="Фланелеві брюки uniqlo"
+                    data-chat-product-url="../product/13699/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="брюки-кюлоти uniqlo 1400 грн uniqlo m shtany-shorty брюки-кюлоти uniqlo
 в наявності розмір м, колір 38 dark brown
@@ -1774,9 +2487,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13698"
+                    data-chat-product-name="Брюки-кюлоти uniqlo"
+                    data-chat-product-url="../product/13698/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="джинси uniqlo широкого крою 1650 грн uniqlo 26, 27, 28, 29, 30 shtany-shorty джинси uniqlo широкого крою
 в наявності:
@@ -1799,9 +2522,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 26, 27, 28, 29, 30</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13697"
+                    data-chat-product-name="Джинси uniqlo широкого крою"
+                    data-chat-product-url="../product/13697/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="елегантні штани до щиколотки uniqlo 1100 грн uniqlo s shtany-shorty елегантні штани до щиколотки uniqlo
 в наявності розмір с, колір 38 dark brown
@@ -1819,9 +2552,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13696"
+                    data-chat-product-name="Елегантні штани до щиколотки uniqlo"
+                    data-chat-product-url="../product/13696/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняні штани вільного крою uniqlo 1100 грн uniqlo l shtany-shorty бавовняні штани вільного крою uniqlo
 в наявності розмір л, колір 31 beige
@@ -1839,9 +2582,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13695"
+                    data-chat-product-name="Бавовняні штани вільного крою uniqlo"
+                    data-chat-product-url="../product/13695/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="широкі штани uniqlo 1100 грн uniqlo xl shtany-shorty широкі штани uniqlo
 в наявності розмір хл, колір 30 natural
@@ -1859,9 +2612,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13694"
+                    data-chat-product-name="Широкі штани uniqlo"
+                    data-chat-product-url="../product/13694/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="легінси uv protection uniqlo 1010 грн uniqlo m shtany-shorty легінси uv protection uniqlo
 в наявності розмір м , колір 37 brown
@@ -1886,9 +2649,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13693"
+                    data-chat-product-name="Легінси uv protection uniqlo"
+                    data-chat-product-url="../product/13693/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани uniqlo 1010 грн uniqlo m shtany-shorty штани uniqlo
 в наявності розмір м, колір чорний
@@ -1914,9 +2687,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13692"
+                    data-chat-product-name="Штани uniqlo"
+                    data-chat-product-url="../product/13692/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="джинси uniqlo 1550 грн uniqlo 32 shtany-shorty джинси uniqlo
 в наявності розмір 32, колір 66 blue
@@ -1935,9 +2718,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 32</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13691"
+                    data-chat-product-name="Джинси uniqlo"
+                    data-chat-product-url="../product/13691/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани зі складками широкі uniqlo (на високий зріст) 1250 грн uniqlo s shtany-shorty штани зі складками широкі uniqlo (на високий зріст)
 в наявності розмір с, колір 32 beige
@@ -1965,9 +2758,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13690"
+                    data-chat-product-name="Штани зі складками широкі uniqlo (на високий зріст)"
+                    data-chat-product-url="../product/13690/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="брюки crepe uniqlo 1010 грн uniqlo s shtany-shorty брюки crepe uniqlo
 в наявності розмір с та м, колір чорний
@@ -1986,9 +2789,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13689"
+                    data-chat-product-name="Брюки crepe uniqlo"
+                    data-chat-product-url="../product/13689/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани-бочки uniqlo 1500 грн uniqlo s, m, l shtany-shorty штани-бочки uniqlo
 в наявності розмір 27, 28, 30 колір білий
@@ -2006,9 +2819,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • S, M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13688"
+                    data-chat-product-name="Штани-бочки uniqlo"
+                    data-chat-product-url="../product/13688/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="брюки широкі airsense uniqlo 1200 грн uniqlo xl shtany-shorty брюки широкі airsense uniqlo
 в наявності розмір хл, колір 32 beige
@@ -2027,9 +2850,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13687"
+                    data-chat-product-name="Брюки широкі airsense uniqlo"
+                    data-chat-product-url="../product/13687/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="м&#x27;які легінси airism uniqlo 850 грн uniqlo хs, s shtany-shorty м&#x27;які легінси airism uniqlo
 в наявності розмір хс, та с колір 11 pink
@@ -2047,9 +2880,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • ХS, S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13686"
+                    data-chat-product-name="М&#x27;які легінси airism uniqlo"
+                    data-chat-product-url="../product/13686/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="м&#x27;які легінси airism uniqlo 850 грн uniqlo xl shtany-shorty м&#x27;які легінси airism uniqlo
 в наявності розмір хл колір 71 purple
@@ -2067,9 +2910,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13685"
+                    data-chat-product-name="М&#x27;які легінси airism uniqlo"
+                    data-chat-product-url="../product/13685/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="брюки chino uniqlo 1010 грн uniqlo хs shtany-shorty брюки chino uniqlo
 в наявності розмір хс, колір чорний
@@ -2096,9 +2949,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13684"
+                    data-chat-product-name="Брюки chino uniqlo"
+                    data-chat-product-url="../product/13684/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="брюки chino uniqlo 1010 грн uniqlo хs shtany-shorty брюки chino uniqlo
 в наявності розмір хс, колір чорний
@@ -2125,9 +2988,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13683"
+                    data-chat-product-name="Брюки chino uniqlo"
+                    data-chat-product-url="../product/13683/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани uniqlo 1050 грн uniqlo s shtany-shorty штани uniqlo
 в наявності розмір с, колір 02 grey
@@ -2146,9 +3019,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13682"
+                    data-chat-product-name="Штани uniqlo"
+                    data-chat-product-url="../product/13682/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани плісировані uniqlo 950 грн uniqlo l shtany-shorty штани плісировані uniqlo
 в наявності розмір л, колір чорний
@@ -2167,9 +3050,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13681"
+                    data-chat-product-name="Штани плісировані uniqlo"
+                    data-chat-product-url="../product/13681/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="легінси uv protection uniqlo 1010 грн uniqlo m, xl shtany-shorty легінси uv protection uniqlo
 в наявності розмір м та хл, колір 61 blue
@@ -2194,9 +3087,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • M, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13680"
+                    data-chat-product-name="Легінси uv protection uniqlo"
+                    data-chat-product-url="../product/13680/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="брюки широкі uniqlo 1100 грн uniqlo m shtany-shorty брюки широкі uniqlo
 в наявності розмір м, колір 69 navy
@@ -2221,9 +3124,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13679"
+                    data-chat-product-name="Брюки широкі uniqlo"
+                    data-chat-product-url="../product/13679/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="джинсові штани uniqlo 1850 грн uniqlo m shtany-shorty джинсові штани uniqlo
 в наявності розмір м, колір 62 blue
@@ -2247,9 +3160,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13678"
+                    data-chat-product-name="Джинсові штани uniqlo"
+                    data-chat-product-url="../product/13678/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="брюки широкі uniqlo 1100 грн uniqlo l shtany-shorty брюки широкі uniqlo
 в наявності розмір л, колір 31 beige
@@ -2274,9 +3197,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13677"
+                    data-chat-product-name="Брюки широкі uniqlo"
+                    data-chat-product-url="../product/13677/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани uniqlo 1010 грн uniqlo s, l shtany-shorty штани uniqlo
 в наявності розмір с та л, колір 39 dark brown
@@ -2302,9 +3235,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • S, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13676"
+                    data-chat-product-name="Штани uniqlo"
+                    data-chat-product-url="../product/13676/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани з лляної суміші easy uniqlo 1200 грн uniqlo m, l shtany-shorty штани з лляної суміші easy uniqlo
 в наявності розмір м та л, колір 32 beige
@@ -2330,9 +3273,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13675"
+                    data-chat-product-name="Штани з лляної суміші easy uniqlo"
+                    data-chat-product-url="../product/13675/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани з лляної суміші easy uniqlo 1200 грн uniqlo l shtany-shorty штани з лляної суміші easy uniqlo
 в наявності розмір л, колір 72 purple
@@ -2360,9 +3313,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13674"
+                    data-chat-product-name="Штани з лляної суміші easy uniqlo"
+                    data-chat-product-url="../product/13674/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани з лляної суміші easy uniqlo 1200 грн uniqlo l, xl shtany-shorty штани з лляної суміші easy uniqlo
 в наявності розмір л та хл, колір 31 beige
@@ -2390,9 +3353,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13673"
+                    data-chat-product-name="Штани з лляної суміші easy uniqlo"
+                    data-chat-product-url="../product/13673/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани з лляної суміші easy uniqlo 1200 грн uniqlo l shtany-shorty штани з лляної суміші easy uniqlo
 в наявності розмір л
@@ -2420,9 +3393,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13672"
+                    data-chat-product-name="Штани з лляної суміші easy uniqlo"
+                    data-chat-product-url="../product/13672/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="брюки knit ribbed uniqlo 1010 грн uniqlo xl shtany-shorty брюки knit ribbed uniqlo
 в наявності розмір хл, колір 30 natural
@@ -2441,9 +3424,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13671"
+                    data-chat-product-name="Брюки knit ribbed uniqlo"
+                    data-chat-product-url="../product/13671/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани milano uniqlo 1400 грн uniqlo xl shtany-shorty штани milano uniqlo
 в наявності розмір хл, колір чорний
@@ -2461,9 +3454,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13670"
+                    data-chat-product-name="Штани milano uniqlo"
+                    data-chat-product-url="../product/13670/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани milano uniqlo 1400 грн uniqlo l shtany-shorty штани milano uniqlo
 в наявності розмір л, колір 66 blue
@@ -2481,9 +3484,19 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13669"
+                    data-chat-product-name="Штани milano uniqlo"
+                    data-chat-product-url="../product/13669/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняні штани uniqlo 1200 грн uniqlo 27, 29 shtany-shorty бавовняні штани uniqlo
 в наявності розмір 27 та 29, колір 08 dark gray
@@ -2501,16 +3514,270 @@ spectarif_ just_ukr
                 <div class='product-meta'>Uniqlo • 27, 29</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13668"
+                    data-chat-product-name="Бавовняні штани uniqlo"
+                    data-chat-product-url="../product/13668/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div></div>
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 23:47</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 11:40</div>
 </main>
 </div>
+<div class="chat-overlay" id="chatOverlay" aria-hidden="true">
+    <section class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+        <div class="chat-head">
+            <div>
+                <div class="chat-title" id="chatTitle">Чат з UniqLow</div>
+                <div class="chat-subtitle" id="chatSubtitle">Увійдіть через Google, щоб написати повідомлення.</div>
+            </div>
+            <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">×</button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-auth" id="chatAuth">
+                <button class="chat-google-btn" type="button" id="chatGoogleBtn">Увійти через Google</button>
+                <div class="chat-warning">
+                    Чат захищений Google-входом і правилами доступу. Не надсилайте номери карт, CVV, паролі або коди з SMS.
+                </div>
+                <div class="chat-status" id="chatStatus">Чат готується...</div>
+            </div>
+            <div class="chat-workspace" id="chatWorkspace">
+                <div class="chat-owner-tools" id="chatOwnerTools">
+                    <div class="chat-status">Режим власника: показані останні діалоги покупців.</div>
+                    <div class="chat-thread-list" id="chatThreadList"></div>
+                </div>
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-composer">
+                    <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
+                    <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
+                    <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "", "authDomain": "", "projectId": "", "appId": ""}, "sdkVersion": "10.12.5"}</script>
+<script type="module">
+const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
+const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
+const firebaseConfig = chatConfig.firebase || {};
+const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
+let chatAuth = null;
+let chatDb = null;
+let chatUser = null;
+let chatProvider = null;
+let chatProduct = {};
+let chatThreadId = '';
+let chatUnsubMessages = null;
+let chatUnsubThreads = null;
+let firebaseApi = null;
+
+const chatEl = (id) => document.getElementById(id);
+const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
+const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
+const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
+const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+
+function openChatFromButton(btn) {
+    chatProduct = {
+        id: btn?.dataset.chatProductId || 'general',
+        name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
+        url: btn?.dataset.chatProductUrl || location.pathname,
+    };
+    chatEl('chatOverlay')?.classList.add('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'false');
+    chatEl('chatSubtitle').textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    prepareChat();
+}
+
+function closeChat() {
+    chatEl('chatOverlay')?.classList.remove('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'true');
+}
+
+window.openChatFromButton = openChatFromButton;
+window.closeChat = closeChat;
+
+async function prepareChat() {
+    if (!chatHasConfig) {
+        chatStatus('Чат ще не підключений. Додайте Firebase config у test.py і опублікуйте сайт.');
+        return;
+    }
+    try {
+        await ensureFirebase();
+        chatStatus(chatUser ? 'Ви увійшли. Можна писати.' : 'Увійдіть через Google, щоб почати чат.');
+    } catch (err) {
+        chatStatus(`Чат не запустився: ${err.message || err}`);
+    }
+}
+
+async function ensureFirebase() {
+    if (firebaseApi) return firebaseApi;
+    const version = chatConfig.sdkVersion || '10.12.5';
+    const appMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-app.js`);
+    const authMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-auth.js`);
+    const storeMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-firestore.js`);
+    const app = appMod.initializeApp(firebaseConfig);
+    chatAuth = authMod.getAuth(app);
+    chatDb = storeMod.getFirestore(app);
+    chatProvider = new authMod.GoogleAuthProvider();
+    firebaseApi = { ...authMod, ...storeMod };
+    firebaseApi.onAuthStateChanged(chatAuth, async (user) => {
+        chatUser = user;
+        updateChatAuthState();
+        if (user) {
+            if (chatIsOwner()) listenOwnerThreads();
+            else await openCustomerThread();
+        }
+    });
+    return firebaseApi;
+}
+
+function updateChatAuthState() {
+    const signed = Boolean(chatUser);
+    chatEl('chatAuth').style.display = signed ? 'none' : 'grid';
+    chatEl('chatWorkspace').classList.toggle('active', signed);
+    chatEl('chatOwnerTools').classList.toggle('active', signed && chatIsOwner());
+    if (signed) chatStatus(`Увійшли як ${chatUser.email}`);
+}
+
+async function signInChat() {
+    if (!chatHasConfig) {
+        chatStatus('Потрібно додати Firebase config перед тестом чату.');
+        return;
+    }
+    await ensureFirebase();
+    try {
+        await firebaseApi.signInWithPopup(chatAuth, chatProvider);
+    } catch (err) {
+        await firebaseApi.signInWithRedirect(chatAuth, chatProvider);
+    }
+}
+
+async function openCustomerThread() {
+    if (!chatUser || !firebaseApi) return;
+    chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
+    const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
+    await firebaseApi.setDoc(threadRef, {
+        customerUid: chatUser.uid,
+        customerEmail: chatUser.email || '',
+        customerName: chatUser.displayName || chatUser.email || '',
+        ownerEmail: chatOwnerEmail,
+        productId: chatProduct.id || 'general',
+        productName: chatProduct.name || '',
+        productUrl: new URL(chatProduct.url || location.pathname, location.href).href,
+        updatedAt: firebaseApi.serverTimestamp(),
+        createdAt: firebaseApi.serverTimestamp(),
+    }, { merge: true });
+    listenMessages(chatThreadId);
+}
+
+function listenOwnerThreads() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads'),
+        firebaseApi.orderBy('updatedAt', 'desc'),
+        firebaseApi.limit(50)
+    );
+    chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
+        const list = chatEl('chatThreadList');
+        list.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const data = docSnap.data();
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `chat-thread-btn${docSnap.id === chatThreadId ? ' active' : ''}`;
+            btn.dataset.threadId = docSnap.id;
+            btn.textContent = `${data.customerName || data.customerEmail || 'Покупець'} — ${data.productName || 'Загальний чат'}`;
+            btn.onclick = () => {
+                chatThreadId = docSnap.id;
+                document.querySelectorAll('.chat-thread-btn').forEach(el => el.classList.toggle('active', el.dataset.threadId === chatThreadId));
+                listenMessages(chatThreadId);
+            };
+            list.appendChild(btn);
+        });
+        if (!chatThreadId && snap.docs[0]) {
+            chatThreadId = snap.docs[0].id;
+            listenMessages(chatThreadId);
+        }
+    }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
+}
+
+function listenMessages(threadId) {
+    if (chatUnsubMessages) chatUnsubMessages();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads', threadId, 'messages'),
+        firebaseApi.orderBy('createdAt', 'asc'),
+        firebaseApi.limit(120)
+    );
+    chatUnsubMessages = firebaseApi.onSnapshot(q, (snap) => {
+        const box = chatEl('chatMessages');
+        box.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const msg = docSnap.data();
+            const row = document.createElement('div');
+            row.className = `chat-message${msg.uid === chatUser?.uid ? ' mine' : ''}`;
+            const meta = document.createElement('div');
+            meta.className = 'chat-message-meta';
+            meta.textContent = msg.name || msg.email || 'Користувач';
+            const text = document.createElement('div');
+            text.textContent = msg.text || '';
+            row.append(meta, text);
+            box.appendChild(row);
+        });
+        box.scrollTop = box.scrollHeight;
+    }, (err) => chatStatus(`Не вдалося прочитати повідомлення: ${err.message}`));
+}
+
+async function sendChatMessage() {
+    const input = chatEl('chatInput');
+    const text = chatClean(input.value);
+    if (!text || !chatUser || !firebaseApi) return;
+    if (!chatThreadId && !chatIsOwner()) await openCustomerThread();
+    if (!chatThreadId) {
+        chatStatus('Виберіть діалог покупця.');
+        return;
+    }
+    chatEl('chatSendBtn').disabled = true;
+    try {
+        const role = chatIsOwner() ? 'owner' : 'customer';
+        await firebaseApi.addDoc(firebaseApi.collection(chatDb, 'chatThreads', chatThreadId, 'messages'), {
+            uid: chatUser.uid,
+            email: chatUser.email || '',
+            name: chatUser.displayName || chatUser.email || '',
+            role,
+            text,
+            createdAt: firebaseApi.serverTimestamp(),
+        });
+        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+            lastMessage: text.slice(0, 180),
+            lastSender: role,
+            updatedAt: firebaseApi.serverTimestamp(),
+        }, { merge: true });
+        input.value = '';
+    } catch (err) {
+        chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
+    } finally {
+        chatEl('chatSendBtn').disabled = false;
+    }
+}
+
+chatEl('chatGoogleBtn')?.addEventListener('click', signInChat);
+chatEl('chatSendBtn')?.addEventListener('click', sendChatMessage);
+chatEl('chatInput')?.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) sendChatMessage();
+});
+</script>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}

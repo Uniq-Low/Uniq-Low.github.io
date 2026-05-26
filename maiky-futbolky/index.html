@@ -89,10 +89,14 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
 .product-attrs dt{color:var(--muted);}
 .product-attrs dd{margin:0;color:var(--text);}
-.card-tg-btn{display:block;margin:0 16px 16px;
-background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
-padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
-.card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
+.card-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 16px 16px;}
+.card-action-btn{min-height:42px;border:none;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;
+display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.card-tg-btn{background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;}
+.card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);gap:7px;}
+.card-tg-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
+.chat-icon{width:18px;height:18px;border:2px solid currentColor;border-radius:7px;display:inline-block;position:relative;flex:0 0 18px;}
+.chat-icon::after{content:"";position:absolute;left:2px;bottom:-5px;width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:var(--panel-solid);transform:skew(-18deg);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
 .product-detail-page{max-width:1500px;margin:0 auto;animation:fadeUp .3s ease both;}
@@ -113,10 +117,45 @@ body.dark .product-detail-info{background:rgba(17,24,39,.88);}
 .product-detail-info h1{font-size:clamp(26px,3.2vw,42px);line-height:1.12;margin:0 0 12px;letter-spacing:0;overflow-wrap:anywhere;}
 .detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
 .detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
-.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+.detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+.detail-order-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+text-decoration:none;border-radius:14px;font-weight:800;padding:13px 22px;transition:.18s ease;}
+.detail-order-btn{
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
-font-weight:800;padding:13px 22px;margin-bottom:24px;box-shadow:0 14px 30px rgba(34,158,217,.24);transition:.18s ease;}
-.detail-order-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.32);}
+box-shadow:0 14px 30px rgba(34,158,217,.24);}
+.detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);gap:8px;cursor:pointer;}
+.detail-order-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
+.chat-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.48);backdrop-filter:blur(8px);
+display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
+.chat-overlay.open{display:flex;}
+.chat-panel{width:min(100%,440px);max-height:min(760px,calc(100vh - 36px));display:flex;flex-direction:column;
+background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.28);overflow:hidden;}
+.chat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);}
+.chat-title{font-weight:900;font-size:20px;line-height:1.2;}
+.chat-subtitle{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.35;}
+.chat-close{border:1px solid var(--border);background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:12px;cursor:pointer;font-size:22px;line-height:1;}
+.chat-body{padding:14px;display:grid;gap:12px;min-height:0;}
+.chat-auth{display:grid;gap:10px;}
+.chat-google-btn,.chat-send-btn{border:none;border-radius:14px;padding:12px 14px;font-weight:800;cursor:pointer;}
+.chat-google-btn{background:var(--text);color:var(--panel-solid);}
+.chat-send-btn{background:var(--accent);color:white;}
+.chat-send-btn:disabled{opacity:.55;cursor:not-allowed;}
+.chat-warning{font-size:12px;line-height:1.45;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:10px;}
+.chat-status{font-size:13px;color:var(--muted);line-height:1.4;}
+.chat-workspace{display:none;gap:12px;min-height:0;}
+.chat-workspace.active{display:grid;}
+.chat-owner-tools{display:none;gap:8px;}
+.chat-owner-tools.active{display:grid;grid-template-columns:1fr;}
+.chat-thread-list{max-height:120px;overflow:auto;display:grid;gap:6px;}
+.chat-thread-btn{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px;text-align:left;cursor:pointer;}
+.chat-thread-btn.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.chat-messages{height:min(42vh,330px);overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--bg);padding:10px;display:flex;flex-direction:column;gap:8px;}
+.chat-message{max-width:86%;border-radius:16px;padding:9px 11px;background:var(--panel-solid);border:1px solid var(--border);line-height:1.45;overflow-wrap:anywhere;}
+.chat-message.mine{margin-left:auto;background:var(--accent);color:white;border-color:transparent;}
+.chat-message-meta{font-size:11px;opacity:.72;margin-bottom:3px;}
+.chat-composer{display:grid;gap:8px;}
+.chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
+.chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
 .detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
 .detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .detail-section summary::-webkit-details-marker{display:none;}
@@ -182,7 +221,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-info{padding:12px;}
 .product-price{font-size:20px;}
 .product-title{font-size:14px;min-height:0;}
-.card-tg-btn{margin:0 12px 12px;font-size:13px;padding:11px 8px;}
+.card-actions{margin:0 12px 12px;grid-template-columns:1fr;}
+.card-action-btn{font-size:13px;padding:11px 8px;}
 .product-detail-layout{gap:14px;}
 .product-thumbs{padding-bottom:6px;scroll-snap-type:x mandatory;}
 .product-thumb{min-width:74px;scroll-snap-align:start;}
@@ -191,7 +231,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-detail-info h1{font-size:clamp(23px,7vw,31px);}
 .detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
 .detail-section{padding-top:14px;margin-top:14px;}
-.detail-order-btn{width:100%;}
+.detail-actions{display:grid;grid-template-columns:1fr;}
+.detail-order-btn,.detail-chat-btn{width:100%;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
@@ -207,6 +248,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-thumb{min-width:68px;}
 .promo-card{padding:18px;border-radius:20px;}
 .promo-badge{width:78px;height:78px;font-size:20px;}
+.chat-overlay{padding:10px;align-items:stretch;}
+.chat-panel{width:100%;max-height:calc(100vh - 20px);border-radius:20px;}
 }
 </style>
 </head>
@@ -220,7 +263,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 23:47</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 11:40</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -346,9 +389,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13463"
+                    data-chat-product-name="Uniqlo u стильная футболка свободного покроя 100% хлопок"
+                    data-chat-product-url="../product/13463/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="женская super mario ut (футболка с принтом/короткие рукава) 650 грн uniqlo 38 / m / 46 maiky-futbolky женская super mario ut (футболка с принтом/короткие рукава)
 420006-фут новий білий 38 / m / 46 жіночий одяг майки й футболки футболки">
@@ -362,9 +415,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13462"
+                    data-chat-product-name="Женская super mario ut (футболка с принтом/короткие рукава)"
+                    data-chat-product-url="../product/13462/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="футболка uniqlo 600 грн uniqlo 34 / xs / 42 maiky-futbolky футболка uniqlo
 410348-фут новий білий 34 / xs / 42 жіночий одяг майки й футболки футболки">
@@ -378,9 +441,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13461"
+                    data-chat-product-name="Футболка uniqlo"
+                    data-chat-product-url="../product/13461/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="футболка uniqlo 620 грн uniqlo 34 / xs / 42, 36 / s / 44, 38 / m / 46, 40 /  l / 48 maiky-futbolky футболка дизайнера еллен ван дюсен від uniqlo японія
 куплено на офіційному сайті uniqlo
@@ -397,9 +470,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44, 38 / M / 46, 40 /  L / 48</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13460"
+                    data-chat-product-name="Футболка uniqlo"
+                    data-chat-product-url="../product/13460/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="uniqlo  женская футболка с круглым вырезом u 750 грн uniqlo 36 / s / 44 maiky-futbolky uniqlo 406456 женская футболка с круглым вырезом u новий рожевий 36 / s / 44 жіночий одяг майки й футболки футболки">
         <a class="card-main-link" href="../product/13459/">
@@ -412,9 +495,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13459"
+                    data-chat-product-name="Uniqlo  женская футболка с круглым вырезом u"
+                    data-chat-product-url="../product/13459/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="женская футболка с круглым вырезом u 750 грн uniqlo 36 / s / 44 maiky-futbolky такой крой создает более женственный образ и удобен в ношении. это идеальная футболка.
 команда дизайнеров под руководством кристофа лемэра представляет вам из парижской студии, подарив базовым вещам инновационную серию.
@@ -434,9 +527,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13458"
+                    data-chat-product-name="Женская футболка с круглым вырезом u"
+                    data-chat-product-url="../product/13458/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="женская футболка с круглым вырезом u 800 грн uniqlo 34 / xs / 42 maiky-futbolky uniqlo 406456-фут женская футболка с круглым вырезом u новий сірий 34 / xs / 42 жіночий одяг майки й футболки футболки">
         <a class="card-main-link" href="../product/13457/">
@@ -449,9 +552,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13457"
+                    data-chat-product-name="Женская футболка с круглым вырезом u"
+                    data-chat-product-url="../product/13457/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo m, l maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір м, л , колір 21 light orange
@@ -473,9 +586,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13456"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13456/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="найкраща базова футболка від uniqlo u 1050 грн uniqlo m maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір м
@@ -498,9 +621,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13455"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13455/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="найкраща базова футболка від uniqlo u 1050 грн uniqlo m, l maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір м та л
@@ -523,9 +656,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13454"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13454/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo m, l maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір м, л  , колір 08 dark gray
@@ -547,9 +690,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13453"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13453/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="топ airism uniqlo з вбудованими чашечками 650 грн uniqlo s, m, l, xl, xxl maiky-futbolky топ airism uniqlo з вбудованими чашечками
 в наявності розмір с, м, л, хл та ххл, колір 56 olive
@@ -572,9 +725,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M, L, XL, XXL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13452"
+                    data-chat-product-name="Топ airism uniqlo з вбудованими чашечками"
+                    data-chat-product-url="../product/13452/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo з серії sanrio characters ut 500 грн uniqlo 36 / s / 44 maiky-futbolky футболка uniqlo з серії sanrio characters ut
 в наявності розмір с
@@ -597,9 +760,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13451"
+                    data-chat-product-name="Футболка uniqlo з серії sanrio characters ut"
+                    data-chat-product-url="../product/13451/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo ut george sowden 699 грн uniqlo 34 / xs / 42 maiky-futbolky черная футболка uniqlo ut george sowden, топ из смесового хлопка
 419379-фут новий чорний 34 / xs / 42 жіночий одяг майки й футболки футболки" data-initial-hidden='1'>
@@ -613,9 +786,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13450"
+                    data-chat-product-name="Футболка uniqlo ut george sowden"
+                    data-chat-product-url="../product/13450/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="uniqlo u  женская футболка с круглым вырезом 750 грн uniqlo 38 / m / 46 maiky-futbolky uniqlo — японский бренд повседневной одежды быстрой моды. серия u — это команда дизайнеров под руководством г-на кристофа лемера, которая создает классическую одежду с инновационными элементами из парижской студии. uniqlo u series 415793 женская футболка с круглым вырезом и короткими рукавами, изготовлена ​​из чистого хлопка, с круглым вырезом, простой дизайн, подходит для повседневного ношения.
 415793-фут новий кораловий 38 / m / 46 жіночий одяг майки й футболки футболки" data-initial-hidden='1'>
@@ -629,9 +812,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 38 / M / 46</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13449"
+                    data-chat-product-name="Uniqlo u  женская футболка с круглым вырезом"
+                    data-chat-product-url="../product/13449/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="женская футболка асимметричного дизайна из мерсеризованного хлопка (с короткими рукавами) 750 грн uniqlo 34 / xs / 42, 36 / s / 44 maiky-futbolky новый асимметричный дизайн привлекает внимание. предметы, которые отличаются от прошлых дизайнов.
 ・совместная коллаборационная серия с британским дизайнером jw anderson.
@@ -648,9 +841,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42, 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13448"
+                    data-chat-product-name="Женская футболка асимметричного дизайна из мерсеризованного хлопка (с короткими рукавами)"
+                    data-chat-product-url="../product/13448/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo m, l maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір м, л, колір 56 olive
@@ -672,9 +875,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13447"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13447/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="топ airism uniqlo з вбудованими чашечками 850 грн uniqlo s, m, l maiky-futbolky топ airism uniqlo з вбудованими чашечками
 
@@ -696,9 +909,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13446"
+                    data-chat-product-name="Топ airism uniqlo з вбудованими чашечками"
+                    data-chat-product-url="../product/13446/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="топ airism uniqlo з вбудованими чашечками 850 грн uniqlo s, l maiky-futbolky топ airism uniqlo з вбудованими чашечками
 
@@ -720,9 +943,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13445"
+                    data-chat-product-name="Топ airism uniqlo з вбудованими чашечками"
+                    data-chat-product-url="../product/13445/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo m, xl maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір м та хл , колір 52 green
@@ -744,9 +977,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13444"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13444/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка жіноча uniqlo cat photographs ut 700 грн uniqlo m maiky-futbolky футболка жіноча uniqlo cat photographs ut - якісна футболка из серії cat photographs.
 
@@ -767,9 +1010,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13443"
+                    data-chat-product-name="Футболка жіноча uniqlo cat photographs ut"
+                    data-chat-product-url="../product/13443/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo з колекції cat photographs ut 700 грн uniqlo m maiky-futbolky футболка uniqlo з колекції cat photographs ut
 в наявності розмір м
@@ -790,9 +1043,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13442"
+                    data-chat-product-name="Футболка uniqlo з колекції cat photographs ut"
+                    data-chat-product-url="../product/13442/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="топ airism uniqlo з вбудованими чашечками 850 грн uniqlo s, l maiky-futbolky топ airism uniqlo з вбудованими чашечками
 
@@ -814,9 +1077,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13441"
+                    data-chat-product-name="Топ airism uniqlo з вбудованими чашечками"
+                    data-chat-product-url="../product/13441/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="топ airism uniqlo 1050 грн uniqlo s maiky-futbolky топ airism uniqlo
 в наявності розмір с , колір 39 dark brown
@@ -840,9 +1113,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13440"
+                    data-chat-product-name="Топ airism uniqlo"
+                    data-chat-product-url="../product/13440/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="топ airism uniqlo 1050 грн uniqlo s maiky-futbolky топ airism uniqlo
 в наявності розмір с , колір чорний
@@ -866,9 +1149,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13439"
+                    data-chat-product-name="Топ airism uniqlo"
+                    data-chat-product-url="../product/13439/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="топ seamless uniqlo з вбудованими чашечками 850 грн uniqlo m maiky-futbolky топ seamless uniqlo з вбудованими чашечками
 
@@ -896,9 +1189,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13438"
+                    data-chat-product-name="Топ seamless uniqlo з вбудованими чашечками"
+                    data-chat-product-url="../product/13438/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo із серії supima® cotton 700 грн uniqlo l maiky-futbolky футболка uniqlo із серії supima® cotton
 в наявності розмір л, колір 02 light grey
@@ -914,9 +1217,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13437"
+                    data-chat-product-name="Футболка uniqlo із серії supima® cotton"
+                    data-chat-product-url="../product/13437/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo із серії u supima® cotton 700 грн uniqlo s, m, l maiky-futbolky футболка uniqlo із серії u supima® cotton
 в наявності розмір с, м та л, колір 40 cream
@@ -943,9 +1256,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13436"
+                    data-chat-product-name="Футболка uniqlo із серії u supima® cotton"
+                    data-chat-product-url="../product/13436/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo із серії u supima® cotton 700 грн uniqlo l maiky-futbolky футболка uniqlo із серії u supima® cotton
 в наявності розмір  л
@@ -972,9 +1295,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13435"
+                    data-chat-product-name="Футболка uniqlo із серії u supima® cotton"
+                    data-chat-product-url="../product/13435/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка airism uniqlo 750 грн uniqlo m maiky-futbolky футболка airism uniqlo
 в наявності розмір м, колір 58 dark green
@@ -1001,9 +1334,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13434"
+                    data-chat-product-name="Футболка airism uniqlo"
+                    data-chat-product-url="../product/13434/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="текстурована футболка з джерсі uniqlo 790 грн uniqlo l, xl maiky-futbolky текстурована футболка з джерсі uniqlo
 в наявності розмір л та хл, колір білий
@@ -1023,9 +1366,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13433"
+                    data-chat-product-name="Текстурована футболка з джерсі uniqlo"
+                    data-chat-product-url="../product/13433/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка аnya hindmarch+uniqlo 750 грн uniqlo m, l maiky-futbolky футболка аnya hindmarch+uniqlo
 в наявності розмір м та л, колір білий
@@ -1053,9 +1406,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13432"
+                    data-chat-product-name="Футболка аnya hindmarch+uniqlo"
+                    data-chat-product-url="../product/13432/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка аnya hindmarch+uniqlo 750 грн uniqlo s, m maiky-futbolky футболка аnya hindmarch+uniqlo
 в наявності розмір с та м, колір чорний
@@ -1083,9 +1446,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13431"
+                    data-chat-product-name="Футболка аnya hindmarch+uniqlo"
+                    data-chat-product-url="../product/13431/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка аnya hindmarch+uniqlo 750 грн uniqlo m maiky-futbolky футболка аnya hindmarch+uniqlo
 в наявності розмір м
@@ -1111,9 +1484,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13430"
+                    data-chat-product-name="Футболка аnya hindmarch+uniqlo"
+                    data-chat-product-url="../product/13430/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="майка uniqlo + anya hindmarch 550 грн uniqlo s maiky-futbolky майка uniqlo + anya hindmarch
 в наявності розмір с, колір білий
@@ -1140,9 +1523,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13429"
+                    data-chat-product-name="Майка uniqlo + anya hindmarch"
+                    data-chat-product-url="../product/13429/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="майка uniqlo + anya hindmarch 550 грн uniqlo s maiky-futbolky майка uniqlo + anya hindmarch
 в наявності розмір с, колір чорний
@@ -1169,9 +1562,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13428"
+                    data-chat-product-name="Майка uniqlo + anya hindmarch"
+                    data-chat-product-url="../product/13428/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="топ uniqlo з вбудованими чашечками 700 грн uniqlo l, xl maiky-futbolky топ uniqlo з вбудованими чашечками
 в наявності розмір л та хл, колір білий
@@ -1193,9 +1596,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13427"
+                    data-chat-product-name="Топ uniqlo з вбудованими чашечками"
+                    data-chat-product-url="../product/13427/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="топ uniqlo з вбудованими чашечками 700 грн uniqlo xl maiky-futbolky топ uniqlo з вбудованими чашечками
 в наявності розмір хл, колір чорний
@@ -1217,9 +1630,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13426"
+                    data-chat-product-name="Топ uniqlo з вбудованими чашечками"
+                    data-chat-product-url="../product/13426/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="топ seamless uniqlo з вбудованими чашечками 850 грн uniqlo m maiky-futbolky топ seamless uniqlo з вбудованими чашечками
 
@@ -1247,9 +1670,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13425"
+                    data-chat-product-name="Топ seamless uniqlo з вбудованими чашечками"
+                    data-chat-product-url="../product/13425/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="майка uniqlo + anya hindmarch 550 грн uniqlo s, m maiky-futbolky майка uniqlo + anya hindmarch
 в наявності розмір с та м, колір білий
@@ -1275,9 +1708,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13424"
+                    data-chat-product-name="Майка uniqlo + anya hindmarch"
+                    data-chat-product-url="../product/13424/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="топ uniqlo з вбудованими чашечками 700 грн uniqlo m, l maiky-futbolky топ uniqlo з вбудованими чашечками
 в наявності розмір м та л, колір 24 orange
@@ -1299,9 +1742,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13423"
+                    data-chat-product-name="Топ uniqlo з вбудованими чашечками"
+                    data-chat-product-url="../product/13423/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo linen blend 650 грн uniqlo m maiky-futbolky linen blend french sleeve t-shirt
 зручна тканина забезпечує відчуття свіжості
@@ -1325,9 +1778,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13422"
+                    data-chat-product-name="Футболка uniqlo linen blend"
+                    data-chat-product-url="../product/13422/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка supima від uniqlo 700 грн uniqlo хs, s maiky-futbolky футболка supima від uniqlo
 в наявності: розмір хс та с, колір 44 yellow
@@ -1348,9 +1811,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • ХS, S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13421"
+                    data-chat-product-name="Футболка supima від uniqlo"
+                    data-chat-product-url="../product/13421/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo 750 грн uniqlo хs maiky-futbolky футболка uniqlo
 в наявності розмір хс, колір 63 blue
@@ -1373,9 +1846,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13420"
+                    data-chat-product-name="Футболка uniqlo"
+                    data-chat-product-url="../product/13420/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo disney collection ut 650 грн uniqlo m, l maiky-futbolky футболка unqlo disney collection ut
 в наявності розмір м та л
@@ -1393,9 +1876,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13419"
+                    data-chat-product-name="Футболка uniqlo disney collection ut"
+                    data-chat-product-url="../product/13419/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo m, l maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір м та л, колір 58 dark green
@@ -1417,9 +1910,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13418"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13418/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo m, l maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір м та л, колір 52 green
@@ -1441,9 +1944,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13417"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13417/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняна футболка airism uniqlo 750 грн uniqlo s, m, l, xl maiky-futbolky бавовняна футболка airism uniqlo
 в наявності розмір с, м, л та хл, колір 20 light orange
@@ -1466,9 +1979,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M, L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13416"
+                    data-chat-product-name="Бавовняна футболка airism uniqlo"
+                    data-chat-product-url="../product/13416/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo s maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір с , колір 63 blue
@@ -1490,9 +2013,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13415"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13415/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo s, l, xl maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір с, л та хл , колір 58 dark green
@@ -1514,9 +2047,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13414"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13414/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo xxl maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір ххл, колір синій
@@ -1538,9 +2081,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • XXL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13413"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13413/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo disney collection ut 650 грн uniqlo l maiky-futbolky футболка uniqlo disney collection ut
 в наявності розмір l
@@ -1558,9 +2111,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13412"
+                    data-chat-product-name="Футболка uniqlo disney collection ut"
+                    data-chat-product-url="../product/13412/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo зі 100% бавовни supima 650 грн uniqlo хs maiky-futbolky футболка uniqlo зі 100% бавовни supima
 в наявності: розмір хс, колір чорний
@@ -1580,9 +2143,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13411"
+                    data-chat-product-name="Футболка uniqlo зі 100% бавовни supima"
+                    data-chat-product-url="../product/13411/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з короткими французькими рукавами від uniqlo 650 грн uniqlo s, m, l maiky-futbolky драпована футболка з вирізом &quot;човником&quot; та короткими французькими рукавами від uniqlo.
 м´яка, гладка та зручна тканина.
@@ -1601,9 +2174,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13410"
+                    data-chat-product-name="Футболка з короткими французькими рукавами від uniqlo"
+                    data-chat-product-url="../product/13410/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка hello kitty 50th anniversary ut uniqlo, розмір м 750 грн uniqlo m maiky-futbolky футболка hello kitty 50th anniversary ut uniqlo, розмір м
 
@@ -1625,9 +2208,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13409"
+                    data-chat-product-name="Футболка hello kitty 50th anniversary ut uniqlo, розмір м"
+                    data-chat-product-url="../product/13409/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo 700 грн uniqlo m maiky-futbolky футболка uniqlo
 
@@ -1651,9 +2244,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13408"
+                    data-chat-product-name="Футболка uniqlo"
+                    data-chat-product-url="../product/13408/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка без рукавів з креп-джерсі від uniqlo 750 грн uniqlo l maiky-futbolky футболка без рукавів з креп-джерсі від uniqlo
 в наявності розмір л
@@ -1671,9 +2274,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13407"
+                    data-chat-product-name="Футболка без рукавів з креп-джерсі від uniqlo"
+                    data-chat-product-url="../product/13407/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo m maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір м , колір 39 dark brown
@@ -1695,9 +2308,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13406"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13406/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo xxl maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір ххл, колір 31 beige
@@ -1721,9 +2344,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • XXL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13405"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13405/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="найкраща базова футболка від uniqlo u 750 грн uniqlo s, xxl maiky-futbolky найкраща базова футболка від uniqlo u
 в наявності розмір с та ххл, колір 74 purple
@@ -1745,9 +2378,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, XXL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13404"
+                    data-chat-product-name="Найкраща базова футболка від uniqlo u"
+                    data-chat-product-url="../product/13404/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo disney collection ut 650 грн uniqlo s, m maiky-futbolky футболка uniqlo disney collection ut
 в наявності розмір с,  м
@@ -1765,9 +2408,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13403"
+                    data-chat-product-name="Футболка uniqlo disney collection ut"
+                    data-chat-product-url="../product/13403/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo disney collection ut 650 грн uniqlo s, m maiky-futbolky футболка uniqlo disney collection ut
 в наявності розмір с та м
@@ -1785,9 +2438,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13402"
+                    data-chat-product-name="Футболка uniqlo disney collection ut"
+                    data-chat-product-url="../product/13402/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo зі 100% бавовни supima 650 грн uniqlo m, l maiky-futbolky футболка uniqlo зі 100% бавовни supima
 в наявності: розмір с, м та л, колір 11 pink
@@ -1805,9 +2468,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13401"
+                    data-chat-product-name="Футболка uniqlo зі 100% бавовни supima"
+                    data-chat-product-url="../product/13401/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="легка футболка linen blend uniqlo 650 грн uniqlo m maiky-futbolky linen blend french sleeve t-shirt
 зручна тканина забезпечує відчуття свіжост
@@ -1830,9 +2503,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13400"
+                    data-chat-product-name="Легка футболка linen blend uniqlo"
+                    data-chat-product-url="../product/13400/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo 650 грн uniqlo хs maiky-futbolky футболка uniqlo
 в наявності розмір хс, колір білий
@@ -1857,9 +2540,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13399"
+                    data-chat-product-name="Футболка uniqlo"
+                    data-chat-product-url="../product/13399/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo з графікою the world of clamp ut 650 грн uniqlo хs maiky-futbolky футболка uniqlo з графікою the world of clamp ut
 в наявності розмір хс
@@ -1877,9 +2570,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13398"
+                    data-chat-product-name="Футболка uniqlo з графікою the world of clamp ut"
+                    data-chat-product-url="../product/13398/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з графікою pop mart ut uniqlo 750 грн uniqlo s, m maiky-futbolky футболка з графікою pop mart ut uniqlo
 в наявності розмір с та м
@@ -1897,9 +2600,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13397"
+                    data-chat-product-name="Футболка з графікою pop mart ut uniqlo"
+                    data-chat-product-url="../product/13397/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з графікою pop mart ut uniqlo 750 грн uniqlo s, m maiky-futbolky футболка з графікою pop mart ut uniqlo
 в наявності розмір с та м
@@ -1917,9 +2630,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13396"
+                    data-chat-product-name="Футболка з графікою pop mart ut uniqlo"
+                    data-chat-product-url="../product/13396/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo зі 100% бавовни supima 650 грн uniqlo хs maiky-futbolky футболка uniqlo зі 100% бавовни supima
 в наявності: розмір хс, колір 34 brown
@@ -1939,9 +2662,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13395"
+                    data-chat-product-name="Футболка uniqlo зі 100% бавовни supima"
+                    data-chat-product-url="../product/13395/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo linen blend 650 грн uniqlo m, l maiky-futbolky linen blend french sleeve t-shirt
 зручна тканина забезпечує відчуття свіжості
@@ -1965,9 +2698,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13394"
+                    data-chat-product-name="Футболка uniqlo linen blend"
+                    data-chat-product-url="../product/13394/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo з колекції hello kitty 50th anniversary ut, розмір л 750 грн uniqlo l maiky-futbolky футболка uniqlo з колекції hello kitty 50th anniversary ut, розмір л
 
@@ -1989,9 +2732,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13393"
+                    data-chat-product-name="Футболка uniqlo з колекції hello kitty 50th anniversary ut, розмір л"
+                    data-chat-product-url="../product/13393/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка dolman uniqlo 750 грн uniqlo s maiky-futbolky футболка dolman uniqlo, розмір с
 
@@ -2017,9 +2770,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13392"
+                    data-chat-product-name="Футболка dolman uniqlo"
+                    data-chat-product-url="../product/13392/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка airism uniqlo 750 грн uniqlo хs maiky-futbolky футболка airism uniqlo
 в наявності розмір хс, колір 60 light blue
@@ -2038,9 +2801,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13391"
+                    data-chat-product-name="Футболка airism uniqlo"
+                    data-chat-product-url="../product/13391/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з графікою mofusand ut uniqlo 700 грн uniqlo m maiky-futbolky футболка з графікою mofusand ut uniqlo
 в наявності розмір м
@@ -2058,9 +2831,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13390"
+                    data-chat-product-name="Футболка з графікою mofusand ut uniqlo"
+                    data-chat-product-url="../product/13390/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з графікою toy istory of utah uniqlo 750 грн uniqlo s, l maiky-futbolky футболка з графікою toy istory of utah uniqlo
 в наявності розмір с та л
@@ -2079,9 +2862,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • S, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13389"
+                    data-chat-product-name="Футболка з графікою toy istory of utah uniqlo"
+                    data-chat-product-url="../product/13389/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з графікою toy istory of utah uniqlo 750 грн uniqlo s maiky-futbolky футболка з графікою toy istory of utah uniqlo
 в наявності розмір с
@@ -2099,9 +2892,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13388"
+                    data-chat-product-name="Футболка з графікою toy istory of utah uniqlo"
+                    data-chat-product-url="../product/13388/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo із серії u supima® cotton 510 грн uniqlo xхs maiky-futbolky футболка uniqlo із серії u supima® cotton
 в наявності розмір ххс, колір 12 pink
@@ -2119,9 +2922,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • XХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13387"
+                    data-chat-product-name="Футболка uniqlo із серії u supima® cotton"
+                    data-chat-product-url="../product/13387/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з графікою toy istory of utah uniqlo 700 грн uniqlo l, xl maiky-futbolky футболка з графікою toy istory of utah uniqlo
 в наявності розмір л та хл
@@ -2139,9 +2952,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13386"
+                    data-chat-product-name="Футболка з графікою toy istory of utah uniqlo"
+                    data-chat-product-url="../product/13386/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo із серії supima® cotton 700 грн uniqlo xxl maiky-futbolky футболка uniqlo із серії supima® cotton
 в наявності розмір ххл, колір 40 cream
@@ -2159,9 +2982,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • XXL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13385"
+                    data-chat-product-name="Футболка uniqlo із серії supima® cotton"
+                    data-chat-product-url="../product/13385/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з крепового трикотажу uniqlo 650 грн uniqlo m maiky-futbolky футболка з крепового трикотажу uniqlo
 в наявності розмір м
@@ -2186,9 +3019,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13384"
+                    data-chat-product-name="Футболка з крепового трикотажу uniqlo"
+                    data-chat-product-url="../product/13384/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка airism uniqlo 799 грн uniqlo m, l maiky-futbolky футболка airism uniqlo
 в наявності японський розмір л та хл, - відповідає м та л європейському
@@ -2206,9 +3049,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13383"
+                    data-chat-product-name="Футболка airism uniqlo"
+                    data-chat-product-url="../product/13383/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка airism uniqlo 799 грн uniqlo m, l maiky-futbolky футболка airism uniqlo
 в наявності японський розмір л та хл, - відповідає м та л європейському
@@ -2226,9 +3079,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13382"
+                    data-chat-product-name="Футболка airism uniqlo"
+                    data-chat-product-url="../product/13382/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo із серії u supima® cotton 700 грн uniqlo хs maiky-futbolky футболка uniqlo із серії u supima® cotton
 в наявності розмір хс, колір 58 dark green
@@ -2246,9 +3109,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13381"
+                    data-chat-product-name="Футболка uniqlo із серії u supima® cotton"
+                    data-chat-product-url="../product/13381/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з графікою disney uniqlo 750 грн uniqlo m maiky-futbolky футболка з графікою disney uniqlo
 в наявності розмір м
@@ -2266,9 +3139,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13380"
+                    data-chat-product-name="Футболка з графікою disney uniqlo"
+                    data-chat-product-url="../product/13380/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="майка лляна uniqlo 899 грн uniqlo s maiky-futbolky майка лляна uniqlo
 в наявності розмір с, колір чорний
@@ -2286,9 +3169,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13379"
+                    data-chat-product-name="Майка лляна uniqlo"
+                    data-chat-product-url="../product/13379/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo з серії sanrio characters ut 700 грн uniqlo s maiky-futbolky футболка uniqlo з серії sanrio characters ut
 в наявності розмір с
@@ -2313,9 +3206,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13378"
+                    data-chat-product-name="Футболка uniqlo з серії sanrio characters ut"
+                    data-chat-product-url="../product/13378/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з крепового трикотажу uniqlo 650 грн uniqlo s, l maiky-futbolky футболка з крепового трикотажу uniqlo
 в наявності розмір с та л
@@ -2340,9 +3243,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • S, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13377"
+                    data-chat-product-name="Футболка з крепового трикотажу uniqlo"
+                    data-chat-product-url="../product/13377/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка airism uniqlo 550 грн uniqlo s maiky-futbolky футболка airism uniqlo
 в наявності розмір с, колір 50 light green
@@ -2360,9 +3273,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13376"
+                    data-chat-product-name="Футболка airism uniqlo"
+                    data-chat-product-url="../product/13376/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка sylvanian families ut uniqlo 750 грн uniqlo s maiky-futbolky футболка sylvanian families ut uniqlo
 в наявності розмір с, колір 50 light green новий м&#x27;ятний s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг майки й футболки футболки круглий" data-initial-hidden='1'>
@@ -2376,9 +3299,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13375"
+                    data-chat-product-name="Футболка sylvanian families ut uniqlo"
+                    data-chat-product-url="../product/13375/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo 700 грн uniqlo s, m, xl maiky-futbolky футболка uniqlo
 в наявності розмір с, м та хл
@@ -2396,9 +3329,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • S, M, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13374"
+                    data-chat-product-name="Футболка uniqlo"
+                    data-chat-product-url="../product/13374/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка жіноча uniqlo cat photographs ut 700 грн uniqlo m maiky-futbolky футболка жіноча uniqlo cat photographs ut - якісна футболка из серії cat photographs.
 
@@ -2417,9 +3360,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13373"
+                    data-chat-product-name="Футболка жіноча uniqlo cat photographs ut"
+                    data-chat-product-url="../product/13373/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка mini uniqlo 510 грн uniqlo m maiky-futbolky футболка mini uniqlo
 в наявності розмір м, колір 12 pink
@@ -2437,9 +3390,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13372"
+                    data-chat-product-name="Футболка mini uniqlo"
+                    data-chat-product-url="../product/13372/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка airism uniqlo 799 грн uniqlo m, l maiky-futbolky футболка airism uniqlo
 в наявності японський розмір л та хл, -  відповідає м та л європейському
@@ -2457,9 +3420,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13371"
+                    data-chat-product-name="Футболка airism uniqlo"
+                    data-chat-product-url="../product/13371/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка airism uniqlo 799 грн uniqlo l maiky-futbolky футболка airism uniqlo
 в наявності японський розмір  хл, - відповідає  л європейському, колір 33 khaki
@@ -2476,9 +3449,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13370"
+                    data-chat-product-name="Футболка airism uniqlo"
+                    data-chat-product-url="../product/13370/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з бавовни supima uniqlo 700 грн uniqlo m, l maiky-futbolky футболка з бавовни supima uniqlo
 в наявності розмір м та л
@@ -2497,9 +3480,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13369"
+                    data-chat-product-name="Футболка з бавовни supima uniqlo"
+                    data-chat-product-url="../product/13369/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка аnya hindmarch+uniqlo 750 грн uniqlo m maiky-futbolky футболка аnya hindmarch+uniqlo
 в наявності розмір м, колір чорний
@@ -2527,9 +3520,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13368"
+                    data-chat-product-name="Футболка аnya hindmarch+uniqlo"
+                    data-chat-product-url="../product/13368/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo з серії sanrio: kuromi &amp; my melody ut 700 грн uniqlo m maiky-futbolky футболка uniqlo з серії sanrio: kuromi &amp; my melody ut
 в наявності розмір м
@@ -2547,9 +3550,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13367"
+                    data-chat-product-name="Футболка uniqlo з серії sanrio: kuromi &amp; my melody ut"
+                    data-chat-product-url="../product/13367/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="майка uniqlo 550 грн uniqlo m maiky-futbolky майка uniqlo
 в наявності розмір м, колір 57 olive
@@ -2570,9 +3583,19 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13366"
+                    data-chat-product-name="Майка uniqlo"
+                    data-chat-product-url="../product/13366/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка uniqlo 650 грн uniqlo l maiky-futbolky футболка uniqlo
 в наявності розмір л , колір 30 natural
@@ -2591,16 +3614,270 @@ hello kitty до 50-річчя
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13365"
+                    data-chat-product-name="Футболка uniqlo"
+                    data-chat-product-url="../product/13365/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div></div>
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 23:47</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 11:40</div>
 </main>
 </div>
+<div class="chat-overlay" id="chatOverlay" aria-hidden="true">
+    <section class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+        <div class="chat-head">
+            <div>
+                <div class="chat-title" id="chatTitle">Чат з UniqLow</div>
+                <div class="chat-subtitle" id="chatSubtitle">Увійдіть через Google, щоб написати повідомлення.</div>
+            </div>
+            <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">×</button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-auth" id="chatAuth">
+                <button class="chat-google-btn" type="button" id="chatGoogleBtn">Увійти через Google</button>
+                <div class="chat-warning">
+                    Чат захищений Google-входом і правилами доступу. Не надсилайте номери карт, CVV, паролі або коди з SMS.
+                </div>
+                <div class="chat-status" id="chatStatus">Чат готується...</div>
+            </div>
+            <div class="chat-workspace" id="chatWorkspace">
+                <div class="chat-owner-tools" id="chatOwnerTools">
+                    <div class="chat-status">Режим власника: показані останні діалоги покупців.</div>
+                    <div class="chat-thread-list" id="chatThreadList"></div>
+                </div>
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-composer">
+                    <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
+                    <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
+                    <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "", "authDomain": "", "projectId": "", "appId": ""}, "sdkVersion": "10.12.5"}</script>
+<script type="module">
+const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
+const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
+const firebaseConfig = chatConfig.firebase || {};
+const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
+let chatAuth = null;
+let chatDb = null;
+let chatUser = null;
+let chatProvider = null;
+let chatProduct = {};
+let chatThreadId = '';
+let chatUnsubMessages = null;
+let chatUnsubThreads = null;
+let firebaseApi = null;
+
+const chatEl = (id) => document.getElementById(id);
+const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
+const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
+const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
+const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+
+function openChatFromButton(btn) {
+    chatProduct = {
+        id: btn?.dataset.chatProductId || 'general',
+        name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
+        url: btn?.dataset.chatProductUrl || location.pathname,
+    };
+    chatEl('chatOverlay')?.classList.add('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'false');
+    chatEl('chatSubtitle').textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    prepareChat();
+}
+
+function closeChat() {
+    chatEl('chatOverlay')?.classList.remove('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'true');
+}
+
+window.openChatFromButton = openChatFromButton;
+window.closeChat = closeChat;
+
+async function prepareChat() {
+    if (!chatHasConfig) {
+        chatStatus('Чат ще не підключений. Додайте Firebase config у test.py і опублікуйте сайт.');
+        return;
+    }
+    try {
+        await ensureFirebase();
+        chatStatus(chatUser ? 'Ви увійшли. Можна писати.' : 'Увійдіть через Google, щоб почати чат.');
+    } catch (err) {
+        chatStatus(`Чат не запустився: ${err.message || err}`);
+    }
+}
+
+async function ensureFirebase() {
+    if (firebaseApi) return firebaseApi;
+    const version = chatConfig.sdkVersion || '10.12.5';
+    const appMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-app.js`);
+    const authMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-auth.js`);
+    const storeMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-firestore.js`);
+    const app = appMod.initializeApp(firebaseConfig);
+    chatAuth = authMod.getAuth(app);
+    chatDb = storeMod.getFirestore(app);
+    chatProvider = new authMod.GoogleAuthProvider();
+    firebaseApi = { ...authMod, ...storeMod };
+    firebaseApi.onAuthStateChanged(chatAuth, async (user) => {
+        chatUser = user;
+        updateChatAuthState();
+        if (user) {
+            if (chatIsOwner()) listenOwnerThreads();
+            else await openCustomerThread();
+        }
+    });
+    return firebaseApi;
+}
+
+function updateChatAuthState() {
+    const signed = Boolean(chatUser);
+    chatEl('chatAuth').style.display = signed ? 'none' : 'grid';
+    chatEl('chatWorkspace').classList.toggle('active', signed);
+    chatEl('chatOwnerTools').classList.toggle('active', signed && chatIsOwner());
+    if (signed) chatStatus(`Увійшли як ${chatUser.email}`);
+}
+
+async function signInChat() {
+    if (!chatHasConfig) {
+        chatStatus('Потрібно додати Firebase config перед тестом чату.');
+        return;
+    }
+    await ensureFirebase();
+    try {
+        await firebaseApi.signInWithPopup(chatAuth, chatProvider);
+    } catch (err) {
+        await firebaseApi.signInWithRedirect(chatAuth, chatProvider);
+    }
+}
+
+async function openCustomerThread() {
+    if (!chatUser || !firebaseApi) return;
+    chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
+    const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
+    await firebaseApi.setDoc(threadRef, {
+        customerUid: chatUser.uid,
+        customerEmail: chatUser.email || '',
+        customerName: chatUser.displayName || chatUser.email || '',
+        ownerEmail: chatOwnerEmail,
+        productId: chatProduct.id || 'general',
+        productName: chatProduct.name || '',
+        productUrl: new URL(chatProduct.url || location.pathname, location.href).href,
+        updatedAt: firebaseApi.serverTimestamp(),
+        createdAt: firebaseApi.serverTimestamp(),
+    }, { merge: true });
+    listenMessages(chatThreadId);
+}
+
+function listenOwnerThreads() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads'),
+        firebaseApi.orderBy('updatedAt', 'desc'),
+        firebaseApi.limit(50)
+    );
+    chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
+        const list = chatEl('chatThreadList');
+        list.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const data = docSnap.data();
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `chat-thread-btn${docSnap.id === chatThreadId ? ' active' : ''}`;
+            btn.dataset.threadId = docSnap.id;
+            btn.textContent = `${data.customerName || data.customerEmail || 'Покупець'} — ${data.productName || 'Загальний чат'}`;
+            btn.onclick = () => {
+                chatThreadId = docSnap.id;
+                document.querySelectorAll('.chat-thread-btn').forEach(el => el.classList.toggle('active', el.dataset.threadId === chatThreadId));
+                listenMessages(chatThreadId);
+            };
+            list.appendChild(btn);
+        });
+        if (!chatThreadId && snap.docs[0]) {
+            chatThreadId = snap.docs[0].id;
+            listenMessages(chatThreadId);
+        }
+    }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
+}
+
+function listenMessages(threadId) {
+    if (chatUnsubMessages) chatUnsubMessages();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads', threadId, 'messages'),
+        firebaseApi.orderBy('createdAt', 'asc'),
+        firebaseApi.limit(120)
+    );
+    chatUnsubMessages = firebaseApi.onSnapshot(q, (snap) => {
+        const box = chatEl('chatMessages');
+        box.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const msg = docSnap.data();
+            const row = document.createElement('div');
+            row.className = `chat-message${msg.uid === chatUser?.uid ? ' mine' : ''}`;
+            const meta = document.createElement('div');
+            meta.className = 'chat-message-meta';
+            meta.textContent = msg.name || msg.email || 'Користувач';
+            const text = document.createElement('div');
+            text.textContent = msg.text || '';
+            row.append(meta, text);
+            box.appendChild(row);
+        });
+        box.scrollTop = box.scrollHeight;
+    }, (err) => chatStatus(`Не вдалося прочитати повідомлення: ${err.message}`));
+}
+
+async function sendChatMessage() {
+    const input = chatEl('chatInput');
+    const text = chatClean(input.value);
+    if (!text || !chatUser || !firebaseApi) return;
+    if (!chatThreadId && !chatIsOwner()) await openCustomerThread();
+    if (!chatThreadId) {
+        chatStatus('Виберіть діалог покупця.');
+        return;
+    }
+    chatEl('chatSendBtn').disabled = true;
+    try {
+        const role = chatIsOwner() ? 'owner' : 'customer';
+        await firebaseApi.addDoc(firebaseApi.collection(chatDb, 'chatThreads', chatThreadId, 'messages'), {
+            uid: chatUser.uid,
+            email: chatUser.email || '',
+            name: chatUser.displayName || chatUser.email || '',
+            role,
+            text,
+            createdAt: firebaseApi.serverTimestamp(),
+        });
+        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+            lastMessage: text.slice(0, 180),
+            lastSender: role,
+            updatedAt: firebaseApi.serverTimestamp(),
+        }, { merge: true });
+        input.value = '';
+    } catch (err) {
+        chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
+    } finally {
+        chatEl('chatSendBtn').disabled = false;
+    }
+}
+
+chatEl('chatGoogleBtn')?.addEventListener('click', signInChat);
+chatEl('chatSendBtn')?.addEventListener('click', sendChatMessage);
+chatEl('chatInput')?.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) sendChatMessage();
+});
+</script>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}

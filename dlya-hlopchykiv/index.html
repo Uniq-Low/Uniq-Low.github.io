@@ -89,10 +89,14 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
 .product-attrs dt{color:var(--muted);}
 .product-attrs dd{margin:0;color:var(--text);}
-.card-tg-btn{display:block;margin:0 16px 16px;
-background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
-padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
-.card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
+.card-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 16px 16px;}
+.card-action-btn{min-height:42px;border:none;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;
+display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.card-tg-btn{background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;}
+.card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);gap:7px;}
+.card-tg-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
+.chat-icon{width:18px;height:18px;border:2px solid currentColor;border-radius:7px;display:inline-block;position:relative;flex:0 0 18px;}
+.chat-icon::after{content:"";position:absolute;left:2px;bottom:-5px;width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:var(--panel-solid);transform:skew(-18deg);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
 .product-detail-page{max-width:1500px;margin:0 auto;animation:fadeUp .3s ease both;}
@@ -113,10 +117,45 @@ body.dark .product-detail-info{background:rgba(17,24,39,.88);}
 .product-detail-info h1{font-size:clamp(26px,3.2vw,42px);line-height:1.12;margin:0 0 12px;letter-spacing:0;overflow-wrap:anywhere;}
 .detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
 .detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
-.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+.detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+.detail-order-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+text-decoration:none;border-radius:14px;font-weight:800;padding:13px 22px;transition:.18s ease;}
+.detail-order-btn{
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
-font-weight:800;padding:13px 22px;margin-bottom:24px;box-shadow:0 14px 30px rgba(34,158,217,.24);transition:.18s ease;}
-.detail-order-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.32);}
+box-shadow:0 14px 30px rgba(34,158,217,.24);}
+.detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);gap:8px;cursor:pointer;}
+.detail-order-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
+.chat-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.48);backdrop-filter:blur(8px);
+display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
+.chat-overlay.open{display:flex;}
+.chat-panel{width:min(100%,440px);max-height:min(760px,calc(100vh - 36px));display:flex;flex-direction:column;
+background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.28);overflow:hidden;}
+.chat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);}
+.chat-title{font-weight:900;font-size:20px;line-height:1.2;}
+.chat-subtitle{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.35;}
+.chat-close{border:1px solid var(--border);background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:12px;cursor:pointer;font-size:22px;line-height:1;}
+.chat-body{padding:14px;display:grid;gap:12px;min-height:0;}
+.chat-auth{display:grid;gap:10px;}
+.chat-google-btn,.chat-send-btn{border:none;border-radius:14px;padding:12px 14px;font-weight:800;cursor:pointer;}
+.chat-google-btn{background:var(--text);color:var(--panel-solid);}
+.chat-send-btn{background:var(--accent);color:white;}
+.chat-send-btn:disabled{opacity:.55;cursor:not-allowed;}
+.chat-warning{font-size:12px;line-height:1.45;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:10px;}
+.chat-status{font-size:13px;color:var(--muted);line-height:1.4;}
+.chat-workspace{display:none;gap:12px;min-height:0;}
+.chat-workspace.active{display:grid;}
+.chat-owner-tools{display:none;gap:8px;}
+.chat-owner-tools.active{display:grid;grid-template-columns:1fr;}
+.chat-thread-list{max-height:120px;overflow:auto;display:grid;gap:6px;}
+.chat-thread-btn{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px;text-align:left;cursor:pointer;}
+.chat-thread-btn.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.chat-messages{height:min(42vh,330px);overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--bg);padding:10px;display:flex;flex-direction:column;gap:8px;}
+.chat-message{max-width:86%;border-radius:16px;padding:9px 11px;background:var(--panel-solid);border:1px solid var(--border);line-height:1.45;overflow-wrap:anywhere;}
+.chat-message.mine{margin-left:auto;background:var(--accent);color:white;border-color:transparent;}
+.chat-message-meta{font-size:11px;opacity:.72;margin-bottom:3px;}
+.chat-composer{display:grid;gap:8px;}
+.chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
+.chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
 .detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
 .detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .detail-section summary::-webkit-details-marker{display:none;}
@@ -182,7 +221,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-info{padding:12px;}
 .product-price{font-size:20px;}
 .product-title{font-size:14px;min-height:0;}
-.card-tg-btn{margin:0 12px 12px;font-size:13px;padding:11px 8px;}
+.card-actions{margin:0 12px 12px;grid-template-columns:1fr;}
+.card-action-btn{font-size:13px;padding:11px 8px;}
 .product-detail-layout{gap:14px;}
 .product-thumbs{padding-bottom:6px;scroll-snap-type:x mandatory;}
 .product-thumb{min-width:74px;scroll-snap-align:start;}
@@ -191,7 +231,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-detail-info h1{font-size:clamp(23px,7vw,31px);}
 .detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
 .detail-section{padding-top:14px;margin-top:14px;}
-.detail-order-btn{width:100%;}
+.detail-actions{display:grid;grid-template-columns:1fr;}
+.detail-order-btn,.detail-chat-btn{width:100%;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
@@ -207,6 +248,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-thumb{min-width:68px;}
 .promo-card{padding:18px;border-radius:20px;}
 .promo-badge{width:78px;height:78px;font-size:20px;}
+.chat-overlay{padding:10px;align-items:stretch;}
+.chat-panel{width:100%;max-height:calc(100vh - 20px);border-radius:20px;}
 }
 </style>
 </head>
@@ -220,7 +263,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 23:47</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 11:40</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -340,9 +383,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 122</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13956"
+                    data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!"
+                    data-chat-product-url="../product/13956/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="uniqlo акція! 3 футболки -знижка!дитяча футболка 300 грн uniqlo 134 dlya-hlopchykiv футболка з малюнком boys mickey travels (з коротким рукавом) 402833-a4 новий білий, бежевий 134 дитячий одяг для хлопчиків футболки та майки">
         <a class="card-main-link" href="../product/13955/">
@@ -355,9 +408,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 134</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13955"
+                    data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка"
+                    data-chat-product-url="../product/13955/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="minions світшот 650 грн uniqlo 134, 140 dlya-hlopchykiv minions світшот 409242-a11 новий сірий 134, 140 дитячий одяг для хлопчиків кофти та светри">
         <a class="card-main-link" href="../product/13954/">
@@ -370,9 +433,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 134, 140</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13954"
+                    data-chat-product-name="Minions світшот"
+                    data-chat-product-url="../product/13954/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="uniqlo акція!3 футболки -знижка!дитяча футболка з принтом! 300 грн uniqlo 110, 116, 122, 128 dlya-hlopchykiv зроблений з чистого бавовняного матеріалу, модного і універсального, і являє собою популярний аніме-серіал. 411289-а4 новий білий 110, 116, 122, 128 дитячий одяг для хлопчиків футболки та майки">
         <a class="card-main-link" href="../product/13953/">
@@ -385,9 +458,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 110, 116, 122, 128</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13953"
+                    data-chat-product-name="Uniqlo акція!3 футболки -знижка!дитяча футболка з принтом!"
+                    data-chat-product-url="../product/13953/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом! 290 грн uniqlo 122, 128, 134 dlya-hlopchykiv зроблений з чистого бавовняного матеріалу, модного і універсального, і являє собою популярний аніме-серіал. 407578-а4 новий білий 122, 128, 134 дитячий одяг для хлопчиків футболки та майки">
         <a class="card-main-link" href="../product/13952/">
@@ -400,9 +483,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 122, 128, 134</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13952"
+                    data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!"
+                    data-chat-product-url="../product/13952/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="шорти uniqlo 600 грн uniqlo 158 dlya-hlopchykiv шорти uniqlo 424421-58 новий жовтий 158 дитячий одяг для хлопчиків шорти">
         <a class="card-main-link" href="../product/13951/">
@@ -415,9 +508,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 158</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13951"
+                    data-chat-product-name="Шорти uniqlo"
+                    data-chat-product-url="../product/13951/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="футболка smithsonian uniqlo 250 грн uniqlo 158, 164 dlya-hlopchykiv футболка smithsonian uniqlo
 в наявності розмір 13 на зріст 165см
@@ -436,9 +539,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 158, 164</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13950"
+                    data-chat-product-name="Футболка smithsonian uniqlo"
+                    data-chat-product-url="../product/13950/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="детская одежда one piece ut (футболка с принтом/короткие рукава) 250 грн uniqlo 110 dlya-hlopchykiv детская одежда one piece ut (футболка с принтом/короткие рукава)
 421405 фут новий хакі 110 дитячий одяг для хлопчиків футболки та майки футболки">
@@ -452,9 +565,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 110</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13949"
+                    data-chat-product-name="Детская одежда one piece ut (футболка с принтом/короткие рукава)"
+                    data-chat-product-url="../product/13949/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="м&#x27;який, легкий і теплий дитячий пуховик. uniqlo 1200 грн uniqlo 158 dlya-hlopchykiv м&#x27;який, легкий і теплий дитячий пуховик. це незамінна частина одягу для прогулянок.
 ・додано міцне водовідштовхувальне покриття.
@@ -474,9 +597,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 158</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13948"
+                    data-chat-product-name="М&#x27;який, легкий і теплий дитячий пуховик. uniqlo"
+                    data-chat-product-url="../product/13948/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="найтепліша дитяча куртка uniqlo 1999 грн uniqlo 110, 116 dlya-hlopchykiv легке, тепле стьобане пальто. велика довжина та продумані деталі забезпечують додатковий захист від холоду. м&#x27;яка, легка тканина ідеально підходить для дітей. міцне водовідштовхувальне покриття. передня блискавка та гудзики захищають від вітру та дощу. трикотажні манжети у рубчик захищають від холодного повітря. капюшон зі знімним галявищем зі штучного хутра. збільшена довжина для додаткового тепла у холодні дні. кишені та каптур на підкладці з трикотажу для м&#x27;якості та тепла. довге пальто захищає дітей від холоду. оздоблення штучного хутра на капюшоні. тепла тканина у бокових кишенях зігріває руки.
 
@@ -496,9 +629,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 110, 116</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13947"
+                    data-chat-product-name="Найтепліша дитяча куртка uniqlo"
+                    data-chat-product-url="../product/13947/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="зимовий пуховик zara 1990 грн zara 158-164 dlya-hlopchykiv зимовий пуховик zara
 в наявності розмір 13/14 (164см)
@@ -514,9 +657,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>ZARA • 158-164</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13946"
+                    data-chat-product-name="Зимовий пуховик zara"
+                    data-chat-product-url="../product/13946/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="crocs kids&#x27; fun lab star wars clog 900 грн crocs 34 dlya-hlopchykiv 100 % крослайт синтетична підошва повністю формований крослит для надлегкого комфорту ліцензія зоряних війн з участю персонажа «зоряних воєн»; лукас фільми новий сірий 34 дитячий одяг для хлопчиків взуття босоніжки та сандалі">
         <a class="card-main-link" href="../product/13945/">
@@ -529,9 +682,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Crocs • 34</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13945"
+                    data-chat-product-name="Crocs kids&#x27; fun lab star wars clog"
+                    data-chat-product-url="../product/13945/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитяча легка куртка warm padded 1100 грн uniqlo 158 dlya-hlopchykiv мягкая, легкая и теплая детская стеганая куртка. незаменимая одежда для прогулок.
 ・с прочной водоотталкивающей обработкой.
@@ -551,9 +714,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 158</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13944"
+                    data-chat-product-name="Дитяча легка куртка warm padded"
+                    data-chat-product-url="../product/13944/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="куртка-парка uniqlo, яку можна прати 1050 грн uniqlo 146, 152 dlya-hlopchykiv куртка-парка uniqlo, яку можна прати
 в наявності розмір 11/12y - на зріст 150см
@@ -583,9 +756,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 146, 152</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13943"
+                    data-chat-product-name="Куртка-парка uniqlo, яку можна прати"
+                    data-chat-product-url="../product/13943/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="флісова кофта унісекс uniqlo 950 грн uniqlo 134, 140 dlya-hlopchykiv флісова кофта унісекс uniqlo
 в наявності розмір 9/10 років на зріст 135-145см
@@ -607,9 +790,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 134, 140</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13942"
+                    data-chat-product-name="Флісова кофта унісекс uniqlo"
+                    data-chat-product-url="../product/13942/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка-поло dry pique color block uniqlo 270 грн uniqlo 134, 140, 146, 152, 158 dlya-hlopchykiv футболка-поло dry pique color block uniqlo
 в наявності розмір 9-10y(140), 11-12y(150) та 13y(160)
@@ -632,9 +825,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 134, 140, 146, 152, 158</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13941"
+                    data-chat-product-name="Футболка-поло dry pique color block uniqlo"
+                    data-chat-product-url="../product/13941/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="утеплений жилет з капюшоном від mango 650 грн mango 164, 170 dlya-hlopchykiv утеплений жилет з капюшоном від mango
 в наявності розмір м-л на зріст 168/171 см - з підліткового розділу
@@ -656,9 +859,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Mango • 164, 170</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13940"
+                    data-chat-product-name="Утеплений жилет з капюшоном від mango"
+                    data-chat-product-url="../product/13940/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячі  черевики  geox new savage, устілка 25,5 см 2100 грн geox 38 dlya-hlopchykiv дитячі черевики geox new savage
 
@@ -684,9 +897,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Geox • 38</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13939"
+                    data-chat-product-name="Дитячі  черевики  geox new savage, устілка 25,5 см"
+                    data-chat-product-url="../product/13939/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="черевики ecco 728513 1300 грн ecco 34 dlya-hlopchykiv сезон весняна демісезонна осіння колір коричневий матеріал верху шкіра матеріал підкладки текстиль матеріал підошви поліуретан країна-виробник товару словаччина країна реєстрації бренду данія розмір 34 , довж устілки 22.5 новий коричневий 34 дитячий одяг для хлопчиків взуття черевики 22,5 см" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13938/">
@@ -699,9 +922,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Ecco • 34</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13938"
+                    data-chat-product-name="Черевики ecco 728513"
+                    data-chat-product-url="../product/13938/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="зимова двостороння куртка zara 949 грн zara 116 dlya-hlopchykiv зимова двостороння куртка zara новий помаранчевий 116 дитячий одяг для хлопчиків верхній одяг куртки двостороння" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13937/">
@@ -714,9 +947,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>ZARA • 116</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13937"
+                    data-chat-product-name="Зимова двостороння куртка zara"
+                    data-chat-product-url="../product/13937/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка з аніме-зображенням one piece 25th ut uniqlo 250 грн uniqlo 146, 152 dlya-hlopchykiv футболка з аніме-зображенням one piece 25th ut uniqlo
 в наявності розмір 11/12 років
@@ -734,9 +977,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 146, 152</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13936"
+                    data-chat-product-name="Футболка з аніме-зображенням one piece 25th ut uniqlo"
+                    data-chat-product-url="../product/13936/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка-поло dry pique color block uniqlo 270 грн uniqlo 146, 152 dlya-hlopchykiv футболка-поло dry pique color block uniqlo
 в наявності розмір 11-12y(150)
@@ -759,9 +1012,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 146, 152</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13935"
+                    data-chat-product-name="Футболка-поло dry pique color block uniqlo"
+                    data-chat-product-url="../product/13935/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки puma palermo ps kids &quot;lapis lazuli-bright&quot; 850 грн puma 33 dlya-hlopchykiv модель puma palermo повертається прямо з наших архівів. ця модель дебютувала на початку 80-х років і швидко стала невід’ємною частиною трибун футбольних стадіонів; тепер ми повернули її для шанувальників. ця дитяча версія має культову етикетку на передній частині, фірмовий t-подібний носок та гумову підошву оригінальної моделі.
 
@@ -789,9 +1052,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Puma • 33</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13934"
+                    data-chat-product-name="Кросівки puma palermo ps kids &quot;lapis lazuli-bright&quot;"
+                    data-chat-product-url="../product/13934/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки geox spherica 2100 грн geox 38 dlya-hlopchykiv комфортні кросівки spherica з легким ультра-амортизуючим дизайном і сучасним стилем.
 особливості:
@@ -814,9 +1087,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Geox • 38</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13933"
+                    data-chat-product-name="Кросівки geox spherica"
+                    data-chat-product-url="../product/13933/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="ціна знижена!!туфлі magnum active duty шкіра 35 євро розмір 450 грн  35 dlya-hlopchykiv magnum active duty shoe ідеально підходить для тих випадків, коли вам потрібно бути безпечним, але розумним.легкий композитний носок захист ніг до 200 джоулів композитна взуття стандарт безпеки sb-sra відповідає стандарту безпеки iso20345 якісна гладка шкіряна верхівка з гумової / підошвою phylon новий чорний 35 дитячий одяг для хлопчиків взуття туфлі" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13932/">
@@ -829,9 +1112,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>35</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13932"
+                    data-chat-product-name="Ціна знижена!!туфлі magnum active duty шкіра 35 євро розмір"
+                    data-chat-product-url="../product/13932/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="нова фірмова зимова куртка topolino 600 грн  110 dlya-hlopchykiv якісна дитяча куртка для хлопчика відомої німецької фірми topolino, весна-осінь, еврозима верхня тканина щільна, вітро і водонипроницаемая, всередині поліестер, всередині куртки у верхній частині плюшевий фліс (крім рукавів), в рукавах підкладка, капюшон не відстібаються, рукав на трикотажному манжеті, блискавка із захистом підборіддя. утеплений капюшон застібається на липучку незнімний. застібка - блискавка, кнопки. 110 см (5 років) - об&#x27;єм грудей 39 см*2, плечі 32 см, довжина рукава від плеча 39 см, довжина куртки 48 см новий хакі 110 дитячий одяг для хлопчиків верхній одяг куртки" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13931/">
@@ -844,9 +1137,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>110</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13931"
+                    data-chat-product-name="Нова фірмова зимова куртка topolino"
+                    data-chat-product-url="../product/13931/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячий airism ультраеластичний костюм uniqlo на зріст 164см 1050 грн uniqlo 164 dlya-hlopchykiv дитячий airism ультраеластичний костюм uniqlo на 13 років, зріст 164см
 еластичний та гладкий airism. ідеально підходить для відпочинку.
@@ -877,9 +1180,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 164</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13930"
+                    data-chat-product-name="Дитячий airism ультраеластичний костюм uniqlo на зріст 164см"
+                    data-chat-product-url="../product/13930/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="босоніжки merrell hydro blaze , устілка 23 см 1130 грн merrell 4y dlya-hlopchykiv босоніжки merrell hydro blaze - міні-версія улюбленого дорослим merrell’s hydro blaze , що дозволяє дитячим ніжкам дихати, безпечно хлюпаютись у воді, лазити та бігати влітку.
 
@@ -906,9 +1219,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Merrell • 4Y</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13929"
+                    data-chat-product-name="Босоніжки merrell hydro blaze , устілка 23 см"
+                    data-chat-product-url="../product/13929/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячі шорти uniqlo 350 грн uniqlo 128, 134 dlya-hlopchykiv дитячі шорти uniqlo
 в наявності розмір 9/10 на зріст 135/145см
@@ -926,9 +1249,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 128, 134</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13928"
+                    data-chat-product-name="Дитячі шорти uniqlo"
+                    data-chat-product-url="../product/13928/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="легкі шорти з еластичної саржі uniqlo 250 грн uniqlo 116, 122 dlya-hlopchykiv легкі шорти з еластичної саржі uniqlo,
 в наявності розмір 5/6 років на зріст 115/125см
@@ -953,9 +1286,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 116, 122</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13927"
+                    data-chat-product-name="Легкі шорти з еластичної саржі uniqlo"
+                    data-chat-product-url="../product/13927/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячий світшот з серії  &quot;губка боб квадратні штани&quot; від uniqlo 850 грн uniqlo 158, 164 dlya-hlopchykiv дитячий світшот з серії  &quot;губка боб квадратні штани&quot; від uniqlo
 в наявності розмір 12 років на зріст 155-164см
@@ -973,9 +1316,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 158, 164</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13926"
+                    data-chat-product-name="Дитячий світшот з серії  &quot;губка боб квадратні штани&quot; від uniqlo"
+                    data-chat-product-url="../product/13926/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="футболка-поло dry pique uniqlo 350 грн uniqlo 116, 122 dlya-hlopchykiv футболка-поло dry pique uniqlo
 в наявності розмір 5/6 років на зріст 115/125см
@@ -993,9 +1346,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 116, 122</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13925"
+                    data-chat-product-name="Футболка-поло dry pique uniqlo"
+                    data-chat-product-url="../product/13925/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитяча футболка губка боб uniqlo 250 грн uniqlo 134, 140 dlya-hlopchykiv дитяча футболка губка боб uniqlo
 в наявності розмір 9/10 на зріст 135/145см
@@ -1013,9 +1376,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 134, 140</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13924"
+                    data-chat-product-name="Дитяча футболка губка боб uniqlo"
+                    data-chat-product-url="../product/13924/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячі шорти uniqlo 350 грн uniqlo 128, 134 dlya-hlopchykiv дитячі шорти uniqlo
 в наявності розмір 7/8 на зріст 125/135см
@@ -1033,9 +1406,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 128, 134</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13923"
+                    data-chat-product-name="Дитячі шорти uniqlo"
+                    data-chat-product-url="../product/13923/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячі шорти uniqlo 350 грн uniqlo 116, 122 dlya-hlopchykiv дитячі шорти uniqlo
 в наявності розмір 5/6  на зріст 115/125см
@@ -1053,9 +1436,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 116, 122</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13922"
+                    data-chat-product-name="Дитячі шорти uniqlo"
+                    data-chat-product-url="../product/13922/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячі штани-карго parachute uniqlo 680 грн uniqlo 146, 152 dlya-hlopchykiv дитячі штани-карго parachute uniqlo
 в наявності розмір 11/12  років на зріст 145/155см
@@ -1074,9 +1467,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 146, 152</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13921"
+                    data-chat-product-name="Дитячі штани-карго parachute uniqlo"
+                    data-chat-product-url="../product/13921/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитяча худі з ультрафіолетовим захистом airism uniqlo 1010 грн uniqlo 158, 164 dlya-hlopchykiv дитяча худі з ультрафіолетовим захистом airism uniqlo
 в наявності розмір 13 років на зріст 155/164см, колір чорний
@@ -1094,9 +1497,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 158, 164</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13920"
+                    data-chat-product-name="Дитяча худі з ультрафіолетовим захистом airism uniqlo"
+                    data-chat-product-url="../product/13920/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячі шорти з тканини dry-ex від uniqlo 250 грн uniqlo 116, 122 dlya-hlopchykiv дитячі шорти з тканини dry-ex від uniqlo
 в наявності розмір 5/6 років на зріст 115/125см
@@ -1123,9 +1536,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 116, 122</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13919"
+                    data-chat-product-name="Дитячі шорти з тканини dry-ex від uniqlo"
+                    data-chat-product-url="../product/13919/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячі шорти з тканини dry-ex від uniqlo 250 грн uniqlo 128, 134 dlya-hlopchykiv дитячі шорти з тканини dry-ex від uniqlo
 в наявності розмір 7/8 років на зріст 125/135см
@@ -1152,9 +1575,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 128, 134</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13918"
+                    data-chat-product-name="Дитячі шорти з тканини dry-ex від uniqlo"
+                    data-chat-product-url="../product/13918/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячі шорти з тканини dry-ex від uniqlo 250 грн uniqlo 116, 122 dlya-hlopchykiv дитячі шорти з тканини dry-ex від uniqlo
 в наявності розмір 5/6 років на зріст 115/125см, колір чорний
@@ -1181,9 +1614,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 116, 122</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13917"
+                    data-chat-product-name="Дитячі шорти з тканини dry-ex від uniqlo"
+                    data-chat-product-url="../product/13917/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани-джоггери ultra stretch dry-ex uniqlo 650 грн uniqlo 140 dlya-hlopchykiv штани-джоггери ultra stretch dry-ex uniqlo
 в наявності розмір 9/10 на зріст  140см
@@ -1207,9 +1650,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 140</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13916"
+                    data-chat-product-name="Штани-джоггери ultra stretch dry-ex uniqlo"
+                    data-chat-product-url="../product/13916/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="штани-джоггери ultra stretch dry-ex uniqlo 650 грн uniqlo 140 dlya-hlopchykiv штани-джоггери ultra stretch dry-ex uniqlo
 в наявності розмір 9/10 на зріст 140см, колір темно-синій
@@ -1233,9 +1686,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 140</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13915"
+                    data-chat-product-name="Штани-джоггери ultra stretch dry-ex uniqlo"
+                    data-chat-product-url="../product/13915/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="лонгслив zara 501 грн zara 146, 152 dlya-hlopchykiv лонгслив з круглим вирізом, довгими рукавами та принтом спереду та ззаду.
 нова, з бірками.
@@ -1253,9 +1716,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>ZARA • 146, 152</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13914"
+                    data-chat-product-name="Лонгслив zara"
+                    data-chat-product-url="../product/13914/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячий світшот  kaws + warhol від uniqlo 820 грн uniqlo 146, 152 dlya-hlopchykiv дитячий світшот  kaws + warhol від uniqlo
 в наявності:
@@ -1275,9 +1748,19 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 146, 152</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13913"
+                    data-chat-product-name="Дитячий світшот  kaws + warhol від uniqlo"
+                    data-chat-product-url="../product/13913/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="дитячий світшот kaws + warhol від uniqlo 850 грн uniqlo 158, 164 dlya-hlopchykiv дитячий світшот kaws + warhol від uniqlo
 в наявності:
@@ -1297,16 +1780,270 @@ puma kids: рекомендовано для дітей віком 4–8 рок�
                 <div class='product-meta'>Uniqlo • 158, 164</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13912"
+                    data-chat-product-name="Дитячий світшот kaws + warhol від uniqlo"
+                    data-chat-product-url="../product/13912/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div></div>
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 23:47</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 11:40</div>
 </main>
 </div>
+<div class="chat-overlay" id="chatOverlay" aria-hidden="true">
+    <section class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+        <div class="chat-head">
+            <div>
+                <div class="chat-title" id="chatTitle">Чат з UniqLow</div>
+                <div class="chat-subtitle" id="chatSubtitle">Увійдіть через Google, щоб написати повідомлення.</div>
+            </div>
+            <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">×</button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-auth" id="chatAuth">
+                <button class="chat-google-btn" type="button" id="chatGoogleBtn">Увійти через Google</button>
+                <div class="chat-warning">
+                    Чат захищений Google-входом і правилами доступу. Не надсилайте номери карт, CVV, паролі або коди з SMS.
+                </div>
+                <div class="chat-status" id="chatStatus">Чат готується...</div>
+            </div>
+            <div class="chat-workspace" id="chatWorkspace">
+                <div class="chat-owner-tools" id="chatOwnerTools">
+                    <div class="chat-status">Режим власника: показані останні діалоги покупців.</div>
+                    <div class="chat-thread-list" id="chatThreadList"></div>
+                </div>
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-composer">
+                    <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
+                    <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
+                    <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "", "authDomain": "", "projectId": "", "appId": ""}, "sdkVersion": "10.12.5"}</script>
+<script type="module">
+const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
+const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
+const firebaseConfig = chatConfig.firebase || {};
+const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
+let chatAuth = null;
+let chatDb = null;
+let chatUser = null;
+let chatProvider = null;
+let chatProduct = {};
+let chatThreadId = '';
+let chatUnsubMessages = null;
+let chatUnsubThreads = null;
+let firebaseApi = null;
+
+const chatEl = (id) => document.getElementById(id);
+const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
+const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
+const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
+const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+
+function openChatFromButton(btn) {
+    chatProduct = {
+        id: btn?.dataset.chatProductId || 'general',
+        name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
+        url: btn?.dataset.chatProductUrl || location.pathname,
+    };
+    chatEl('chatOverlay')?.classList.add('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'false');
+    chatEl('chatSubtitle').textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    prepareChat();
+}
+
+function closeChat() {
+    chatEl('chatOverlay')?.classList.remove('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'true');
+}
+
+window.openChatFromButton = openChatFromButton;
+window.closeChat = closeChat;
+
+async function prepareChat() {
+    if (!chatHasConfig) {
+        chatStatus('Чат ще не підключений. Додайте Firebase config у test.py і опублікуйте сайт.');
+        return;
+    }
+    try {
+        await ensureFirebase();
+        chatStatus(chatUser ? 'Ви увійшли. Можна писати.' : 'Увійдіть через Google, щоб почати чат.');
+    } catch (err) {
+        chatStatus(`Чат не запустився: ${err.message || err}`);
+    }
+}
+
+async function ensureFirebase() {
+    if (firebaseApi) return firebaseApi;
+    const version = chatConfig.sdkVersion || '10.12.5';
+    const appMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-app.js`);
+    const authMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-auth.js`);
+    const storeMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-firestore.js`);
+    const app = appMod.initializeApp(firebaseConfig);
+    chatAuth = authMod.getAuth(app);
+    chatDb = storeMod.getFirestore(app);
+    chatProvider = new authMod.GoogleAuthProvider();
+    firebaseApi = { ...authMod, ...storeMod };
+    firebaseApi.onAuthStateChanged(chatAuth, async (user) => {
+        chatUser = user;
+        updateChatAuthState();
+        if (user) {
+            if (chatIsOwner()) listenOwnerThreads();
+            else await openCustomerThread();
+        }
+    });
+    return firebaseApi;
+}
+
+function updateChatAuthState() {
+    const signed = Boolean(chatUser);
+    chatEl('chatAuth').style.display = signed ? 'none' : 'grid';
+    chatEl('chatWorkspace').classList.toggle('active', signed);
+    chatEl('chatOwnerTools').classList.toggle('active', signed && chatIsOwner());
+    if (signed) chatStatus(`Увійшли як ${chatUser.email}`);
+}
+
+async function signInChat() {
+    if (!chatHasConfig) {
+        chatStatus('Потрібно додати Firebase config перед тестом чату.');
+        return;
+    }
+    await ensureFirebase();
+    try {
+        await firebaseApi.signInWithPopup(chatAuth, chatProvider);
+    } catch (err) {
+        await firebaseApi.signInWithRedirect(chatAuth, chatProvider);
+    }
+}
+
+async function openCustomerThread() {
+    if (!chatUser || !firebaseApi) return;
+    chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
+    const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
+    await firebaseApi.setDoc(threadRef, {
+        customerUid: chatUser.uid,
+        customerEmail: chatUser.email || '',
+        customerName: chatUser.displayName || chatUser.email || '',
+        ownerEmail: chatOwnerEmail,
+        productId: chatProduct.id || 'general',
+        productName: chatProduct.name || '',
+        productUrl: new URL(chatProduct.url || location.pathname, location.href).href,
+        updatedAt: firebaseApi.serverTimestamp(),
+        createdAt: firebaseApi.serverTimestamp(),
+    }, { merge: true });
+    listenMessages(chatThreadId);
+}
+
+function listenOwnerThreads() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads'),
+        firebaseApi.orderBy('updatedAt', 'desc'),
+        firebaseApi.limit(50)
+    );
+    chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
+        const list = chatEl('chatThreadList');
+        list.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const data = docSnap.data();
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `chat-thread-btn${docSnap.id === chatThreadId ? ' active' : ''}`;
+            btn.dataset.threadId = docSnap.id;
+            btn.textContent = `${data.customerName || data.customerEmail || 'Покупець'} — ${data.productName || 'Загальний чат'}`;
+            btn.onclick = () => {
+                chatThreadId = docSnap.id;
+                document.querySelectorAll('.chat-thread-btn').forEach(el => el.classList.toggle('active', el.dataset.threadId === chatThreadId));
+                listenMessages(chatThreadId);
+            };
+            list.appendChild(btn);
+        });
+        if (!chatThreadId && snap.docs[0]) {
+            chatThreadId = snap.docs[0].id;
+            listenMessages(chatThreadId);
+        }
+    }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
+}
+
+function listenMessages(threadId) {
+    if (chatUnsubMessages) chatUnsubMessages();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads', threadId, 'messages'),
+        firebaseApi.orderBy('createdAt', 'asc'),
+        firebaseApi.limit(120)
+    );
+    chatUnsubMessages = firebaseApi.onSnapshot(q, (snap) => {
+        const box = chatEl('chatMessages');
+        box.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const msg = docSnap.data();
+            const row = document.createElement('div');
+            row.className = `chat-message${msg.uid === chatUser?.uid ? ' mine' : ''}`;
+            const meta = document.createElement('div');
+            meta.className = 'chat-message-meta';
+            meta.textContent = msg.name || msg.email || 'Користувач';
+            const text = document.createElement('div');
+            text.textContent = msg.text || '';
+            row.append(meta, text);
+            box.appendChild(row);
+        });
+        box.scrollTop = box.scrollHeight;
+    }, (err) => chatStatus(`Не вдалося прочитати повідомлення: ${err.message}`));
+}
+
+async function sendChatMessage() {
+    const input = chatEl('chatInput');
+    const text = chatClean(input.value);
+    if (!text || !chatUser || !firebaseApi) return;
+    if (!chatThreadId && !chatIsOwner()) await openCustomerThread();
+    if (!chatThreadId) {
+        chatStatus('Виберіть діалог покупця.');
+        return;
+    }
+    chatEl('chatSendBtn').disabled = true;
+    try {
+        const role = chatIsOwner() ? 'owner' : 'customer';
+        await firebaseApi.addDoc(firebaseApi.collection(chatDb, 'chatThreads', chatThreadId, 'messages'), {
+            uid: chatUser.uid,
+            email: chatUser.email || '',
+            name: chatUser.displayName || chatUser.email || '',
+            role,
+            text,
+            createdAt: firebaseApi.serverTimestamp(),
+        });
+        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+            lastMessage: text.slice(0, 180),
+            lastSender: role,
+            updatedAt: firebaseApi.serverTimestamp(),
+        }, { merge: true });
+        input.value = '';
+    } catch (err) {
+        chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
+    } finally {
+        chatEl('chatSendBtn').disabled = false;
+    }
+}
+
+chatEl('chatGoogleBtn')?.addEventListener('click', signInChat);
+chatEl('chatSendBtn')?.addEventListener('click', sendChatMessage);
+chatEl('chatInput')?.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) sendChatMessage();
+});
+</script>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}

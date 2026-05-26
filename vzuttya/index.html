@@ -89,10 +89,14 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
 .product-attrs dt{color:var(--muted);}
 .product-attrs dd{margin:0;color:var(--text);}
-.card-tg-btn{display:block;margin:0 16px 16px;
-background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
-padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
-.card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
+.card-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 16px 16px;}
+.card-action-btn{min-height:42px;border:none;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;
+display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.card-tg-btn{background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;}
+.card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);gap:7px;}
+.card-tg-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
+.chat-icon{width:18px;height:18px;border:2px solid currentColor;border-radius:7px;display:inline-block;position:relative;flex:0 0 18px;}
+.chat-icon::after{content:"";position:absolute;left:2px;bottom:-5px;width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:var(--panel-solid);transform:skew(-18deg);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
 .product-detail-page{max-width:1500px;margin:0 auto;animation:fadeUp .3s ease both;}
@@ -113,10 +117,45 @@ body.dark .product-detail-info{background:rgba(17,24,39,.88);}
 .product-detail-info h1{font-size:clamp(26px,3.2vw,42px);line-height:1.12;margin:0 0 12px;letter-spacing:0;overflow-wrap:anywhere;}
 .detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
 .detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
-.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+.detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+.detail-order-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+text-decoration:none;border-radius:14px;font-weight:800;padding:13px 22px;transition:.18s ease;}
+.detail-order-btn{
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
-font-weight:800;padding:13px 22px;margin-bottom:24px;box-shadow:0 14px 30px rgba(34,158,217,.24);transition:.18s ease;}
-.detail-order-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.32);}
+box-shadow:0 14px 30px rgba(34,158,217,.24);}
+.detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);gap:8px;cursor:pointer;}
+.detail-order-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
+.chat-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.48);backdrop-filter:blur(8px);
+display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
+.chat-overlay.open{display:flex;}
+.chat-panel{width:min(100%,440px);max-height:min(760px,calc(100vh - 36px));display:flex;flex-direction:column;
+background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.28);overflow:hidden;}
+.chat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);}
+.chat-title{font-weight:900;font-size:20px;line-height:1.2;}
+.chat-subtitle{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.35;}
+.chat-close{border:1px solid var(--border);background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:12px;cursor:pointer;font-size:22px;line-height:1;}
+.chat-body{padding:14px;display:grid;gap:12px;min-height:0;}
+.chat-auth{display:grid;gap:10px;}
+.chat-google-btn,.chat-send-btn{border:none;border-radius:14px;padding:12px 14px;font-weight:800;cursor:pointer;}
+.chat-google-btn{background:var(--text);color:var(--panel-solid);}
+.chat-send-btn{background:var(--accent);color:white;}
+.chat-send-btn:disabled{opacity:.55;cursor:not-allowed;}
+.chat-warning{font-size:12px;line-height:1.45;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:10px;}
+.chat-status{font-size:13px;color:var(--muted);line-height:1.4;}
+.chat-workspace{display:none;gap:12px;min-height:0;}
+.chat-workspace.active{display:grid;}
+.chat-owner-tools{display:none;gap:8px;}
+.chat-owner-tools.active{display:grid;grid-template-columns:1fr;}
+.chat-thread-list{max-height:120px;overflow:auto;display:grid;gap:6px;}
+.chat-thread-btn{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px;text-align:left;cursor:pointer;}
+.chat-thread-btn.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.chat-messages{height:min(42vh,330px);overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--bg);padding:10px;display:flex;flex-direction:column;gap:8px;}
+.chat-message{max-width:86%;border-radius:16px;padding:9px 11px;background:var(--panel-solid);border:1px solid var(--border);line-height:1.45;overflow-wrap:anywhere;}
+.chat-message.mine{margin-left:auto;background:var(--accent);color:white;border-color:transparent;}
+.chat-message-meta{font-size:11px;opacity:.72;margin-bottom:3px;}
+.chat-composer{display:grid;gap:8px;}
+.chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
+.chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
 .detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
 .detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .detail-section summary::-webkit-details-marker{display:none;}
@@ -182,7 +221,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-info{padding:12px;}
 .product-price{font-size:20px;}
 .product-title{font-size:14px;min-height:0;}
-.card-tg-btn{margin:0 12px 12px;font-size:13px;padding:11px 8px;}
+.card-actions{margin:0 12px 12px;grid-template-columns:1fr;}
+.card-action-btn{font-size:13px;padding:11px 8px;}
 .product-detail-layout{gap:14px;}
 .product-thumbs{padding-bottom:6px;scroll-snap-type:x mandatory;}
 .product-thumb{min-width:74px;scroll-snap-align:start;}
@@ -191,7 +231,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-detail-info h1{font-size:clamp(23px,7vw,31px);}
 .detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
 .detail-section{padding-top:14px;margin-top:14px;}
-.detail-order-btn{width:100%;}
+.detail-actions{display:grid;grid-template-columns:1fr;}
+.detail-order-btn,.detail-chat-btn{width:100%;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
@@ -207,6 +248,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-thumb{min-width:68px;}
 .promo-card{padding:18px;border-radius:20px;}
 .promo-badge{width:78px;height:78px;font-size:20px;}
+.chat-overlay{padding:10px;align-items:stretch;}
+.chat-panel{width:100%;max-height:calc(100vh - 20px);border-radius:20px;}
 }
 </style>
 </head>
@@ -220,7 +263,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 23:47</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 11:40</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -352,9 +395,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>37</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13911"
+                    data-chat-product-name="Кросівки skechers women&#x27;s virtue"
+                    data-chat-product-url="../product/13911/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="угг bearpaw girls&#x27; riley boots, charcoal/plum 2100 грн ugg 36 vzuttya bearpaw girls&#x27; riley boots, charcoal/plum
 верх із гладкої сірої замші має зручну підкладку, яка зберігає ногу в теплі та сухості. гнучка гумова підошва, яка не залишає слідів, забезпечує вашому малюку покращене зчеплення на мокрій поверхні. новий сірий 36 жіночий одяг взуття уггі">
@@ -368,9 +421,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>UGG • 36</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13910"
+                    data-chat-product-name="Угг bearpaw girls&#x27; riley boots, charcoal/plum"
+                    data-chat-product-url="../product/13910/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="кросівки new balance w460lk3, устілка 24 см 2200 грн new balance 37 vzuttya жіночі кросівки new balance 460v3 - це спортивний стиль, чудова амортизація та підтримка завдяки зручній устілці та надійній шнурівці.
 
@@ -395,9 +458,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>New Balance • 37</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13909"
+                    data-chat-product-name="Кросівки new balance w460lk3, устілка 24 см"
+                    data-chat-product-url="../product/13909/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="домашні капці uniqlo, устілка 24см 880 грн uniqlo 36, 37 vzuttya домашні капці uniqlo, устілка 24см
 
@@ -419,9 +492,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Uniqlo • 36, 37</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13908"
+                    data-chat-product-name="Домашні капці uniqlo, устілка 24см"
+                    data-chat-product-url="../product/13908/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="ugg bearpaw emma tall black boots 1700 грн ugg 35, 36 vzuttya високі черевики bearpaw emma, ​​sz 7. верх із замші, підкладка із суміші овчини та шерсті, устілка з овчини, підошва tpr.
 36 розмір 1900 новий коричневий 35, 36 жіночий одяг взуття чоботи овчина">
@@ -435,9 +518,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>UGG • 35, 36</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13907"
+                    data-chat-product-name="Ugg bearpaw emma tall black boots"
+                    data-chat-product-url="../product/13907/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="черевики зимові jack wolfskin vancouver texapore high w 3300 грн jack wolfskin 39.5 vzuttya зимові черевики. утеплювач nanuk, витримують температуру до -25 градусів морозу. підошва wolf snow втримає ногу на льоді. колір чорний. нові. оригінал новий чорний 39.5 жіночий одяг взуття черевики 25">
         <a class="card-main-link" href="../product/13906/">
@@ -450,9 +543,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Jack Wolfskin • 39.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13906"
+                    data-chat-product-name="Черевики зимові jack wolfskin vancouver texapore high w"
+                    data-chat-product-url="../product/13906/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="ugg mini bailey button 5900 грн ugg 39 vzuttya черевики із колекції ugg. модель виготовлена із натуральної шкіри. надзвичайно міцний матеріал.
 - міцна та легка підошва treadlite ідеально підходить як для сухих, так і для вологих поверхонь.
@@ -471,9 +574,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>UGG • 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13905"
+                    data-chat-product-name="Ugg mini bailey button"
+                    data-chat-product-url="../product/13905/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="кросівки new balance fresh foam 680v7, устілка 23 см 2400 грн new balance 36 vzuttya кросівки new balance fresh foam 680v7 дарують надзвичайний комфорт під час довгих пробіжок. м’якість цих кросівок забезпечується завдяки технології fresh foam, та плетеному верху, що зонально розтягується.
 
@@ -492,9 +605,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>New Balance • 36</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13904"
+                    data-chat-product-name="Кросівки new balance fresh foam 680v7, устілка 23 см"
+                    data-chat-product-url="../product/13904/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="кросівки adidas rapidmove adv train 1700 грн adidas 37.5 vzuttya кросівки adidas rapidmove adv train - тренувальні кросівки створені для динамічних рухів. верх із трикотажу має стратегічно розташовані зони підтримки. амортизація lightstrike дуже легка та чуйна, а асиметрична система torsion system допомагає зберігати стійкість під час швидких скорочень і різноспрямованих рухів.
 
@@ -521,9 +644,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Adidas • 37.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13903"
+                    data-chat-product-name="Кросівки adidas rapidmove adv train"
+                    data-chat-product-url="../product/13903/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="кросівки nike flex experience run 11 nn, 1800 грн nike 41.5 vzuttya кросівки nike flex experience run 11 next nature мають легкий і мінімалістичний дизайн, який вражає не тільки зовнішнім виглядом, але й комфортним відчуттям під час носіння.
 
@@ -544,9 +677,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Nike • 41.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13902"
+                    data-chat-product-name="Кросівки nike flex experience run 11 nn,"
+                    data-chat-product-url="../product/13902/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="кросівки teva geotrecca low rp водонепроникні 1890 грн teva 10,5 vzuttya прогресивна модель для піших прогулянок на підошві spider rubber з високим зчепленням, geotrecca low поєднує в собі технологічні характеристики та сучасний стиль.
 моделі tevarapid proof виготовлені з водонепроникних матеріалів, а також мають водонепроникну конструкцію черевика нижче щиколотки. застібки-блискавки та язички, якщо вони є, мають вставки та оброблені водовідштовхувальним покриттям.
@@ -569,9 +712,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Teva • 10,5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13901"
+                    data-chat-product-name="Кросівки teva geotrecca low rp водонепроникні"
+                    data-chat-product-url="../product/13901/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="кросівки adidas 4dfwd pulse 2100 грн adidas 11 vzuttya кросівки  adidas 4dfwd pulse для бігу з точно налаштованою амортизацією для щоденного комфорту.
 
@@ -608,9 +761,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Adidas • 11</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13900"
+                    data-chat-product-name="Кросівки adidas 4dfwd pulse"
+                    data-chat-product-url="../product/13900/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки оригінал adidas grand court platform 2290 грн adidas 8 vzuttya створено спеціально для жіночої стопи.
 застібка на шнурках.
@@ -632,9 +795,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Adidas • 8</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13899"
+                    data-chat-product-name="Кросівки оригінал adidas grand court platform"
+                    data-chat-product-url="../product/13899/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кеди converse chuck taylor all star low, устілка 23 см 1200 грн converse 36 vzuttya кеди converse chuck taylor all star low дарують сонячне світло в дощові дні весни. виготовлений з яскраво-помаранчевого полотна, з металевими люверсами, нашивкою converse all star на язичку.
 
@@ -655,9 +828,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Converse • 36</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13898"
+                    data-chat-product-name="Кеди converse chuck taylor all star low, устілка 23 см"
+                    data-chat-product-url="../product/13898/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="мокасини skechers breathe-easy-opportuknity 1400 грн skechers 37.5 vzuttya skechers breathe-easy-opportuknity – спортивні повсякденні комфортні мокасини без застібок зі шнурівкою на еластичній резинці. універсальний стиль та комфорт.
 
@@ -682,9 +865,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Skechers • 37.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13897"
+                    data-chat-product-name="Мокасини skechers breathe-easy-opportuknity"
+                    data-chat-product-url="../product/13897/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки  adidas front court 1899 грн adidas 38 vzuttya незалежно від того, чи ви в дорозі, чи прогулюєтеся вулицею, кросівки adidas front court забезпечать комфорт під час кожного кроку. проміжна підошва cloudfoam , а верх зі змішаних матеріалів має синтетичну шкіру, нубук з покриттям і сітку для надзвичайної міцності та комфорту протягом тривалого часу.
 з дизайном, натхненним спортивним баскетбольним взуттям, ці низькопрофільні кросівки можуть похвалитися тяговою підошвою, яка тримає вас на місці, де б ви не були.
@@ -700,9 +893,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Adidas • 38</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13896"
+                    data-chat-product-name="Кросівки  adidas front court"
+                    data-chat-product-url="../product/13896/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки для бігу asics gel-kinsei blast 2799 грн asics 36 vzuttya преміальні жіночі кросівки asics gel-kinsei blast
 
@@ -723,9 +926,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Asics • 36</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13895"
+                    data-chat-product-name="Кросівки для бігу asics gel-kinsei blast"
+                    data-chat-product-url="../product/13895/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="туфлі шкіряні geox cordusio 2900 грн geox 39.5 vzuttya шкіряні туфлі geox cordusio - туфлі з динамічним виглядом і дизайном, який забезпечує комфорт і повітропроникність протягом дня. вони виготовлені з гладкої натуральної зернистої шкіри, а бічна блискавка полегшує їх надягання та знімання, що робить це взуття ідеальним доповненням до вашого повсякденного гардеробу.
 
@@ -750,9 +963,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Geox • 39.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13894"
+                    data-chat-product-name="Туфлі шкіряні geox cordusio"
+                    data-chat-product-url="../product/13894/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки adidas grand court alpha 00s 1799 грн adidas 40.5 vzuttya елегантні та зручні, ці кросівки adidas обов&#x27;язково повинні бути у вашій колекції. верх із замши ,  має підкладку, яка забезпечує м&#x27;якість при контакті зі стопою.
 
@@ -773,9 +996,19 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
                 <div class='product-meta'>Adidas • 40.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13893"
+                    data-chat-product-name="Кросівки adidas grand court alpha 00s"
+                    data-chat-product-url="../product/13893/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки adidas trae young 2 1799 грн adidas 37 vzuttya кросівки adidas trae young 2 - найновіше фірмове взуття від adidas basketball і trae young — це спритність і швидкість, два елементи, які роблять трея таким динамічним. boost і lightstrike працюють у парі з адаптивним напівбезшнуровим верхом sck360 для забезпечення підвищеного комфорту та кардинальної підтримки.
 
@@ -796,9 +1029,19 @@ adidas lightstrike забезпечує надлегку амортизацію 
                 <div class='product-meta'>Adidas • 37</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13892"
+                    data-chat-product-name="Кросівки adidas trae young 2"
+                    data-chat-product-url="../product/13892/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки nike dunk low  royal pulse 2500 грн nike 41 vzuttya nike dunk low, спочатку представлений у 1985 році, вийшов за межі свого коріння як баскетбольне взуття, щоб стати наріжним каменем культури кросівок. розроблені пітером муром, який також зіграв важливу роль у розробці air jordan 1, кросівки dunk low спочатку були випущені в рамках кампанії nike «будь вірним своїй школі», яка представляла кольори різних баскетбольних команд коледжів. протягом десятиліть його універсальний дизайн і комфортна посадка дозволили dunk low  завоювати відданих прихильників серед любителів кросівок, скейтбордистів і людей, які просувають моду
 
@@ -817,9 +1060,19 @@ adidas lightstrike забезпечує надлегку амортизацію 
                 <div class='product-meta'>Nike • 41</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13891"
+                    data-chat-product-name="Кросівки nike dunk low  royal pulse"
+                    data-chat-product-url="../product/13891/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки adidas cloudfoam pure 2.0 1700 грн adidas 41 vzuttya легкі кросівки для бігу жіночого фасону
 гнучкий верх: м&#x27;який текстильний верх еластичний і зручний
@@ -837,9 +1090,19 @@ adidas lightstrike забезпечує надлегку амортизацію 
                 <div class='product-meta'>Adidas • 41</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13890"
+                    data-chat-product-name="Кросівки adidas cloudfoam pure 2.0"
+                    data-chat-product-url="../product/13890/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки  reebok zig dynamica 4 1700 грн reebok 35.5 vzuttya ці  кросівки представляють майбутнє бігового дизайну. верх із дихаючої сітки доповнюється легкою проміжною підошвою fuelfoam для комфорту та амортизації по всій довжині. сміливий зигзагоподібний дизайн привертає увагу .
 
@@ -861,9 +1124,19 @@ adidas lightstrike забезпечує надлегку амортизацію 
                 <div class='product-meta'>Reebok • 35.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13889"
+                    data-chat-product-name="Кросівки  reebok zig dynamica 4"
+                    data-chat-product-url="../product/13889/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки adidas solarglide 6 2000 грн adidas 39 vzuttya adidas solarglide 6 - це ті кросівки, які одягаєш щодня, ставлячи собі за мету, наприклад, збільшити дистанцію або досягти особистого рекорду. вони оснащені технологіями, необхідними для того, щоб бігти далі та швидше, включно з чутливою амортизацією boost. adidas lep 2.0 спрямовує кожен удар стопи, щоб змусити тебе рухатися вперед, а підошва continental™ rubber забезпечує виняткове зчеплення на мокрій і сухій поверхні.
 
@@ -880,9 +1153,19 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
                 <div class='product-meta'>Adidas • 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13888"
+                    data-chat-product-name="Кросівки adidas solarglide 6"
+                    data-chat-product-url="../product/13888/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки  adidas response super 2.0 1800 грн adidas 41.5 vzuttya жіночі кросівки для бігу з амортизацією та стабільністю для щоденних пробіжок.
 стандартний крій; гумова підошва для кращого зчеплення.
@@ -900,9 +1183,19 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
                 <div class='product-meta'>Adidas • 41.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13887"
+                    data-chat-product-name="Кросівки  adidas response super 2.0"
+                    data-chat-product-url="../product/13887/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі домашні капці calzedonia 699 грн calzedonia 38, 39, 40, 41 vzuttya жіночі домашні капці від calzedonia
 в наявності розмір 38/41. новий бежевий 38, 39, 40, 41 жіночий одяг взуття капці" data-initial-hidden='1'>
@@ -916,9 +1209,19 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
                 <div class='product-meta'>Calzedonia • 38, 39, 40, 41</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13886"
+                    data-chat-product-name="Жіночі домашні капці calzedonia"
+                    data-chat-product-url="../product/13886/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="зимові черевики columbia women&#x27;s moritza™ boot 2750 грн columbia 40 vzuttya міський стиль у шикарних утеплених черевиках, готових до зимових випробувань.
 
@@ -956,9 +1259,19 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
                 <div class='product-meta'>Columbia • 40</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13885"
+                    data-chat-product-name="Зимові черевики columbia women&#x27;s moritza™ boot"
+                    data-chat-product-url="../product/13885/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="зимові черевики keen terradora ii wintry waterproof boot w 2800 грн keen 38.5 vzuttya бути активним – не означає припиняти рухатись до весни, тому що холодно. keen створив спортивне зимове взуття terradora ii wintry waterproof boot w на базі жіночих кросівок terradora hiker. черевики отримали міцний рант між верхом і підошвою, термоустілку та утеплювач keen.warm recycled p.e.t., який розрахований на морози до -32°c. стьобаний верх, підошва – з чіпкої гуми.
 
@@ -978,9 +1291,19 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
                 <div class='product-meta'>Keen • 38.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13884"
+                    data-chat-product-name="Зимові черевики keen terradora ii wintry waterproof boot w"
+                    data-chat-product-url="../product/13884/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки columbia crestwood 2360 грн columbia 7,5 vzuttya кросівки columbia crestwood - ідеальне поєднання високої функціональності та продуктивності, ці універсальні кросівки для піших прогулянок забезпечать вам роки комфортного використання.
 
@@ -1001,9 +1324,19 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
                 <div class='product-meta'>Columbia • 7,5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13883"
+                    data-chat-product-name="Кросівки columbia crestwood"
+                    data-chat-product-url="../product/13883/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="черевики timberland everleigh chelsea tb0a5yf4231 3800 грн timberland 38.5 vzuttya міцне та стильне доповнення до вашого гардеробу. черевики everleigh chelsea без застібок з подвійною еластичною вставкою, зручною устілкою ortholite® та гумовою підошвою для зчеплення. особливості: верх виконаний із преміальної шкіри timberland®. модель без застібок з подвійною еластичною кромкою устілка ortholite® impressions з піноматеріалу з ефектом пам&#x27;яті міжпідошва з ева гумова підошва висота каблука: 7,6 см
 
@@ -1020,9 +1353,19 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
                 <div class='product-meta'>Timberland • 38.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13882"
+                    data-chat-product-name="Черевики timberland everleigh chelsea tb0a5yf4231"
+                    data-chat-product-url="../product/13882/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки ecco biom aex w 3300 грн ecco 10 vzuttya універсальні та стильні жіночі кросівки ecco biom aex створені для міського використання або легких прогулянок по стежках, мають чудову повітропроникність та забезпечать вам комфорт протягом усього дня.
 
@@ -1042,9 +1385,19 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
                 <div class='product-meta'>Ecco • 10</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13881"
+                    data-chat-product-name="Кросівки ecco biom aex w"
+                    data-chat-product-url="../product/13881/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки columbia  plateau, устілка 26,5 см 2120 грн columbia 9,5 vzuttya в кросівках columbia  plateau  верхня частина в поєднанні з вдосконаленою амортизацією середньої частини підошви та підошвою з високим зчепленням забезпечують комфорт під час ходьби, де б ви не були.
 
@@ -1066,9 +1419,19 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
                 <div class='product-meta'>Columbia • 9,5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13880"
+                    data-chat-product-name="Кросівки columbia  plateau, устілка 26,5 см"
+                    data-chat-product-url="../product/13880/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки under armour ace highlight 2950 грн under armour 8,5 vzuttya супервисокий дизайн забезпечує додаткову підтримку щиколотки, але не створює відчуття важкості чи обмеження рухів. амортизація ua flow надзвичайно легка та пружна.
 
@@ -1091,9 +1454,19 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
                 <div class='product-meta'>Under Armour • 8,5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13879"
+                    data-chat-product-name="Кросівки under armour ace highlight"
+                    data-chat-product-url="../product/13879/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки adidas exhibit select 2.0 2750 грн adidas 8 vzuttya adidas exhibit select 2.0 – яскраве поєднання стилю та функціональності.
 
@@ -1111,9 +1484,19 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
                 <div class='product-meta'>Adidas • 8</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13878"
+                    data-chat-product-name="Кросівки adidas exhibit select 2.0"
+                    data-chat-product-url="../product/13878/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="черевики dr. martens combs w 3000 грн dr. martens 8 vzuttya достатньо зручні для щоденного використання. ці черевики — це ідеальне взуття для будь-якої погоди. виготовлені з міцної, але легкої поліестерової тканини та шкіри ajax, черевики з 6 шнурівками прикрашені тональними d-образними кільцями та гачками для піших прогулянок, а також нашими фірмовими маркуваннями.
 
@@ -1131,9 +1514,19 @@ extra tough poly — це надзвичайно міцна синтетична
                 <div class='product-meta'>Dr. Martens • 8</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13877"
+                    data-chat-product-name="Черевики dr. martens combs w"
+                    data-chat-product-url="../product/13877/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки  asics netburner ballistic ff 3 3200 грн asics 9,5 vzuttya кросівки netburner ballistic - ця модель привносить відновлення в лінійку й доповнюється просунутими технологіями, які створюють більш гнучку посадку й підвищену зносостійкість. ці кросівки створені із вставками з поліуретанової гуми в області пальців для додаткового захисту й довговічності, а також підвищення гнучкості в передній частині стопи, при цьому зберігаються традиційні якості підтримки.  завдяки технології flytefoam propel у проміжній підошві, ці кросівки забезпечують амортизований відскік і м&#x27;який комфорт. призначена для підвищення стабільності технологія twistruss також забезпечує  більшу маневреність і швидкість під час різких поворотних рухів. розроблені з поглибленими гнучкими жолобками в підошві,  кросівки netburner ballistic постачені технологіями, які підвищують гнучкість і довговічність.
 
@@ -1160,9 +1553,19 @@ extra tough poly — це надзвичайно міцна синтетична
                 <div class='product-meta'>Asics • 9,5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13876"
+                    data-chat-product-name="Кросівки  asics netburner ballistic ff 3"
+                    data-chat-product-url="../product/13876/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки skechers go run horizon - phantom, устілка  25.5 см 1850 грн skechers 8,5 vzuttya надзвичайний комфорт і елегантна естетика поєднуються в кросівках skechers go run horizon - phantom.
 
@@ -1183,9 +1586,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Skechers • 8,5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13875"
+                    data-chat-product-name="Кросівки skechers go run horizon - phantom, устілка  25.5 см"
+                    data-chat-product-url="../product/13875/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки adidas ultraboost 5.0 dna, устілка 24 см 2800 грн adidas 37 vzuttya кросівки adidas ultraboost 5.0 dna гарні у будь-який час. вони оснащені всіма біговими технологіями, але створені для міста. ця версія доповнена стильними деталями кольору металік. проміжна підошва boost повертає енергію кожного кроку, а верх adidas primeknit щільно облягає.
 
@@ -1212,9 +1625,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Adidas • 37</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13874"
+                    data-chat-product-name="Кросівки adidas ultraboost 5.0 dna, устілка 24 см"
+                    data-chat-product-url="../product/13874/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки new balance fresh foam roav v2, устілка 24 см 2290 грн new balance 37 vzuttya кросівки new balance fresh foam roav v2 ідеально підходять для інтенсивних видів спорту.
 
@@ -1233,9 +1656,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>New Balance • 37</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13873"
+                    data-chat-product-name="Кросівки new balance fresh foam roav v2, устілка 24 см"
+                    data-chat-product-url="../product/13873/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки skechers street™ uno 2 1550 грн skechers 36 vzuttya ще більше комфорту в skechers street™ uno 2 - air around you.
 
@@ -1252,9 +1685,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Skechers • 36</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13872"
+                    data-chat-product-name="Кросівки skechers street™ uno 2"
+                    data-chat-product-url="../product/13872/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="крокси crocs crush disco, розмір w9 1420 грн crocs 9 vzuttya сабо classic crush disco - завдяки сміливій висоті та яскравому дизайну це динамічне нове сабо пропонує безліч варіантів персоналізації з перфорацією для jibbitz™ у верхній частині та поворотними ремінцями на п’яті.
 
@@ -1276,9 +1719,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Crocs • 9</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13871"
+                    data-chat-product-name="Крокси crocs crush disco, розмір w9"
+                    data-chat-product-url="../product/13871/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="крокси crocs skyline sandal, розмір w11 1390 грн crocs 41 vzuttya crocs skyline sandal - ​​колекція босоніжок, яка дарує енергію кожному, хто її носить. цей кивок у бік масивних підошв 90-х набуває сучасного відтінку, який є молодіжним, виразним і сміливим. скульптурна проміжна підошва створює енергійну атмосферу мегаполісу з досить зручною висотою, щоб доставити вас, куди ви збираєтеся, цілий день і всю ніч. робіть монументальні кроки в колекції skyline.
 
@@ -1299,9 +1752,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Crocs • 41</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13870"
+                    data-chat-product-name="Крокси crocs skyline sandal, розмір w11"
+                    data-chat-product-url="../product/13870/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки sorel ona 503 knit mid, устілка 25 та 26 см 2900 грн sorel 9 vzuttya кросівки sorel ona 503 knit mid - практична модель, яка чудово підійде для повсякденного використання, кросівки виконані з легкого матеріалу, що дозволяє їм бути практично непомітними на нозі. щільна фіксація на стопі, задник та язичок створюють комфортні умови для ходьби. підошва виконана за спеціальною технологією, яка знижує ударне навантаження на стопу.
 
@@ -1321,9 +1784,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Sorel • 9</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13869"
+                    data-chat-product-name="Кросівки sorel ona 503 knit mid, устілка 25 та 26 см"
+                    data-chat-product-url="../product/13869/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки для бігу adidas solar control 2100 грн adidas 39, 40 vzuttya кросівки adidas solar control - ці бігові кросівки забезпечують додаткову стабільність завдяки adidas linear energy push 2.0, розробленому, щоб допомогти направляти кожен удар ногою та просувати вас вперед.
 
@@ -1347,9 +1820,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Adidas • 39, 40</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13868"
+                    data-chat-product-name="Кросівки для бігу adidas solar control"
+                    data-chat-product-url="../product/13868/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки adidas ozweego celox 2000 грн adidas 36 vzuttya жіночі кросівки adidas ozweego celox (gz7279) - високотехнологічні кросівки, втілені за допомогою сучасних технологій. верх щільно облягає, виконаний з сітки та поліуретану.
 
@@ -1366,9 +1849,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Adidas • 36</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13867"
+                    data-chat-product-name="Кросівки adidas ozweego celox"
+                    data-chat-product-url="../product/13867/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки adidas adizero sl 1999 грн adidas 40 vzuttya кросівки adidas adizero sl — це швидкі кросівки для щоденних тренувань, наповнені ключовими інгредієнтами та дизайнерськими маркерами франшизи adizero, яка встановила світові рекорди.
 
@@ -1395,9 +1888,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Adidas • 40</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13866"
+                    data-chat-product-name="Кросівки adidas adizero sl"
+                    data-chat-product-url="../product/13866/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки saucony cohesion 16 1950 грн saucony 38 vzuttya кросівки saucony cohesion 16 - дають вам усе необхідне для комфортного бігу - амортизація versarun, плавний перехід від п’яти до носка та зручна та надійна посадка.
 
@@ -1418,9 +1921,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Saucony • 38</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13865"
+                    data-chat-product-name="Кросівки saucony cohesion 16"
+                    data-chat-product-url="../product/13865/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки new balance 877 v1 1700 грн new balance 37 vzuttya росівки new balance 877 — ідеальне взуття, коли попереду довга дорога.
 
@@ -1439,9 +1952,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>New Balance • 37</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13864"
+                    data-chat-product-name="Кросівки new balance 877 v1"
+                    data-chat-product-url="../product/13864/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки saucony kinvara 14 1750 грн saucony 38 vzuttya saucony kinvara 14 - створені для швидкості.  ці гнучкі, дихаючі  кросівки дозволяють  бігати з комфортом завдяки технології пам&#x27;яті піни та контурній устілці. від початку до кінця вони створені, щоб стати улюбленими кросівками для бігу.
 
@@ -1467,9 +1990,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Saucony • 38</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13863"
+                    data-chat-product-name="Кросівки saucony kinvara 14"
+                    data-chat-product-url="../product/13863/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="зимові черевики columbia moritza shorty 3430 грн columbia 39.5 vzuttya теплі черевики columbia moritza shorty — чудовий вибір для тих, хто любить зимові прогулянки та пригоди.
 
@@ -1495,9 +2028,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Columbia • 39.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13862"
+                    data-chat-product-name="Зимові черевики columbia moritza shorty"
+                    data-chat-product-url="../product/13862/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки   reebok dailyfit dmx 2.0  ( gz3041) 1980 грн reebok 42 vzuttya reebok,dailyfit dmx 2.0- створені для жінок, які цінують комфорт і стиль. яскравий рожевий відтінок додасть вашому образу яскравості, а міцна гумова підошва забезпечить чудове зчеплення і підтримку. ці кросівки ідеально підходять для щоденних пригод, поєднуючи функціональність і модну естетику, що робить їх незамінним доповненням до вашої колекції взуття. оберіть комфорт і стиль без зусиль з reebok.
 
@@ -1512,9 +2055,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Reebok • 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13861"
+                    data-chat-product-name="Кросівки   reebok dailyfit dmx 2.0  ( gz3041)"
+                    data-chat-product-url="../product/13861/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки reebok court advance surge 1899 грн reebok 40 vzuttya кросівки reebok court advance surge є прикладом поєднання класичного дизайну та сучасної привабливості, що робить їх ідеальним вибором для вимогливих спортсменів, які стежать за модою. ці кросівки мають вишукану колірну гаму з відтінками крейди та білого, яка легко поєднується з різними вбраннями, дозволяючи безперешкодно переходити від тенісного корту до повсякденного міського стилю. конструкція взуття поєднує в собі естетику та функціональність, втілюючи традицію reebok створювати високоякісні та функціональні продукти. доповнені витонченими, але вишуканими деталями бренду, ці кросівки мають мінімалістичний шарм, що випромінює елегантність без шкоди для практичності.
 
@@ -1531,9 +2084,19 @@ us 8.5 (довжина устілки 25.5 см)
                 <div class='product-meta'>Reebok • 40</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13860"
+                    data-chat-product-name="Кросівки reebok court advance surge"
+                    data-chat-product-url="../product/13860/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки columbia womens facet 75 outdry 2600 грн columbia 40 vzuttya водонепроникне технічне взуття для піших прогулянок, призначене для будь-якої місцевості та погодних умов. водонепроникний та дихаючий верх взуття розроблений, щоб ваші ноги залишалися сухими та комфортними під час дощу чи сонця. насолоджуйтесь комфортом протягом усього дня завдяки легкій конструкції, м&#x27;якій підошві, фіксатору в середній частині стопи та застібці на п&#x27;яті. ходіть в походи або бігайте по будь-якій стежці з адаптивним зчепленням, розробленим для вологих або сухих умов. почувайтеся впевнено під ногами з нашою системою adapt-trax, яка дозволяє з легкістю підніматися, лазити та рухатися по стежці.
 
@@ -1558,9 +2121,19 @@ techlite™ plush забезпечує максимальну амортизац
                 <div class='product-meta'>Columbia • 40</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13859"
+                    data-chat-product-name="Кросівки columbia womens facet 75 outdry"
+                    data-chat-product-url="../product/13859/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки puma cali dream pastel white blue 1850 грн puma 37 vzuttya кросівки puma cali dream - &quot;м&#x27;яка сторона&quot; вуличного стилю. відрізняються кокетливою пастельною палітрою кольорів, глянсовими люверсами і акцентами з преміального нубука - фірмовими смужками puma formstrip, а також накладками на носінні і в зоні шнурівки.
 
@@ -1577,9 +2150,19 @@ techlite™ plush забезпечує максимальну амортизац
                 <div class='product-meta'>Puma • 37</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13858"
+                    data-chat-product-name="Кросівки puma cali dream pastel white blue"
+                    data-chat-product-url="../product/13858/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки new balance wx608wp5 1999 грн new balance 39 vzuttya кросівки new balance wx608wp5 мають надм’яку амортизацію та міцну гумову підошву, що забезпечує підтримку та комфорт, необхідні вашим ногам щодня. у цьому взутті було створено такі переваги комфорту, як велика накладка на п’яту abzorb, міцна вставка з литого поліуретану та легка посадка
 
@@ -1604,9 +2187,19 @@ techlite™ plush забезпечує максимальну амортизац
                 <div class='product-meta'>New Balance • 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13857"
+                    data-chat-product-name="Кросівки new balance wx608wp5"
+                    data-chat-product-url="../product/13857/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки columbia redmond waterproof hiking shoe 2200 грн columbia 38.5 vzuttya кросівки columbia redmond waterproof hiking shoe - водонепроникне туристичне взуття розроблено та створено завдяки майстерності експертів. чудово підходить для весняних, літніх і осінніх прогулянок та походів. високоякісні матеріали є обов’язковими та входять до списку вимог columbia при розробці та створенні довговічного взуття.
 
@@ -1633,9 +2226,19 @@ techlite™ plush забезпечує максимальну амортизац
                 <div class='product-meta'>Columbia • 38.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13856"
+                    data-chat-product-name="Кросівки columbia redmond waterproof hiking shoe"
+                    data-chat-product-url="../product/13856/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="сліпони ecco soft 7 woven slip-on 2.0 2300 грн ecco 38 vzuttya сліпони ecco soft 7 woven slip-on 2.0:
 
@@ -1656,9 +2259,19 @@ techlite™ plush забезпечує максимальну амортизац
                 <div class='product-meta'>Ecco • 38</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13855"
+                    data-chat-product-name="Сліпони ecco soft 7 woven slip-on 2.0"
+                    data-chat-product-url="../product/13855/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки under armour  ua charged gemini running shoes 2200 грн under armour 40 vzuttya кросівки under armour charged gemini 2020:
 
@@ -1683,9 +2296,19 @@ techlite™ plush забезпечує максимальну амортизац
                 <div class='product-meta'>Under Armour • 40</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13854"
+                    data-chat-product-name="Кросівки under armour  ua charged gemini running shoes"
+                    data-chat-product-url="../product/13854/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки  nike air max 270 (ib4017_468) 3100 грн nike 37.5 vzuttya наш перший lifestyle air max принесе вам комфорт, сміливий стиль і 270 градусів технології max air, щоб продемонструвати одну з наших найбільших інновацій. легкий, повітряний верх і комір з низьким вирізом - ви отримаєте ідеальний варіант для повсякденних прогулянок.
 
@@ -1700,9 +2323,19 @@ techlite™ plush забезпечує максимальну амортизац
                 <div class='product-meta'>Nike • 37.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13853"
+                    data-chat-product-name="Кросівки  nike air max 270 (ib4017_468)"
+                    data-chat-product-url="../product/13853/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки reebok zig dynamica 5 1899 грн reebok 39 vzuttya кросівки reebok zig dynamica 5
 прогресивні кросівки з комфортом на весь день.
@@ -1738,9 +2371,19 @@ floatride fuel – не просто елемент дизайну цієї мо
                 <div class='product-meta'>Reebok • 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13852"
+                    data-chat-product-name="Кросівки reebok zig dynamica 5"
+                    data-chat-product-url="../product/13852/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки reebok nano gym 2300 грн reebok 39 vzuttya reebok nano gym стануть вашим улюбленим взуттям для кожного тренування, будь то бігова доріжка, підняття ваги або інтенсивні високоінтенсивні інтервальні тренування. розроблені з використанням новітніх технологій та з упором на універсальність, reebok nano gym допоможуть вам на кожному кроці, присіданні та спринті.
 nano gym – неперевершена універсальність для кожного тренування.
@@ -1772,9 +2415,19 @@ nano gym і міцність: це взуття розраховане на те
                 <div class='product-meta'>Reebok • 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13851"
+                    data-chat-product-name="Кросівки reebok nano gym"
+                    data-chat-product-url="../product/13851/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки reebok classic club c grounds uk 1899 грн reebok 39 vzuttya кросівки з колекції reebok classic виготовлені із поєднання замші та екологічної шкіри. модель зі зміцненими халявами забезпечує стійкість стопи.
 - круглий, трохи ущільнений носок.
@@ -1794,9 +2447,19 @@ nano gym і міцність: це взуття розраховане на те
                 <div class='product-meta'>Reebok • 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13850"
+                    data-chat-product-name="Кросівки reebok classic club c grounds uk"
+                    data-chat-product-url="../product/13850/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="зимові черевики columbia keetley™ shorty boot 3320 грн columbia 39, 39.5 vzuttya зимові черевики women&#x27;s keetley™ shorty boot - сучасний погляд на класичні зимові черевики, це взуття забезпечує максимальний захист від негоди без шкоди для вашого почуття стилю.
 
@@ -1829,9 +2492,19 @@ techlite+™ забезпечує чутливу амортизацію та с�
                 <div class='product-meta'>Columbia • 39, 39.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13849"
+                    data-chat-product-name="Зимові черевики columbia keetley™ shorty boot"
+                    data-chat-product-url="../product/13849/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі черевики columbia bugaboot™ celsius plus 3650 грн columbia 38, 39 vzuttya енергійне оновлення нашої класики для холодної погоди. універсальність і захист роблять це взуття ідеальним для вологої, холодної та сніжної погоди. черевики
 
@@ -1863,9 +2536,19 @@ bugaboot™ celsius plus - створені для комфорту та про�
                 <div class='product-meta'>Columbia • 38, 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13848"
+                    data-chat-product-name="Жіночі черевики columbia bugaboot™ celsius plus"
+                    data-chat-product-url="../product/13848/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки skechers bobs sport squad - tough talk 1450 грн skechers 38.5 vzuttya кросівки skechers bobs sport squad - tough talk - стильні кросівки на шнурівці з верхом із м’якого плетеного трикотажу з синтетичними шарами та устілкою з піни пам’яті.
 
@@ -1890,9 +2573,19 @@ bugaboot™ celsius plus - створені для комфорту та про�
                 <div class='product-meta'>Skechers • 38.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13847"
+                    data-chat-product-name="Кросівки skechers bobs sport squad - tough talk"
+                    data-chat-product-url="../product/13847/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки adidas ultraboost 22 cold.rdy 2500 грн adidas 38 vzuttya жіночі кросівки adidas ultraboost 22 cold.rdy (gx8032). м&#x27;яка, комфортна модель з підвищеною амортизацією та міцною підошвою continental™ wintergrip™. ці кросівки створені для бігу в холодну погоду й оснащені системою cold.rdy для збереження тепла ніг.
 
@@ -1919,9 +2612,19 @@ bugaboot™ celsius plus - створені для комфорту та про�
                 <div class='product-meta'>Adidas • 38</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13846"
+                    data-chat-product-name="Кросівки adidas ultraboost 22 cold.rdy"
+                    data-chat-product-url="../product/13846/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="чоботи жіночі ecco dress classic 35mm buckle ankle boot 2900 грн ecco 39 vzuttya жіночі чоботи  ecco dress classic 35 boot - позачасова елегантність у формі ботильйона для стильної, сучасної жінки. чоботи ecco dress classic на 35 підборах, натхненні мінімалістичним датським дизайном, виготовлені з високоякісної шкіри для комфорту та довговічності. облягаючий силует надає вашим ногам жіночності. деталь пряжки говорить про сучасний вуличний стиль. має безшовну конструкцію ecco fluidform™ з легкою поліуретановою підошвою. ультрастильні черевики, які можна носити сезон за сезоном.
 
@@ -1936,9 +2639,19 @@ bugaboot™ celsius plus - створені для комфорту та про�
                 <div class='product-meta'>Ecco • 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13845"
+                    data-chat-product-name="Чоботи жіночі ecco dress classic 35mm buckle ankle boot"
+                    data-chat-product-url="../product/13845/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки adidas women&#x27;s grand court alpha 00s 2200 грн adidas 38 vzuttya кросівки adidas women&#x27;s grand court alpha 00s
 жіночі стильні та універсальні кросівки з безпомилковим днк adidas
@@ -1959,9 +2672,19 @@ bugaboot™ celsius plus - створені для комфорту та про�
                 <div class='product-meta'>Adidas • 38</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13844"
+                    data-chat-product-name="Кросівки adidas women&#x27;s grand court alpha 00s"
+                    data-chat-product-url="../product/13844/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки grand court alpha 00s 2000 грн adidas 39 vzuttya витончені, спортивні та такі прості у догляді. ці кросівки adidas не займуть багато місця на твоїй полиці для взуття. верх прикрашений смужками 3-stripes, що додають спортивного стилю будь-якому вбранню. проміжна підошва cloudfoam пом&#x27;якшує крок, а м&#x27;яка підкладка фіксує стопу. класична гумова підошва допомагає тобі залишатися на ногах день у день. неважливо, йдеш ти містом чи відпочиваєш із друзями, спадщина adidas завжди буде на висоті.
 
@@ -1980,9 +2703,19 @@ bugaboot™ celsius plus - створені для комфорту та про�
                 <div class='product-meta'>Adidas • 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13843"
+                    data-chat-product-name="Кросівки grand court alpha 00s"
+                    data-chat-product-url="../product/13843/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки columbia vitesse outdry 2000 грн columbia 39.5 vzuttya кросівки жіночі columbia vitesse outdry- це спортивне взуття, що має водонепроникну, герметичну безшовну конструкцію.
 
@@ -2014,9 +2747,19 @@ omni-grip® - підошва для ходьби по пересіченій м�
                 <div class='product-meta'>Columbia • 39.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13842"
+                    data-chat-product-name="Кросівки columbia vitesse outdry"
+                    data-chat-product-url="../product/13842/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="демісезонні черевики skechers arya - new rumo 1850 грн skechers 38 vzuttya жіночі черевики демісезонні skechers arya - new rumor - зроблять холодний повсякденний день більш комфортним.
 
@@ -2043,9 +2786,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Skechers • 38</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13841"
+                    data-chat-product-name="Демісезонні черевики skechers arya - new rumo"
+                    data-chat-product-url="../product/13841/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="зимові черевики columbia women&#x27;s moritza™ boot, устілка 25 см 3750 грн columbia 38.5 vzuttya міський стиль у шикарних утеплених черевиках, готових до зимових випробувань.
 
@@ -2081,9 +2834,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Columbia • 38.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13840"
+                    data-chat-product-name="Зимові черевики columbia women&#x27;s moritza™ boot, устілка 25 см"
+                    data-chat-product-url="../product/13840/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="зимові черевики columbia slopeside peak™ 2600 грн columbia 36.5 vzuttya сміливо вирушайте на вулицю в columbia® slopeside peak™.
 
@@ -2106,9 +2869,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Columbia • 36.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13839"
+                    data-chat-product-name="Зимові черевики columbia slopeside peak™"
+                    data-chat-product-url="../product/13839/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="зимові черевики columbia newton ridge omni heat 2550 грн columbia 36.5, 39.5 vzuttya жіночі черевики columbia newton ridge plus omni heat - класичний водонепроникний черевик, що дихає, покращений нашою тепловідбивною підкладкою.
 
@@ -2139,9 +2912,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Columbia • 36.5, 39.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13838"
+                    data-chat-product-name="Зимові черевики columbia newton ridge omni heat"
+                    data-chat-product-url="../product/13838/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="зимові черевики wolverine frost snow boot 2700 грн wolverine 38 vzuttya зимові черевики wolverine frost snow boot - захищають вас у зимові дні. верх із водонепроникної суцільнозернистої шкіри преміум-класу з формованою оболонкою з тпу, щоб зберегти ноги теплими та сухими у вологу та холодну погоду.
 
@@ -2166,9 +2949,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Wolverine • 38</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13837"
+                    data-chat-product-name="Зимові черевики wolverine frost snow boot"
+                    data-chat-product-url="../product/13837/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="зимові черевики merrell haven mid lace polar 2990 грн merrell 39 vzuttya водонепроникні зимові черевики merrell® haven mid lace polar завжди будуть готові до непередбачуваної погоди.
 
@@ -2197,9 +2990,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Merrell • 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13836"
+                    data-chat-product-name="Зимові черевики merrell haven mid lace polar"
+                    data-chat-product-url="../product/13836/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="черевики sorel  explorer joan 2700 грн sorel 39.5 vzuttya черевики sorel explorer joan - теплі і міцні: чудово підходять для ваших ніг у сльоту, сніг і мороз та забезпечують комфорт протягом усього дня. ці черевики оснащені синтетичним флісовим хутром на комірі та 100-грамовим шаром теплоізоляції, який гарантує вам відмінне тепло за будь-яких обставин. мають верх із водонепроникної замші з поліуретановим покриттям та водонепроникну конструкцію з проклеєними швами
 
@@ -2228,9 +3031,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Sorel • 39.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13835"
+                    data-chat-product-name="Черевики sorel  explorer joan"
+                    data-chat-product-url="../product/13835/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі черевики  adidas terrex trailmaker 2.0 leather mid 2800 грн adidas terrex 39 vzuttya амбітні пригоди чи спокійні прогулянки — ці похідні черевики adidas terrex забезпечують підвищену стабільність щиколотки та підтримку завдяки середній висоті. високоякісна нубукова шкіра додає стилю та міцності цим універсальним похідним черевикам. стійкі до стирання накладки підвищують міцність, а язичок із вставкою захищає від сміття під час прогулянок по скелястій та пильній місцевості. гумова підошва continental™ забезпечує зчеплення на мокрій та сухій поверхні для надійної опори.
 
@@ -2245,9 +3058,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Adidas TERREX • 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13834"
+                    data-chat-product-name="Жіночі черевики  adidas terrex trailmaker 2.0 leather mid"
+                    data-chat-product-url="../product/13834/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки ugg goldencush 3750 грн ugg 39 vzuttya ніщо не зрівняється з  ugg goldencush. ці кросівки, що поєднують в собі суть ugg і невимушену каліфорнійську крутість, неймовірно розкішні в усіх сенсах. ми створили їх з пружною підошвою, об&#x27;ємним язичком і прихованою кишенею для зберігання ваших секретів. тсс, це ваш секрет ідеального повсякденного комфорту: ви можете носити їх зав&#x27;язаними або без шнурків.
 
@@ -2268,9 +3091,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>UGG • 39</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13833"
+                    data-chat-product-name="Кросівки ugg goldencush"
+                    data-chat-product-url="../product/13833/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="черевики koolaburra by ugg advay tall 2300 грн koolaburra by ugg 37.5 vzuttya надзвичайно м&#x27;які та теплі високі шнуровані черевики koolaburra by ugg advay мають підкладку з м&#x27;якого штучного хутра та вовняної суміші, а також м&#x27;яку устілку та класичну підошву з eva-амортизацією для максимального комфорту та затишку.
 
@@ -2291,9 +3124,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Koolaburra by UGG • 37.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13832"
+                    data-chat-product-name="Черевики koolaburra by ugg advay tall"
+                    data-chat-product-url="../product/13832/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="домашні капці uniqlo, устілка 25см 880 грн uniqlo 37, 38 vzuttya домашні капці uniqlo, устілка 25см
 
@@ -2311,9 +3154,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Uniqlo • 37, 38</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13831"
+                    data-chat-product-name="Домашні капці uniqlo, устілка 25см"
+                    data-chat-product-url="../product/13831/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="домашні капці uniqlo, устілка 24см 650 грн uniqlo 36, 37 vzuttya домашні капці uniqlo, устілка 24см
 
@@ -2332,9 +3185,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Uniqlo • 36, 37</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13830"
+                    data-chat-product-name="Домашні капці uniqlo, устілка 24см"
+                    data-chat-product-url="../product/13830/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки saucony shadow original unisex 2600 грн saucony 9 vzuttya saucony shadow original – це основний силует історії saucony. це взуття, як і раніше, має той же комфорт і стабільність. верх з дихаючою сіткою та нейлоновими вставками відмінно поєднується з проміжною підошвою з marshmallowy eva.
 
@@ -2359,9 +3222,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Saucony • 9</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13829"
+                    data-chat-product-name="Кросівки saucony shadow original unisex"
+                    data-chat-product-url="../product/13829/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки  ecco w s-three  gore-tex 2750 грн ecco 9 vzuttya оновлені завдяки новому дизайну верху та інноваційній технології, водонепроникні черевики ecco w golf s-three поєднують в собі чудові експлуатаційні характеристики та сучасний стиль . рельєфні та друковані деталі додають преміальної естетики жіночим  черевикам, які були вдосконалені за допомогою технології x-tensa invisible technology для додаткової стабільності. підошва e-dts® забезпечує чудове зчеплення, а технологія gore-tex — 100% водонепроникний захист. інноваційна технологія ecco zonal fluidform™ створює три окремі зони жорсткості в середній частині підошви, забезпечуючи ідеальний баланс амортизації та стабільності.
 
@@ -2383,9 +3256,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Ecco • 9</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13828"
+                    data-chat-product-name="Кросівки  ecco w s-three  gore-tex"
+                    data-chat-product-url="../product/13828/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки adidas response 1850 грн adidas 9 vzuttya неважливо, пробігаєш ти кілька легких кіл чи прагнеш до особистого рекорду, ці кросівки adidas підтримають тебе на шляху до мети. повнорозмірна міжпідошва з eva забезпечує комфорт, а підошва з міцною конструкцією дозволяє не зменшувати темп. універсальний стиль легко підходить для занять після пробіжки
 
@@ -2409,9 +3292,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Adidas • 9</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13827"
+                    data-chat-product-name="Кросівки adidas response"
+                    data-chat-product-url="../product/13827/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки  fila disruptor ii premium 1990 грн fila 37 vzuttya жіночі кросівки fila disruptor 2 premium оранжевого кольору — ідеальний вибір для тих, хто прагне поєднати стиль і комфорт у своєму повсякденному гардеробі. завдяки сучасному та яскравому дизайну ці кросівки стануть акцентом будь-якого вбрання, підкреслюючи унікальність особистості їхньої власниці.
 
@@ -2431,9 +3324,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Fila • 37</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13826"
+                    data-chat-product-name="Кросівки  fila disruptor ii premium"
+                    data-chat-product-url="../product/13826/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки ghost max leather 2900 грн brooks 10,5 vzuttya отримайте максимум від кожної милі в brooks ghost max leather! ці кросівки для ходьби з максимальною амортизацією мають шкіряний верх для щоденного комфорту. відчуйте м&#x27;якість з кожним кроком на пінопластовій підошві dna loft v3. дизайн glideroll rocker забезпечує плавні та ефективні переходи. м&#x27;які, гладкі та стильні кросівки brooks ghost max leather ідеально підходять для щоденних прогулянок!
 
@@ -2460,9 +3363,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Brooks • 10,5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13825"
+                    data-chat-product-name="Кросівки ghost max leather"
+                    data-chat-product-url="../product/13825/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки sorel out n about™ iv low women&#x27;s waterproof sneaker 2450 грн sorel 8 vzuttya низькі кросівки  sorel out n about™ iv — ідеальний вибір для прогулянок містом.
  зручні, водонепроникні та універсальні, пасують до будь-якого вбрання.
@@ -2482,9 +3395,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Sorel • 8</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13824"
+                    data-chat-product-name="Кросівки sorel out n about™ iv low women&#x27;s waterproof sneaker"
+                    data-chat-product-url="../product/13824/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="кросівки  reebok cl legacy fz2905 2390 грн reebok 7,5 vzuttya об’ємний 3d-вигляд надає підошві виразного вигляду.
 
@@ -2503,9 +3426,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Reebok • 7,5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13823"
+                    data-chat-product-name="Кросівки  reebok cl legacy fz2905"
+                    data-chat-product-url="../product/13823/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="босоніжки  koolaburra by ugg women tizz sandal 2000 грн koolaburra 9,5 vzuttya босоніжки  koolaburra by ugg women tizz sandal:
 
@@ -2525,9 +3458,19 @@ skechers® arya - new rumor, - водовідштовхувальні черев
                 <div class='product-meta'>Koolaburra • 9,5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13822"
+                    data-chat-product-name="Босоніжки  koolaburra by ugg women tizz sandal"
+                    data-chat-product-url="../product/13822/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="сандалі dr. martens voss hydro leather strap sandals 3300 грн dr. martens 9 vzuttya модель dr. martens voss hydro voss має   фірмовий комфорт: два регульовані ремінці, надлегку підошву з рельєфним протектором та надзвичайно міцний рант goodyear.
 
@@ -2553,9 +3496,19 @@ hydro — шкіра з поліуретановим покриттям, що м
                 <div class='product-meta'>Dr. Martens • 9</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13821"
+                    data-chat-product-name="Сандалі dr. martens voss hydro leather strap sandals"
+                    data-chat-product-url="../product/13821/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="взуття для бігу nike free run 2 gs 1000 грн nike 37.5 vzuttya оригінальні бігові кросівки,куплені в сша,устілка 24 см новий бірюзовий 37.5 жіночий одяг взуття кросівки для бігу 24" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13820/">
@@ -2568,9 +3521,19 @@ hydro — шкіра з поліуретановим покриттям, що м
                 <div class='product-meta'>Nike • 37.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13820"
+                    data-chat-product-name="Взуття для бігу nike free run 2 gs"
+                    data-chat-product-url="../product/13820/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бігові кросівки indigo -система підтримки phantom support 800 грн ryka 38.5 vzuttya з тренажерного залу на вулицю робіть правильні рухи в жіночих кросівках indigo. особливості верх із дихаючої сітки система підтримки phantom support на 3d-принтері у середньої і передньої частини стопи забезпечує легку підтримку і стабільність світловідбиваюча деталь на п&#x27;яті новий сірий 38.5 жіночий одяг взуття кросівки сітка" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13819/">
@@ -2583,9 +3546,19 @@ hydro — шкіра з поліуретановим покриттям, що м
                 <div class='product-meta'>Ryka • 38.5</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13819"
+                    data-chat-product-name="Бігові кросівки indigo -система підтримки phantom support"
+                    data-chat-product-url="../product/13819/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі сандалії merrell terran 3 cush lattice 1550 грн merrell 10 vzuttya merrell terran 3 cush lattice — це сандалі, які забезпечать вам стійкість і впевненість протягом усього дня. амортизуючий проміжний шар, устілка, що підтримує стопу, та гнучка підошва роблять ці сандалі ідеальним взуттям
 
@@ -2606,9 +3579,19 @@ hydro — шкіра з поліуретановим покриттям, що м
                 <div class='product-meta'>Merrell • 10</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13818"
+                    data-chat-product-name="Жіночі сандалії merrell terran 3 cush lattice"
+                    data-chat-product-url="../product/13818/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="шкіряні сандалі zara, розмір 37 850 грн zara 37 vzuttya шкіряні сандалі zara, розмір 37
 йдуть в розмір, на середню повноту
@@ -2624,9 +3607,19 @@ hydro — шкіра з поліуретановим покриттям, що м
                 <div class='product-meta'>ZARA • 37</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13817"
+                    data-chat-product-name="Шкіряні сандалі zara, розмір 37"
+                    data-chat-product-url="../product/13817/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="крокси crocs   collegiate clogs duke, розмір w10 1690 грн crocs 10 vzuttya офіційні лімітовані  сабо з символікою баскетбольних команд університетів: клемсона, дьюка, мічигану, огайо стейт, лсу, флориди, техасу a&amp;m та інших.
 
@@ -2643,9 +3636,19 @@ cтворені для  людей , які цінують комфорт і д�
                 <div class='product-meta'>Crocs • 10</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13816"
+                    data-chat-product-name="Крокси crocs   collegiate clogs duke, розмір w10"
+                    data-chat-product-url="../product/13816/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="балетки crocs alice work 1240 грн crocs 7 vzuttya нові crocs alice work балетки жіночі:
 
@@ -2672,9 +3675,19 @@ cтворені для  людей , які цінують комфорт і д�
                 <div class='product-meta'>Crocs • 7</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13815"
+                    data-chat-product-name="Балетки crocs alice work"
+                    data-chat-product-url="../product/13815/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="шльопанці  crocs classic platform slide, розмір w8 1490 грн crocs 8 vzuttya шльопанці crocs™ classic platform slide .
 
@@ -2697,9 +3710,19 @@ cтворені для  людей , які цінують комфорт і д�
                 <div class='product-meta'>Crocs • 8</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13814"
+                    data-chat-product-name="Шльопанці  crocs classic platform slide, розмір w8"
+                    data-chat-product-url="../product/13814/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="шльопанці crocs classic marbled slide,  розмір w7 850 грн crocs 7 vzuttya crocs classic crocs marbled slide - це шльопанці, які у своїй простоті приховують не лише функціональність, але й виразні акценти, відповідь на потреби тих, хто цінує повсякденний, але оригінальний вигляд. це для тих, хто не хоче відмовлятися від комфорту, але в той же час хоче додати до свого гардеробу оригінальні речі. на створення crocs classic crocs marbled slide надихнула класична форма шльопанців з додаванням спортивної нотки і нової графіки, які надають моделі унікальний характер. ці шльопанці вирізняються надзвичайною легкістю, що робить їх надзвичайно зручними в носінні. устілка з піни croslite™ розвантажує ноги після довгого дня, забезпечуючи ідеальне прилягання до форми стопи. шльопанці crocs classic crocs marbled slide не тільки зручні, але й довговічні та легко чистяться.
 
@@ -2714,9 +3737,19 @@ cтворені для  людей , які цінують комфорт і д�
                 <div class='product-meta'>Crocs • 7</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13813"
+                    data-chat-product-name="Шльопанці crocs classic marbled slide,  розмір w7"
+                    data-chat-product-url="../product/13813/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="шльопанці crocs mega crush triple strap 1790 грн crocs 7 vzuttya шльопанці crocs  mega crush triple strap із вдосконаленим гумовим профілем, оновленими деталями навколо підошви та платформою, яка підніме будь-який образ на новий рівень.
 
@@ -2739,16 +3772,270 @@ crocs на платформі: підкресліть свій стиль за �
                 <div class='product-meta'>Crocs • 7</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13812"
+                    data-chat-product-name="Шльопанці crocs mega crush triple strap"
+                    data-chat-product-url="../product/13812/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div></div>
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 23:47</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 11:40</div>
 </main>
 </div>
+<div class="chat-overlay" id="chatOverlay" aria-hidden="true">
+    <section class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+        <div class="chat-head">
+            <div>
+                <div class="chat-title" id="chatTitle">Чат з UniqLow</div>
+                <div class="chat-subtitle" id="chatSubtitle">Увійдіть через Google, щоб написати повідомлення.</div>
+            </div>
+            <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">×</button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-auth" id="chatAuth">
+                <button class="chat-google-btn" type="button" id="chatGoogleBtn">Увійти через Google</button>
+                <div class="chat-warning">
+                    Чат захищений Google-входом і правилами доступу. Не надсилайте номери карт, CVV, паролі або коди з SMS.
+                </div>
+                <div class="chat-status" id="chatStatus">Чат готується...</div>
+            </div>
+            <div class="chat-workspace" id="chatWorkspace">
+                <div class="chat-owner-tools" id="chatOwnerTools">
+                    <div class="chat-status">Режим власника: показані останні діалоги покупців.</div>
+                    <div class="chat-thread-list" id="chatThreadList"></div>
+                </div>
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-composer">
+                    <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
+                    <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
+                    <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "", "authDomain": "", "projectId": "", "appId": ""}, "sdkVersion": "10.12.5"}</script>
+<script type="module">
+const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
+const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
+const firebaseConfig = chatConfig.firebase || {};
+const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
+let chatAuth = null;
+let chatDb = null;
+let chatUser = null;
+let chatProvider = null;
+let chatProduct = {};
+let chatThreadId = '';
+let chatUnsubMessages = null;
+let chatUnsubThreads = null;
+let firebaseApi = null;
+
+const chatEl = (id) => document.getElementById(id);
+const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
+const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
+const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
+const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+
+function openChatFromButton(btn) {
+    chatProduct = {
+        id: btn?.dataset.chatProductId || 'general',
+        name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
+        url: btn?.dataset.chatProductUrl || location.pathname,
+    };
+    chatEl('chatOverlay')?.classList.add('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'false');
+    chatEl('chatSubtitle').textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    prepareChat();
+}
+
+function closeChat() {
+    chatEl('chatOverlay')?.classList.remove('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'true');
+}
+
+window.openChatFromButton = openChatFromButton;
+window.closeChat = closeChat;
+
+async function prepareChat() {
+    if (!chatHasConfig) {
+        chatStatus('Чат ще не підключений. Додайте Firebase config у test.py і опублікуйте сайт.');
+        return;
+    }
+    try {
+        await ensureFirebase();
+        chatStatus(chatUser ? 'Ви увійшли. Можна писати.' : 'Увійдіть через Google, щоб почати чат.');
+    } catch (err) {
+        chatStatus(`Чат не запустився: ${err.message || err}`);
+    }
+}
+
+async function ensureFirebase() {
+    if (firebaseApi) return firebaseApi;
+    const version = chatConfig.sdkVersion || '10.12.5';
+    const appMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-app.js`);
+    const authMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-auth.js`);
+    const storeMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-firestore.js`);
+    const app = appMod.initializeApp(firebaseConfig);
+    chatAuth = authMod.getAuth(app);
+    chatDb = storeMod.getFirestore(app);
+    chatProvider = new authMod.GoogleAuthProvider();
+    firebaseApi = { ...authMod, ...storeMod };
+    firebaseApi.onAuthStateChanged(chatAuth, async (user) => {
+        chatUser = user;
+        updateChatAuthState();
+        if (user) {
+            if (chatIsOwner()) listenOwnerThreads();
+            else await openCustomerThread();
+        }
+    });
+    return firebaseApi;
+}
+
+function updateChatAuthState() {
+    const signed = Boolean(chatUser);
+    chatEl('chatAuth').style.display = signed ? 'none' : 'grid';
+    chatEl('chatWorkspace').classList.toggle('active', signed);
+    chatEl('chatOwnerTools').classList.toggle('active', signed && chatIsOwner());
+    if (signed) chatStatus(`Увійшли як ${chatUser.email}`);
+}
+
+async function signInChat() {
+    if (!chatHasConfig) {
+        chatStatus('Потрібно додати Firebase config перед тестом чату.');
+        return;
+    }
+    await ensureFirebase();
+    try {
+        await firebaseApi.signInWithPopup(chatAuth, chatProvider);
+    } catch (err) {
+        await firebaseApi.signInWithRedirect(chatAuth, chatProvider);
+    }
+}
+
+async function openCustomerThread() {
+    if (!chatUser || !firebaseApi) return;
+    chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
+    const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
+    await firebaseApi.setDoc(threadRef, {
+        customerUid: chatUser.uid,
+        customerEmail: chatUser.email || '',
+        customerName: chatUser.displayName || chatUser.email || '',
+        ownerEmail: chatOwnerEmail,
+        productId: chatProduct.id || 'general',
+        productName: chatProduct.name || '',
+        productUrl: new URL(chatProduct.url || location.pathname, location.href).href,
+        updatedAt: firebaseApi.serverTimestamp(),
+        createdAt: firebaseApi.serverTimestamp(),
+    }, { merge: true });
+    listenMessages(chatThreadId);
+}
+
+function listenOwnerThreads() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads'),
+        firebaseApi.orderBy('updatedAt', 'desc'),
+        firebaseApi.limit(50)
+    );
+    chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
+        const list = chatEl('chatThreadList');
+        list.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const data = docSnap.data();
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `chat-thread-btn${docSnap.id === chatThreadId ? ' active' : ''}`;
+            btn.dataset.threadId = docSnap.id;
+            btn.textContent = `${data.customerName || data.customerEmail || 'Покупець'} — ${data.productName || 'Загальний чат'}`;
+            btn.onclick = () => {
+                chatThreadId = docSnap.id;
+                document.querySelectorAll('.chat-thread-btn').forEach(el => el.classList.toggle('active', el.dataset.threadId === chatThreadId));
+                listenMessages(chatThreadId);
+            };
+            list.appendChild(btn);
+        });
+        if (!chatThreadId && snap.docs[0]) {
+            chatThreadId = snap.docs[0].id;
+            listenMessages(chatThreadId);
+        }
+    }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
+}
+
+function listenMessages(threadId) {
+    if (chatUnsubMessages) chatUnsubMessages();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads', threadId, 'messages'),
+        firebaseApi.orderBy('createdAt', 'asc'),
+        firebaseApi.limit(120)
+    );
+    chatUnsubMessages = firebaseApi.onSnapshot(q, (snap) => {
+        const box = chatEl('chatMessages');
+        box.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const msg = docSnap.data();
+            const row = document.createElement('div');
+            row.className = `chat-message${msg.uid === chatUser?.uid ? ' mine' : ''}`;
+            const meta = document.createElement('div');
+            meta.className = 'chat-message-meta';
+            meta.textContent = msg.name || msg.email || 'Користувач';
+            const text = document.createElement('div');
+            text.textContent = msg.text || '';
+            row.append(meta, text);
+            box.appendChild(row);
+        });
+        box.scrollTop = box.scrollHeight;
+    }, (err) => chatStatus(`Не вдалося прочитати повідомлення: ${err.message}`));
+}
+
+async function sendChatMessage() {
+    const input = chatEl('chatInput');
+    const text = chatClean(input.value);
+    if (!text || !chatUser || !firebaseApi) return;
+    if (!chatThreadId && !chatIsOwner()) await openCustomerThread();
+    if (!chatThreadId) {
+        chatStatus('Виберіть діалог покупця.');
+        return;
+    }
+    chatEl('chatSendBtn').disabled = true;
+    try {
+        const role = chatIsOwner() ? 'owner' : 'customer';
+        await firebaseApi.addDoc(firebaseApi.collection(chatDb, 'chatThreads', chatThreadId, 'messages'), {
+            uid: chatUser.uid,
+            email: chatUser.email || '',
+            name: chatUser.displayName || chatUser.email || '',
+            role,
+            text,
+            createdAt: firebaseApi.serverTimestamp(),
+        });
+        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+            lastMessage: text.slice(0, 180),
+            lastSender: role,
+            updatedAt: firebaseApi.serverTimestamp(),
+        }, { merge: true });
+        input.value = '';
+    } catch (err) {
+        chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
+    } finally {
+        chatEl('chatSendBtn').disabled = false;
+    }
+}
+
+chatEl('chatGoogleBtn')?.addEventListener('click', signInChat);
+chatEl('chatSendBtn')?.addEventListener('click', sendChatMessage);
+chatEl('chatInput')?.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) sendChatMessage();
+});
+</script>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}

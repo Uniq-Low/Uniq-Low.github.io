@@ -89,10 +89,14 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
 .product-attrs dt{color:var(--muted);}
 .product-attrs dd{margin:0;color:var(--text);}
-.card-tg-btn{display:block;margin:0 16px 16px;
-background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;
-padding:12px;border-radius:14px;text-decoration:none;font-weight:bold;font-size:14px;transition:transform .2s;}
-.card-tg-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.3);}
+.card-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 16px 16px;}
+.card-action-btn{min-height:42px;border:none;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;
+display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.card-tg-btn{background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;}
+.card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);gap:7px;}
+.card-tg-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
+.chat-icon{width:18px;height:18px;border:2px solid currentColor;border-radius:7px;display:inline-block;position:relative;flex:0 0 18px;}
+.chat-icon::after{content:"";position:absolute;left:2px;bottom:-5px;width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:var(--panel-solid);transform:skew(-18deg);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
 .product-detail-page{max-width:1500px;margin:0 auto;animation:fadeUp .3s ease both;}
@@ -113,10 +117,45 @@ body.dark .product-detail-info{background:rgba(17,24,39,.88);}
 .product-detail-info h1{font-size:clamp(26px,3.2vw,42px);line-height:1.12;margin:0 0 12px;letter-spacing:0;overflow-wrap:anywhere;}
 .detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
 .detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
-.detail-order-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+.detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+.detail-order-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+text-decoration:none;border-radius:14px;font-weight:800;padding:13px 22px;transition:.18s ease;}
+.detail-order-btn{
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
-font-weight:800;padding:13px 22px;margin-bottom:24px;box-shadow:0 14px 30px rgba(34,158,217,.24);transition:.18s ease;}
-.detail-order-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.32);}
+box-shadow:0 14px 30px rgba(34,158,217,.24);}
+.detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);gap:8px;cursor:pointer;}
+.detail-order-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
+.chat-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.48);backdrop-filter:blur(8px);
+display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
+.chat-overlay.open{display:flex;}
+.chat-panel{width:min(100%,440px);max-height:min(760px,calc(100vh - 36px));display:flex;flex-direction:column;
+background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.28);overflow:hidden;}
+.chat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);}
+.chat-title{font-weight:900;font-size:20px;line-height:1.2;}
+.chat-subtitle{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.35;}
+.chat-close{border:1px solid var(--border);background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:12px;cursor:pointer;font-size:22px;line-height:1;}
+.chat-body{padding:14px;display:grid;gap:12px;min-height:0;}
+.chat-auth{display:grid;gap:10px;}
+.chat-google-btn,.chat-send-btn{border:none;border-radius:14px;padding:12px 14px;font-weight:800;cursor:pointer;}
+.chat-google-btn{background:var(--text);color:var(--panel-solid);}
+.chat-send-btn{background:var(--accent);color:white;}
+.chat-send-btn:disabled{opacity:.55;cursor:not-allowed;}
+.chat-warning{font-size:12px;line-height:1.45;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:10px;}
+.chat-status{font-size:13px;color:var(--muted);line-height:1.4;}
+.chat-workspace{display:none;gap:12px;min-height:0;}
+.chat-workspace.active{display:grid;}
+.chat-owner-tools{display:none;gap:8px;}
+.chat-owner-tools.active{display:grid;grid-template-columns:1fr;}
+.chat-thread-list{max-height:120px;overflow:auto;display:grid;gap:6px;}
+.chat-thread-btn{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px;text-align:left;cursor:pointer;}
+.chat-thread-btn.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.chat-messages{height:min(42vh,330px);overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--bg);padding:10px;display:flex;flex-direction:column;gap:8px;}
+.chat-message{max-width:86%;border-radius:16px;padding:9px 11px;background:var(--panel-solid);border:1px solid var(--border);line-height:1.45;overflow-wrap:anywhere;}
+.chat-message.mine{margin-left:auto;background:var(--accent);color:white;border-color:transparent;}
+.chat-message-meta{font-size:11px;opacity:.72;margin-bottom:3px;}
+.chat-composer{display:grid;gap:8px;}
+.chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
+.chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
 .detail-section{border-top:1px solid var(--border);padding-top:18px;margin-top:18px;}
 .detail-section summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .detail-section summary::-webkit-details-marker{display:none;}
@@ -182,7 +221,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-info{padding:12px;}
 .product-price{font-size:20px;}
 .product-title{font-size:14px;min-height:0;}
-.card-tg-btn{margin:0 12px 12px;font-size:13px;padding:11px 8px;}
+.card-actions{margin:0 12px 12px;grid-template-columns:1fr;}
+.card-action-btn{font-size:13px;padding:11px 8px;}
 .product-detail-layout{gap:14px;}
 .product-thumbs{padding-bottom:6px;scroll-snap-type:x mandatory;}
 .product-thumb{min-width:74px;scroll-snap-align:start;}
@@ -191,7 +231,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-detail-info h1{font-size:clamp(23px,7vw,31px);}
 .detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
 .detail-section{padding-top:14px;margin-top:14px;}
-.detail-order-btn{width:100%;}
+.detail-actions{display:grid;grid-template-columns:1fr;}
+.detail-order-btn,.detail-chat-btn{width:100%;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
@@ -207,6 +248,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-thumb{min-width:68px;}
 .promo-card{padding:18px;border-radius:20px;}
 .promo-badge{width:78px;height:78px;font-size:20px;}
+.chat-overlay{padding:10px;align-items:stretch;}
+.chat-panel{width:100%;max-height:calc(100vh - 20px);border-radius:20px;}
 }
 </style>
 </head>
@@ -220,7 +263,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 25.05.2026 23:47</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 11:40</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -351,9 +394,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>34 / XS / 42, 36 / S / 44, 38 / M / 46, 40 /  L / 48, 42 /  XL / 50</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13364"
+                    data-chat-product-name="Cорочка uniqlo з льону преміум класу"
+                    data-chat-product-url="../product/13364/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіноча блуза з рюшами від uniqlo 650 грн uniqlo 36 / s / 44 sorochky-bluzy оборчатый виріз. дизайн в богемному стилі випромінює вишуканість. ・спільна серія з британським дизайнером бренду jw anderson. ・додайте нашийник з листя лотоса, щоб створити ефектний богемний образ у стилі ретро. ・його можна поєднувати з спідницями для чудового образу. 419510-54 новий синій 36 / s / 44 жіночий одяг сорочки та блузи блузи рюши">
         <a class="card-main-link" href="../product/13363/">
@@ -366,9 +419,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13363"
+                    data-chat-product-name="Жіноча блуза з рюшами від uniqlo"
+                    data-chat-product-url="../product/13363/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіноча блузка 690 грн uniqlo 36 / s / 44 sorochky-bluzy красива блузка з широким кроєм і выточками що прикрашає її і робить жіночною 401695-a14 новий білий 36 / s / 44 жіночий одяг сорочки та блузи блузи">
         <a class="card-main-link" href="../product/13362/">
@@ -381,9 +444,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13362"
+                    data-chat-product-name="Жіноча блузка"
+                    data-chat-product-url="../product/13362/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіноча сорочка 949 грн uniqlo 36 / s / 44 sorochky-bluzy м&#x27;які лінії драпірування дуже красиві. мінімалістський дизайн можна носити як у повсякденному, так і в офіційному стилі. ・матеріал з додаванням віскози з м&#x27;якими драпірованими лініями. ・легкий догляд, не мнеться після прання, простий у догляді. ・класичний крій, серія з штучного шовку підходить для будь-якого випадку і будь-якого стилю. ・чіткий крій для одноразового носіння. ・менше шиття, більше чистоти і формальності. 408901-а14 новий білий 36 / s / 44 жіночий одяг сорочки та блузи сорочки класичний, повсякденний">
         <a class="card-main-link" href="../product/13361/">
@@ -396,9 +469,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13361"
+                    data-chat-product-name="Жіноча сорочка"
+                    data-chat-product-url="../product/13361/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіночий топ з змішаної лляної тканини з коміром-стійкою 999 грн uniqlo 36 / s / 44 sorochky-bluzy крута і повсякденна річ з прохолодним і гнучким відчуттям. м&#x27;який прохолодний лляної віскоза. ・він не мнеться і надає гарний вигляд. ・тонкі і природно виглядають гудзики підходять для лляних тканин. ・рекомендується поєднувати його з брюками і т. д. 415678-a14 новий білий 36 / s / 44 жіночий одяг сорочки та блузи сорочки повсякденний">
         <a class="card-main-link" href="../product/13360/">
@@ -411,9 +494,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13360"
+                    data-chat-product-name="Жіночий топ з змішаної лляної тканини з коміром-стійкою"
+                    data-chat-product-url="../product/13360/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіноча блузка з бавовни і льону 999 грн uniqlo 36 / s / 44 sorochky-bluzy жіноча блузка uniqlo uniqlo 195493 з бавовни і льону виготовлено з 66 % бавовни і 34 % льону, що робить його зручним і освіжаючим. вільний крій з напіввідкритим коміром і рукавами-ліхтариками три чверті створює відчуття жвавості. 195493 новий білий 36 / s / 44 жіночий одяг сорочки та блузи блузи рукави ліхтарики">
         <a class="card-main-link" href="../product/13359/">
@@ -426,9 +519,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13359"
+                    data-chat-product-name="Жіноча блузка з бавовни і льону"
+                    data-chat-product-url="../product/13359/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіноча сорочка 699 грн uniqlo 36 / s / 44 sorochky-bluzy 100%коттон 402269-а14 новий зелений 36 / s / 44 жіночий одяг сорочки та блузи сорочки">
         <a class="card-main-link" href="../product/13358/">
@@ -441,9 +544,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13358"
+                    data-chat-product-name="Жіноча сорочка"
+                    data-chat-product-url="../product/13358/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіноча лляна сорочка з круглим вирізом idlf premium 1299 грн uniqlo 34 / xs / 42 sorochky-bluzy класний і зручний якісний 100% лляної матеріал! насолоджуйтеся комфортом преміальних матеріалів. ・продукти в співробітництві з всесвітньо відомою моделлю інес де ла фасанж. ・прохолодний і зручний 100% льон преміум-класу. новий білий 34 / xs / 42 жіночий одяг сорочки та блузи сорочки">
         <a class="card-main-link" href="../product/13357/">
@@ -456,9 +569,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13357"
+                    data-chat-product-name="Жіноча лляна сорочка з круглим вирізом idlf premium"
+                    data-chat-product-url="../product/13357/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="uniqlo червона блузка з довгим рукавом з твілу з драпіруванням 680 грн uniqlo 34 / xs / 42 sorochky-bluzy проста і чиста, ця чудова червона блузка ідеально підходить для універсального гардеробу. м&#x27;яка і зручна тканина, яка чудово поєднується з джинсами, шортами, брюками або спідницею. 100% віскоза новий з бірками! 412093-54 новий червоний 34 / xs / 42 жіночий одяг сорочки та блузи блузи">
         <a class="card-main-link" href="../product/13356/">
@@ -471,9 +594,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13356"
+                    data-chat-product-name="Uniqlo червона блузка з довгим рукавом з твілу з драпіруванням"
+                    data-chat-product-url="../product/13356/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіноча сорочка з відкритим коміром uniqlo 780 грн uniqlo 36 / s / 44 sorochky-bluzy ви можете носити два стилю коміра в одному виробі!дизайн з глибоким розрізом і геометричними лініями підкреслює жіночність. ・одну річ можна носити двома способами. ・геометричний крій з глибокими прорізами. 406453-58 новий рожевий 36 / s / 44 жіночий одяг сорочки та блузи блузи геометричний">
         <a class="card-main-link" href="../product/13355/">
@@ -486,9 +619,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13355"
+                    data-chat-product-name="Жіноча сорочка з відкритим коміром uniqlo"
+                    data-chat-product-url="../product/13355/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="жіноча дизайнерська довга сорочка в смужку 799 грн uniqlo 36 / s / 44 sorochky-bluzy сорочка без коміра в традиційному стилі. можна поєднувати з різними низом. ・спільна серія з британським дизайнером бренду jw anderson. носіть з короткою спідницею. ・традиційна сорочка без коміра, яка виходить за рамки часу і виражає елегантний смак і жіночність. ・надівається з джинсами з високою талією або заправляється в спідницю. 4`17573-a14 новий білий, блакитний 36 / s / 44 жіночий одяг сорочки та блузи сорочки у смужку">
         <a class="card-main-link" href="../product/13354/">
@@ -501,9 +644,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13354"
+                    data-chat-product-name="Жіноча дизайнерська довга сорочка в смужку"
+                    data-chat-product-url="../product/13354/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card" data-search="сорочка овер extra fine cotton від uniqlo японія 949 грн uniqlo 34 / xs / 42 sorochky-bluzy сорочка з 100% бавовни преміум-класу. ефектна смугаста сорочка, підходить як для занять в приміщенні, так і для активного відпочинку. -100% щільний бавовна преміум-класу. ・прозорі смуги, а також широкі плечі, невимушена і зручна сорочка. ・досить прикрити сідниці. ・стандартна сорочка, підходить як для занять в приміщенні, так і на відкритому повітрі 413006-а14 новий блакитний 34 / xs / 42 жіночий одяг сорочки та блузи сорочки у смужку">
         <a class="card-main-link" href="../product/13353/">
@@ -516,9 +669,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 34 / XS / 42</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13353"
+                    data-chat-product-name="Сорочка овер extra fine cotton від uniqlo японія"
+                    data-chat-product-url="../product/13353/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="фланелева сорочка uniqlo 850 грн uniqlo 36 / s / 44 sorochky-bluzy фланелева сорочка uniqlo
 в наявності розмір хс, розмір зазначений по чоловічій сітці, підійде на с-ку жіночу
@@ -541,9 +704,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • 36 / S / 44</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13352"
+                    data-chat-product-name="Фланелева сорочка uniqlo"
+                    data-chat-product-url="../product/13352/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка з віскози uniqlo 1010 грн uniqlo s, m sorochky-bluzy блузка з віскози uniqlo
 в наявності розмір с та м
@@ -560,9 +733,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13351"
+                    data-chat-product-name="Блузка з віскози uniqlo"
+                    data-chat-product-url="../product/13351/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняна сорочка uniqlo 1100 грн uniqlo s, l sorochky-bluzy бавовняна сорочка uniqlo
 в наявності розмір с та л
@@ -583,9 +766,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13350"
+                    data-chat-product-name="Бавовняна сорочка uniqlo"
+                    data-chat-product-url="../product/13350/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="cорочка uniqlo з льону преміум класу 1200 грн uniqlo s sorochky-bluzy жіноча сорочка uniqlo з льону преміум класу
 в наявності розмір хс колір 02 light grey
@@ -609,9 +802,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13349"
+                    data-chat-product-name="Cорочка uniqlo з льону преміум класу"
+                    data-chat-product-url="../product/13349/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блуза з віскози uniqlo 950 грн uniqlo хs sorochky-bluzy блуза з 3/4 рукавами з коміром із віскози uniqlo
 в наявності розмір хс, колір 59 dark green
@@ -634,9 +837,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13348"
+                    data-chat-product-name="Блуза з віскози uniqlo"
+                    data-chat-product-url="../product/13348/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняна блузка uniqlo 1050 грн uniqlo l sorochky-bluzy бавовняна блузка uniqlo
 в наявності розмір л
@@ -659,9 +872,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13347"
+                    data-chat-product-name="Бавовняна блузка uniqlo"
+                    data-chat-product-url="../product/13347/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняна блуза uniqlo 880 грн uniqlo s sorochky-bluzy бавовняна блуза uniqlo, розмір с
 - легка бавовна.
@@ -681,9 +904,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13346"
+                    data-chat-product-name="Бавовняна блуза uniqlo"
+                    data-chat-product-url="../product/13346/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняна сорочка uniqlo 880 грн uniqlo хs sorochky-bluzy бавовняна сорочка uniqlo
 в наявності розмір хс  колір 72 purple
@@ -707,9 +940,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • ХS</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13345"
+                    data-chat-product-name="Бавовняна сорочка uniqlo"
+                    data-chat-product-url="../product/13345/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняна сорочка з колекції ines de la fressange від uniqlo 950 грн uniqlo s sorochky-bluzy бавовняна сорочка з колекції ines de la fressange від uniqlo
 в наявності: розмір с, колір 09 black
@@ -731,9 +974,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13344"
+                    data-chat-product-name="Бавовняна сорочка з колекції ines de la fressange від uniqlo"
+                    data-chat-product-url="../product/13344/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="об&#x27;ємна напівпрозора блузка uniqlo + jw anderson 1050 грн uniqlo s sorochky-bluzy новий lifewear, який поєднує увагу uniqlo до дизайну, крою, тканини та функціональності з фокусом jw anderson на традиційному британському одязі в інноваційному дизайні.
 
@@ -757,9 +1010,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13343"
+                    data-chat-product-name="Об&#x27;ємна напівпрозора блузка uniqlo + jw anderson"
+                    data-chat-product-url="../product/13343/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="вельветова довга сорочка-куртка uniqlo 1010 грн uniqlo l sorochky-bluzy вельветова довга сорочка-куртка uniqlo
 в наявності розмір л, колір 57 olive
@@ -777,9 +1040,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13342"
+                    data-chat-product-name="Вельветова довга сорочка-куртка uniqlo"
+                    data-chat-product-url="../product/13342/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="сорочка без рукавів uniqlo 1200 грн uniqlo s, xl sorochky-bluzy сорочка без рукавів uniqlo
 в наявності розмір с та хл, колір 30 natural
@@ -797,9 +1070,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13341"
+                    data-chat-product-name="Сорочка без рукавів uniqlo"
+                    data-chat-product-url="../product/13341/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="сорочка без рукавів uniqlo 1200 грн uniqlo хs, m sorochky-bluzy сорочка без рукавів uniqlo
 в наявності розмір хс та м, колір 76 purple
@@ -817,9 +1100,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • ХS, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13340"
+                    data-chat-product-name="Сорочка без рукавів uniqlo"
+                    data-chat-product-url="../product/13340/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo m, l sorochky-bluzy блузка uniqlo з віскози
 в наявності розмір м та л,  колір 11 pink
@@ -841,9 +1134,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13339"
+                    data-chat-product-name="Блузка uniqlo з віскози"
+                    data-chat-product-url="../product/13339/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo xl sorochky-bluzy блузка uniqlo з віскози
 в наявності розмір хл, колір чорний
@@ -865,9 +1168,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13338"
+                    data-chat-product-name="Блузка uniqlo з віскози"
+                    data-chat-product-url="../product/13338/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo m sorochky-bluzy блузка uniqlo з віскози
 в наявності розмір м, колір 01 off white
@@ -885,9 +1198,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13337"
+                    data-chat-product-name="Блузка uniqlo з віскози"
+                    data-chat-product-url="../product/13337/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo xl sorochky-bluzy блузка uniqlo з віскози
 в наявності розмір хл, колір чорний
@@ -911,9 +1234,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13336"
+                    data-chat-product-name="Блузка uniqlo з віскози"
+                    data-chat-product-url="../product/13336/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo m, l, xl sorochky-bluzy блузка uniqlo з віскози
 в наявності розмір м, л та хл, колір блакитний
@@ -934,9 +1267,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13335"
+                    data-chat-product-name="Блузка uniqlo з віскози"
+                    data-chat-product-url="../product/13335/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo xl sorochky-bluzy блузка uniqlo з віскози
 в наявності розмір хл, колір 58 dark green
@@ -958,9 +1301,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13334"
+                    data-chat-product-name="Блузка uniqlo з віскози"
+                    data-chat-product-url="../product/13334/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка з суміші льону uniqlo 1080 грн uniqlo l sorochky-bluzy блузка з суміші льону uniqlo
 в наявності розмір л, колір 38 dark brown
@@ -978,9 +1331,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13333"
+                    data-chat-product-name="Блузка з суміші льону uniqlo"
+                    data-chat-product-url="../product/13333/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка з суміші льону uniqlo 1080 грн uniqlo s, m, l sorochky-bluzy блузка з суміші льону uniqlo
 в наявності розмір с, м та л, колір чорний
@@ -998,9 +1361,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13332"
+                    data-chat-product-name="Блузка з суміші льону uniqlo"
+                    data-chat-product-url="../product/13332/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo m sorochky-bluzy блузка uniqlo з віскози
 в наявності розмір м, колір 50 light green
@@ -1018,9 +1391,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13331"
+                    data-chat-product-name="Блузка uniqlo з віскози"
+                    data-chat-product-url="../product/13331/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="сорочка бавовняна uniqlo 1100 грн uniqlo l sorochky-bluzy сорочка бавовняна uniqlo
 в наявності розмір л, колір 67 blue
@@ -1039,9 +1422,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13330"
+                    data-chat-product-name="Сорочка бавовняна uniqlo"
+                    data-chat-product-url="../product/13330/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo l, xl sorochky-bluzy блузка uniqlo з віскози
 в наявності розмір л та хл
@@ -1065,9 +1458,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13329"
+                    data-chat-product-name="Блузка uniqlo з віскози"
+                    data-chat-product-url="../product/13329/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка uniqlo з віскози 1050 грн uniqlo m, xl sorochky-bluzy блузка uniqlo з віскози
 в наявності розмір м та хл, колір білий
@@ -1089,9 +1492,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13328"
+                    data-chat-product-name="Блузка uniqlo з віскози"
+                    data-chat-product-url="../product/13328/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="укорочена сорочка оксфордського крою uniqlo 1150 грн uniqlo l, xl sorochky-bluzy укорочена сорочка оксфордського крою uniqlo
 в наявності розмір л та хл, колір 61 blue
@@ -1109,9 +1522,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13327"
+                    data-chat-product-name="Укорочена сорочка оксфордського крою uniqlo"
+                    data-chat-product-url="../product/13327/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка uniqlo з сатіну 1050 грн uniqlo m sorochky-bluzy блузка uniqlo з сатіну
 в наявності розмір м, колір 32 beige
@@ -1129,9 +1552,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13326"
+                    data-chat-product-name="Блузка uniqlo з сатіну"
+                    data-chat-product-url="../product/13326/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="блузка з суміші льону uniqlo 1080 грн uniqlo s, m, l sorochky-bluzy блузка з суміші льону uniqlo
 в наявності розмір с, м та л, колір 61 blue
@@ -1149,9 +1582,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13325"
+                    data-chat-product-name="Блузка з суміші льону uniqlo"
+                    data-chat-product-url="../product/13325/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="сорочка унісекс uniqlo 900 грн uniqlo хs, s, m sorochky-bluzy сорочка унісекс uniqlo
 в наявності розмір хс по чоловічій сітці, що відповідає жіночому с/м, колір 69 navy
@@ -1174,9 +1617,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • ХS, S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13324"
+                    data-chat-product-name="Сорочка унісекс uniqlo"
+                    data-chat-product-url="../product/13324/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="сорочка вільного крою uniqlo u 1050 грн uniqlo m sorochky-bluzy сорочка вільного крою uniqlo u
 в наявності розмір м, колір 56 olive
@@ -1194,9 +1647,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13323"
+                    data-chat-product-name="Сорочка вільного крою uniqlo u"
+                    data-chat-product-url="../product/13323/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняна сорочка-кокон uniqlo 1100 грн uniqlo l sorochky-bluzy бавовняна сорочка-кокон uniqlo
 в наявності розмір л, колір 63 blue
@@ -1214,9 +1677,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13322"
+                    data-chat-product-name="Бавовняна сорочка-кокон uniqlo"
+                    data-chat-product-url="../product/13322/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="оксфордська сорочка вільного крою uniqlo 1150 грн uniqlo m sorochky-bluzy оксфордська сорочка вільного крою uniqlo
 в наявності розмір м, колір 64 blau
@@ -1234,9 +1707,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13321"
+                    data-chat-product-name="Оксфордська сорочка вільного крою uniqlo"
+                    data-chat-product-url="../product/13321/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="укорочена сорочка оксфордського крою uniqlo 1150 грн uniqlo m sorochky-bluzy укорочена сорочка оксфордського крою uniqlo
 в наявності розмір л , колір 31 beige
@@ -1254,9 +1737,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13320"
+                    data-chat-product-name="Укорочена сорочка оксфордського крою uniqlo"
+                    data-chat-product-url="../product/13320/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняна сорочка uniqlo 1100 грн uniqlo s, l sorochky-bluzy бавовняна сорочка uniqlo
 в наявності розмір с та л
@@ -1277,9 +1770,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, L</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13011"
+                    data-chat-product-name="Бавовняна сорочка uniqlo"
+                    data-chat-product-url="../product/13011/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняна сорочка оверсайз uniqlo 1100 грн uniqlo s, m sorochky-bluzy бавовняна сорочка оверсайз uniqlo
 в наявності розмір с та м, колір 62 blau
@@ -1297,9 +1800,19 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13010"
+                    data-chat-product-name="Бавовняна сорочка оверсайз uniqlo"
+                    data-chat-product-url="../product/13010/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div>
     <div class="product-card hidden-card" data-search="бавовняна сорочка оверсайз uniqlo 1100 грн uniqlo s, m, xl sorochky-bluzy бавовняна сорочка оверсайз uniqlo
 в наявності розмір с, м та хл, колір білий
@@ -1317,16 +1830,270 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='product-meta'>Uniqlo • S, M, XL</div>
             </div>
         </a>
-        <a class="card-tg-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-            Замовити в Telegram (-10%)
-        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
+                Telegram -10%
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    data-chat-product-id="13009"
+                    data-chat-product-name="Бавовняна сорочка оверсайз uniqlo"
+                    data-chat-product-url="../product/13009/"
+                    onclick="openChatFromButton(this)">
+                <span class="chat-icon" aria-hidden="true"></span>
+                Чат
+            </button>
+        </div>
     </div></div>
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 25.05.2026 23:47</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 11:40</div>
 </main>
 </div>
+<div class="chat-overlay" id="chatOverlay" aria-hidden="true">
+    <section class="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+        <div class="chat-head">
+            <div>
+                <div class="chat-title" id="chatTitle">Чат з UniqLow</div>
+                <div class="chat-subtitle" id="chatSubtitle">Увійдіть через Google, щоб написати повідомлення.</div>
+            </div>
+            <button class="chat-close" type="button" onclick="closeChat()" aria-label="Закрити">×</button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-auth" id="chatAuth">
+                <button class="chat-google-btn" type="button" id="chatGoogleBtn">Увійти через Google</button>
+                <div class="chat-warning">
+                    Чат захищений Google-входом і правилами доступу. Не надсилайте номери карт, CVV, паролі або коди з SMS.
+                </div>
+                <div class="chat-status" id="chatStatus">Чат готується...</div>
+            </div>
+            <div class="chat-workspace" id="chatWorkspace">
+                <div class="chat-owner-tools" id="chatOwnerTools">
+                    <div class="chat-status">Режим власника: показані останні діалоги покупців.</div>
+                    <div class="chat-thread-list" id="chatThreadList"></div>
+                </div>
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-composer">
+                    <textarea class="chat-input" id="chatInput" maxlength="2000" placeholder="Напишіть повідомлення..."></textarea>
+                    <button class="chat-send-btn" type="button" id="chatSendBtn">Надіслати</button>
+                    <div class="chat-warning">Для платежів використовуйте тільки офіційні платіжні сервіси. Дані карт у чат не відправляйте.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script id="chatConfig" type="application/json">{"ownerEmail": "nikitakraft2204@gmail.com", "firebase": {"apiKey": "", "authDomain": "", "projectId": "", "appId": ""}, "sdkVersion": "10.12.5"}</script>
+<script type="module">
+const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
+const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
+const firebaseConfig = chatConfig.firebase || {};
+const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
+let chatAuth = null;
+let chatDb = null;
+let chatUser = null;
+let chatProvider = null;
+let chatProduct = {};
+let chatThreadId = '';
+let chatUnsubMessages = null;
+let chatUnsubThreads = null;
+let firebaseApi = null;
+
+const chatEl = (id) => document.getElementById(id);
+const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
+const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
+const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
+const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+
+function openChatFromButton(btn) {
+    chatProduct = {
+        id: btn?.dataset.chatProductId || 'general',
+        name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
+        url: btn?.dataset.chatProductUrl || location.pathname,
+    };
+    chatEl('chatOverlay')?.classList.add('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'false');
+    chatEl('chatSubtitle').textContent = chatProduct.name ? `Товар: ${chatProduct.name}` : 'Чат з магазином';
+    prepareChat();
+}
+
+function closeChat() {
+    chatEl('chatOverlay')?.classList.remove('open');
+    chatEl('chatOverlay')?.setAttribute('aria-hidden', 'true');
+}
+
+window.openChatFromButton = openChatFromButton;
+window.closeChat = closeChat;
+
+async function prepareChat() {
+    if (!chatHasConfig) {
+        chatStatus('Чат ще не підключений. Додайте Firebase config у test.py і опублікуйте сайт.');
+        return;
+    }
+    try {
+        await ensureFirebase();
+        chatStatus(chatUser ? 'Ви увійшли. Можна писати.' : 'Увійдіть через Google, щоб почати чат.');
+    } catch (err) {
+        chatStatus(`Чат не запустився: ${err.message || err}`);
+    }
+}
+
+async function ensureFirebase() {
+    if (firebaseApi) return firebaseApi;
+    const version = chatConfig.sdkVersion || '10.12.5';
+    const appMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-app.js`);
+    const authMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-auth.js`);
+    const storeMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-firestore.js`);
+    const app = appMod.initializeApp(firebaseConfig);
+    chatAuth = authMod.getAuth(app);
+    chatDb = storeMod.getFirestore(app);
+    chatProvider = new authMod.GoogleAuthProvider();
+    firebaseApi = { ...authMod, ...storeMod };
+    firebaseApi.onAuthStateChanged(chatAuth, async (user) => {
+        chatUser = user;
+        updateChatAuthState();
+        if (user) {
+            if (chatIsOwner()) listenOwnerThreads();
+            else await openCustomerThread();
+        }
+    });
+    return firebaseApi;
+}
+
+function updateChatAuthState() {
+    const signed = Boolean(chatUser);
+    chatEl('chatAuth').style.display = signed ? 'none' : 'grid';
+    chatEl('chatWorkspace').classList.toggle('active', signed);
+    chatEl('chatOwnerTools').classList.toggle('active', signed && chatIsOwner());
+    if (signed) chatStatus(`Увійшли як ${chatUser.email}`);
+}
+
+async function signInChat() {
+    if (!chatHasConfig) {
+        chatStatus('Потрібно додати Firebase config перед тестом чату.');
+        return;
+    }
+    await ensureFirebase();
+    try {
+        await firebaseApi.signInWithPopup(chatAuth, chatProvider);
+    } catch (err) {
+        await firebaseApi.signInWithRedirect(chatAuth, chatProvider);
+    }
+}
+
+async function openCustomerThread() {
+    if (!chatUser || !firebaseApi) return;
+    chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
+    const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
+    await firebaseApi.setDoc(threadRef, {
+        customerUid: chatUser.uid,
+        customerEmail: chatUser.email || '',
+        customerName: chatUser.displayName || chatUser.email || '',
+        ownerEmail: chatOwnerEmail,
+        productId: chatProduct.id || 'general',
+        productName: chatProduct.name || '',
+        productUrl: new URL(chatProduct.url || location.pathname, location.href).href,
+        updatedAt: firebaseApi.serverTimestamp(),
+        createdAt: firebaseApi.serverTimestamp(),
+    }, { merge: true });
+    listenMessages(chatThreadId);
+}
+
+function listenOwnerThreads() {
+    if (chatUnsubThreads) chatUnsubThreads();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads'),
+        firebaseApi.orderBy('updatedAt', 'desc'),
+        firebaseApi.limit(50)
+    );
+    chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
+        const list = chatEl('chatThreadList');
+        list.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const data = docSnap.data();
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `chat-thread-btn${docSnap.id === chatThreadId ? ' active' : ''}`;
+            btn.dataset.threadId = docSnap.id;
+            btn.textContent = `${data.customerName || data.customerEmail || 'Покупець'} — ${data.productName || 'Загальний чат'}`;
+            btn.onclick = () => {
+                chatThreadId = docSnap.id;
+                document.querySelectorAll('.chat-thread-btn').forEach(el => el.classList.toggle('active', el.dataset.threadId === chatThreadId));
+                listenMessages(chatThreadId);
+            };
+            list.appendChild(btn);
+        });
+        if (!chatThreadId && snap.docs[0]) {
+            chatThreadId = snap.docs[0].id;
+            listenMessages(chatThreadId);
+        }
+    }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
+}
+
+function listenMessages(threadId) {
+    if (chatUnsubMessages) chatUnsubMessages();
+    const q = firebaseApi.query(
+        firebaseApi.collection(chatDb, 'chatThreads', threadId, 'messages'),
+        firebaseApi.orderBy('createdAt', 'asc'),
+        firebaseApi.limit(120)
+    );
+    chatUnsubMessages = firebaseApi.onSnapshot(q, (snap) => {
+        const box = chatEl('chatMessages');
+        box.innerHTML = '';
+        snap.forEach((docSnap) => {
+            const msg = docSnap.data();
+            const row = document.createElement('div');
+            row.className = `chat-message${msg.uid === chatUser?.uid ? ' mine' : ''}`;
+            const meta = document.createElement('div');
+            meta.className = 'chat-message-meta';
+            meta.textContent = msg.name || msg.email || 'Користувач';
+            const text = document.createElement('div');
+            text.textContent = msg.text || '';
+            row.append(meta, text);
+            box.appendChild(row);
+        });
+        box.scrollTop = box.scrollHeight;
+    }, (err) => chatStatus(`Не вдалося прочитати повідомлення: ${err.message}`));
+}
+
+async function sendChatMessage() {
+    const input = chatEl('chatInput');
+    const text = chatClean(input.value);
+    if (!text || !chatUser || !firebaseApi) return;
+    if (!chatThreadId && !chatIsOwner()) await openCustomerThread();
+    if (!chatThreadId) {
+        chatStatus('Виберіть діалог покупця.');
+        return;
+    }
+    chatEl('chatSendBtn').disabled = true;
+    try {
+        const role = chatIsOwner() ? 'owner' : 'customer';
+        await firebaseApi.addDoc(firebaseApi.collection(chatDb, 'chatThreads', chatThreadId, 'messages'), {
+            uid: chatUser.uid,
+            email: chatUser.email || '',
+            name: chatUser.displayName || chatUser.email || '',
+            role,
+            text,
+            createdAt: firebaseApi.serverTimestamp(),
+        });
+        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+            lastMessage: text.slice(0, 180),
+            lastSender: role,
+            updatedAt: firebaseApi.serverTimestamp(),
+        }, { merge: true });
+        input.value = '';
+    } catch (err) {
+        chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
+    } finally {
+        chatEl('chatSendBtn').disabled = false;
+    }
+}
+
+chatEl('chatGoogleBtn')?.addEventListener('click', signInChat);
+chatEl('chatSendBtn')?.addEventListener('click', sendChatMessage);
+chatEl('chatInput')?.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) sendChatMessage();
+});
+</script>
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
