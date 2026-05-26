@@ -312,7 +312,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 26.05.2026 13:16</div>
+    <div class='updated-at'>Оновлено: 26.05.2026 13:25</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -875,7 +875,7 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="show-more-wrap">
                 <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 13:16</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 26.05.2026 13:25</div>
 </main>
 </div>
 <div class="chat-overlay" id="chatOverlay" aria-hidden="true">
@@ -956,6 +956,18 @@ const chatFormatTime = (stamp) => {
     const value = chatTimeValue(stamp);
     if (!value) return '';
     return new Intl.DateTimeFormat('uk-UA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+};
+const hydrateThreadData = (data = {}) => {
+    const productId = String(data.productId || '').trim();
+    const cached = productId ? (chatCatalog[productId] || {}) : {};
+    return {
+        ...cached,
+        ...data,
+        productImage: data.productImage || cached.productImage || '',
+        productPrice: data.productPrice || cached.productPrice || '',
+        productName: data.productName || cached.productName || '',
+        productUrl: data.productUrl || cached.productUrl || '',
+    };
 };
 
 function openChatFromButton(btn) {
@@ -1096,7 +1108,7 @@ function listenOwnerThreads() {
         firebaseApi.limit(100)
     );
     chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
-        renderThreadList(snap.docs.map((docSnap) => ({ id: docSnap.id, data: docSnap.data() })));
+        renderThreadList(snap.docs.map((docSnap) => ({ id: docSnap.id, data: hydrateThreadData(docSnap.data()) })));
     }, (err) => chatStatus(`Не вдалося прочитати діалоги: ${err.message}`));
 }
 
@@ -1109,7 +1121,7 @@ function listenCustomerThreads() {
     );
     chatUnsubThreads = firebaseApi.onSnapshot(q, (snap) => {
         const threads = snap.docs
-            .map((docSnap) => ({ id: docSnap.id, data: docSnap.data() }))
+            .map((docSnap) => ({ id: docSnap.id, data: hydrateThreadData(docSnap.data()) }))
             .sort((a, b) => chatTimeValue(b.data.updatedAt) - chatTimeValue(a.data.updatedAt));
         renderThreadList(threads);
     }, (err) => chatStatus(`Не вдалося прочитати ваші чати: ${err.message}`));
@@ -1132,6 +1144,7 @@ function renderThreadList(threads) {
 }
 
 function renderSingleThreadButton(threadId, data) {
+    data = hydrateThreadData(data || {});
     const list = chatEl('chatThreadList');
     const history = chatEl('chatHistoryPanel');
     if (!list || !history || (!chatPageMode && !chatIsOwner())) return;
@@ -1142,6 +1155,7 @@ function renderSingleThreadButton(threadId, data) {
 }
 
 function createThreadButton(threadId, data) {
+    data = hydrateThreadData(data || {});
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'chat-thread-btn';
@@ -1174,7 +1188,7 @@ function createThreadButton(threadId, data) {
 
 function selectThread(threadId, data) {
     chatThreadId = threadId;
-    chatCurrentThread = data || {};
+    chatCurrentThread = hydrateThreadData(data || {});
     markActiveThread();
     renderThreadProduct(chatCurrentThread);
     listenMessages(threadId);
@@ -1189,7 +1203,7 @@ function markActiveThread() {
 function renderThreadProduct(data) {
     const preview = chatEl('chatProductPreview');
     if (!preview) return;
-    const source = data || chatProduct || {};
+    const source = hydrateThreadData(data || chatProduct || {});
     preview.innerHTML = '';
     if (!source.productName && !source.name) {
         const empty = document.createElement('div');
