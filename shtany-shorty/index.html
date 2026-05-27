@@ -61,11 +61,20 @@ border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
 .telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
 padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
-.product-search-bar{display:flex;align-items:center;gap:12px;margin:0 0 18px;max-width:760px;}
-.product-search-input{width:min(520px,100%);border:1px solid var(--border);border-radius:14px;
-background:var(--panel-solid);color:var(--text);padding:13px 14px;font-size:15px;outline:none;}
-.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
-.search-status{color:var(--muted);font-size:13px;white-space:nowrap;}
+.filter-panel{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:10px;align-items:end;
+margin:0 0 18px;padding:14px;border:1px solid var(--border);border-radius:20px;background:var(--panel-solid);
+box-shadow:var(--shadow);}
+.filter-field{display:grid;gap:6px;min-width:0;}
+.filter-field-wide{grid-column:span 2;}
+.filter-field span{font-size:12px;font-weight:900;color:var(--muted);}
+.filter-field input,.filter-field select,.product-search-input{width:100%;min-height:44px;border:1px solid var(--border);border-radius:13px;
+background:var(--bg);color:var(--text);padding:10px 12px;font:inherit;font-size:14px;outline:none;}
+.filter-field input:focus,.filter-field select:focus,.product-search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.filter-actions{display:grid;gap:7px;align-content:end;min-width:0;}
+.filter-reset-btn{min-height:44px;border:1px solid var(--border);background:var(--panel-solid);color:var(--text);
+border-radius:13px;font-weight:900;cursor:pointer;}
+.filter-reset-btn:hover{border-color:var(--accent);color:var(--accent);}
+.search-status,.review-filter-status{color:var(--muted);font-size:13px;line-height:1.35;}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:clamp(14px,2vw,20px);}
 .product-card{display:flex;flex-direction:column;background:var(--panel-solid);
 border:1px solid var(--border);border-radius:22px;overflow:hidden;
@@ -109,17 +118,31 @@ display:inline-flex;align-items:center;justify-content:center;text-decoration:no
 .product-main-image-wrap img{width:100%;height:min(64vh,620px);min-height:320px;object-fit:contain;display:block;padding:8px;}
 .product-zoom-hint{position:absolute;right:12px;bottom:12px;border:1px solid var(--border);background:rgba(255,255,255,.92);color:var(--text);border-radius:12px;padding:9px 12px;font-weight:900;cursor:pointer;box-shadow:0 10px 24px rgba(16,24,40,.16);}
 body.dark .product-zoom-hint{background:rgba(17,24,39,.92);}
-.product-zoom-overlay{position:fixed;inset:0;z-index:120;background:rgba(2,6,23,.78);display:none;align-items:center;justify-content:center;padding:14px;}
+.product-zoom-overlay{position:fixed;inset:0;z-index:120;background:rgba(2,6,23,.84);display:none;align-items:center;justify-content:center;padding:clamp(8px,1.5vw,18px);}
 .product-zoom-overlay.open{display:flex;}
-.product-zoom-content{width:min(1120px,100%);height:min(900px,92vh);background:var(--panel-solid);border:1px solid var(--border);border-radius:22px;box-shadow:0 30px 90px rgba(0,0,0,.45);display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;}
+.product-zoom-content{width:min(1280px,100%);height:min(940px,94vh);background:var(--panel-solid);border:1px solid var(--border);border-radius:22px;box-shadow:0 30px 90px rgba(0,0,0,.48);display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;}
 .product-zoom-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border);}
 .product-zoom-title{font-weight:900;}
+.product-zoom-meta{margin-top:3px;color:var(--muted);font-size:12px;}
 .product-zoom-close{width:38px;height:38px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:22px;cursor:pointer;}
-.product-zoom-stage{min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg);}
-.product-zoom-image{max-width:100%;max-height:100%;object-fit:contain;transition:transform .16s ease;transform-origin:center center;will-change:transform;}
-.product-zoom-controls{display:flex;justify-content:center;gap:8px;padding:12px;border-top:1px solid var(--border);}
+.product-zoom-stage{position:relative;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg);touch-action:none;user-select:none;}
+.product-zoom-stage.is-draggable{cursor:grab;}
+.product-zoom-stage.is-dragging{cursor:grabbing;}
+.product-zoom-image{max-width:100%;max-height:100%;object-fit:contain;transition:transform .12s ease;transform-origin:center center;will-change:transform;pointer-events:none;}
+.product-zoom-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:46px;height:58px;border:1px solid var(--border);border-radius:15px;background:rgba(255,255,255,.88);color:var(--text);font-size:38px;line-height:1;cursor:pointer;box-shadow:0 12px 30px rgba(16,24,40,.16);}
+body.dark .product-zoom-nav{background:rgba(17,24,39,.88);}
+.product-zoom-nav:disabled{opacity:.32;cursor:default;}
+.product-zoom-prev{left:12px;}
+.product-zoom-next{right:12px;}
+.product-zoom-bottom{display:grid;gap:10px;padding:12px;border-top:1px solid var(--border);background:var(--panel-solid);}
+.product-zoom-controls{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;}
 .product-zoom-controls button{min-width:54px;border:1px solid var(--border);background:var(--panel-solid);color:var(--text);border-radius:12px;padding:10px 12px;font-weight:900;cursor:pointer;}
-.product-zoom-controls button:hover,.product-zoom-close:hover,.product-zoom-hint:hover{border-color:var(--accent);color:var(--accent);}
+.product-zoom-percent{min-width:58px;text-align:center;color:var(--muted);font-size:13px;font-weight:900;}
+.product-zoom-thumbs{display:flex;gap:8px;overflow-x:auto;justify-content:center;padding-bottom:2px;}
+.product-zoom-thumb{flex:0 0 58px;width:58px;height:58px;border:1px solid var(--border);background:var(--bg);border-radius:12px;padding:2px;cursor:pointer;}
+.product-zoom-thumb img{width:100%;height:100%;object-fit:contain;display:block;}
+.product-zoom-thumb.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.product-zoom-controls button:hover,.product-zoom-close:hover,.product-zoom-hint:hover,.product-zoom-nav:not(:disabled):hover{border-color:var(--accent);color:var(--accent);}
 .product-thumbs{display:flex;gap:10px;margin-top:12px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity;}
 .product-thumb{border:1px solid var(--border);background:var(--panel-solid);border-radius:12px;padding:0;overflow:hidden;cursor:pointer;transition:.18s ease;}
 .product-thumb{flex:0 0 78px;scroll-snap-align:start;}
@@ -241,6 +264,7 @@ color:white;padding:14px 28px;border-radius:14px;font-size:16px;font-weight:700;
 .review-secondary-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--text);}
 .review-form{display:grid;gap:10px;margin-top:16px;}
 .review-field-label{font-size:13px;font-weight:900;color:var(--muted);}
+.field-optional{font-weight:700;color:var(--muted);opacity:.8;}
 .review-rating-select{display:flex;gap:8px;flex-wrap:wrap;}
 .review-rating-select button{width:42px;height:42px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-weight:900;cursor:pointer;}
 .review-rating-select button.active{background:var(--orange);border-color:var(--orange);color:white;}
@@ -257,11 +281,14 @@ border-radius:16px;padding:20px;box-shadow:var(--shadow);}
 .hidden-review{display:none;}
 .review-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .review-name{font-weight:800;font-size:16px;display:flex;align-items:center;gap:10px;}
+.review-side{display:grid;justify-items:end;gap:5px;}
 .review-stars{display:flex;gap:4px;align-items:center;}
+.review-date{font-size:12px;color:var(--muted);line-height:1.3;text-align:right;}
 .rating-star{width:17px;height:17px;display:inline-block;background:var(--border);
 clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 56%,79% 91%,50% 70%,21% 91%,32% 56%,2% 35%,39% 35%);}
 .rating-star.filled{background:var(--orange);}
 .review-text{color:var(--text);line-height:1.6;font-size:15px;}
+.review-text-empty{color:var(--muted);font-style:italic;}
 .empty-box{padding:30px;border-radius:22px;border:1px dashed var(--border);
 background:var(--panel-solid);color:var(--muted);}
 .footer-note{margin-top:26px;text-align:center;color:var(--muted);font-size:13px;}
@@ -284,7 +311,8 @@ background:var(--panel-solid);color:var(--muted);}
 .mobile-catalog .menu-block ul{display:flex;flex-wrap:wrap;gap:6px;}
 .mobile-catalog .menu-block a{margin:0;padding:9px 11px;border:1px solid var(--border);background:var(--panel-solid);white-space:nowrap;}
 .promo-card{flex-direction:column;text-align:center;}
-.product-search-bar{align-items:stretch;flex-direction:column;}
+.filter-panel{grid-template-columns:repeat(3,minmax(0,1fr));}
+.filter-field-wide{grid-column:span 3;}
 .product-detail-layout{grid-template-columns:minmax(230px,.9fr) minmax(290px,1.1fr);gap:16px;}
 .product-gallery-panel{top:92px;}
 .product-main-image-wrap img{height:min(56vh,500px);min-height:260px;}
@@ -321,11 +349,15 @@ background:var(--panel-solid);color:var(--muted);}
 .chat-head{align-items:flex-start;}
 .chat-head-actions{flex-direction:column;align-items:flex-end;}
 .product-zoom-hint{right:8px;bottom:8px;padding:8px 10px;font-size:12px;}
+.filter-panel{grid-template-columns:1fr 1fr;}
+.filter-field-wide{grid-column:1/-1;}
+.filter-actions{grid-column:1/-1;grid-template-columns:1fr;}
 .product-zoom-content{height:92vh;border-radius:18px;}
 .product-zoom-controls button{min-width:48px;}
 .review-compose-head{display:grid;}
 .review-form-actions{display:grid;align-items:stretch;}
 .review-header{align-items:flex-start;flex-direction:column;gap:8px;}
+.review-side{justify-items:start;}
 .footer-note{font-size:12px;}}
 @media(max-width:680px){
 .product-detail-layout{grid-template-columns:1fr;}
@@ -335,6 +367,8 @@ background:var(--panel-solid);color:var(--muted);}
 @media(max-width:430px){
 .quick-grid,.products-grid{grid-template-columns:1fr;}
 .mobile-catalog .menu-block ul{display:grid;grid-template-columns:1fr;}
+.filter-panel{grid-template-columns:1fr;padding:12px;border-radius:16px;}
+.filter-field-wide,.filter-actions{grid-column:auto;}
 .product-image{height:260px;}
 .product-main-image-wrap img{height:min(44vh,340px);min-height:220px;}
 .product-thumb{min-width:68px;}
@@ -362,7 +396,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 27.05.2026 11:55</div>
+    <div class='updated-at'>Оновлено: 27.05.2026 13:12</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -466,12 +500,48 @@ background:var(--panel-solid);color:var(--muted);}
             <h2>Товари розділу</h2>
         </div>
         
-            <div class="product-search-bar">
-                <input class="product-search-input" type="search"
-                       placeholder="Пошук на цій сторінці: назва, бренд, розмір..."
-                       oninput="filterProducts(this)" autocomplete="off">
-                <div class="search-status" data-total="98">Показано: 12 / 98</div>
-            </div>
+            <section class="filter-panel product-filter-panel" aria-label="Фільтри товарів">
+                <label class="filter-field filter-field-wide">
+                    <span>Пошук</span>
+                    <input id="productSearchInput" class="product-search-input" type="search"
+                           placeholder="Назва, бренд, розмір, опис..." oninput="filterProducts()" autocomplete="off">
+                </label>
+                <label class="filter-field">
+                    <span>Бренд</span>
+                    <select id="productBrandFilter" onchange="filterProducts()">
+                        <option value="">Всі бренди</option>
+                        <option value="levi&#x27;s">Levi&#x27;s</option><option value="uniqlo">Uniqlo</option><option value="zara">ZARA</option>
+                    </select>
+                </label>
+                <label class="filter-field">
+                    <span>Розмір</span>
+                    <input id="productSizeFilter" type="search" placeholder="XS, 42, 10.5..." oninput="filterProducts()" autocomplete="off">
+                </label>
+                
+                <label class="filter-field filter-field-price">
+                    <span>Ціна від</span>
+                    <input id="productMinPriceFilter" type="number" min="0" inputmode="numeric"
+                           placeholder="500" oninput="filterProducts()">
+                </label>
+                <label class="filter-field filter-field-price">
+                    <span>Ціна до</span>
+                    <input id="productMaxPriceFilter" type="number" min="0" inputmode="numeric"
+                           placeholder="2500" oninput="filterProducts()">
+                </label>
+                <label class="filter-field">
+                    <span>Сортування</span>
+                    <select id="productSortFilter" onchange="filterProducts()">
+                        <option value="default">Як у каталозі</option>
+                        <option value="price-asc">Спочатку дешевші</option>
+                        <option value="price-desc">Спочатку дорожчі</option>
+                        <option value="name-asc">Назва А-Я</option>
+                    </select>
+                </label>
+                <div class="filter-actions">
+                    <button class="filter-reset-btn" type="button" onclick="resetProductFilters()">Скинути</button>
+                    <div class="search-status" data-total="98">Показано: 12 / 98</div>
+                </div>
+            </section>
         <div class="products-grid">
     <div class="product-card" data-search="штани smart uniqlo 1200 грн  s shtany-shorty штани smart uniqlo
 в наявності розмір с, колір 10 pink
@@ -488,7 +558,12 @@ background:var(--panel-solid);color:var(--muted);}
 склад
 66% поліестер, 29% віскоза, 5% спандекс
 
-464140 новий рожевий s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс">
+464140 новий рожевий s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс"
+         data-order=""
+         data-price="1200.0"
+         data-brand=""
+         data-size="s"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13765/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/186415656/01-2185186151.jpg" alt="Штани smart uniqlo" loading="lazy" decoding="async">
@@ -515,7 +590,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="джинси вінтаж levis 501 ct селвидж 1900 грн  25 / xs shtany-shorty джинси levis 501 ct новий блакитний 25 / xs жіночий одяг штани та шорти джинси">
+    <div class="product-card" data-search="джинси вінтаж levis 501 ct селвидж 1900 грн  25 / xs shtany-shorty джинси levis 501 ct новий блакитний 25 / xs жіночий одяг штани та шорти джинси"
+         data-order="1"
+         data-price="1900.0"
+         data-brand=""
+         data-size="25 / xs"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13764/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/73441840/01-327440937.jpg" alt="Джинси вінтаж levis 501 ct селвидж" loading="lazy" decoding="async">
@@ -554,7 +634,12 @@ background:var(--panel-solid);color:var(--muted);}
 
 склад: 43% віскоза, 34% льон, 23% поліестер
 
-464846 новий чорний 40 /  l / 48, 42 /  xl / 50 жіночий одяг штани та шорти шорти">
+464846 новий чорний 40 /  l / 48, 42 /  xl / 50 жіночий одяг штани та шорти шорти"
+         data-order="2"
+         data-price="800.0"
+         data-brand=""
+         data-size="40 / l / 48, 42 / xl / 50"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13763/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/189243626/01-2201616940.jpg" alt="Спідниця-шорти uniqlo" loading="lazy" decoding="async">
@@ -594,7 +679,12 @@ background:var(--panel-solid);color:var(--muted);}
 
 склад: 61% віскоза, 39% поліестер
 
-468918 новий зелений, салатовий 38 / m / 46 жіночий одяг штани та шорти шорти">
+468918 новий зелений, салатовий 38 / m / 46 жіночий одяг штани та шорти шорти"
+         data-order="3"
+         data-price="699.0"
+         data-brand=""
+         data-size="38 / m / 46"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13762/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/189244683/01-2201624035.webp" alt="Шорти uniqlo" loading="lazy" decoding="async">
@@ -631,7 +721,12 @@ background:var(--panel-solid);color:var(--muted);}
 
 склад: 67% поліестер, 29% віскоза, 4% еластан
 
-470923 новий сірий 36 / s / 44 жіночий одяг штани та шорти брюки віскоза, поліестер, еластан">
+470923 новий сірий 36 / s / 44 жіночий одяг штани та шорти брюки віскоза, поліестер, еластан"
+         data-order="4"
+         data-price="1010.0"
+         data-brand=""
+         data-size="36 / s / 44"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13761/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/189873146/01-2205624573.jpg" alt="Легкі широкі штани uniqlo" loading="lazy" decoding="async">
@@ -669,7 +764,12 @@ background:var(--panel-solid);color:var(--muted);}
 
 склад: 66% поліестер, 29% віскоза, 5% спандекс
 
-469858 новий бежевий s, m, l 🇺🇦 український: 44-46, 44; європейський: 36; 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс повсякденний">
+469858 новий бежевий s, m, l 🇺🇦 український: 44-46, 44; європейський: 36; 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс повсякденний"
+         data-order="5"
+         data-price="1200.0"
+         data-brand=""
+         data-size="s, m, l"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13760/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/186756321/01-2187324260.jpg" alt="Елегантні брюки uniqlo, розмір с, м та л" loading="lazy" decoding="async">
@@ -707,7 +807,12 @@ background:var(--panel-solid);color:var(--muted);}
 
 склад: 66% поліестер, 28% район, 6% спандекс
 
-464886 новий білий 42 /  xl / 50 жіночий одяг штани та шорти брюки">
+464886 новий білий 42 /  xl / 50 жіночий одяг штани та шорти брюки"
+         data-order="6"
+         data-price="1200.0"
+         data-brand=""
+         data-size="42 / xl / 50"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13759/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/189243539/01-2201616041.jpg" alt="Брюки широкі uniqlo, розмір хл" loading="lazy" decoding="async">
@@ -734,7 +839,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="укорочені жіночі атласні штани 800 грн uniqlo 38 / m / 46 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вигини, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 404663-a20 новий білий 38 / m / 46 жіночий одяг штани та шорти брюки укорочені повсякденний">
+    <div class="product-card" data-search="укорочені жіночі атласні штани 800 грн uniqlo 38 / m / 46 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вигини, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 404663-a20 новий білий 38 / m / 46 жіночий одяг штани та шорти брюки укорочені повсякденний"
+         data-order="7"
+         data-price="800.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13758/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101244693/01-569139646.jpg" alt="Укорочені жіночі атласні штани" loading="lazy" decoding="async">
@@ -761,7 +871,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="710 super skinny women&#x27;s jeans w25l28 1000 грн levi&#x27;s 25 / xs shtany-shorty наші фірмові крою &quot;lot 700&quot; - це ідеальні приголомшливі фасони, створені, щоб лестити, утримувати і піднімати - весь день, кожен день. один з наших бестселерів, надлегка модель 710 super skinny ідеально підкреслює вашу фігуру. у нього найтонша штанина в нашій колекції для чіткого силуету. стиль # 177780171 новий блакитний 25 / xs жіночий одяг штани та шорти джинси">
+    <div class="product-card" data-search="710 super skinny women&#x27;s jeans w25l28 1000 грн levi&#x27;s 25 / xs shtany-shorty наші фірмові крою &quot;lot 700&quot; - це ідеальні приголомшливі фасони, створені, щоб лестити, утримувати і піднімати - весь день, кожен день. один з наших бестселерів, надлегка модель 710 super skinny ідеально підкреслює вашу фігуру. у нього найтонша штанина в нашій колекції для чіткого силуету. стиль # 177780171 новий блакитний 25 / xs жіночий одяг штани та шорти джинси"
+         data-order="8"
+         data-price="1000.0"
+         data-brand="levi&#x27;s"
+         data-size="25 / xs"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13757/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/73464660/01-327558466.jpg" alt="710 super skinny women&#x27;s jeans w25l28" loading="lazy" decoding="async">
@@ -788,7 +903,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="джинсові шорти zara 34 розмір 650 грн zara 34 / xs / 42 shtany-shorty джинсові шорти zara новий синій 34 / xs / 42 жіночий одяг штани та шорти шорти">
+    <div class="product-card" data-search="джинсові шорти zara 34 розмір 650 грн zara 34 / xs / 42 shtany-shorty джинсові шорти zara новий синій 34 / xs / 42 жіночий одяг штани та шорти шорти"
+         data-order="9"
+         data-price="650.0"
+         data-brand="zara"
+         data-size="34 / xs / 42"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13756/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101012312/01-567087534.jpg" alt="Джинсові шорти zara 34 розмір" loading="lazy" decoding="async">
@@ -815,7 +935,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="жіночі укорочені широкі брюки в стилі драп 750 грн uniqlo 36 / s / 44 shtany-shorty легкі і еластичні широкі штани. почуття моди і сезонності. ・ висока талія і широкий крій для стильного образу. ・легкий і гладкий матеріал, що демонструє сезонність. ・ вертикально і горизонтально розтягується матеріал, розтягується в двох напрямках, зручний в носінні. ・ еластичний ремінь і бічна блискавка для більш зручного носіння. ・не мнеться після прання, простий у догляді. ・ можна носити з топом з того ж матеріалу. 400555-a20 новий чорний 36 / s / 44 жіночий одяг штани та шорти брюки укорочені">
+    <div class="product-card" data-search="жіночі укорочені широкі брюки в стилі драп 750 грн uniqlo 36 / s / 44 shtany-shorty легкі і еластичні широкі штани. почуття моди і сезонності. ・ висока талія і широкий крій для стильного образу. ・легкий і гладкий матеріал, що демонструє сезонність. ・ вертикально і горизонтально розтягується матеріал, розтягується в двох напрямках, зручний в носінні. ・ еластичний ремінь і бічна блискавка для більш зручного носіння. ・не мнеться після прання, простий у догляді. ・ можна носити з топом з того ж матеріалу. 400555-a20 новий чорний 36 / s / 44 жіночий одяг штани та шорти брюки укорочені"
+         data-order="10"
+         data-price="750.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13755/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101236366/01-569093281.jpg" alt="Жіночі укорочені широкі брюки в стилі драп" loading="lazy" decoding="async">
@@ -842,7 +967,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="жіночі укорочені атласні штани ezy 790 грн uniqlo 36 / s / 44 shtany-shorty чудова розтяжність, м&#x27;яка посадка, зручність і простота в шкарпетці!демонструє елегантний блиск і підкреслює жіночність. ・атласний бавовняний матеріал з елегантним блиском. ・гнучкий і блискучий, він не занадто облягає ногу, демонструючи гарний крій. ・в комплект входить петля для ременя, що дозволяє легко регулювати розмір за допомогою ременя. ・еластичні та зручні кишені. ・довжина стегна трохи широка, щоб білизна не було видно при нахилі. 411972-а20 новий бордовий 36 / s / 44 жіночий одяг штани та шорти брюки укорочені">
+    <div class="product-card" data-search="жіночі укорочені атласні штани ezy 790 грн uniqlo 36 / s / 44 shtany-shorty чудова розтяжність, м&#x27;яка посадка, зручність і простота в шкарпетці!демонструє елегантний блиск і підкреслює жіночність. ・атласний бавовняний матеріал з елегантним блиском. ・гнучкий і блискучий, він не занадто облягає ногу, демонструючи гарний крій. ・в комплект входить петля для ременя, що дозволяє легко регулювати розмір за допомогою ременя. ・еластичні та зручні кишені. ・довжина стегна трохи широка, щоб білизна не було видно при нахилі. 411972-а20 новий бордовий 36 / s / 44 жіночий одяг штани та шорти брюки укорочені"
+         data-order="11"
+         data-price="790.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty">
         <a class="card-main-link" href="../product/13754/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101235950/01-569091177.jpg" alt="Жіночі укорочені атласні штани ezy" loading="lazy" decoding="async">
@@ -869,7 +999,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="уникло жіночі атласні штани до щитка 800 грн uniqlo 36 / s / 44 shtany-shorty уникло жіночі атласні штани до щитка 199104 -a20 новий коричневий 36 / s / 44 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="уникло жіночі атласні штани до щитка 800 грн uniqlo 36 / s / 44 shtany-shorty уникло жіночі атласні штани до щитка 199104 -a20 новий коричневий 36 / s / 44 жіночий одяг штани та шорти брюки"
+         data-order="12"
+         data-price="800.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13753/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101237916/01-569101897.jpg" alt="Уникло жіночі атласні штани до щитка" loading="lazy" decoding="async">
@@ -896,7 +1031,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 800 грн uniqlo 36 / s / 44, 38 / m / 46 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вигини, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 404663-a20 новий кораловий 36 / s / 44, 38 / m / 46 жіночий одяг штани та шорти брюки укорочені повсякденний" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 800 грн uniqlo 36 / s / 44, 38 / m / 46 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вигини, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 404663-a20 новий кораловий 36 / s / 44, 38 / m / 46 жіночий одяг штани та шорти брюки укорочені повсякденний"
+         data-order="13"
+         data-price="800.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44, 38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13752/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101239208/01-569108715.jpg" alt="Укорочені жіночі атласні штани" loading="lazy" decoding="async">
@@ -923,7 +1063,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 700 грн uniqlo 34 / xs / 42 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вігіні, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 180834-a20 новий бордовий 34 / xs / 42 жіночий одяг штани та шорти брюки укорочені повсякденний" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 700 грн uniqlo 34 / xs / 42 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вігіні, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 180834-a20 новий бордовий 34 / xs / 42 жіночий одяг штани та шорти брюки укорочені повсякденний"
+         data-order="14"
+         data-price="700.0"
+         data-brand="uniqlo"
+         data-size="34 / xs / 42"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13751/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101243291/01-569131437.jpg" alt="Укорочені жіночі атласні штани" loading="lazy" decoding="async">
@@ -950,7 +1095,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 800 грн uniqlo 38 / m / 46 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вигини, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 404663-a20 новий бежевий 38 / m / 46 жіночий одяг штани та шорти брюки укорочені повсякденний" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 800 грн uniqlo 38 / m / 46 shtany-shorty елегантний і блискучий матеріал, що демонструє гарні жіночі ніжки. колекція вишуканих дизайнів для комфортного носіння. ・в центрі уваги поновлення цього сезону! щоб зробити всі типи статури прийнятними і зручними для носіння за межами минулого, швидкість вигину гумки пояса змінена для підвищення комфорту при носінні. ・блиск матеріалу є ключовим моментом укладання. . ・еластичний матеріал може показати красиві вигини, не вибираючи форму тіла. . ・брюки підходять для роботи і відпочинку. ・надіньте його з сорочкою, щоб створити акуратний образ, або з футболкою, щоб створити повсякденний образ. ・є вушка для штанів, а розмір талії можна регулювати за допомогою ременя. ・покращує розтяжність тканини кишень, а також підвищує комфорт при носінні. ・конструкція штанів заглиблена, а низ штанів не може легко сповзати вниз при сидінні на корточках. 404663-a20 новий бежевий 38 / m / 46 жіночий одяг штани та шорти брюки укорочені повсякденний"
+         data-order="15"
+         data-price="800.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13750/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101244306/01-569137070.jpg" alt="Укорочені жіночі атласні штани" loading="lazy" decoding="async">
@@ -977,7 +1127,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="жіночі брюки 800 грн uniqlo 36 / s / 44 shtany-shorty класичні брюки ines з 100% бавовни кольору хакі. ・з інес., яку любили і використовували багато людей поза часом і покоління, і яка є синонімом паризького стилю. продукція бренду fasanqi для корпоративного співробітництва. ・класичні брюки ines кольору хакі! 407139-а20 новий бежевий 36 / s / 44 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="жіночі брюки 800 грн uniqlo 36 / s / 44 shtany-shorty класичні брюки ines з 100% бавовни кольору хакі. ・з інес., яку любили і використовували багато людей поза часом і покоління, і яка є синонімом паризького стилю. продукція бренду fasanqi для корпоративного співробітництва. ・класичні брюки ines кольору хакі! 407139-а20 новий бежевий 36 / s / 44 жіночий одяг штани та шорти брюки"
+         data-order="16"
+         data-price="800.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13749/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101248894/01-569162761.jpg" alt="Жіночі брюки" loading="lazy" decoding="async">
@@ -1004,7 +1159,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="модні жіночі брюки-банджі uniqlo 900 грн uniqlo 34 / xs / 42 shtany-shorty ці модні жіночі брюки-банджі uniqlo 400558 виготовлені з 96% поліестеру , який легко розтягується для свободи рухів. модель з високою талією і драпірованою текстурою проста і універсальна для повсякденного образу. 400558-а20 новий чорний 34 / xs / 42 жіночий одяг штани та шорти брюки повсякденний" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="модні жіночі брюки-банджі uniqlo 900 грн uniqlo 34 / xs / 42 shtany-shorty ці модні жіночі брюки-банджі uniqlo 400558 виготовлені з 96% поліестеру , який легко розтягується для свободи рухів. модель з високою талією і драпірованою текстурою проста і універсальна для повсякденного образу. 400558-а20 новий чорний 34 / xs / 42 жіночий одяг штани та шорти брюки повсякденний"
+         data-order="17"
+         data-price="900.0"
+         data-brand="uniqlo"
+         data-size="34 / xs / 42"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13748/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101248591/01-569161114.jpg" alt="Модні жіночі брюки-банджі uniqlo" loading="lazy" decoding="async">
@@ -1031,7 +1191,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="жіночі брюки 790 грн uniqlo 34 / xs / 42 shtany-shorty класичні брюки ines з 100% бавовни кольору хакі. ・з інес., яку любили і використовували багато людей поза часом і покоління, і яка є синонімом паризького стилю. продукція бренду fasanqi для корпоративного співробітництва. ・класичні брюки ines кольору хакі! 407139-а20 новий бежевий 34 / xs / 42 жіночий одяг штани та шорти брюки класичні" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="жіночі брюки 790 грн uniqlo 34 / xs / 42 shtany-shorty класичні брюки ines з 100% бавовни кольору хакі. ・з інес., яку любили і використовували багато людей поза часом і покоління, і яка є синонімом паризького стилю. продукція бренду fasanqi для корпоративного співробітництва. ・класичні брюки ines кольору хакі! 407139-а20 новий бежевий 34 / xs / 42 жіночий одяг штани та шорти брюки класичні"
+         data-order="18"
+         data-price="790.0"
+         data-brand="uniqlo"
+         data-size="34 / xs / 42"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13747/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101248276/01-569159321.jpg" alt="Жіночі брюки" loading="lazy" decoding="async">
@@ -1058,7 +1223,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="жіночі брюки 800 грн uniqlo 42 /  xl / 50 shtany-shorty виготовлений зі 100% віскози, такий же гладкою і приємною на дотик, як шкіра. -100% віскоза, повсякденні штани з драпіруванням, м&#x27;які і зручні, як шкіра. 407981-a20 новий білий, синій 42 /  xl / 50 жіночий одяг штани та шорти брюки повсякденний" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="жіночі брюки 800 грн uniqlo 42 /  xl / 50 shtany-shorty виготовлений зі 100% віскози, такий же гладкою і приємною на дотик, як шкіра. -100% віскоза, повсякденні штани з драпіруванням, м&#x27;які і зручні, як шкіра. 407981-a20 новий білий, синій 42 /  xl / 50 жіночий одяг штани та шорти брюки повсякденний"
+         data-order="19"
+         data-price="800.0"
+         data-brand="uniqlo"
+         data-size="42 / xl / 50"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13746/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101248388/01-569160109.jpg" alt="Жіночі брюки" loading="lazy" decoding="async">
@@ -1085,7 +1255,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="укорочені розкльошені джинси 24 розмір 550 грн uniqlo one size shtany-shorty колекція, створена командою паризьких дизайнерів на чолі з крістофом лемером, в якій представлена нова одяг lifewear з інноваційних матеріалів і дизайну, що дозволяє відчути атмосферу справжнього. - силует із завищеною талією, що облягає талію і стегна, і розкльошені низом. - справжня джинсова тканина з 100% бавовни вагою 12 унцій. 421244-а20 новий чорний one size жіночий одяг штани та шорти брюки укорочені" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="укорочені розкльошені джинси 24 розмір 550 грн uniqlo one size shtany-shorty колекція, створена командою паризьких дизайнерів на чолі з крістофом лемером, в якій представлена нова одяг lifewear з інноваційних матеріалів і дизайну, що дозволяє відчути атмосферу справжнього. - силует із завищеною талією, що облягає талію і стегна, і розкльошені низом. - справжня джинсова тканина з 100% бавовни вагою 12 унцій. 421244-а20 новий чорний one size жіночий одяг штани та шорти брюки укорочені"
+         data-order="20"
+         data-price="550.0"
+         data-brand="uniqlo"
+         data-size="one size"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13745/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101249263/01-569165060.jpg" alt="Укорочені розкльошені джинси 24 розмір" loading="lazy" decoding="async">
@@ -1113,7 +1288,12 @@ background:var(--panel-solid);color:var(--muted);}
         </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі легінси-штани uniqlo smart 700 грн uniqlo 34 / xs / 42 shtany-shorty our leggings pants feature all-way stretch for гладеньке comfort. form-fitting skinny cut creates feminine, гладеньке lines. /// 82% бавовна, 12% поліестер, 6% спандекс machine wash cold, gentle cycle imported
-413147-a20 новий зелений 34 / xs / 42 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+413147-a20 новий зелений 34 / xs / 42 жіночий одяг штани та шорти брюки"
+         data-order="21"
+         data-price="700.0"
+         data-brand="uniqlo"
+         data-size="34 / xs / 42"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13744/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/105433975/01-642774963.jpg" alt="Жіночі легінси-штани uniqlo smart" loading="lazy" decoding="async">
@@ -1146,7 +1326,12 @@ background:var(--panel-solid);color:var(--muted);}
 ・він має відчуття еластичності матеріалу, демонструючи спортивний і жвавий стиль.
 - приталений поділ із чітким звуженим кроєм.
 ・підходить як для спортивного відпочинку, так і для дозвілля, демонструючи модний стиль.
-401100 a29 новий синій 38 / m / 46 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+401100 a29 новий синій 38 / m / 46 жіночий одяг штани та шорти брюки"
+         data-order="22"
+         data-price="1049.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13743/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/105868869/01-653510671.webp" alt="Жіночі стрейч повсякденні штани dry" loading="lazy" decoding="async">
@@ -1178,7 +1363,12 @@ background:var(--panel-solid);color:var(--muted);}
 ・100% м&#x27;який бавовняний матеріал.
 ・вельвет промивається водою для посилення невимушеного відчуття.
 ・додайте знижку на передню частину, щоб відкрити тривимірний виріз.
-412459-a29 новий бежевий 36 / s / 44 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+412459-a29 новий бежевий 36 / s / 44 жіночий одяг штани та шорти брюки"
+         data-order="23"
+         data-price="1049.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13742/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/105872169/01-653559520.jpg" alt="Жіночі бавовняні прямі штани" loading="lazy" decoding="async">
@@ -1211,7 +1401,12 @@ background:var(--panel-solid);color:var(--muted);}
 ・внутрішня частина кишені виконана з бавовни контрастних тонів.
 · передня блискавка та невидимий гачок.
 ・прикріплений ремінь із звичайним d-подібним кільцем
-416276-a29 новий коричневий 38 / m / 46 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+416276-a29 новий коричневий 38 / m / 46 жіночий одяг штани та шорти брюки"
+         data-order="24"
+         data-price="1349.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13741/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/105872658/01-653578177.jpg" alt="Жіночі плісировані штани з високою талією" loading="lazy" decoding="async">
@@ -1249,7 +1444,12 @@ background:var(--panel-solid);color:var(--muted);}
 
 склад: 53% бавовна, 32% поліестер, 15% спандекс
 
-456192 новий рожевий 38 / m / 46, 40 /  l / 48 жіночий одяг штани та шорти лосіни та легінси" data-initial-hidden='1'>
+456192 новий рожевий 38 / m / 46, 40 /  l / 48 жіночий одяг штани та шорти лосіни та легінси"
+         data-order="25"
+         data-price="500.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46, 40 / l / 48"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13740/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/186409334/01-2185146422.jpg" alt="Легінси extra stretch uniqlo" loading="lazy" decoding="async">
@@ -1291,7 +1491,12 @@ background:var(--panel-solid);color:var(--muted);}
 
 склад: 65% поліестер, 31% віскоза, 4% спандекс
 
-457238 новий сірий 38 / m / 46 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс класичні літо" data-initial-hidden='1'>
+457238 новий сірий 38 / m / 46 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс класичні літо"
+         data-order="26"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13739/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/186409758/01-2185148916.webp" alt="Штани smart ankle uniqlo" loading="lazy" decoding="async">
@@ -1319,7 +1524,12 @@ background:var(--panel-solid);color:var(--muted);}
         </div>
     </div>
     <div class="product-card hidden-card" data-search="джинси легінси uniqlo ultra stretch denim 890 грн uniqlo 36 / s / 44 shtany-shorty ці жіночі джинси uniqloвиготовлені з еластичної бавовняної суміші та мають класичний прямий силует для універсального та простого образу.
- 411152 -102ann новий синій 36 / s / 44 жіночий одяг штани та шорти лосіни та легінси бавовна" data-initial-hidden='1'>
+ 411152 -102ann новий синій 36 / s / 44 жіночий одяг штани та шорти лосіни та легінси бавовна"
+         data-order="27"
+         data-price="890.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13738/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/193257532/01-2225976983.webp" alt="Джинси легінси uniqlo ultra stretch denim" loading="lazy" decoding="async">
@@ -1346,7 +1556,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="жіночі джинси 710 super skinny 850 грн levi&#x27;s 28 / m shtany-shorty ваші бездоганні джинси, які ідеально підходять, утримують і підводять - весь день, кожен день. один з наших найпопулярніших дизайнів, innovation super skinny пропонує новий рівень форми, тому що наша спеціальна технологія flawlessfx вплетена в джинсову тканину. підсумок: ви будете виглядати приголомшливо ще довше. 177800028 новий блакитний 28 / m жіночий одяг штани та шорти джинси" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="жіночі джинси 710 super skinny 850 грн levi&#x27;s 28 / m shtany-shorty ваші бездоганні джинси, які ідеально підходять, утримують і підводять - весь день, кожен день. один з наших найпопулярніших дизайнів, innovation super skinny пропонує новий рівень форми, тому що наша спеціальна технологія flawlessfx вплетена в джинсову тканину. підсумок: ви будете виглядати приголомшливо ще довше. 177800028 новий блакитний 28 / m жіночий одяг штани та шорти джинси"
+         data-order="28"
+         data-price="850.0"
+         data-brand="levi&#x27;s"
+         data-size="28 / m"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13737/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/73441559/01-327439064.jpg" alt="Жіночі джинси 710 super skinny" loading="lazy" decoding="async">
@@ -1373,7 +1588,12 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="джинси levis 501ct w26l32 нові 2500 грн levi&#x27;s 26 / s shtany-shorty жіночі джинси levi&#x27;s 501 ct cali cool nwt style 178040002 новий синій 26 / s жіночий одяг штани та шорти джинси" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="джинси levis 501ct w26l32 нові 2500 грн levi&#x27;s 26 / s shtany-shorty жіночі джинси levi&#x27;s 501 ct cali cool nwt style 178040002 новий синій 26 / s жіночий одяг штани та шорти джинси"
+         data-order="29"
+         data-price="2500.0"
+         data-brand="levi&#x27;s"
+         data-size="26 / s"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13736/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/73442325/01-327442610.jpg" alt="Джинси levis 501ct w26l32 нові" loading="lazy" decoding="async">
@@ -1424,7 +1644,12 @@ levis
 джинсы
 материал:	хлопок
 spectarif_ just_ukr
-джинси levis 711 skinny. стан ідеальний. • вузький крій • лінія пояса нижче талії • облягаючі по всій довжині • класичні п&#x27;ять кишень • застібка - блискавка • декоровані біля кишень фігурної фурнітурою країна виробництва: шрі ланка склад: 92% бавовна, 6% поліестер, 2% еластан новий синій 25 / xs жіночий одяг штани та шорти джинси класичні" data-initial-hidden='1'>
+джинси levis 711 skinny. стан ідеальний. • вузький крій • лінія пояса нижче талії • облягаючі по всій довжині • класичні п&#x27;ять кишень • застібка - блискавка • декоровані біля кишень фігурної фурнітурою країна виробництва: шрі ланка склад: 92% бавовна, 6% поліестер, 2% еластан новий синій 25 / xs жіночий одяг штани та шорти джинси класичні"
+         data-order="30"
+         data-price="1200.0"
+         data-brand="levi&#x27;s"
+         data-size="25 / xs"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13735/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/73464064/01-327554499.jpg" alt="Джинси levis 711 skinny 188810219 cheap thrill 25w x 30l" loading="lazy" decoding="async">
@@ -1451,7 +1676,12 @@ spectarif_ just_ukr
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="джинси levis 311 розмір 27-34 2100 грн levi&#x27;s 27 / s shtany-shorty наші формують джинси, розроблені для розгладження і поліпшення форми, роблять ваш животик стрункішою, піднімають сидіння і подовжують ноги. модель 311 shaping skinny дуже зручна і дуже лестна, доповнено ідеальної обтягує штаниною, яку ви захочете носити кожен день, і технологією схуднення, яка робить саме те, що вона говорить. технологія схуднення живота стиль # 196260047 новий синій 27 / s жіночий одяг штани та шорти джинси" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="джинси levis 311 розмір 27-34 2100 грн levi&#x27;s 27 / s shtany-shorty наші формують джинси, розроблені для розгладження і поліпшення форми, роблять ваш животик стрункішою, піднімають сидіння і подовжують ноги. модель 311 shaping skinny дуже зручна і дуже лестна, доповнено ідеальної обтягує штаниною, яку ви захочете носити кожен день, і технологією схуднення, яка робить саме те, що вона говорить. технологія схуднення живота стиль # 196260047 новий синій 27 / s жіночий одяг штани та шорти джинси"
+         data-order="31"
+         data-price="2100.0"
+         data-brand="levi&#x27;s"
+         data-size="27 / s"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13734/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/73464381/01-327557058.jpg" alt="Джинси levis 311 розмір 27-34" loading="lazy" decoding="async">
@@ -1478,7 +1708,12 @@ spectarif_ just_ukr
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="жіночі вовняні штани ezy (в смужку) uniqlo 980 грн uniqlo 36 / s / 44 shtany-shorty вовняні штани з елегантною текстурою і теплом. еластичний і еластичний на талії, зручний і простий у використанні! ・нове оновлення цього сезону вже тут!нове оновлення, без шипів на шкірі, щільна текстура. ・еластичний пояс полегшує надягання штанів. 412668-52 новий синій 36 / s / 44 жіночий одяг штани та шорти брюки у смужку" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="жіночі вовняні штани ezy (в смужку) uniqlo 980 грн uniqlo 36 / s / 44 shtany-shorty вовняні штани з елегантною текстурою і теплом. еластичний і еластичний на талії, зручний і простий у використанні! ・нове оновлення цього сезону вже тут!нове оновлення, без шипів на шкірі, щільна текстура. ・еластичний пояс полегшує надягання штанів. 412668-52 новий синій 36 / s / 44 жіночий одяг штани та шорти брюки у смужку"
+         data-order="32"
+         data-price="980.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13733/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/92655654/01-474352686.jpg" alt="Жіночі вовняні штани ezy (в смужку) uniqlo" loading="lazy" decoding="async">
@@ -1505,7 +1740,12 @@ spectarif_ just_ukr
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="серія колаборацій з інес фасанж,жіночі бавовняні штани uniqlo 750 грн uniqlo 34 / xs / 42 shtany-shorty ・серія колаборацій з інес фасанж, яка виходить за межі епох і поколінь, улюблена публікою і є синонімом паризького стилю. ・випраний і виготовлений з повсякденного бавовняного матеріалу кольору хакі. ・змінено на прямий крій, що підходить для всіх. ・передня пряжка зроблена з лямки, що додає моделі яскравий вигляд. 416083-57 новий синій 34 / xs / 42 жіночий одяг штани та шорти брюки повсякденний" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="серія колаборацій з інес фасанж,жіночі бавовняні штани uniqlo 750 грн uniqlo 34 / xs / 42 shtany-shorty ・серія колаборацій з інес фасанж, яка виходить за межі епох і поколінь, улюблена публікою і є синонімом паризького стилю. ・випраний і виготовлений з повсякденного бавовняного матеріалу кольору хакі. ・змінено на прямий крій, що підходить для всіх. ・передня пряжка зроблена з лямки, що додає моделі яскравий вигляд. 416083-57 новий синій 34 / xs / 42 жіночий одяг штани та шорти брюки повсякденний"
+         data-order="33"
+         data-price="750.0"
+         data-brand="uniqlo"
+         data-size="34 / xs / 42"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13732/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/93518352/01-486289905.jpg" alt="Серія колаборацій з інес фасанж,жіночі бавовняні штани uniqlo" loading="lazy" decoding="async">
@@ -1532,7 +1772,12 @@ spectarif_ just_ukr
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="штани-джоггеры з драпіруванням і принтом uniqlo 900 грн uniqlo 38 / m / 46 shtany-shorty широкі штани з елегантною драпіруванням ідеально підходять для носіння вдома і на прогулянці. 441634-58 новий синій 38 / m / 46 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="штани-джоггеры з драпіруванням і принтом uniqlo 900 грн uniqlo 38 / m / 46 shtany-shorty широкі штани з елегантною драпіруванням ідеально підходять для носіння вдома і на прогулянці. 441634-58 новий синій 38 / m / 46 жіночий одяг штани та шорти брюки"
+         data-order="34"
+         data-price="900.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13731/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/93672445/01-487950162.jpg" alt="Штани-джоггеры з драпіруванням і принтом uniqlo" loading="lazy" decoding="async">
@@ -1559,7 +1804,12 @@ spectarif_ just_ukr
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="uniqlo жіночі широкі кюлоти 650 грн uniqlo 34 / xs / 42 shtany-shorty ці широкі жіночі укорочені брюки uniqlo 404262 виготовлені з сумішевої тканини, що складається з 50% поліестеру і 50% віскози, високоякісної текстури, зручні в носінні, плісированою обробки спереду, пухнастого тривимірного зображення, більш драпірованого, пояс з d-образної пряжкою, шикарний і елегантний, він може додати родзинки фігурі, довжиною у сім пунктів, освіжаючий і акуратний, ще більше підкреслює елегантні лінії ніг. 404262-58 новий бежевий 34 / xs / 42 жіночий одяг штани та шорти брюки кюлоти" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="uniqlo жіночі широкі кюлоти 650 грн uniqlo 34 / xs / 42 shtany-shorty ці широкі жіночі укорочені брюки uniqlo 404262 виготовлені з сумішевої тканини, що складається з 50% поліестеру і 50% віскози, високоякісної текстури, зручні в носінні, плісированою обробки спереду, пухнастого тривимірного зображення, більш драпірованого, пояс з d-образної пряжкою, шикарний і елегантний, він може додати родзинки фігурі, довжиною у сім пунктів, освіжаючий і акуратний, ще більше підкреслює елегантні лінії ніг. 404262-58 новий бежевий 34 / xs / 42 жіночий одяг штани та шорти брюки кюлоти"
+         data-order="35"
+         data-price="650.0"
+         data-brand="uniqlo"
+         data-size="34 / xs / 42"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13730/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/93847664/01-490017459.jpg" alt="Uniqlo жіночі широкі кюлоти" loading="lazy" decoding="async">
@@ -1586,7 +1836,12 @@ spectarif_ just_ukr
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="модні жіночі брюки-банджі uniqlo 800 грн uniqlo 36 / s / 44 shtany-shorty ці модні жіночі брюки-банджі uniqlo 400558 виготовлені з 96% поліестеру , який легко розтягується для свободи рухів. модель з високою талією і драпірованою текстурою проста і універсальна для повсякденного образу. 400558-а20 новий бордовий 36 / s / 44 жіночий одяг штани та шорти брюки повсякденний" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="модні жіночі брюки-банджі uniqlo 800 грн uniqlo 36 / s / 44 shtany-shorty ці модні жіночі брюки-банджі uniqlo 400558 виготовлені з 96% поліестеру , який легко розтягується для свободи рухів. модель з високою талією і драпірованою текстурою проста і універсальна для повсякденного образу. 400558-а20 новий бордовий 36 / s / 44 жіночий одяг штани та шорти брюки повсякденний"
+         data-order="36"
+         data-price="800.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13729/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101237740/01-569100496.jpg" alt="Модні жіночі брюки-банджі uniqlo" loading="lazy" decoding="async">
@@ -1613,7 +1868,12 @@ spectarif_ just_ukr
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 900 грн uniqlo 40 /  l / 48 shtany-shorty укорочені брюки з легкими і акуратними ступнями. випромінює елегантний блиск, підходить для роботи і відпочинку. ・свіжий і невимушений дизайн, яскраве словосполучення. ・показує глянцеві матеріали і має гарний дизайн. 408662-a20 новий синій 40 /  l / 48 жіночий одяг штани та шорти брюки укорочені" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="укорочені жіночі атласні штани 900 грн uniqlo 40 /  l / 48 shtany-shorty укорочені брюки з легкими і акуратними ступнями. випромінює елегантний блиск, підходить для роботи і відпочинку. ・свіжий і невимушений дизайн, яскраве словосполучення. ・показує глянцеві матеріали і має гарний дизайн. 408662-a20 новий синій 40 /  l / 48 жіночий одяг штани та шорти брюки укорочені"
+         data-order="37"
+         data-price="900.0"
+         data-brand="uniqlo"
+         data-size="40 / l / 48"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13728/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101239535/01-569110316.jpg" alt="Укорочені жіночі атласні штани" loading="lazy" decoding="async">
@@ -1640,7 +1900,12 @@ spectarif_ just_ukr
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="уникло жіночі атласні штани 700 грн uniqlo 36 / s / 44, 38 / m / 46 shtany-shorty укорочені брюки з легкими і акуратними ступнями. випромінює елегантний блиск, підходить для роботи і відпочинку. ・свіжий і невимушений дизайн, яскраве словосполучення. ・показує глянцеві матеріали і має гарний дизайн. 408662-a20 новий сріблястий 36 / s / 44, 38 / m / 46 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="уникло жіночі атласні штани 700 грн uniqlo 36 / s / 44, 38 / m / 46 shtany-shorty укорочені брюки з легкими і акуратними ступнями. випромінює елегантний блиск, підходить для роботи і відпочинку. ・свіжий і невимушений дизайн, яскраве словосполучення. ・показує глянцеві матеріали і має гарний дизайн. 408662-a20 новий сріблястий 36 / s / 44, 38 / m / 46 жіночий одяг штани та шорти брюки"
+         data-order="38"
+         data-price="700.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44, 38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13727/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101238319/01-569103715.jpg" alt="Уникло жіночі атласні штани" loading="lazy" decoding="async">
@@ -1667,7 +1932,12 @@ spectarif_ just_ukr
             </button>
         </div>
     </div>
-    <div class="product-card hidden-card" data-search="жіночі укорочені брюки smart style 800 грн uniqlo 36 / s / 44 shtany-shorty стиль підходить як для дому, так і для прогулянок. ・ключовий момент оновлення в цьому сезоні! змініть еластичну криву талії для більш зручної посадки для всіх типів статури. ・ключовий момент оновлення в цьому сезоні! передня частина довша на 1,5 см, а низ штанів не так легко сповзає вниз при присіданні. ・ключовий момент оновлення в цьому сезоні! передбачені додаткові шлевкі для зручного регулювання талії ременем. ・ключовий момент оновлення в цьому сезоні! оновіть обгортку кишені до еластичної тканини, щоб було легше рухатися. ・це змішане волокно з поліефірного волокна віскози, якому надається форма, за яким легко доглядати після прання. ・схожий на шерсть матеріал з помірною драпіруванням підходить для офіційних заходів. ・підходить для носіння з топами з бавовни, еластичної тканини та інших матеріалів або з футболками в стилі кежуал. 404660-a20 новий білий 36 / s / 44 жіночий одяг штани та шорти брюки укорочені" data-initial-hidden='1'>
+    <div class="product-card hidden-card" data-search="жіночі укорочені брюки smart style 800 грн uniqlo 36 / s / 44 shtany-shorty стиль підходить як для дому, так і для прогулянок. ・ключовий момент оновлення в цьому сезоні! змініть еластичну криву талії для більш зручної посадки для всіх типів статури. ・ключовий момент оновлення в цьому сезоні! передня частина довша на 1,5 см, а низ штанів не так легко сповзає вниз при присіданні. ・ключовий момент оновлення в цьому сезоні! передбачені додаткові шлевкі для зручного регулювання талії ременем. ・ключовий момент оновлення в цьому сезоні! оновіть обгортку кишені до еластичної тканини, щоб було легше рухатися. ・це змішане волокно з поліефірного волокна віскози, якому надається форма, за яким легко доглядати після прання. ・схожий на шерсть матеріал з помірною драпіруванням підходить для офіційних заходів. ・підходить для носіння з топами з бавовни, еластичної тканини та інших матеріалів або з футболками в стилі кежуал. 404660-a20 новий білий 36 / s / 44 жіночий одяг штани та шорти брюки укорочені"
+         data-order="39"
+         data-price="800.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13726/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/101244492/01-569138147.jpg" alt="Жіночі укорочені брюки smart style" loading="lazy" decoding="async">
@@ -1698,7 +1968,12 @@ spectarif_ just_ukr
 ・він має правильну товщину одягу, і нелегко показати лінії ніг.поверхня м&#x27;яка на дотик, а форма дуже красива.
 ・він розроблений із заниженою талією з неглибоким підйомом, тому його зручно та легко пересувати.
 ・рубриста манжета на вузькому краю штанів створює елегантний вигляд.
-422708-a29 новий синій 36 / s / 44 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+422708-a29 новий синій 36 / s / 44 жіночий одяг штани та шорти брюки"
+         data-order="40"
+         data-price="950.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13725/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/105868281/01-653498166.jpg" alt="Жіночі повсякденні штани" loading="lazy" decoding="async">
@@ -1728,7 +2003,12 @@ spectarif_ just_ukr
     <div class="product-card hidden-card" data-search="штани легінси 1049 грн uniqlo 38 / m / 46 shtany-shorty скільки він розтягується на 360°, він не перешкоджає руху будь-якої ноги, дозволяючи вам рухатися легко.
 - приталений худий силует створює красиві жіночі ніжки.
 ・той, який ідеально підходить для міського стилю.
-413147-a29 новий чорний 38 / m / 46 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+413147-a29 новий чорний 38 / m / 46 жіночий одяг штани та шорти брюки"
+         data-order="41"
+         data-price="1049.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13724/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/105872519/01-653571417.jpg" alt="Штани легінси" loading="lazy" decoding="async">
@@ -1756,7 +2036,12 @@ spectarif_ just_ukr
         </div>
     </div>
     <div class="product-card hidden-card" data-search="жіночі вовняні штани ezy 1350 грн uniqlo 36 / s / 44 shtany-shorty вовняні штани з елегантною текстурою і відмінним теплом
-412666-46l новий чорний 36 / s / 44 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+412666-46l новий чорний 36 / s / 44 жіночий одяг штани та шорти брюки"
+         data-order="42"
+         data-price="1350.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13723/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/142973302/01-1590621329.jpg" alt="Жіночі вовняні штани ezy" loading="lazy" decoding="async">
@@ -1797,7 +2082,12 @@ spectarif_ just_ukr
 
 склад: 51% бавовна, 49% поліестер
 
-466147 новий сірий s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки поліестер, трикотаж, бавовна осінь" data-initial-hidden='1'>
+466147 новий сірий s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки поліестер, трикотаж, бавовна осінь"
+         data-order="43"
+         data-price="1700.0"
+         data-brand="uniqlo"
+         data-size="s"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13722/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/186368738/01-2184894169.png" alt="Широкі плісировані штани uniqlo" loading="lazy" decoding="async">
@@ -1839,7 +2129,12 @@ spectarif_ just_ukr
 склад
 66% поліестер, 29% віскоза, 5% спандекс
 
-464140, 469858 новий білий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс" data-initial-hidden='1'>
+464140, 469858 новий білий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс"
+         data-order="44"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13721/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/189660208/01-2203947080.png" alt="Штани smart uniqlo" loading="lazy" decoding="async">
@@ -1875,7 +2170,12 @@ spectarif_ just_ukr
 
 склад: 80% поліестер, 20% вовна
 
-472747 новий чорний 38 / m / 46, 40 /  l / 48 жіночий одяг штани та шорти брюки поліестер, вовна" data-initial-hidden='1'>
+472747 новий чорний 38 / m / 46, 40 /  l / 48 жіночий одяг штани та шорти брюки поліестер, вовна"
+         data-order="45"
+         data-price="1350.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46, 40 / l / 48"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13720/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/194059822/01-2230843948.jpg" alt="Вовняні жіночі брюки uniqlo" loading="lazy" decoding="async">
@@ -1911,7 +2211,12 @@ spectarif_ just_ukr
 
 склад: 100% бавовна
 
-478861 новий коричневий, білий хs, s 🇺🇦 український: 42, 42-44; європейський: 34; 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки бавовна, вовна" data-initial-hidden='1'>
+478861 новий коричневий, білий хs, s 🇺🇦 український: 42, 42-44; європейський: 34; 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки бавовна, вовна"
+         data-order="46"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="хs, s"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13719/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/199781714/01-2257846452.jpg" alt="Фланелеві штани uniqlo" loading="lazy" decoding="async">
@@ -1950,7 +2255,12 @@ spectarif_ just_ukr
 склад
 100% бавовна
 
-469816 новий бежевий 25 джинсовий: w25; міжнародний: xs; 🇺🇦 український: 40-42 жіночий одяг штани та шорти джинси" data-initial-hidden='1'>
+469816 новий бежевий 25 джинсовий: w25; міжнародний: xs; 🇺🇦 український: 40-42 жіночий одяг штани та шорти джинси"
+         data-order="47"
+         data-price="1050.0"
+         data-brand="uniqlo"
+         data-size="25"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13718/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/189082736/01-2200682166.jpg" alt="Джинси wide straight uniqlo" loading="lazy" decoding="async">
@@ -1993,7 +2303,12 @@ spectarif_ just_ukr
 не розтягується
 кнопка муха
 стиль із 5 кишенями
-машинне прання в холодній воді - звичайний режим. прати навиворіт однаковими кольорами, не відбілювати, сушити в пральній машині, гарячою праскою, можлива хімчистка новий блакитний, синій 28 / m жіночий одяг штани та шорти джинси" data-initial-hidden='1'>
+машинне прання в холодній воді - звичайний режим. прати навиворіт однаковими кольорами, не відбілювати, сушити в пральній машині, гарячою праскою, можлива хімчистка новий блакитний, синій 28 / m жіночий одяг штани та шорти джинси"
+         data-order="48"
+         data-price="1650.0"
+         data-brand="levi&#x27;s"
+         data-size="28 / m"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13717/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/150385855/01-1924622733.jpg" alt="Levi&#x27;s® premium жіночі джинси 501®, розмір 28*28" loading="lazy" decoding="async">
@@ -2032,7 +2347,12 @@ spectarif_ just_ukr
 - повністю еластична талія з шлевками.
 - чудово підходить для різних стилів, включаючи поєднання з укороченим або заправленим верхом.
 
-склад: 53% бавовна, 32% поліестер, 15% еластан новий рожевий 38 / m / 46, 40 /  l / 48 жіночий одяг штани та шорти брюки укорочені" data-initial-hidden='1'>
+склад: 53% бавовна, 32% поліестер, 15% еластан новий рожевий 38 / m / 46, 40 /  l / 48 жіночий одяг штани та шорти брюки укорочені"
+         data-order="49"
+         data-price="550.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46, 40 / l / 48"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13716/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/170110158/01--310525953.png" alt="Еластичні укорочені легінси з високою посадкою uniqlo" loading="lazy" decoding="async">
@@ -2071,7 +2391,12 @@ spectarif_ just_ukr
 
 склад: основа: 90% поліестер, 10% еластан/ підкладка: 64% поліестер, 22% акрил, 14% віскоза/ підкладка кишень: 100% поліестер
 
-460548 новий хакі xxl 🇺🇦 український: 52, 52-54; європейський: 44 жіночий одяг штани та шорти брюки віскоза, поліестер, фліс" data-initial-hidden='1'>
+460548 новий хакі xxl 🇺🇦 український: 52, 52-54; європейський: 44 жіночий одяг штани та шорти брюки віскоза, поліестер, фліс"
+         data-order="50"
+         data-price="1800.0"
+         data-brand="uniqlo"
+         data-size="xxl"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13715/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/181550975/01-2155026233.jpg" alt="Теплі штани на підкладці heattech uniqlo, розмір ххл" loading="lazy" decoding="async">
@@ -2112,7 +2437,12 @@ spectarif_ just_ukr
 
 склад: 51% бавовна, 49% поліестер
 
-466147 новий бежевий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки поліестер, трикотаж, бавовна осінь" data-initial-hidden='1'>
+466147 новий бежевий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки поліестер, трикотаж, бавовна осінь"
+         data-order="51"
+         data-price="1700.0"
+         data-brand="uniqlo"
+         data-size="l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13714/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/186368580/01-2184893292.png" alt="Широкі плісировані штани uniqlo" loading="lazy" decoding="async">
@@ -2156,7 +2486,12 @@ spectarif_ just_ukr
 
 склад: 66% поліестер, 30% віскоза, 4% спандекс
 
-460538 новий коричневий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс" data-initial-hidden='1'>
+460538 новий коричневий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс"
+         data-order="52"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13713/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/186409557/01-2185147718.jpg" alt="Штани smart ankle uniqlo" loading="lazy" decoding="async">
@@ -2201,7 +2536,12 @@ spectarif_ just_ukr
 
 склад: 63% поліестер - перероблене волокно, 33% віскоза, 4% еластан
 
-456117 новий бузковий 38 / m / 46 жіночий одяг штани та шорти брюки віскоза, поліестер, еластан" data-initial-hidden='1'>
+456117 новий бузковий 38 / m / 46 жіночий одяг штани та шорти брюки віскоза, поліестер, еластан"
+         data-order="53"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13712/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/186409865/01-2185149613.jpg" alt="Елегантні штани uniqlo" loading="lazy" decoding="async">
@@ -2241,7 +2581,12 @@ spectarif_ just_ukr
 
 склад: 100% polyester
 
-446410 новий сірий, зелений 38 / m / 46 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+446410 новий сірий, зелений 38 / m / 46 жіночий одяг штани та шорти брюки"
+         data-order="54"
+         data-price="650.0"
+         data-brand="uniqlo"
+         data-size="38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13711/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/186410116/01-2185151157.jpg" alt="Атласові прямі штани з драпірованням uniqlo" loading="lazy" decoding="async">
@@ -2276,7 +2621,12 @@ spectarif_ just_ukr
 еластичний пояс із внутрішнім шнурком для легкого регулювання розміру.
 
 склад: 100% бавовна
-471552 новий сірий, синій 40 /  l / 48 жіночий одяг штани та шорти брюки середня весна, літо, демісезон, осінь у клітинку повсякденний" data-initial-hidden='1'>
+471552 новий сірий, синій 40 /  l / 48 жіночий одяг штани та шорти брюки середня весна, літо, демісезон, осінь у клітинку повсякденний"
+         data-order="55"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="40 / l / 48"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13710/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/187204079/01-2190134781.jpg" alt="Фланелеві штани uniqlo" loading="lazy" decoding="async">
@@ -2313,7 +2663,12 @@ spectarif_ just_ukr
 
 склад: 100% бавовна
 
-464945 новий блакитний 34 / xs / 42, 36 / s / 44, 38 / m / 46 жіночий одяг штани та шорти шорти коротка висока" data-initial-hidden='1'>
+464945 новий блакитний 34 / xs / 42, 36 / s / 44, 38 / m / 46 жіночий одяг штани та шорти шорти коротка висока"
+         data-order="56"
+         data-price="650.0"
+         data-brand="uniqlo"
+         data-size="34 / xs / 42, 36 / s / 44, 38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13709/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/189235844/01-2201567009.png" alt="Акція! шорти high rise uniqlo" loading="lazy" decoding="async">
@@ -2357,7 +2712,12 @@ spectarif_ just_ukr
 
 склад: 50% льон, 50% бавовна
 
-464905 новий бежевий 40 /  l / 48 жіночий одяг штани та шорти брюки" data-initial-hidden='1'>
+464905 новий бежевий 40 /  l / 48 жіночий одяг штани та шорти брюки"
+         data-order="57"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="40 / l / 48"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13708/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/189244216/01-2201620922.jpg" alt="Льняні бавовняні штани uniqlo" loading="lazy" decoding="async">
@@ -2387,7 +2747,12 @@ spectarif_ just_ukr
     <div class="product-card hidden-card" data-search="шорти uniqlo disney in blue easy 690 грн uniqlo 36 / s / 44 shtany-shorty шорти uniqlo disney in blue easy
 в наявності розмір с
 
-склад: 100% бавовна новий синій 36 / s / 44 жіночий одяг штани та шорти шорти" data-initial-hidden='1'>
+склад: 100% бавовна новий синій 36 / s / 44 жіночий одяг штани та шорти шорти"
+         data-order="58"
+         data-price="690.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13707/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/190311797/01-2207824081.jpg" alt="Шорти uniqlo disney in blue easy" loading="lazy" decoding="async">
@@ -2425,7 +2790,12 @@ spectarif_ just_ukr
 
 склад: 100% поліестер
 
-475819 новий бежевий xl, xxl 🇺🇦 український: 50-52, 50; європейський: 42; 🇺🇦 український: 52, 52-54; європейський: 44 жіночий одяг штани та шорти брюки поліестер" data-initial-hidden='1'>
+475819 новий бежевий xl, xxl 🇺🇦 український: 50-52, 50; європейський: 42; 🇺🇦 український: 52, 52-54; європейський: 44 жіночий одяг штани та шорти брюки поліестер"
+         data-order="59"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="xl, xxl"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13706/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/190996023/01-2211989873.png" alt="Широкі штани airsense uniqlo" loading="lazy" decoding="async">
@@ -2461,7 +2831,12 @@ spectarif_ just_ukr
 
 склад: 80% поліестер, 20% вовна
 
-472747 новий синій 36 / s / 44, 38 / m / 46 жіночий одяг штани та шорти брюки поліестер, вовна" data-initial-hidden='1'>
+472747 новий синій 36 / s / 44, 38 / m / 46 жіночий одяг штани та шорти брюки поліестер, вовна"
+         data-order="60"
+         data-price="1350.0"
+         data-brand="uniqlo"
+         data-size="36 / s / 44, 38 / m / 46"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13705/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/194059878/01-2230844377.jpg" alt="Вовняні жіночі брюки uniqlo" loading="lazy" decoding="async">
@@ -2497,7 +2872,12 @@ spectarif_ just_ukr
 
 склад: 100% бавовна
 
-478861 новий коричневий, синій хs, s, m 🇺🇦 український: 42, 42-44; європейський: 34; 🇺🇦 український: 44-46, 44; європейський: 36; 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки бавовна, вовна" data-initial-hidden='1'>
+478861 новий коричневий, синій хs, s, m 🇺🇦 український: 42, 42-44; європейський: 34; 🇺🇦 український: 44-46, 44; європейський: 36; 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки бавовна, вовна"
+         data-order="61"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="хs, s, m"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13704/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/199781627/01-2257845844.jpg" alt="Фланелеві штани uniqlo" loading="lazy" decoding="async">
@@ -2537,7 +2917,12 @@ spectarif_ just_ukr
 
 склад: 51% віскоза, 32% льон, 17% бавовна
 
-466024 новий сірий s, m, l 🇺🇦 український: 44-46, 44; європейський: 36; 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, льон, бавовна класичні повсякденний" data-initial-hidden='1'>
+466024 новий сірий s, m, l 🇺🇦 український: 44-46, 44; європейський: 36; 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, льон, бавовна класичні повсякденний"
+         data-order="62"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="s, m, l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13703/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/186416084/01-2185188179.png" alt="Штани з лляної суміші easy uniqlo" loading="lazy" decoding="async">
@@ -2569,7 +2954,12 @@ spectarif_ just_ukr
 
 склад: 100% бавовна
 
-480337 новий бежевий m, l 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки бавовна, вовна середня" data-initial-hidden='1'>
+480337 новий бежевий m, l 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки бавовна, вовна середня"
+         data-order="63"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="m, l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13702/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/205189737/01-2281272543.jpg" alt="Бавовняні штани uniqlo" loading="lazy" decoding="async">
@@ -2605,7 +2995,12 @@ spectarif_ just_ukr
 
 склад: 53% віскоза, 24% поліестер, 23% поліамід
 
-478847 новий сірий m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки віскоза, поліестер, поліамід із зав&#x27;язками осінь, демісезон, весна, літо" data-initial-hidden='1'>
+478847 новий сірий m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки віскоза, поліестер, поліамід із зав&#x27;язками осінь, демісезон, весна, літо"
+         data-order="64"
+         data-price="1100.0"
+         data-brand="uniqlo"
+         data-size="m"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13701/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/206580508/01-2286627616.jpg" alt="Штани uniqlo" loading="lazy" decoding="async">
@@ -2637,7 +3032,12 @@ spectarif_ just_ukr
 
 склад: 50% льон, 50% бавовна
 
-473685 новий хакі, зелений m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки льон, бавовна, вовна літо" data-initial-hidden='1'>
+473685 новий хакі, зелений m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки льон, бавовна, вовна літо"
+         data-order="65"
+         data-price="1500.0"
+         data-brand="uniqlo"
+         data-size="m"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13700/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/204179482/01-2277613894.png" alt="Льняні бавовняні звужені штани uniqlo" loading="lazy" decoding="async">
@@ -2669,7 +3069,12 @@ spectarif_ just_ukr
 
 склад: 100% бавовна
 
-478849 новий чорний m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки бавовна, вовна із зав&#x27;язками осінь, демісезон, весна, літо без принту повсякденний" data-initial-hidden='1'>
+478849 новий чорний m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки бавовна, вовна із зав&#x27;язками осінь, демісезон, весна, літо без принту повсякденний"
+         data-order="66"
+         data-price="1050.0"
+         data-brand="uniqlo"
+         data-size="m"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13699/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/206582047/01-2286639085.jpg" alt="Фланелеві брюки uniqlo" loading="lazy" decoding="async">
@@ -2711,7 +3116,12 @@ spectarif_ just_ukr
 склад
 67% поліестер, 29% віскоза, 4% спандекс (62% використовується перероблене поліестерне волокно)
 
-479698 новий коричневий m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс кльош, кюлоти висока зима, демісезон, весна, осінь без принту" data-initial-hidden='1'>
+479698 новий коричневий m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс кльош, кюлоти висока зима, демісезон, весна, осінь без принту"
+         data-order="67"
+         data-price="1400.0"
+         data-brand="uniqlo"
+         data-size="m"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13698/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/206579783/01-2286623972.jpg" alt="Брюки-кюлоти uniqlo" loading="lazy" decoding="async">
@@ -2748,7 +3158,12 @@ spectarif_ just_ukr
 
 склад: 100% бавовна
 
-483764 новий синій 26, 27, 28, 29, 30 міжнародний: s; 🇺🇦 український: 42; джинсовий: w26; джинсовий: w27; міжнародний: s; 🇺🇦 український: 42-44; міжнародний: m; 🇺🇦 український: 44; джинсовий: w28; джинсовий: w29; міжнародний: m; 🇺🇦 український: 44-46; джинсовий: w30; міжнародний: l; 🇺🇦 український: 46 жіночий одяг штани та шорти джинси середня осінь, весна, демісезон, літо без принту широкі" data-initial-hidden='1'>
+483764 новий синій 26, 27, 28, 29, 30 міжнародний: s; 🇺🇦 український: 42; джинсовий: w26; джинсовий: w27; міжнародний: s; 🇺🇦 український: 42-44; міжнародний: m; 🇺🇦 український: 44; джинсовий: w28; джинсовий: w29; міжнародний: m; 🇺🇦 український: 44-46; джинсовий: w30; міжнародний: l; 🇺🇦 український: 46 жіночий одяг штани та шорти джинси середня осінь, весна, демісезон, літо без принту широкі"
+         data-order="68"
+         data-price="1650.0"
+         data-brand="uniqlo"
+         data-size="26, 27, 28, 29, 30"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13697/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208067530/01-2292648547.png" alt="Джинси uniqlo широкого крою" loading="lazy" decoding="async">
@@ -2780,7 +3195,12 @@ spectarif_ just_ukr
 
 склад: основна частина: 64% поліестер - перероблене волокно, 28% віскоза, 8% еластан / підкладка кишень: 60% поліестер - перероблене волокно, 40% еластомультіестер
 
-479298 новий коричневий s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки віскоза, поліестер, еластан осінь, демісезон, весна, літо" data-initial-hidden='1'>
+479298 новий коричневий s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки віскоза, поліестер, еластан осінь, демісезон, весна, літо"
+         data-order="69"
+         data-price="1100.0"
+         data-brand="uniqlo"
+         data-size="s"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13696/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208446658/01-2294673841.jpg" alt="Елегантні штани до щиколотки uniqlo" loading="lazy" decoding="async">
@@ -2812,7 +3232,12 @@ spectarif_ just_ukr
 
 склад: 100% бавовна
 
-478846 новий бежевий, коричневий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки бавовна, вовна літо повсякденний" data-initial-hidden='1'>
+478846 новий бежевий, коричневий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки бавовна, вовна літо повсякденний"
+         data-order="70"
+         data-price="1100.0"
+         data-brand="uniqlo"
+         data-size="l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13695/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208447224/01-2294677271.jpg" alt="Бавовняні штани вільного крою uniqlo" loading="lazy" decoding="async">
@@ -2844,7 +3269,12 @@ spectarif_ just_ukr
 
 склад: 66% поліестер, 28% віскоза, 6% спандекс
 
-479292 новий білий xl 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс середня демісезон, осінь, літо, весна без принту діловий" data-initial-hidden='1'>
+479292 новий білий xl 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс середня демісезон, осінь, літо, весна без принту діловий"
+         data-order="71"
+         data-price="1100.0"
+         data-brand="uniqlo"
+         data-size="xl"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13694/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208447640/01-2294679864.jpg" alt="Широкі штани uniqlo" loading="lazy" decoding="async">
@@ -2883,7 +3313,12 @@ spectarif_ just_ukr
 
 склад: 77% поліестер - перероблене волокно, 23% еластан
 
-479150 новий коричневий m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти лосіни та легінси безшовні еластан" data-initial-hidden='1'>
+479150 новий коричневий m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти лосіни та легінси безшовні еластан"
+         data-order="72"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="m"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13693/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208567331/01-2295323444.jpg" alt="Легінси uv protection uniqlo" loading="lazy" decoding="async">
@@ -2923,7 +3358,12 @@ spectarif_ just_ukr
 склад
 95% поліестер, 5% спандекс
 
-481001 новий чорний m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки поліестер, спандекс" data-initial-hidden='1'>
+481001 новий чорний m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки поліестер, спандекс"
+         data-order="73"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="m"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13692/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208569862/01-2295339592.jpg" alt="Штани uniqlo" loading="lazy" decoding="async">
@@ -2956,7 +3396,12 @@ spectarif_ just_ukr
 склад
 59% бавовна, 41% ліоцелл
 
-476346 новий синій 32 міжнародний: xl; 🇺🇦 український: 48; джинсовий: w32 жіночий одяг штани та шорти джинси" data-initial-hidden='1'>
+476346 новий синій 32 міжнародний: xl; 🇺🇦 український: 48; джинсовий: w32 жіночий одяг штани та шорти джинси"
+         data-order="74"
+         data-price="1550.0"
+         data-brand="uniqlo"
+         data-size="32"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13691/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208572224/01-2295354703.jpg" alt="Джинси uniqlo" loading="lazy" decoding="async">
@@ -2998,7 +3443,12 @@ spectarif_ just_ukr
 склад:
 основна частина: 60% поліестер - перероблене волокно, 28% віскоза, 6% поліестер, 6% еластан
 
-463182 новий коричневий, бежевий s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки віскоза, поліестер, еластан осінь, демісезон, весна, літо" data-initial-hidden='1'>
+463182 новий коричневий, бежевий s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки віскоза, поліестер, еластан осінь, демісезон, весна, літо"
+         data-order="75"
+         data-price="1250.0"
+         data-brand="uniqlo"
+         data-size="s"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13690/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208564429/01-2295305839.jpg" alt="Штани зі складками широкі uniqlo (на високий зріст)" loading="lazy" decoding="async">
@@ -3031,7 +3481,12 @@ spectarif_ just_ukr
 склад
 95% поліестер - перероблене волокно, 5% еластан
 
-470783 новий чорний s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки поліестер, еластан" data-initial-hidden='1'>
+470783 новий чорний s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки поліестер, еластан"
+         data-order="76"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="s"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13689/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208565205/01-2295308724.jpg" alt="Брюки crepe uniqlo" loading="lazy" decoding="async">
@@ -3063,7 +3518,12 @@ spectarif_ just_ukr
 
 100% бавовна
 
-480338 новий білий s, m, l 🇺🇦 український: 44-46, 44; європейський: 36; 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки бавовна, вовна" data-initial-hidden='1'>
+480338 новий білий s, m, l 🇺🇦 український: 44-46, 44; європейський: 36; 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки бавовна, вовна"
+         data-order="77"
+         data-price="1500.0"
+         data-brand="uniqlo"
+         data-size="s, m, l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13688/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208566003/01-2295314877.jpg" alt="Штани-бочки uniqlo" loading="lazy" decoding="async">
@@ -3096,7 +3556,12 @@ spectarif_ just_ukr
 склад
 100% поліестер
 
-477872 новий коричневий, бежевий xl 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти брюки поліестер осінь, демісезон, весна, літо без принту діловий" data-initial-hidden='1'>
+477872 новий коричневий, бежевий xl 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти брюки поліестер осінь, демісезон, весна, літо без принту діловий"
+         data-order="78"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="xl"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13687/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208566304/01-2295316723.png" alt="Брюки широкі airsense uniqlo" loading="lazy" decoding="async">
@@ -3128,7 +3593,12 @@ spectarif_ just_ukr
 
 75% поліестер, 25% спандекс (
 
-455938 новий рожевий хs, s 🇺🇦 український: 42, 42-44; європейський: 34; 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти лосіни та легінси поліестер" data-initial-hidden='1'>
+455938 новий рожевий хs, s 🇺🇦 український: 42, 42-44; європейський: 34; 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти лосіни та легінси поліестер"
+         data-order="79"
+         data-price="850.0"
+         data-brand="uniqlo"
+         data-size="хs, s"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13686/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208568757/01-2295332290.jpg" alt="М&#x27;які легінси airism uniqlo" loading="lazy" decoding="async">
@@ -3160,7 +3630,12 @@ spectarif_ just_ukr
 
 75% поліестер, 25% спандекс
 
-455938 новий бузковий xl 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти лосіни та легінси поліестер" data-initial-hidden='1'>
+455938 новий бузковий xl 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти лосіни та легінси поліестер"
+         data-order="80"
+         data-price="850.0"
+         data-brand="uniqlo"
+         data-size="xl"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13685/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208568846/01-2295332853.jpg" alt="М&#x27;які легінси airism uniqlo" loading="lazy" decoding="async">
@@ -3201,7 +3676,12 @@ spectarif_ just_ukr
 склад
 66% бавовна, 23% поліестер, 9% віскоза, 2% спандекс
 
-475831 новий чорний хs 🇺🇦 український: 42, 42-44; європейський: 34 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс" data-initial-hidden='1'>
+475831 новий чорний хs 🇺🇦 український: 42, 42-44; європейський: 34 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс"
+         data-order="81"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="хs"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13684/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208570106/01-2295341091.jpg" alt="Брюки chino uniqlo" loading="lazy" decoding="async">
@@ -3242,7 +3722,12 @@ spectarif_ just_ukr
 склад
 66% бавовна, 23% поліестер, 9% віскоза, 2% спандекс
 
-475830 новий чорний хs 🇺🇦 український: 42, 42-44; європейський: 34 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс" data-initial-hidden='1'>
+475830 новий чорний хs 🇺🇦 український: 42, 42-44; європейський: 34 жіночий одяг штани та шорти брюки віскоза, поліестер, спандекс"
+         data-order="82"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="хs"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13683/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208570404/01-2295342874.jpg" alt="Брюки chino uniqlo" loading="lazy" decoding="async">
@@ -3275,7 +3760,12 @@ spectarif_ just_ukr
 склад
 53% віскоза, 24% поліестер, 23% поліамід
 
-461317 новий сірий s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки віскоза, поліестер, поліамід" data-initial-hidden='1'>
+461317 новий сірий s 🇺🇦 український: 44-46, 44; європейський: 36 жіночий одяг штани та шорти брюки віскоза, поліестер, поліамід"
+         data-order="83"
+         data-price="1050.0"
+         data-brand="uniqlo"
+         data-size="s"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13682/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208563922/01-2295302212.jpg" alt="Штани uniqlo" loading="lazy" decoding="async">
@@ -3308,7 +3798,12 @@ spectarif_ just_ukr
 склад
 95% поліестер - перероблене волокно, 5% еластан
 
-465786 новий чорний l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки поліестер, еластан" data-initial-hidden='1'>
+465786 новий чорний l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки поліестер, еластан"
+         data-order="84"
+         data-price="950.0"
+         data-brand="uniqlo"
+         data-size="l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13681/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208566746/01-2295319491.jpg" alt="Штани плісировані uniqlo" loading="lazy" decoding="async">
@@ -3347,7 +3842,12 @@ spectarif_ just_ukr
 
 склад: 77% поліестер - перероблене волокно, 23% еластан
 
-479150 новий блакитний m, xl 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти лосіни та легінси безшовні еластан" data-initial-hidden='1'>
+479150 новий блакитний m, xl 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти лосіни та легінси безшовні еластан"
+         data-order="85"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="m, xl"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13680/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208567202/01-2295322544.jpg" alt="Легінси uv protection uniqlo" loading="lazy" decoding="async">
@@ -3386,7 +3886,12 @@ spectarif_ just_ukr
 склад
 77% нейлон, 23% еластан
 
-474481 новий синій m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки нейлон, еластан повсякденний" data-initial-hidden='1'>
+474481 новий синій m 🇺🇦 український: 46, 46-48; європейський: 38 жіночий одяг штани та шорти брюки нейлон, еластан повсякденний"
+         data-order="86"
+         data-price="1100.0"
+         data-brand="uniqlo"
+         data-size="m"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13679/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208569401/01-2295336461.jpg" alt="Брюки широкі uniqlo" loading="lazy" decoding="async">
@@ -3424,7 +3929,12 @@ spectarif_ just_ukr
 
 склад: 9% бавовна, 41% ліоцелл
 
-468848 новий блакитний m європейський: 28; 🇺🇦 український: 44; джинсовий: w28 жіночий одяг штани та шорти джинси літо широкі" data-initial-hidden='1'>
+468848 новий блакитний m європейський: 28; 🇺🇦 український: 44; джинсовий: w28 жіночий одяг штани та шорти джинси літо широкі"
+         data-order="87"
+         data-price="1850.0"
+         data-brand="uniqlo"
+         data-size="m"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13678/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208564626/01-2295307043.jpg" alt="Джинсові штани uniqlo" loading="lazy" decoding="async">
@@ -3463,7 +3973,12 @@ spectarif_ just_ukr
 склад
 77% нейлон, 23% еластан
 
-474481 новий коричневий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки нейлон, еластан повсякденний" data-initial-hidden='1'>
+474481 новий коричневий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки нейлон, еластан повсякденний"
+         data-order="88"
+         data-price="1100.0"
+         data-brand="uniqlo"
+         data-size="l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13677/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208569472/01-2295337311.jpg" alt="Брюки широкі uniqlo" loading="lazy" decoding="async">
@@ -3503,7 +4018,12 @@ spectarif_ just_ukr
 склад
 95% поліестер, 5% спандекс
 
-481001 новий коричневий s, l 🇺🇦 український: 44-46, 44; європейський: 36; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки поліестер, спандекс" data-initial-hidden='1'>
+481001 новий коричневий s, l 🇺🇦 український: 44-46, 44; європейський: 36; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки поліестер, спандекс"
+         data-order="89"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="s, l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13676/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208569717/01-2295339064.jpg" alt="Штани uniqlo" loading="lazy" decoding="async">
@@ -3543,7 +4063,12 @@ spectarif_ just_ukr
 
 склад: 51% віскоза, 32% льон, 17% бавовна
 
-466024 новий бежевий m, l 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, льон, бавовна класичні повсякденний" data-initial-hidden='1'>
+466024 новий бежевий m, l 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, льон, бавовна класичні повсякденний"
+         data-order="90"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="m, l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13675/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208571197/01-2295348295.jpg" alt="Штани з лляної суміші easy uniqlo" loading="lazy" decoding="async">
@@ -3585,7 +4110,12 @@ spectarif_ just_ukr
 
 склад: 53% віскоза, 30% льон, 17% бавовна
 
-466323 новий рожевий, бузковий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, льон, бавовна класичні повсякденний" data-initial-hidden='1'>
+466323 новий рожевий, бузковий l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, льон, бавовна класичні повсякденний"
+         data-order="91"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13674/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208571306/01-2295348896.jpg" alt="Штани з лляної суміші easy uniqlo" loading="lazy" decoding="async">
@@ -3627,7 +4157,12 @@ spectarif_ just_ukr
 
 склад: 53% віскоза, 30% льон, 17% бавовна
 
-466323 новий бежевий l, xl 🇺🇦 український: 48-50, 48; європейський: 40; 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти брюки віскоза, льон, бавовна класичні повсякденний" data-initial-hidden='1'>
+466323 новий бежевий l, xl 🇺🇦 український: 48-50, 48; європейський: 40; 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти брюки віскоза, льон, бавовна класичні повсякденний"
+         data-order="92"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="l, xl"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13673/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208571504/01-2295350246.jpg" alt="Штани з лляної суміші easy uniqlo" loading="lazy" decoding="async">
@@ -3669,7 +4204,12 @@ spectarif_ just_ukr
 
 склад: 53% віскоза, 30% льон, 17% бавовна
 
-466323 новий зелений l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, льон, бавовна класичні повсякденний" data-initial-hidden='1'>
+466323 новий зелений l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, льон, бавовна класичні повсякденний"
+         data-order="93"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13672/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/208571631/01-2295351160.jpg" alt="Штани з лляної суміші easy uniqlo" loading="lazy" decoding="async">
@@ -3702,7 +4242,12 @@ spectarif_ just_ukr
 склад
 53% віскоза, 24% поліестер, 23% поліамід
 
-473802 новий бежевий xl 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти брюки віскоза, поліестер, поліамід" data-initial-hidden='1'>
+473802 новий бежевий xl 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти брюки віскоза, поліестер, поліамід"
+         data-order="94"
+         data-price="1010.0"
+         data-brand="uniqlo"
+         data-size="xl"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13671/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/209029974/01-2297775470.jpg" alt="Брюки knit ribbed uniqlo" loading="lazy" decoding="async">
@@ -3734,7 +4279,12 @@ spectarif_ just_ukr
 
 склад: 37% бавовна, 36% поліестер, 27% віскоза (36% використовується перероблене поліестерне волокно)
 
-481109 новий чорний xl 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти брюки віскоза, поліестер, бавовна" data-initial-hidden='1'>
+481109 новий чорний xl 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти брюки віскоза, поліестер, бавовна"
+         data-order="95"
+         data-price="1400.0"
+         data-brand="uniqlo"
+         data-size="xl"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13670/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/209035170/01-2297806210.jpg" alt="Штани milano uniqlo" loading="lazy" decoding="async">
@@ -3766,7 +4316,12 @@ spectarif_ just_ukr
 
 склад: 37% бавовна, 36% поліестер, 27% віскоза (36% використовується перероблене поліестерне волокно)
 
-481109 новий синій l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, поліестер, бавовна" data-initial-hidden='1'>
+481109 новий синій l 🇺🇦 український: 48-50, 48; європейський: 40 жіночий одяг штани та шорти брюки віскоза, поліестер, бавовна"
+         data-order="96"
+         data-price="1400.0"
+         data-brand="uniqlo"
+         data-size="l"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13669/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/209035096/01-2297805712.jpg" alt="Штани milano uniqlo" loading="lazy" decoding="async">
@@ -3798,7 +4353,12 @@ spectarif_ just_ukr
 
 склад: 100% бавовна
 
-480337 новий сірий 27, 29 джинсовий: w27; міжнародний: s; 🇺🇦 український: 42-44; джинсовий: w29; міжнародний: m; 🇺🇦 український: 44-46 жіночий одяг штани та шорти джинси" data-initial-hidden='1'>
+480337 новий сірий 27, 29 джинсовий: w27; міжнародний: s; 🇺🇦 український: 42-44; джинсовий: w29; міжнародний: m; 🇺🇦 український: 44-46 жіночий одяг штани та шорти джинси"
+         data-order="97"
+         data-price="1200.0"
+         data-brand="uniqlo"
+         data-size="27, 29"
+         data-category="shtany-shorty" data-initial-hidden='1'>
         <a class="card-main-link" href="../product/13668/">
             <div class="product-image-wrap">
                 <img class="product-image" src="../assets/products/209120910/01-2298196299.jpg" alt="Бавовняні штани uniqlo" loading="lazy" decoding="async">
@@ -3826,9 +4386,9 @@ spectarif_ just_ukr
         </div>
     </div></div>
         <div class="show-more-wrap">
-                <button class="show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
+                <button class="show-more-btn product-show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 27.05.2026 11:55</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 27.05.2026 13:12</div>
 </main>
 </div>
 <script>
@@ -3843,42 +4403,135 @@ window.openChatFromButton = openChatFromButton;
 function toggleTheme(){document.body.classList.toggle('dark');
 localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
 if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-function visibleProductCount(){return Array.from(document.querySelectorAll('.product-card')).filter(card=>getComputedStyle(card).display!=='none').length;}
+function productCards(){return Array.from(document.querySelectorAll('.product-card'));}
+function visibleProductCount(){return productCards().filter(card=>getComputedStyle(card).display!=='none').length;}
 function updateSearchStatus(total, shown){document.querySelectorAll('.search-status').forEach(el=>el.textContent=`Показано: ${shown} / ${total}`);}
-function showMoreProducts(btn){document.querySelectorAll('.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
-function showMoreReviews(btn){const batch=Array.from(document.querySelectorAll('.hidden-review')).slice(0,12);batch.forEach(el=>el.classList.remove('hidden-review'));if(!document.querySelector('.hidden-review'))btn.style.display='none';}
-function setProductImage(btn){const img=document.getElementById('productMainImage');if(img&&btn&&btn.dataset.src)img.src=btn.dataset.src;document.querySelectorAll('.product-thumb').forEach(el=>el.classList.remove('active'));if(btn)btn.classList.add('active');}
-let productZoomScale=1;
-function applyProductZoom(){const img=document.getElementById('productZoomImage');if(img)img.style.transform=`scale(${productZoomScale})`;}
-function openProductZoom(src){const overlay=document.getElementById('productZoomOverlay');const img=document.getElementById('productZoomImage');if(!overlay||!img||!src)return;img.src=src;productZoomScale=1;applyProductZoom();overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
-function closeProductZoom(){const overlay=document.getElementById('productZoomOverlay');if(!overlay)return;overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';}
-function changeProductZoom(delta){productZoomScale=Math.max(1,Math.min(4,productZoomScale+delta));applyProductZoom();}
-function resetProductZoom(){productZoomScale=1;applyProductZoom();}
-function productZoomWheel(event){event.preventDefault();changeProductZoom(event.deltaY<0?0.25:-0.25);}
-document.addEventListener('keydown',(event)=>{if(event.key==='Escape')closeProductZoom();});
-function syncCompactDetails(){const compact=window.innerWidth<=860;document.querySelectorAll('[data-mobile-closed]').forEach(el=>{if(compact)el.removeAttribute('open');else el.setAttribute('open','');});}
-syncCompactDetails();
-window.addEventListener('resize',syncCompactDetails);
-function filterProducts(input){
-const q=(input.value||'').trim().toLowerCase();
-const cards=Array.from(document.querySelectorAll('.product-card'));
+function inputValue(id){const el=document.getElementById(id);return el?String(el.value||'').trim().toLowerCase():'';}
+function numberValue(id){const raw=inputValue(id).replace(',','.');if(raw==='')return null;const value=Number(raw);return Number.isFinite(value)?value:null;}
+function productFilterState(){return {
+q:inputValue('productSearchInput'),
+brand:inputValue('productBrandFilter'),
+size:inputValue('productSizeFilter'),
+category:inputValue('productCategoryFilter'),
+min:numberValue('productMinPriceFilter'),
+max:numberValue('productMaxPriceFilter'),
+sort:inputValue('productSortFilter')||'default'
+};}
+function isProductFilterActive(state){return Boolean(state.q||state.brand||state.size||state.category||state.min!==null||state.max!==null);}
+function sortProductCards(cards, sort){const grid=document.querySelector('.products-grid');if(!grid)return;const ordered=[...cards].sort((a,b)=>{
+if(sort==='price-asc'||sort==='price-desc'){const av=Number(a.dataset.price||Number.POSITIVE_INFINITY);const bv=Number(b.dataset.price||Number.POSITIVE_INFINITY);return sort==='price-asc'?av-bv:bv-av;}
+if(sort==='name-asc')return (a.querySelector('.product-title')?.textContent||'').localeCompare(b.querySelector('.product-title')?.textContent||'', 'uk');
+return Number(a.dataset.order||0)-Number(b.dataset.order||0);
+});ordered.forEach(card=>grid.appendChild(card));}
+function filterProducts(){
+const cards=productCards();
+if(!cards.length)return;
+const state=productFilterState();
+const active=isProductFilterActive(state);
+sortProductCards(cards,state.sort);
 let shown=0;
 cards.forEach((card)=>{
-const matches=!q||(card.dataset.search||card.innerText).toLowerCase().includes(q);
+const price=Number(card.dataset.price||'');
+const matches=(!state.q||(card.dataset.search||card.innerText).toLowerCase().includes(state.q))
+&&(!state.brand||card.dataset.brand===state.brand)
+&&(!state.size||(card.dataset.size||'').includes(state.size))
+&&(!state.category||card.dataset.category===state.category)
+&&(state.min===null||(!Number.isNaN(price)&&price>=state.min))
+&&(state.max===null||(!Number.isNaN(price)&&price<=state.max));
 card.classList.toggle('is-hidden-by-search',!matches);
-if(q){
+if(active){
 card.classList.remove('hidden-card');
 card.style.display=matches?'flex':'none';
 }else{
 card.style.display='';
 if(card.dataset.initialHidden==='1'&&card.dataset.expanded!=='1')card.classList.add('hidden-card');
+else card.classList.remove('hidden-card');
 }
-if(matches&&(q||!card.classList.contains('hidden-card')))shown++;
+if(matches&&(active||!card.classList.contains('hidden-card')))shown++;
 });
-const btn=document.querySelector('.show-more-btn');
-if(btn)btn.style.display=q?'none':(document.querySelector('.hidden-card')?'inline-block':'none');
-updateSearchStatus(cards.length, q?shown:visibleProductCount());
+const btn=document.querySelector('.product-show-more-btn');
+if(btn)btn.style.display=active?'none':(document.querySelector('.product-card.hidden-card')?'inline-block':'none');
+updateSearchStatus(cards.length, active?shown:visibleProductCount());
 }
+function resetProductFilters(){['productSearchInput','productBrandFilter','productSizeFilter','productCategoryFilter','productMinPriceFilter','productMaxPriceFilter'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const sort=document.getElementById('productSortFilter');if(sort)sort.value='default';filterProducts();}
+function showMoreProducts(btn){document.querySelectorAll('.product-card.hidden-card').forEach(el=>{el.classList.remove('hidden-card');el.dataset.expanded='1';el.style.display='flex';});if(btn)btn.style.display='none';updateSearchStatus(document.querySelectorAll('.product-card').length, visibleProductCount());}
+function showMoreReviews(btn){const batch=Array.from(document.querySelectorAll('.review-card.is-review-filter-match.hidden-review')).slice(0,12);batch.forEach(el=>el.classList.remove('hidden-review'));if(!document.querySelector('.review-card.is-review-filter-match.hidden-review')&&btn)btn.style.display='none';updateReviewFilterStatus();}
+function reviewCards(){return Array.from(document.querySelectorAll('.review-card'));}
+function reviewFilterState(){return {
+q:inputValue('reviewSearchInput'),
+source:inputValue('reviewSourceFilter'),
+rating:Number(inputValue('reviewRatingFilter')||0),
+sort:inputValue('reviewSortFilter')||'informative'
+};}
+function sortReviewCards(cards,sort){const groups=[document.getElementById('siteReviewsList'),document.querySelector('.reviews-page-grid:not(.dynamic-reviews-grid)')].filter(Boolean);groups.forEach(group=>{const own=cards.filter(card=>card.parentElement===group).sort((a,b)=>{
+const ai=Number(a.dataset.reviewInfo||0),bi=Number(b.dataset.reviewInfo||0);
+const ar=Number(a.dataset.reviewRating||0),br=Number(b.dataset.reviewRating||0);
+const at=Number(a.dataset.reviewTime||0),bt=Number(b.dataset.reviewTime||0);
+if(sort==='newest')return bt-at;
+if(sort==='rating-desc')return br-ar||bi-ai;
+if(sort==='rating-asc')return ar-br||bi-ai;
+return bi-ai||bt-at;
+});own.forEach(card=>group.appendChild(card));});}
+function updateReviewFilterStatus(){const cards=reviewCards();const matched=cards.filter(card=>card.classList.contains('is-review-filter-match')).length;const visible=cards.filter(card=>card.classList.contains('is-review-filter-match')&&getComputedStyle(card).display!=='none').length;const el=document.getElementById('reviewFilterStatus');if(el)el.textContent=`Показано: ${visible} / ${matched}`;}
+function applyReviewFilters(){
+const cards=reviewCards();
+if(!cards.length)return;
+const state=reviewFilterState();
+const active=Boolean(state.q||state.source||state.rating);
+sortReviewCards(cards,state.sort);
+let visible=0,matched=0;
+cards.forEach((card,index)=>{
+const rating=Number(card.dataset.reviewRating||0);
+const matches=(!state.q||(card.dataset.search||card.innerText).toLowerCase().includes(state.q))
+&&(!state.source||card.dataset.reviewSource===state.source)
+&&(!state.rating||rating>=state.rating);
+card.classList.toggle('is-review-filter-match',matches);
+card.classList.toggle('is-hidden-by-search',!matches);
+if(active){
+card.classList.remove('hidden-review');
+card.style.display=matches?'block':'none';
+}else{
+card.style.display='';
+if(index>=12)card.classList.add('hidden-review');
+else card.classList.remove('hidden-review');
+}
+if(matches)matched++;
+if(matches&&(active||!card.classList.contains('hidden-review')))visible++;
+});
+const btn=document.querySelector('.review-show-more-btn');
+if(btn)btn.style.display=active?'none':(document.querySelector('.review-card.is-review-filter-match.hidden-review')?'inline-block':'none');
+const el=document.getElementById('reviewFilterStatus');
+if(el)el.textContent=`Показано: ${visible} / ${matched}`;
+}
+function resetReviewFilters(){['reviewSearchInput','reviewSourceFilter','reviewRatingFilter'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const sort=document.getElementById('reviewSortFilter');if(sort)sort.value='informative';applyReviewFilters();}
+function setProductImage(btn){const img=document.getElementById('productMainImage');if(img&&btn&&btn.dataset.src)img.src=btn.dataset.src;document.querySelectorAll('.product-thumb').forEach(el=>el.classList.remove('active'));if(btn)btn.classList.add('active');}
+let productZoomScale=1,productZoomX=0,productZoomY=0,productZoomIndex=0,productZoomDragging=false,productZoomStartX=0,productZoomStartY=0,productZoomBaseX=0,productZoomBaseY=0,productZoomPinchDistance=0,productZoomPinchScale=1;
+function productZoomImages(){return Array.from(document.querySelectorAll('.product-thumb')).map(btn=>btn.dataset.src).filter(Boolean);}
+function productZoomClamp(){const stage=document.getElementById('productZoomStage');const img=document.getElementById('productZoomImage');if(!stage||!img||productZoomScale<=1){productZoomX=0;productZoomY=0;return;}const rect=stage.getBoundingClientRect();const naturalW=img.naturalWidth||rect.width;const naturalH=img.naturalHeight||rect.height;const fit=Math.min(rect.width/naturalW,rect.height/naturalH,1);const displayW=naturalW*fit*productZoomScale;const displayH=naturalH*fit*productZoomScale;const maxX=Math.max(0,(displayW-rect.width)/2);const maxY=Math.max(0,(displayH-rect.height)/2);productZoomX=Math.max(-maxX,Math.min(maxX,productZoomX));productZoomY=Math.max(-maxY,Math.min(maxY,productZoomY));}
+function updateProductZoomUi(){const stage=document.getElementById('productZoomStage');const img=document.getElementById('productZoomImage');const percent=document.getElementById('productZoomPercent');const meta=document.getElementById('productZoomMeta');const images=productZoomImages();productZoomClamp();if(img)img.style.transform=`translate(${productZoomX}px, ${productZoomY}px) scale(${productZoomScale})`;if(percent)percent.textContent=`${Math.round(productZoomScale*100)}%`;if(meta)meta.textContent=images.length?`${productZoomIndex+1} / ${images.length}`:'';if(stage)stage.classList.toggle('is-draggable',productZoomScale>1);document.querySelectorAll('.product-zoom-thumb').forEach((btn,i)=>btn.classList.toggle('active',i===productZoomIndex));document.querySelectorAll('.product-zoom-prev,.product-zoom-next').forEach(btn=>btn.disabled=images.length<=1);}
+function fitProductZoom(){productZoomScale=1;productZoomX=0;productZoomY=0;updateProductZoomUi();}
+function productZoomSetIndex(index){const images=productZoomImages();if(!images.length)return;productZoomIndex=(index+images.length)%images.length;const img=document.getElementById('productZoomImage');if(img)img.src=images[productZoomIndex];fitProductZoom();}
+function productZoomStep(delta){productZoomSetIndex(productZoomIndex+delta);}
+function buildProductZoomThumbs(){const holder=document.getElementById('productZoomThumbs');if(!holder)return;const images=productZoomImages();holder.innerHTML='';images.forEach((src,index)=>{const btn=document.createElement('button');btn.type='button';btn.className='product-zoom-thumb';btn.onclick=()=>productZoomSetIndex(index);btn.innerHTML=`<img src="${src.replace(/"/g,'&quot;')}" alt="">`;holder.appendChild(btn);});}
+function openProductZoom(src){const overlay=document.getElementById('productZoomOverlay');const img=document.getElementById('productZoomImage');if(!overlay||!img||!src)return;const images=productZoomImages();productZoomIndex=Math.max(0,images.indexOf(src));buildProductZoomThumbs();img.src=src;fitProductZoom();overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(updateProductZoomUi,80);}
+function closeProductZoom(){const overlay=document.getElementById('productZoomOverlay');if(!overlay)return;overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';productZoomDragging=false;}
+function productZoomBackdrop(event){if(event.target&&event.target.id==='productZoomOverlay')closeProductZoom();}
+function changeProductZoom(delta,originEvent){const old=productZoomScale;productZoomScale=Math.max(1,Math.min(5,productZoomScale+delta));if(productZoomScale===1){productZoomX=0;productZoomY=0;}else if(originEvent&&old!==productZoomScale){const stage=document.getElementById('productZoomStage');if(stage){const rect=stage.getBoundingClientRect();const ox=originEvent.clientX-(rect.left+rect.width/2);const oy=originEvent.clientY-(rect.top+rect.height/2);const ratio=productZoomScale/old-1;productZoomX-=ox*ratio;productZoomY-=oy*ratio;}}updateProductZoomUi();}
+function productZoomWheel(event){event.preventDefault();changeProductZoom(event.deltaY<0?0.25:-0.25,event);}
+function productZoomPointerDown(event){if(productZoomScale<=1||event.pointerType==='touch')return;productZoomDragging=true;productZoomStartX=event.clientX;productZoomStartY=event.clientY;productZoomBaseX=productZoomX;productZoomBaseY=productZoomY;event.currentTarget.setPointerCapture?.(event.pointerId);event.currentTarget.classList.add('is-dragging');}
+function productZoomPointerMove(event){if(!productZoomDragging)return;productZoomX=productZoomBaseX+(event.clientX-productZoomStartX);productZoomY=productZoomBaseY+(event.clientY-productZoomStartY);updateProductZoomUi();}
+function productZoomPointerUp(event){productZoomDragging=false;event.currentTarget?.classList?.remove('is-dragging');}
+function productZoomDoubleClick(event){if(productZoomScale>1)fitProductZoom();else changeProductZoom(1.25,event);}
+function productZoomTouchDistance(touches){const dx=touches[0].clientX-touches[1].clientX;const dy=touches[0].clientY-touches[1].clientY;return Math.hypot(dx,dy);}
+function productZoomTouchStart(event){if(event.touches.length===2){productZoomPinchDistance=productZoomTouchDistance(event.touches);productZoomPinchScale=productZoomScale;}else if(event.touches.length===1&&productZoomScale>1){productZoomDragging=true;productZoomStartX=event.touches[0].clientX;productZoomStartY=event.touches[0].clientY;productZoomBaseX=productZoomX;productZoomBaseY=productZoomY;}}
+function productZoomTouchMove(event){if(event.touches.length===2&&productZoomPinchDistance){event.preventDefault();const next=Math.max(1,Math.min(5,productZoomPinchScale*(productZoomTouchDistance(event.touches)/productZoomPinchDistance)));productZoomScale=next;updateProductZoomUi();}else if(event.touches.length===1&&productZoomDragging){event.preventDefault();productZoomX=productZoomBaseX+(event.touches[0].clientX-productZoomStartX);productZoomY=productZoomBaseY+(event.touches[0].clientY-productZoomStartY);updateProductZoomUi();}}
+function productZoomTouchEnd(event){if(event.touches.length===0){productZoomDragging=false;productZoomPinchDistance=0;}}
+document.addEventListener('keydown',(event)=>{if(event.key==='Escape')closeProductZoom();if(document.getElementById('productZoomOverlay')?.classList.contains('open')){if(event.key==='ArrowLeft')productZoomStep(-1);if(event.key==='ArrowRight')productZoomStep(1);if(event.key==='0')fitProductZoom();}});
+function syncCompactDetails(){const compact=window.innerWidth<=860;document.querySelectorAll('[data-mobile-closed]').forEach(el=>{if(compact)el.removeAttribute('open');else el.setAttribute('open','');});}
+syncCompactDetails();
+window.addEventListener('resize',syncCompactDetails);
+filterProducts();
+applyReviewFilters();
 </script>
 </body>
 </html>
