@@ -414,7 +414,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 28.05.2026 22:14</div>
+    <div class='updated-at'>Оновлено: 28.05.2026 22:35</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -609,6 +609,19 @@ const reviewEl = (id) => document.getElementById(id);
 const reviewClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const reviewStatus = (text) => { const el = reviewEl('reviewStatus'); if (el) el.textContent = text; };
 const reviewHostAllowed = () => !reviewAllowedHosts.size || reviewAllowedHosts.has(location.hostname.toLowerCase());
+const reviewAuthErrorText = (err) => {
+    const code = String(err?.code || '');
+    if (code === 'auth/unauthorized-domain') {
+        return `Firebase не дозволяє Google-вхід з домену ${location.hostname}. Додайте цей домен в Authentication -> Settings -> Authorized domains.`;
+    }
+    if (code === 'auth/popup-closed-by-user') {
+        return 'Вікно Google було закрито до завершення входу.';
+    }
+    if (code === 'auth/popup-blocked') {
+        return 'Браузер заблокував Google-вхід. Дозвольте спливаючі вікна або спробуйте ще раз.';
+    }
+    return `Google-вхід не вдався: ${err?.message || err || 'невідома помилка'}`;
+};
 const reviewInfoScore = (text) => {
     text = reviewClean(text).toLowerCase();
     if (!text) return 0;
@@ -699,10 +712,20 @@ async function signInReview() {
     const api = await ensureReviewFirebase();
     if (!api) return;
     const provider = new api.GoogleAuthProvider();
+    reviewStatus('Відкриваю Google-вхід...');
     try {
         await api.signInWithPopup(reviewAuth, provider);
     } catch (err) {
-        await api.signInWithRedirect(reviewAuth, provider);
+        if (err?.code === 'auth/popup-blocked') {
+            try {
+                reviewStatus('Браузер заблокував вікно. Перенаправляю на Google-вхід...');
+                await api.signInWithRedirect(reviewAuth, provider);
+            } catch (redirectErr) {
+                reviewStatus(reviewAuthErrorText(redirectErr));
+            }
+            return;
+        }
+        reviewStatus(reviewAuthErrorText(err));
     }
 }
 
@@ -21273,7 +21296,7 @@ ensureReviewFirebase();
         <div class="show-more-wrap">
                     <button class="show-more-btn review-show-more-btn" onclick="showMoreReviews(this)">Показати ще відгуки</button>
                 </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 22:14</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 22:35</div>
 </main>
 </div>
 <script>
