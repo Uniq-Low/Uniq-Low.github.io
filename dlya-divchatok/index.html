@@ -42,6 +42,15 @@ color:var(--muted);margin-bottom:8px;padding:0 6px;}
 .menu-block a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);padding:10px 12px;
 border-radius:12px;font-size:14px;margin-bottom:4px;transition:.18s ease;}
 .nav-icon{width:18px;height:18px;object-fit:contain;flex:0 0 18px;}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.action-icon,.chat-message-action-icon{display:block;width:22px;height:22px;background:currentColor;
+-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;
+-webkit-mask-size:contain;mask-size:contain;}
+.icon-telegram{-webkit-mask-image:url('../assets/icons/telegram.svg');mask-image:url('../assets/icons/telegram.svg');}
+.icon-viber{-webkit-mask-image:url('../assets/icons/viber.svg');mask-image:url('../assets/icons/viber.svg');}
+.icon-chat-action{-webkit-mask-image:url('../assets/icons/chat-action.svg');mask-image:url('../assets/icons/chat-action.svg');}
+.icon-edit{-webkit-mask-image:url('../assets/icons/edit.svg');mask-image:url('../assets/icons/edit.svg');}
+.icon-delete{-webkit-mask-image:url('../assets/icons/delete.svg');mask-image:url('../assets/icons/delete.svg');}
 .menu-block a:hover{background:var(--accent-soft);color:var(--accent);transform:translateX(2px);}
 .active-link{background:var(--accent-soft);color:var(--accent)!important;font-weight:700;}
 .content{padding:clamp(16px,2.6vw,32px);min-width:0;}
@@ -102,14 +111,13 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-attrs dt{color:var(--muted);}
 .product-attrs dd{margin:0;color:var(--text);}
 .card-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 16px 16px;}
-.card-action-btn{min-height:42px;border:none;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;
+.card-action-btn{min-height:44px;border:none;border-radius:14px;padding:0;font-weight:800;font-size:14px;
 display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
 .card-tg-btn{background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;}
 .card-viber-btn{background:linear-gradient(135deg,#7b6cff,#665cac);color:white;text-align:center;}
-.card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);gap:7px;}
+.card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);}
+.card-chat-btn .action-icon{width:24px;height:24px;}
 .card-tg-btn:hover,.card-viber-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
-.chat-icon{width:18px;height:18px;border:2px solid currentColor;border-radius:7px;display:inline-block;position:relative;flex:0 0 18px;}
-.chat-icon::after{content:"";position:absolute;left:2px;bottom:-5px;width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:var(--panel-solid);transform:skew(-18deg);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
 .product-detail-page{max-width:1500px;margin:0 auto;animation:fadeUp .3s ease both;}
@@ -160,12 +168,13 @@ body.dark .product-detail-info{background:rgba(17,24,39,.88);}
 .detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
 .detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
 .detail-order-btn,.detail-viber-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
-text-decoration:none;border-radius:14px;font-weight:800;padding:13px 22px;transition:.18s ease;}
+width:54px;text-decoration:none;border-radius:14px;font-weight:800;padding:0;transition:.18s ease;}
 .detail-order-btn{
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
 box-shadow:0 14px 30px rgba(34,158,217,.24);}
 .detail-viber-btn{background:linear-gradient(135deg,#7b6cff,#665cac);color:white;text-decoration:none;box-shadow:0 14px 30px rgba(115,96,242,.24);}
-.detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);gap:8px;cursor:pointer;}
+.detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);cursor:pointer;}
+.detail-chat-btn .action-icon{width:25px;height:25px;}
 .detail-order-btn:hover,.detail-viber-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
 .chat-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.48);backdrop-filter:blur(8px);
 display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
@@ -201,10 +210,12 @@ background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;
 .chat-message-meta{font-size:11px;opacity:.72;margin-bottom:3px;}
 .chat-message-text{white-space:pre-wrap;}
 .chat-message-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:8px;}
-.chat-message-action{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:900;cursor:pointer;}
+.chat-message-action{width:32px;height:32px;border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:999px;padding:0;font-size:0;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;}
+.chat-message-action-icon{width:16px;height:16px;}
 .chat-message.mine .chat-message-action{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.28);color:white;}
 .chat-message-action:hover{border-color:var(--accent);color:var(--accent);}
 .chat-message.mine .chat-message-action:hover{background:white;color:var(--accent);}
+.chat-message-action.danger:hover{border-color:#ef4444;color:#ef4444;}
 .chat-composer{display:grid;gap:8px;}
 .chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
 .chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
@@ -334,8 +345,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-info{padding:12px;}
 .product-price{font-size:20px;}
 .product-title{font-size:14px;min-height:0;}
-.card-actions{margin:0 12px 12px;grid-template-columns:1fr;}
-.card-action-btn{font-size:13px;padding:11px 8px;}
+.card-actions{margin:0 12px 12px;grid-template-columns:repeat(3,minmax(0,1fr));}
+.card-action-btn{font-size:13px;padding:0;min-height:44px;}
 .product-detail-layout{gap:14px;}
 .product-thumbs{padding-bottom:6px;scroll-snap-type:x mandatory;}
 .product-thumb{min-width:74px;scroll-snap-align:start;}
@@ -344,8 +355,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-detail-info h1{font-size:clamp(23px,7vw,31px);}
 .detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
 .detail-section{padding-top:14px;margin-top:14px;}
-.detail-actions{display:grid;grid-template-columns:1fr;}
-.detail-order-btn,.detail-viber-btn,.detail-chat-btn{width:100%;}
+.detail-actions{display:grid;grid-template-columns:repeat(3,54px);justify-content:start;}
+.detail-order-btn,.detail-viber-btn,.detail-chat-btn{width:54px;}
 .chat-page-panel{min-height:auto;}
 .chat-page-panel .chat-workspace.active{grid-template-columns:1fr;min-height:auto;}
 .chat-history-panel{border-right:none;border-bottom:1px solid var(--border);}
@@ -401,7 +412,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 28.05.2026 12:43</div>
+    <div class='updated-at'>Оновлено: 28.05.2026 13:40</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -563,21 +574,26 @@ background:var(--panel-solid);color:var(--muted);}
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13811"
                     data-chat-product-name="Штани з ультраэластичных легінсів для дівчаток uniqlo"
                     data-chat-product-url="../product/13811/"
                     data-chat-product-image="../assets/products/93671762/01-487943517.jpg"
                     data-chat-product-price="400 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -598,21 +614,26 @@ background:var(--panel-solid);color:var(--muted);}
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13810"
                     data-chat-product-name="Уникло красуня дісней футболка!"
                     data-chat-product-url="../product/13810/"
                     data-chat-product-image="../assets/products/94919598/01-500114889.jpg"
                     data-chat-product-price="300 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -633,21 +654,26 @@ background:var(--panel-solid);color:var(--muted);}
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13809"
                     data-chat-product-name="Mango лосини"
                     data-chat-product-url="../product/13809/"
                     data-chat-product-image="../assets/products/101014866/01-567114663.jpg"
                     data-chat-product-price="355 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -668,21 +694,26 @@ background:var(--panel-solid);color:var(--muted);}
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13808"
                     data-chat-product-name="Сукня без рукавів uniqlo"
                     data-chat-product-url="../product/13808/"
                     data-chat-product-image="../assets/products/101360427/01-569785805.jpg"
                     data-chat-product-price="350 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -704,21 +735,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13807"
                     data-chat-product-name="Темно-сині з  м флісовим утіпленням легінси nwt gymboree warm and fuzzy toddler north star party"
                     data-chat-product-url="../product/13807/"
                     data-chat-product-image="../assets/products/105426457/01-642629511.jpg"
                     data-chat-product-price="299 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -739,21 +775,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13806"
                     data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка"
                     data-chat-product-url="../product/13806/"
                     data-chat-product-image="../assets/products/94919416/01-500112713.jpg"
                     data-chat-product-price="300 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -774,21 +815,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13805"
                     data-chat-product-name="Дитячий светр з круглим вирізом peanuts"
                     data-chat-product-url="../product/13805/"
                     data-chat-product-image="../assets/products/101360533/01-569786272.jpg"
                     data-chat-product-price="550 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -809,21 +855,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13804"
                     data-chat-product-name="Сукня з об&#x27;єднання ємними рукавами girls з мерсеризованої бавовни"
                     data-chat-product-url="../product/13804/"
                     data-chat-product-image="../assets/products/101360621/01-569786789.jpg"
                     data-chat-product-price="550 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -844,21 +895,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13803"
                     data-chat-product-name="Дитяча сітчаста толстовка airism з ультрафіолетовим вирізом"
                     data-chat-product-url="../product/13803/"
                     data-chat-product-image="../assets/products/101360744/01-569787567.jpg"
                     data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -879,21 +935,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13802"
                     data-chat-product-name="Дитяча колекція disney светр з круглим вирізом"
                     data-chat-product-url="../product/13802/"
                     data-chat-product-image="../assets/products/101361095/01-569790052.jpg"
                     data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -914,21 +975,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13801"
                     data-chat-product-name="Кардиган дитячий"
                     data-chat-product-url="../product/13801/"
                     data-chat-product-image="../assets/products/101361212/01-569790554.jpg"
                     data-chat-product-price="400 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -951,21 +1017,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13800"
                     data-chat-product-name="Угг bearpaw brady black"
                     data-chat-product-url="../product/13800/"
                     data-chat-product-image="../assets/products/142917201/01-1586695422.jpg"
                     data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -986,21 +1057,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13799"
                     data-chat-product-name="Сукня-футболка з круглим вирізом і короткими рукавами для дівчаток uniqlo"
                     data-chat-product-url="../product/13799/"
                     data-chat-product-image="../assets/products/93670936/01-487937396.jpg"
                     data-chat-product-price="500 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1021,21 +1097,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13798"
                     data-chat-product-name="Kids kaws x sesame street ut (футболка з коротким рукавом) 9-10 ,11-12"
                     data-chat-product-url="../product/13798/"
                     data-chat-product-image="../assets/products/94914867/01-500069520.jpg"
                     data-chat-product-price="410 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1056,21 +1137,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13797"
                     data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!"
                     data-chat-product-url="../product/13797/"
                     data-chat-product-image="../assets/products/94915216/01-500072024.jpg"
                     data-chat-product-price="290 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1091,21 +1177,26 @@ a27 новий синій 98 дитячий одяг для дівчаток ш�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13796"
                     data-chat-product-name="Uniqlo акція! 3 футболки -знижка!дитяча футболка з принтом!"
                     data-chat-product-url="../product/13796/"
                     data-chat-product-image="../assets/products/94918363/01-500099826.jpg"
                     data-chat-product-price="300 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1127,21 +1218,26 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13795"
                     data-chat-product-name="Пижама для девочки carters"
                     data-chat-product-url="../product/13795/"
                     data-chat-product-image="../assets/products/105464366/01-643296650.jpg"
                     data-chat-product-price="590 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1179,21 +1275,26 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13794"
                     data-chat-product-name="Зимові черевики merrell thermo rhea waterproof boot,"
                     data-chat-product-url="../product/13794/"
                     data-chat-product-image="../assets/products/193484389/01-2227290636.jpg"
                     data-chat-product-price="2800 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1214,21 +1315,26 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13793"
                     data-chat-product-name="Дитяча піжама"
                     data-chat-product-url="../product/13793/"
                     data-chat-product-image="../assets/products/101360227/01-569784490.jpg"
                     data-chat-product-price="600 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1249,21 +1355,26 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13792"
                     data-chat-product-name="Дитяча піжама"
                     data-chat-product-url="../product/13792/"
                     data-chat-product-image="../assets/products/101360323/01-569785066.jpg"
                     data-chat-product-price="600 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1284,21 +1395,26 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13791"
                     data-chat-product-name="Кросівки puma «clyde»"
                     data-chat-product-url="../product/13791/"
                     data-chat-product-image="../assets/products/73486457/01-327670230.jpg"
                     data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1319,21 +1435,26 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13790"
                     data-chat-product-name="Crocs ralen clog k fuchsia pink girls size j1 roomy fit"
                     data-chat-product-url="../product/13790/"
                     data-chat-product-image="../assets/products/96700601/01-514652886.jpg"
                     data-chat-product-price="750 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1354,21 +1475,26 @@ a28 новий рожевий 122 дитячий одяг для дівчато�
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13789"
                     data-chat-product-name="Дитяче флісове пальто uniqlo blocktech"
                     data-chat-product-url="../product/13789/"
                     data-chat-product-image="../assets/products/105416412/01-642499440.jpg"
                     data-chat-product-price="800 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1390,21 +1516,26 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13788"
                     data-chat-product-name="Колекція теплого домашнього одягу"
                     data-chat-product-url="../product/13788/"
                     data-chat-product-image="../assets/products/105462608/01-643267499.webp"
                     data-chat-product-price="750 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1426,21 +1557,26 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13787"
                     data-chat-product-name="Ugg bearpaw emma tall black boots"
                     data-chat-product-url="../product/13787/"
                     data-chat-product-image="../assets/products/142917955/01-1586724763.jpg"
                     data-chat-product-price="1700 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1462,21 +1598,26 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13786"
                     data-chat-product-name="Теплий  пуховик для дівчаток uniqlo"
                     data-chat-product-url="../product/13786/"
                     data-chat-product-image="../assets/products/192089118/01-2218909693.jpg"
                     data-chat-product-price="1600 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1501,21 +1642,26 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13785"
                     data-chat-product-name="Куртка uniqlo дитяча"
                     data-chat-product-url="../product/13785/"
                     data-chat-product-image="../assets/products/192118373/01-2219084220.jpg"
                     data-chat-product-price="999 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1543,21 +1689,26 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13784"
                     data-chat-product-name="Кросівки under armour kids youth 4y  assert 9"
                     data-chat-product-url="../product/13784/"
                     data-chat-product-image="../assets/products/200718804/01-2263034446.webp"
                     data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1578,21 +1729,26 @@ a28 новий рожевий 122, 128 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13783"
                     data-chat-product-name="Курточка gymboree 4 роки"
                     data-chat-product-url="../product/13783/"
                     data-chat-product-image="../assets/products/102891587/01-587363593.jpg"
                     data-chat-product-price="640 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1614,21 +1770,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13782"
                     data-chat-product-name="Колекція теплого домашнього одягу"
                     data-chat-product-url="../product/13782/"
                     data-chat-product-image="../assets/products/105462481/01-643265114.webp"
                     data-chat-product-price="800 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1653,21 +1814,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13781"
                     data-chat-product-name="Зимові черевики columbia ice maiden shorty snow boot"
                     data-chat-product-url="../product/13781/"
                     data-chat-product-image="../assets/products/193480444/01-2227266804.webp"
                     data-chat-product-price="1990 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1688,21 +1854,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13780"
                     data-chat-product-name="Зимовий мерехтливе пальто matalan на дівчинку 6 років і 5 років"
                     data-chat-product-url="../product/13780/"
                     data-chat-product-image="../assets/products/74467240/01-332809090.jpg"
                     data-chat-product-price="700 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1723,21 +1894,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13779"
                     data-chat-product-name="Двустороння куртка 116 зріст c&amp;a"
                     data-chat-product-url="../product/13779/"
                     data-chat-product-image="../assets/products/103516007/01-598270235.jpg"
                     data-chat-product-price="697 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1760,21 +1936,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13778"
                     data-chat-product-name="Лонгслив для дівчинки zara"
                     data-chat-product-url="../product/13778/"
                     data-chat-product-image="../assets/products/170558077/01--320876822.jpg"
                     data-chat-product-price="250 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1807,21 +1988,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13777"
                     data-chat-product-name="М&#x27;яка пухнаста флісова кофта uniqlo"
                     data-chat-product-url="../product/13777/"
                     data-chat-product-image="../assets/products/186752530/01-2187300193.jpg"
                     data-chat-product-price="850 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1854,21 +2040,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13776"
                     data-chat-product-name="Черевики skechers synergy - collab"
                     data-chat-product-url="../product/13776/"
                     data-chat-product-image="../assets/products/192057803/01-2218709887.jpg"
                     data-chat-product-price="1500 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1897,21 +2088,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13775"
                     data-chat-product-name="Дитяча куртка пуховик zara"
                     data-chat-product-url="../product/13775/"
                     data-chat-product-image="../assets/products/194120433/01-2231212411.jpg"
                     data-chat-product-price="1990 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1932,21 +2128,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13774"
                     data-chat-product-name="Дитяча куртка-пуховик gio oversized для дівчаток urban republic 5-6 років"
                     data-chat-product-url="../product/13774/"
                     data-chat-product-image="../assets/products/74467896/01-332812443.jpg"
                     data-chat-product-price="550 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -1967,21 +2168,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13773"
                     data-chat-product-name="Carter&#x27;s чоботи"
                     data-chat-product-url="../product/13773/"
                     data-chat-product-image="../assets/products/142920855/01-1586833844.jpg"
                     data-chat-product-price="650 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -2002,21 +2208,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13772"
                     data-chat-product-name="Жилетка gymboree 4 роки"
                     data-chat-product-url="../product/13772/"
                     data-chat-product-image="../assets/products/101838265/01-578346126.jpg"
                     data-chat-product-price="350 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -2037,21 +2248,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13771"
                     data-chat-product-name="Резиновые сапоги carter’s"
                     data-chat-product-url="../product/13771/"
                     data-chat-product-image="../assets/products/142920995/01-1586843336.jpg"
                     data-chat-product-price="600 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -2083,21 +2299,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13770"
                     data-chat-product-name="Термолонгслів uniqlo heattech extra warm, розмір 11/12 років"
                     data-chat-product-url="../product/13770/"
                     data-chat-product-image="../assets/products/193891769/01-2229802106.jpg"
                     data-chat-product-price="500 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -2118,21 +2339,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13769"
                     data-chat-product-name="Пальто uniqlo флісова непродуваемое windproof 7-8 років"
                     data-chat-product-url="../product/13769/"
                     data-chat-product-image="../assets/products/101011855/01-567078997.jpg"
                     data-chat-product-price="600 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -2155,21 +2381,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13768"
                     data-chat-product-name="Сабо crocs classic terry cloth clog"
                     data-chat-product-url="../product/13768/"
                     data-chat-product-image="../assets/products/208870284/01-2296910453.webp"
                     data-chat-product-price="1150 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -2195,21 +2426,26 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13767"
                     data-chat-product-name="Дитячі штани штани з лляної суміші uniqlo"
                     data-chat-product-url="../product/13767/"
                     data-chat-product-image="../assets/products/209137433/01-2298283967.jpg"
                     data-chat-product-price="510 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
@@ -2237,28 +2473,33 @@ a28 новий рожевий 146, 152 дитячий одяг для дівча
             </div>
         </a>
         <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
-                Telegram
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
             </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
-                Viber
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
                     data-chat-product-id="13766"
                     data-chat-product-name="Дитяча сукня uniqlo"
                     data-chat-product-url="../product/13766/"
                     data-chat-product-image="../assets/products/209128307/01-2298234896.jpg"
                     data-chat-product-price="520 грн"
                     onclick="openChatFromButton(this)">
-                <span class="chat-icon" aria-hidden="true"></span>
-                Чат
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
             </button>
         </div>
     </div></div>
         <div class="show-more-wrap">
                 <button class="show-more-btn product-show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 12:43</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 13:40</div>
 </main>
 </div>
 <script>

@@ -42,6 +42,15 @@ color:var(--muted);margin-bottom:8px;padding:0 6px;}
 .menu-block a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);padding:10px 12px;
 border-radius:12px;font-size:14px;margin-bottom:4px;transition:.18s ease;}
 .nav-icon{width:18px;height:18px;object-fit:contain;flex:0 0 18px;}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.action-icon,.chat-message-action-icon{display:block;width:22px;height:22px;background:currentColor;
+-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;
+-webkit-mask-size:contain;mask-size:contain;}
+.icon-telegram{-webkit-mask-image:url('../../assets/icons/telegram.svg');mask-image:url('../../assets/icons/telegram.svg');}
+.icon-viber{-webkit-mask-image:url('../../assets/icons/viber.svg');mask-image:url('../../assets/icons/viber.svg');}
+.icon-chat-action{-webkit-mask-image:url('../../assets/icons/chat-action.svg');mask-image:url('../../assets/icons/chat-action.svg');}
+.icon-edit{-webkit-mask-image:url('../../assets/icons/edit.svg');mask-image:url('../../assets/icons/edit.svg');}
+.icon-delete{-webkit-mask-image:url('../../assets/icons/delete.svg');mask-image:url('../../assets/icons/delete.svg');}
 .menu-block a:hover{background:var(--accent-soft);color:var(--accent);transform:translateX(2px);}
 .active-link{background:var(--accent-soft);color:var(--accent)!important;font-weight:700;}
 .content{padding:clamp(16px,2.6vw,32px);min-width:0;}
@@ -102,14 +111,13 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-attrs dt{color:var(--muted);}
 .product-attrs dd{margin:0;color:var(--text);}
 .card-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 16px 16px;}
-.card-action-btn{min-height:42px;border:none;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;
+.card-action-btn{min-height:44px;border:none;border-radius:14px;padding:0;font-weight:800;font-size:14px;
 display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
 .card-tg-btn{background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;}
 .card-viber-btn{background:linear-gradient(135deg,#7b6cff,#665cac);color:white;text-align:center;}
-.card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);gap:7px;}
+.card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);}
+.card-chat-btn .action-icon{width:24px;height:24px;}
 .card-tg-btn:hover,.card-viber-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
-.chat-icon{width:18px;height:18px;border:2px solid currentColor;border-radius:7px;display:inline-block;position:relative;flex:0 0 18px;}
-.chat-icon::after{content:"";position:absolute;left:2px;bottom:-5px;width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:var(--panel-solid);transform:skew(-18deg);}
 .hidden-card{display:none;}
 .is-hidden-by-search{display:none!important;}
 .product-detail-page{max-width:1500px;margin:0 auto;animation:fadeUp .3s ease both;}
@@ -160,12 +168,13 @@ body.dark .product-detail-info{background:rgba(17,24,39,.88);}
 .detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
 .detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
 .detail-order-btn,.detail-viber-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
-text-decoration:none;border-radius:14px;font-weight:800;padding:13px 22px;transition:.18s ease;}
+width:54px;text-decoration:none;border-radius:14px;font-weight:800;padding:0;transition:.18s ease;}
 .detail-order-btn{
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
 box-shadow:0 14px 30px rgba(34,158,217,.24);}
 .detail-viber-btn{background:linear-gradient(135deg,#7b6cff,#665cac);color:white;text-decoration:none;box-shadow:0 14px 30px rgba(115,96,242,.24);}
-.detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);gap:8px;cursor:pointer;}
+.detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);cursor:pointer;}
+.detail-chat-btn .action-icon{width:25px;height:25px;}
 .detail-order-btn:hover,.detail-viber-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
 .chat-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.48);backdrop-filter:blur(8px);
 display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
@@ -201,10 +210,12 @@ background:var(--panel-solid);border:1px solid var(--border);border-radius:24px;
 .chat-message-meta{font-size:11px;opacity:.72;margin-bottom:3px;}
 .chat-message-text{white-space:pre-wrap;}
 .chat-message-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:8px;}
-.chat-message-action{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:900;cursor:pointer;}
+.chat-message-action{width:32px;height:32px;border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:999px;padding:0;font-size:0;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;}
+.chat-message-action-icon{width:16px;height:16px;}
 .chat-message.mine .chat-message-action{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.28);color:white;}
 .chat-message-action:hover{border-color:var(--accent);color:var(--accent);}
 .chat-message.mine .chat-message-action:hover{background:white;color:var(--accent);}
+.chat-message-action.danger:hover{border-color:#ef4444;color:#ef4444;}
 .chat-composer{display:grid;gap:8px;}
 .chat-input{width:100%;min-height:82px;resize:vertical;border:1px solid var(--border);border-radius:14px;background:var(--panel-solid);color:var(--text);padding:12px;font:inherit;}
 .chat-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
@@ -334,8 +345,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-info{padding:12px;}
 .product-price{font-size:20px;}
 .product-title{font-size:14px;min-height:0;}
-.card-actions{margin:0 12px 12px;grid-template-columns:1fr;}
-.card-action-btn{font-size:13px;padding:11px 8px;}
+.card-actions{margin:0 12px 12px;grid-template-columns:repeat(3,minmax(0,1fr));}
+.card-action-btn{font-size:13px;padding:0;min-height:44px;}
 .product-detail-layout{gap:14px;}
 .product-thumbs{padding-bottom:6px;scroll-snap-type:x mandatory;}
 .product-thumb{min-width:74px;scroll-snap-align:start;}
@@ -344,8 +355,8 @@ background:var(--panel-solid);color:var(--muted);}
 .product-detail-info h1{font-size:clamp(23px,7vw,31px);}
 .detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
 .detail-section{padding-top:14px;margin-top:14px;}
-.detail-actions{display:grid;grid-template-columns:1fr;}
-.detail-order-btn,.detail-viber-btn,.detail-chat-btn{width:100%;}
+.detail-actions{display:grid;grid-template-columns:repeat(3,54px);justify-content:start;}
+.detail-order-btn,.detail-viber-btn,.detail-chat-btn{width:54px;}
 .chat-page-panel{min-height:auto;}
 .chat-page-panel .chat-workspace.active{grid-template-columns:1fr;min-height:auto;}
 .chat-history-panel{border-right:none;border-bottom:1px solid var(--border);}
@@ -401,7 +412,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 28.05.2026 12:43</div>
+    <div class='updated-at'>Оновлено: 28.05.2026 13:40</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../../assets/icons/theme.png" alt="">
     </button>
@@ -520,17 +531,26 @@ background:var(--panel-solid);color:var(--muted);}
                 <div class='detail-meta'>Uniqlo • M</div>
                 <div class="detail-price">2500 грн</div>
                 <div class="detail-actions">
-                    <a class="detail-order-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">Замовити в Telegram</a>
-                    <a class="detail-viber-btn" href="viber://chat?number=380998623590">Замовити у Viber</a>
+                    <a class="detail-order-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+                       aria-label="Замовити в Telegram" title="Telegram">
+                        <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                        <span class="sr-only">Telegram</span>
+                    </a>
+                    <a class="detail-viber-btn" href="viber://chat?number=380998623590"
+                       aria-label="Замовити у Viber" title="Viber">
+                        <span class="action-icon icon-viber" aria-hidden="true"></span>
+                        <span class="sr-only">Viber</span>
+                    </a>
                     <button class="detail-chat-btn" type="button"
+                            aria-label="Відкрити чат" title="Чат"
                             data-chat-product-id="13037"
                             data-chat-product-name="Пальто-дощовик blocktech uniqlo"
                             data-chat-product-url=""
                             data-chat-product-image="../../assets/products/209220777/01-2298760235.jpg"
                             data-chat-product-price="2500 грн"
                             onclick="openChatFromButton(this)">
-                        <span class="chat-icon" aria-hidden="true"></span>
-                        Чат
+                        <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                        <span class="sr-only">Чат</span>
                     </button>
                 </div>
                 <details class="detail-section" open>
@@ -579,7 +599,7 @@ background:var(--panel-solid);color:var(--muted);}
             </div>
         </div>
     </section>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 12:43</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 13:40</div>
 </main>
 </div>
 <script>
