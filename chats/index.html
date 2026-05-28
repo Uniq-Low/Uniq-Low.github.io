@@ -396,7 +396,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 27.05.2026 13:32</div>
+    <div class='updated-at'>Оновлено: 28.05.2026 11:09</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -541,7 +541,7 @@ background:var(--panel-solid);color:var(--muted);}
         </div>
     </section>
     </section>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 27.05.2026 13:32</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 11:09</div>
 </main>
 </div>
 <script id="chatConfig" type="application/json">{"ownerEmail": "artur1rabota2@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
@@ -603,6 +603,16 @@ const hydrateThreadData = (data = {}) => {
         productPrice: data.productPrice || cached.productPrice || '',
         productName: data.productName || cached.productName || '',
         productUrl: data.productUrl || cached.productUrl || '',
+    };
+};
+const chatCustomerThreadRepair = () => {
+    const source = hydrateThreadData(chatCurrentThread || chatProduct || {});
+    return {
+        ownerEmail: chatOwnerEmail,
+        productName: chatClean(source.productName || source.name || '').slice(0, 180),
+        productUrl: chatSitePath(source.productUrl || source.url || location.pathname),
+        productImage: chatSitePath(source.productImage || source.image || ''),
+        productPrice: chatClean(source.productPrice || source.price || '').slice(0, 60),
     };
 };
 
@@ -736,19 +746,29 @@ async function openCustomerThread() {
     chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
     const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
     const existing = await firebaseApi.getDoc(threadRef);
-    const payload = {
-        customerUid: chatUser.uid,
-        customerEmail: chatUser.email || '',
-        customerName: chatUser.displayName || chatUser.email || '',
+    let payload = {
         ownerEmail: chatOwnerEmail,
-        productId: chatProduct.id || 'general',
         productName: chatProduct.name || '',
         productUrl: chatSitePath(chatProduct.url || location.pathname),
         productImage: chatSitePath(chatProduct.image || ''),
         productPrice: chatProduct.price || '',
         updatedAt: firebaseApi.serverTimestamp(),
     };
-    if (!existing.exists()) payload.createdAt = firebaseApi.serverTimestamp();
+    if (!existing.exists()) {
+        payload = {
+            customerUid: chatUser.uid,
+            customerEmail: chatUser.email || '',
+            customerName: chatUser.displayName || chatUser.email || '',
+            ownerEmail: chatOwnerEmail,
+            productId: chatProduct.id || 'general',
+            productName: chatProduct.name || '',
+            productUrl: chatSitePath(chatProduct.url || location.pathname),
+            productImage: chatSitePath(chatProduct.image || ''),
+            productPrice: chatProduct.price || '',
+            createdAt: firebaseApi.serverTimestamp(),
+            updatedAt: firebaseApi.serverTimestamp(),
+        };
+    }
     await firebaseApi.setDoc(threadRef, payload, { merge: true });
     chatCurrentThread = payload;
     renderThreadProduct(payload);
@@ -971,6 +991,7 @@ async function sendChatMessage() {
             lastMessageId: msgRef.id,
             updatedAt: firebaseApi.serverTimestamp(),
         };
+        if (!chatIsOwner()) Object.assign(update, chatCustomerThreadRepair());
         await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
         chatCurrentThread = hydrateThreadData({ ...(chatCurrentThread || {}), ...update });
         input.value = '';
@@ -1000,10 +1021,14 @@ async function editChatMessage(messageId, currentText) {
             { text, editedAt: firebaseApi.serverTimestamp() }
         );
         if (chatCurrentThread?.lastMessageId === messageId) {
-            await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+            const update = {
                 lastMessage: text.slice(0, 180),
+                lastSender: chatIsOwner() ? 'owner' : 'customer',
+                lastMessageId: messageId,
                 updatedAt: firebaseApi.serverTimestamp(),
-            }, { merge: true });
+            };
+            if (!chatIsOwner()) Object.assign(update, chatCustomerThreadRepair());
+            await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
         }
     } catch (err) {
         chatStatus(`Не вдалося змінити повідомлення: ${err.message || err}`);
@@ -1016,11 +1041,14 @@ async function deleteChatMessage(messageId) {
     try {
         await firebaseApi.deleteDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId, 'messages', messageId));
         if (chatCurrentThread?.lastMessageId === messageId) {
-            await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), {
+            const update = {
                 lastMessage: 'Повідомлення видалено',
+                lastSender: chatIsOwner() ? 'owner' : 'customer',
                 lastMessageId: '',
                 updatedAt: firebaseApi.serverTimestamp(),
-            }, { merge: true });
+            };
+            if (!chatIsOwner()) Object.assign(update, chatCustomerThreadRepair());
+            await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
         }
     } catch (err) {
         chatStatus(`Не вдалося видалити повідомлення: ${err.message || err}`);
