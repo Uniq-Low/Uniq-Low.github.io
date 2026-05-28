@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; base-uri &#x27;self&#x27;; object-src &#x27;none&#x27;; frame-ancestors &#x27;none&#x27;; form-action &#x27;self&#x27;; img-src &#x27;self&#x27; data: blob: https://*.googleusercontent.com; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://www.gstatic.com https://apis.google.com https://accounts.google.com; connect-src &#x27;self&#x27; https://*.googleapis.com https://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com https://accounts.google.com wss://*.firebaseio.com; frame-src https://accounts.google.com https://*.firebaseapp.com;">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>UniqLow — Відгуки покупців</title>
 <style>
 :root{--bg:#f6f8fc;--bg-soft:#eef2ff;--panel:rgba(255,255,255,0.92);--panel-solid:#fff;
@@ -412,7 +414,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 28.05.2026 13:40</div>
+    <div class='updated-at'>Оновлено: 28.05.2026 22:14</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -591,11 +593,12 @@ background:var(--panel-solid);color:var(--muted);}
         </div>
         <div class="reviews-page-grid dynamic-reviews-grid" id="siteReviewsList"></div>
     </section>
-    <script id="reviewConfig" type="application/json">{"ownerEmail": "artur1rabota2@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
+    <script id="reviewConfig" type="application/json">{"ownerEmail": "artur1rabota2@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5", "appCheckSiteKey": "", "allowedHosts": ["uniq-low.github.io", "uniq-low.pages.dev", "localhost", "127.0.0.1"], "maxMessageLength": 2000, "minSendIntervalMs": 2500}</script>
     <script type="module">
 const reviewConfig = JSON.parse(document.getElementById('reviewConfig').textContent || '{}');
 const reviewFirebaseConfig = reviewConfig.firebase || {};
 const reviewHasConfig = Boolean(reviewFirebaseConfig.apiKey && reviewFirebaseConfig.authDomain && reviewFirebaseConfig.projectId && reviewFirebaseConfig.appId);
+const reviewAllowedHosts = new Set((reviewConfig.allowedHosts || []).map((host) => String(host || '').toLowerCase()));
 let reviewAuth = null;
 let reviewDb = null;
 let reviewUser = null;
@@ -605,6 +608,7 @@ let reviewRating = 5;
 const reviewEl = (id) => document.getElementById(id);
 const reviewClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const reviewStatus = (text) => { const el = reviewEl('reviewStatus'); if (el) el.textContent = text; };
+const reviewHostAllowed = () => !reviewAllowedHosts.size || reviewAllowedHosts.has(location.hostname.toLowerCase());
 const reviewInfoScore = (text) => {
     text = reviewClean(text).toLowerCase();
     if (!text) return 0;
@@ -651,6 +655,10 @@ function setReviewRating(value) {
 
 async function ensureReviewFirebase() {
     if (reviewApi) return reviewApi;
+    if (!reviewHostAllowed()) {
+        reviewStatus('Відгуки заблоковано на цьому домені.');
+        return null;
+    }
     if (!reviewHasConfig) {
         reviewStatus('Відгуки поки не підключені до Firebase.');
         return null;
@@ -660,6 +668,13 @@ async function ensureReviewFirebase() {
     const authMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-auth.js`);
     const storeMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-firestore.js`);
     const app = appMod.initializeApp(reviewFirebaseConfig, 'reviews-app');
+    if (reviewConfig.appCheckSiteKey) {
+        const appCheckMod = await import(`https://www.gstatic.com/firebasejs/${version}/firebase-app-check.js`);
+        appCheckMod.initializeAppCheck(app, {
+            provider: new appCheckMod.ReCaptchaEnterpriseProvider(reviewConfig.appCheckSiteKey),
+            isTokenAutoRefreshEnabled: true,
+        });
+    }
     reviewAuth = authMod.getAuth(app);
     reviewDb = storeMod.getFirestore(app);
     reviewApi = { ...authMod, ...storeMod };
@@ -21258,7 +21273,7 @@ ensureReviewFirebase();
         <div class="show-more-wrap">
                     <button class="show-more-btn review-show-more-btn" onclick="showMoreReviews(this)">Показати ще відгуки</button>
                 </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 13:40</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 22:14</div>
 </main>
 </div>
 <script>

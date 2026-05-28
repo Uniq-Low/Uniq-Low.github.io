@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; base-uri &#x27;self&#x27;; object-src &#x27;none&#x27;; frame-ancestors &#x27;none&#x27;; form-action &#x27;self&#x27;; img-src &#x27;self&#x27; data: blob: https://*.googleusercontent.com; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://www.gstatic.com https://apis.google.com https://accounts.google.com; connect-src &#x27;self&#x27; https://*.googleapis.com https://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com https://accounts.google.com wss://*.firebaseio.com; frame-src https://accounts.google.com https://*.firebaseapp.com;">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>UniqLow — Чати</title>
 <style>
 :root{--bg:#f6f8fc;--bg-soft:#eef2ff;--panel:rgba(255,255,255,0.92);--panel-solid:#fff;
@@ -412,7 +414,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 28.05.2026 13:40</div>
+    <div class='updated-at'>Оновлено: 28.05.2026 22:14</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -557,10 +559,10 @@ background:var(--panel-solid);color:var(--muted);}
         </div>
     </section>
     </section>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 13:40</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 22:14</div>
 </main>
 </div>
-<script id="chatConfig" type="application/json">{"ownerEmail": "artur1rabota2@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
+<script id="chatConfig" type="application/json">{"ownerEmail": "artur1rabota2@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5", "appCheckSiteKey": "", "allowedHosts": ["uniq-low.github.io", "uniq-low.pages.dev", "localhost", "127.0.0.1"], "maxMessageLength": 2000, "minSendIntervalMs": 2500}</script>
 <script type="module">
 const chatConfig = JSON.parse(document.getElementById('chatConfig').textContent || '{}');
 const chatCatalog = JSON.parse(document.getElementById('chatCatalog')?.textContent || '{}');
@@ -568,6 +570,9 @@ const chatOwnerEmail = String(chatConfig.ownerEmail || '').toLowerCase();
 const firebaseConfig = chatConfig.firebase || {};
 const chatHasConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.appId);
 const chatPageMode = Boolean(document.querySelector('.chat-page-root'));
+const chatAllowedHosts = new Set((chatConfig.allowedHosts || []).map((host) => String(host || '').toLowerCase()));
+const chatMaxMessageLength = Math.min(2000, Math.max(1, Number(chatConfig.maxMessageLength) || 2000));
+const chatMinSendIntervalMs = Math.max(1200, Number(chatConfig.minSendIntervalMs) || 2500);
 let chatAuth = null;
 let chatDb = null;
 let chatUser = null;
@@ -578,12 +583,19 @@ let chatCurrentThread = null;
 let chatUnsubMessages = null;
 let chatUnsubThreads = null;
 let firebaseApi = null;
+let chatSending = false;
+let chatLastSendAt = 0;
 
 const chatEl = (id) => document.getElementById(id);
 const chatClean = (value) => String(value || '').replace(/\s+/g, ' ').trim();
 const chatStatus = (text) => { const el = chatEl('chatStatus'); if (el) el.textContent = text; };
 const chatIsOwner = () => chatUser && String(chatUser.email || '').toLowerCase() === chatOwnerEmail;
-const chatThreadKey = (uid, productId) => `${uid}_${chatClean(productId || 'general').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 80) || 'general'}`;
+const chatHostAllowed = () => !chatAllowedHosts.size || chatAllowedHosts.has(location.hostname.toLowerCase());
+const chatProductId = (value) => {
+    const id = chatClean(value).replace(/[^0-9]/g, '').slice(0, 12);
+    return id || '';
+};
+const chatThreadKey = (uid, productId) => `${uid}_${chatProductId(productId)}`;
 const chatAbsoluteUrl = (value) => {
     try { return value ? new URL(value, location.href).href : ''; }
     catch { return ''; }
@@ -623,19 +635,28 @@ const hydrateThreadData = (data = {}) => {
 };
 const chatCustomerThreadRepair = () => {
     const source = hydrateThreadData(chatCurrentThread || chatProduct || {});
+    const productId = chatProductId(source.productId || source.id || chatProduct.id || '');
     return {
         ownerEmail: chatOwnerEmail,
         productName: chatClean(source.productName || source.name || '').slice(0, 180),
-        productUrl: chatProductUrlPath(source.productUrl || source.url || ''),
+        productUrl: chatProductUrlPath(productId, source.productUrl || source.url || ''),
         productImage: chatSitePath(source.productImage || source.image || ''),
         productPrice: chatClean(source.productPrice || source.price || '').slice(0, 60),
     };
 };
-const chatProductUrlPath = (value) => {
+const chatProductUrlPath = (productId, value) => {
     const path = chatSitePath(value || '');
-    if (new RegExp('^/product/[0-9]+/?$').test(path)) return path.endsWith('/') ? path : `${path}/`;
-    const productId = chatClean(chatProduct.id || '');
-    return /^[0-9]+$/.test(productId) ? `/product/${productId}/` : '';
+    const normalizedProductId = chatProductId(productId || chatProduct.id || '');
+    if (new RegExp('^/product/[0-9]+/?$').test(path)) {
+        const normalizedPath = path.endsWith('/') ? path : `${path}/`;
+        return normalizedPath === `/product/${normalizedProductId}/` ? normalizedPath : '';
+    }
+    return normalizedProductId ? `/product/${normalizedProductId}/` : '';
+};
+const chatLooksSensitive = (text) => {
+    const compact = String(text || '').replace(/[\s-]/g, '');
+    if (/\d{13,19}/.test(compact)) return true;
+    return /(cvv|cvc|парол|password|код\s*(з|із|из)?\s*(sms|смс)|secret|секрет)/i.test(text);
 };
 const chatErrorText = (err) => {
     const code = err?.code ? `${err.code}: ` : '';
@@ -645,7 +666,7 @@ const chatErrorText = (err) => {
 function setChatProductFromUrl() {
     if (!chatPageMode) return;
     const params = new URLSearchParams(location.search);
-    const productId = chatClean(params.get('product') || params.get('productId') || '');
+    const productId = chatProductId(params.get('product') || params.get('productId') || '');
     if (!productId) return;
     const product = hydrateThreadData({ productId });
     chatProduct = {
@@ -661,8 +682,9 @@ function setChatProductFromUrl() {
 }
 
 function openChatFromButton(btn) {
+    const productId = chatProductId(btn?.dataset.chatProductId || '');
     chatProduct = {
-        id: btn?.dataset.chatProductId || 'general',
+        id: productId,
         name: btn?.dataset.chatProductName || document.title.replace(/^UniqLow\s*[—-]\s*/, ''),
         url: btn?.dataset.chatProductUrl || location.pathname,
         image: btn?.dataset.chatProductImage || document.getElementById('productMainImage')?.getAttribute('src') || '',
@@ -769,36 +791,39 @@ async function signInChat() {
 
 async function openCustomerThread() {
     if (!chatUser || !firebaseApi) return false;
-    chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
+    const productId = chatProductId(chatProduct.id);
+    if (!productId) {
+        chatStatus('Чат можна відкрити тільки з конкретного товару.');
+        return false;
+    }
+    chatProduct.id = productId;
+    chatThreadId = chatThreadKey(chatUser.uid, productId);
     const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
-    const updatePayload = {
-        ownerEmail: chatOwnerEmail,
-        productName: chatClean(chatProduct.name || '').slice(0, 180),
-        productUrl: chatProductUrlPath(chatProduct.url || ''),
-        productImage: chatSitePath(chatProduct.image || ''),
-        productPrice: chatClean(chatProduct.price || '').slice(0, 60),
-        updatedAt: firebaseApi.serverTimestamp(),
-    };
     const createPayload = {
         customerUid: chatUser.uid,
         customerEmail: chatUser.email || '',
         customerName: chatUser.displayName || chatUser.email || 'Покупець',
-        productId: chatClean(chatProduct.id || 'general').slice(0, 100) || 'general',
+        ownerEmail: chatOwnerEmail,
+        productId,
+        productName: chatClean(chatProduct.name || '').slice(0, 180),
+        productUrl: chatProductUrlPath(productId, chatProduct.url || ''),
+        productImage: chatSitePath(chatProduct.image || ''),
+        productPrice: chatClean(chatProduct.price || '').slice(0, 60),
         createdAt: firebaseApi.serverTimestamp(),
-        ...updatePayload,
+        updatedAt: firebaseApi.serverTimestamp(),
     };
     try {
-        await firebaseApi.setDoc(threadRef, createPayload, { merge: true });
-        chatCurrentThread = createPayload;
-    } catch (createErr) {
-        try {
-            await firebaseApi.setDoc(threadRef, updatePayload, { merge: true });
-            chatCurrentThread = hydrateThreadData({ productId: createPayload.productId, ...(chatCurrentThread || {}), ...updatePayload });
-        } catch (updateErr) {
-            chatStatus(`Не вдалося відкрити чат: ${chatErrorText(updateErr)}`);
-            chatThreadId = '';
-            return false;
+        const existing = await firebaseApi.getDoc(threadRef);
+        if (existing.exists()) {
+            chatCurrentThread = hydrateThreadData({ productId, ...existing.data() });
+        } else {
+            await firebaseApi.setDoc(threadRef, createPayload);
+            chatCurrentThread = createPayload;
         }
+    } catch (err) {
+        chatStatus(`Не вдалося відкрити чат: ${chatErrorText(err)}`);
+        chatThreadId = '';
+        return false;
     }
     renderThreadProduct(chatCurrentThread);
     renderSingleThreadButton(chatThreadId, chatCurrentThread);
@@ -1009,16 +1034,39 @@ async function sendChatMessage() {
     const input = chatEl('chatInput');
     const text = chatClean(input?.value);
     if (!text || !chatUser || !firebaseApi) return;
+    if (chatSending) return;
+    if (text.length > chatMaxMessageLength) {
+        chatStatus(`Повідомлення занадто довге. Максимум ${chatMaxMessageLength} символів.`);
+        return;
+    }
+    if (chatLooksSensitive(text)) {
+        chatStatus('Не надсилайте в чат номери карт, CVV, паролі або SMS-коди. Для оплати використовуйте тільки офіційний платіжний сервіс.');
+        return;
+    }
+    const now = Date.now();
+    if (now - chatLastSendAt < chatMinSendIntervalMs) {
+        chatStatus('Зачекайте кілька секунд перед наступним повідомленням.');
+        return;
+    }
     if (!chatThreadId && !chatIsOwner() && chatProduct.id) await openCustomerThread();
     if (!chatThreadId) {
         chatStatus('Виберіть діалог або відкрийте чат з картки товару.');
         return;
     }
+    chatSending = true;
     chatEl('chatSendBtn').disabled = true;
-    let msgRef = null;
     let role = chatIsOwner() ? 'owner' : 'customer';
     try {
-        msgRef = await firebaseApi.addDoc(firebaseApi.collection(chatDb, 'chatThreads', chatThreadId, 'messages'), {
+        const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
+        const msgRef = firebaseApi.doc(firebaseApi.collection(chatDb, 'chatThreads', chatThreadId, 'messages'));
+        const update = {
+            lastMessage: text.slice(0, 180),
+            lastSender: role,
+            lastMessageId: msgRef.id,
+            updatedAt: firebaseApi.serverTimestamp(),
+        };
+        const batch = firebaseApi.writeBatch(chatDb);
+        batch.set(msgRef, {
             uid: chatUser.uid,
             email: chatUser.email || '',
             name: chatUser.displayName || chatUser.email || '',
@@ -1026,25 +1074,15 @@ async function sendChatMessage() {
             text,
             createdAt: firebaseApi.serverTimestamp(),
         });
+        batch.set(threadRef, update, { merge: true });
+        await batch.commit();
+        chatCurrentThread = hydrateThreadData({ ...(chatCurrentThread || {}), ...update });
+        input.value = '';
+        chatLastSendAt = Date.now();
     } catch (err) {
         chatStatus(`Повідомлення не надіслано: ${chatErrorText(err)}`);
-        chatEl('chatSendBtn').disabled = false;
-        return;
-    }
-    input.value = '';
-    try {
-        const update = {
-            lastMessage: text.slice(0, 180),
-            lastSender: role,
-            lastMessageId: msgRef.id,
-            updatedAt: firebaseApi.serverTimestamp(),
-        };
-        if (!chatIsOwner()) Object.assign(update, chatCustomerThreadRepair());
-        await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
-        chatCurrentThread = hydrateThreadData({ ...(chatCurrentThread || {}), ...update });
-    } catch (err) {
-        chatStatus(`Повідомлення надіслано, але список діалогів не оновився: ${chatErrorText(err)}`);
     } finally {
+        chatSending = false;
         chatEl('chatSendBtn').disabled = false;
     }
 }
@@ -1062,6 +1100,10 @@ async function editChatMessage(messageId, currentText) {
         chatStatus('Повідомлення занадто довге.');
         return;
     }
+    if (chatLooksSensitive(text)) {
+        chatStatus('Не зберігайте в чаті номери карт, CVV, паролі або SMS-коди.');
+        return;
+    }
     try {
         await firebaseApi.updateDoc(
             firebaseApi.doc(chatDb, 'chatThreads', chatThreadId, 'messages', messageId),
@@ -1074,7 +1116,6 @@ async function editChatMessage(messageId, currentText) {
                 lastMessageId: messageId,
                 updatedAt: firebaseApi.serverTimestamp(),
             };
-            if (!chatIsOwner()) Object.assign(update, chatCustomerThreadRepair());
             await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
         }
     } catch (err) {
@@ -1094,7 +1135,6 @@ async function deleteChatMessage(messageId) {
                 lastMessageId: '',
                 updatedAt: firebaseApi.serverTimestamp(),
             };
-            if (!chatIsOwner()) Object.assign(update, chatCustomerThreadRepair());
             await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
         }
     } catch (err) {
