@@ -401,7 +401,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 28.05.2026 12:27</div>
+    <div class='updated-at'>Оновлено: 28.05.2026 12:43</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -546,7 +546,7 @@ background:var(--panel-solid);color:var(--muted);}
         </div>
     </section>
     </section>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 12:27</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 12:43</div>
 </main>
 </div>
 <script id="chatConfig" type="application/json">{"ownerEmail": "artur1rabota2@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
@@ -757,7 +757,7 @@ async function signInChat() {
 }
 
 async function openCustomerThread() {
-    if (!chatUser || !firebaseApi) return;
+    if (!chatUser || !firebaseApi) return false;
     chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
     const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
     const updatePayload = {
@@ -785,12 +785,14 @@ async function openCustomerThread() {
             chatCurrentThread = hydrateThreadData({ productId: createPayload.productId, ...(chatCurrentThread || {}), ...updatePayload });
         } catch (updateErr) {
             chatStatus(`Не вдалося відкрити чат: ${chatErrorText(updateErr)}`);
-            return;
+            chatThreadId = '';
+            return false;
         }
     }
     renderThreadProduct(chatCurrentThread);
     renderSingleThreadButton(chatThreadId, chatCurrentThread);
     listenMessages(chatThreadId);
+    return true;
 }
 
 function listenOwnerThreads() {
