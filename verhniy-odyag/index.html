@@ -59,8 +59,11 @@ background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.04));
 border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:var(--shadow);}
 .promo-badge{width:100px;height:100px;border-radius:50%;background:var(--green);color:white;
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
-.telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
-padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.promo-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+.telegram-btn,.viber-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:white;
+padding:12px 18px;border-radius:14px;font-weight:700;}
+.telegram-btn{background:#229ED9;}
+.viber-btn{background:#7360f2;}
 .filter-panel{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:10px;align-items:end;
 margin:0 0 18px;padding:14px;border:1px solid var(--border);border-radius:20px;background:var(--panel-solid);
 box-shadow:var(--shadow);}
@@ -98,12 +101,13 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
 .product-attrs dt{color:var(--muted);}
 .product-attrs dd{margin:0;color:var(--text);}
-.card-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 16px 16px;}
+.card-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 16px 16px;}
 .card-action-btn{min-height:42px;border:none;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;
 display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
 .card-tg-btn{background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;}
+.card-viber-btn{background:linear-gradient(135deg,#7b6cff,#665cac);color:white;text-align:center;}
 .card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);gap:7px;}
-.card-tg-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
+.card-tg-btn:hover,.card-viber-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
 .chat-icon{width:18px;height:18px;border:2px solid currentColor;border-radius:7px;display:inline-block;position:relative;flex:0 0 18px;}
 .chat-icon::after{content:"";position:absolute;left:2px;bottom:-5px;width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:var(--panel-solid);transform:skew(-18deg);}
 .hidden-card{display:none;}
@@ -155,13 +159,14 @@ body.dark .product-detail-info{background:rgba(17,24,39,.88);}
 .detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
 .detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
 .detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
-.detail-order-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+.detail-order-btn,.detail-viber-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
 text-decoration:none;border-radius:14px;font-weight:800;padding:13px 22px;transition:.18s ease;}
 .detail-order-btn{
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
 box-shadow:0 14px 30px rgba(34,158,217,.24);}
+.detail-viber-btn{background:linear-gradient(135deg,#7b6cff,#665cac);color:white;text-decoration:none;box-shadow:0 14px 30px rgba(115,96,242,.24);}
 .detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);gap:8px;cursor:pointer;}
-.detail-order-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
+.detail-order-btn:hover,.detail-viber-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
 .chat-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.48);backdrop-filter:blur(8px);
 display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
 .chat-overlay.open{display:flex;}
@@ -340,7 +345,7 @@ background:var(--panel-solid);color:var(--muted);}
 .detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
 .detail-section{padding-top:14px;margin-top:14px;}
 .detail-actions{display:grid;grid-template-columns:1fr;}
-.detail-order-btn,.detail-chat-btn{width:100%;}
+.detail-order-btn,.detail-viber-btn,.detail-chat-btn{width:100%;}
 .chat-page-panel{min-height:auto;}
 .chat-page-panel .chat-workspace.active{grid-template-columns:1fr;min-height:auto;}
 .chat-history-panel{border-right:none;border-bottom:1px solid var(--border);}
@@ -396,7 +401,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 28.05.2026 11:09</div>
+    <div class='updated-at'>Оновлено: 28.05.2026 11:37</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -561,6 +566,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13166"
                     data-chat-product-name="Жіноче пальто з вовни сумішевої"
@@ -594,6 +602,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13165"
                     data-chat-product-name="Куртка uniqlo надлегка пухова"
@@ -626,6 +637,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13164"
                     data-chat-product-name="C&amp;a розмір xl"
@@ -657,6 +671,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13163"
@@ -700,6 +717,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13162"
                     data-chat-product-name="Куртка pufftech uniqlo"
@@ -733,6 +753,9 @@ a27 новий бежевий 36 / s / 44 жіночий одяг верхній
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13161"
@@ -776,6 +799,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13160"
@@ -825,6 +851,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13159"
                     data-chat-product-name="Uniqlo women ines down jacket"
@@ -857,6 +886,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13158"
                     data-chat-product-name="Пухова куртка uniqlo"
@@ -888,6 +920,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13157"
@@ -927,6 +962,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13156"
                     data-chat-product-name="Жіноча легка переносна куртка з капюшоном"
@@ -958,6 +996,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13155"
@@ -997,6 +1038,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13154"
                     data-chat-product-name="Жіноче двостороннє текстуроване пальто u"
@@ -1035,6 +1079,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13153"
                     data-chat-product-name="Жіноче кашемірове пальто честер"
@@ -1069,6 +1116,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13152"
@@ -1111,6 +1161,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13151"
                     data-chat-product-name="Жіноче двостороннє вовняне  текстуроване пальто без коміра"
@@ -1150,6 +1203,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13150"
                     data-chat-product-name="Жіночий надзвичайно легкий пуховик"
@@ -1188,6 +1244,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13149"
@@ -1232,6 +1291,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13148"
                     data-chat-product-name="Флісова куртка uniqlo"
@@ -1274,6 +1336,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13147"
                     data-chat-product-name="Жилет puffertech compact uniqlo"
@@ -1305,6 +1370,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13146"
@@ -1338,6 +1406,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13145"
                     data-chat-product-name="Жіночий пуховик кокон-подібний uniqlo юникло"
@@ -1369,6 +1440,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13144"
@@ -1402,6 +1476,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13143"
                     data-chat-product-name="Краще вовняне пальто uniqlo u"
@@ -1433,6 +1510,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13142"
@@ -1466,6 +1546,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13141"
                     data-chat-product-name="Жіноче пальто з капюшоном зі штучної шкіри"
@@ -1497,6 +1580,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13140"
@@ -1530,6 +1616,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13139"
@@ -1568,6 +1657,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13138"
                     data-chat-product-name="Женский пуховик инес"
@@ -1599,6 +1691,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13137"
@@ -1636,6 +1731,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13136"
@@ -1678,6 +1776,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13135"
                     data-chat-product-name="Легке пухове пальто uniqlo"
@@ -1715,6 +1816,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13134"
@@ -1754,6 +1858,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13133"
@@ -1799,6 +1906,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13132"
                     data-chat-product-name="Флісова куртка uniqlo"
@@ -1843,6 +1953,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13131"
                     data-chat-product-name="Флісова куртка uniqlo"
@@ -1885,6 +1998,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13130"
@@ -1934,6 +2050,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13129"
                     data-chat-product-name="Ультралегкий пуховик uniqlo"
@@ -1974,6 +2093,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13128"
@@ -2017,6 +2139,9 @@ a27 новий чорний 36 / s / 44 жіночий одяг верхній �
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13127"
@@ -2062,6 +2187,9 @@ white mountaineering втілює свій фірмовий стиль вули�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13126"
                     data-chat-product-name="Пуховик-бомбер uniqlo коллаборація з white mountaineering"
@@ -2100,6 +2228,9 @@ white mountaineering втілює свій фірмовий стиль вули�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13125"
@@ -2145,6 +2276,9 @@ white mountaineering втілює свій фірмовий стиль вули�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13124"
                     data-chat-product-name="Ультралегка куртка-пуховик uniqlo"
@@ -2188,6 +2322,9 @@ white mountaineering втілює свій фірмовий стиль вули�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13123"
@@ -2233,6 +2370,9 @@ wool blend long coat
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13122"
                     data-chat-product-name="Пальто wool blend uniqlo"
@@ -2272,6 +2412,9 @@ wool blend long coat
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13121"
                     data-chat-product-name="Якісний піджак з твіду uniqlo"
@@ -2304,6 +2447,9 @@ wool blend long coat
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13120"
@@ -2346,6 +2492,9 @@ wool blend long coat
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13119"
                     data-chat-product-name="Пальто жакет levi&#x27;s"
@@ -2382,6 +2531,9 @@ m420242-p новий бежевий, чорний 36 / s / 44, 38 / m / 46 жі�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13118"
                     data-chat-product-name="Меховушка от uniqlo!акция 1299 грн"
@@ -2417,6 +2569,9 @@ m420242-p новий бежевий, чорний 36 / s / 44, 38 / m / 46 жі�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13117"
@@ -2467,6 +2622,9 @@ m420242-p новий бежевий, чорний 36 / s / 44, 38 / m / 46 жі�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13116"
                     data-chat-product-name="Ультралегкий пуховий жилет uniqlo"
@@ -2514,6 +2672,9 @@ ultra light down vest
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13115"
                     data-chat-product-name="Ультратонкий пуховий жилет uniqlo"
@@ -2557,6 +2718,9 @@ ultra light down vest
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13114"
                     data-chat-product-name="Піджак uniqlo"
@@ -2595,6 +2759,9 @@ ultra light down vest
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13113"
@@ -2642,6 +2809,9 @@ ultra light down vest
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13112"
                     data-chat-product-name="Жакет oversize uniqlo:с"
@@ -2680,6 +2850,9 @@ ultra light down vest
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13111"
@@ -2723,6 +2896,9 @@ down oversized hooded coat
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13110"
@@ -2773,6 +2949,9 @@ ultra light down long coat
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13109"
                     data-chat-product-name="Пальто ultra light uniqlo"
@@ -2815,6 +2994,9 @@ ultra light down long coat
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13108"
@@ -2860,6 +3042,9 @@ ultra light down long coat
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13107"
                     data-chat-product-name="Пальто oversized uniqlo"
@@ -2904,6 +3089,9 @@ ultra light down long coat
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13106"
@@ -2954,6 +3142,9 @@ ultra light down long coat
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13105"
                     data-chat-product-name="Демісезонний пуховик uniqlo ultra light down hooded"
@@ -2994,6 +3185,9 @@ ultra light down long coat
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13104"
@@ -3042,6 +3236,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13103"
                     data-chat-product-name="Куртка windproof uniqlo"
@@ -3084,6 +3281,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13102"
@@ -3133,6 +3333,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13101"
                     data-chat-product-name="Пальто blocktech uniqlo"
@@ -3174,6 +3377,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13100"
@@ -3222,6 +3428,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13099"
                     data-chat-product-name="Ультралегкий пуховик uniqlo"
@@ -3268,6 +3477,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13098"
@@ -3316,6 +3528,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13097"
                     data-chat-product-name="Жилет puffertech uniqlo, розмір ххл"
@@ -3362,6 +3577,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13096"
@@ -3410,6 +3628,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13095"
                     data-chat-product-name="Жилет puffertech uniqlo, розмір ххл"
@@ -3444,6 +3665,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13094"
@@ -3488,6 +3712,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13093"
@@ -3536,6 +3763,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13092"
                     data-chat-product-name="Жилет puffertech uniqlo"
@@ -3577,6 +3807,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13091"
@@ -3621,6 +3854,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13090"
                     data-chat-product-name="Парка blocktech uniqlo"
@@ -3664,6 +3900,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13089"
                     data-chat-product-name="Жилет puffertech uniqlo"
@@ -3702,6 +3941,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13088"
@@ -3751,6 +3993,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13087"
                     data-chat-product-name="Ультралегкий пуховик uniqlo"
@@ -3799,6 +4044,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13086"
                     data-chat-product-name="Ультралегкий пуховик uniqlo"
@@ -3846,6 +4094,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13085"
                     data-chat-product-name="Ультралегкий пуховик uniqlo"
@@ -3890,6 +4141,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13084"
                     data-chat-product-name="Пуховик uniqlo ultra light down parka"
@@ -3931,6 +4185,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13083"
@@ -3977,6 +4234,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13082"
                     data-chat-product-name="Пуховик uniqlo ultra light down parka"
@@ -4017,6 +4277,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13081"
@@ -4064,6 +4327,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13080"
@@ -4113,6 +4379,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13079"
                     data-chat-product-name="Жіночий пуховий компактний жилет uniqlo"
@@ -4158,6 +4427,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13078"
@@ -4205,6 +4477,9 @@ windproof outer fleece jacket
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13077"
                     data-chat-product-name="Ультралегкий довгий жилет uniqlo"
@@ -4247,6 +4522,9 @@ windproof outer fleece jacket
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13076"
@@ -4295,6 +4573,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13075"
                     data-chat-product-name="Пальто wool blend wrap uniqlo"
@@ -4338,6 +4619,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13074"
@@ -4387,6 +4671,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13073"
                     data-chat-product-name="Пальто оверсайз uniqlo"
@@ -4426,6 +4713,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13072"
@@ -4469,6 +4759,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13071"
                     data-chat-product-name="Куртка pufftech uniqlo"
@@ -4509,6 +4802,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13070"
@@ -4554,6 +4850,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13069"
@@ -4603,6 +4902,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13068"
                     data-chat-product-name="Ультралегкий пуховик uniqlo"
@@ -4647,6 +4949,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13067"
@@ -4693,6 +4998,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13066"
                     data-chat-product-name="Ультралегкий пуховий жилет uniqlo"
@@ -4738,6 +5046,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13065"
                     data-chat-product-name="Пуховик uniqlo ultra light down parka"
@@ -4779,6 +5090,9 @@ uniqlo та comptoir des cotonniers представляють капсульн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13064"
@@ -4824,6 +5138,9 @@ white mountaineering втілює свій фірмовий стиль вули�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13063"
                     data-chat-product-name="Пуховик-бомбер uniqlo коллаборація з white mountaineering"
@@ -4861,6 +5178,9 @@ white mountaineering втілює свій фірмовий стиль вули�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13062"
@@ -4904,6 +5224,9 @@ white mountaineering втілює свій фірмовий стиль вули�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13061"
@@ -4954,6 +5277,9 @@ white mountaineering втілює свій фірмовий стиль вули�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13060"
                     data-chat-product-name="Жіноча куртка columbia mighty lite hooded jacket, розмір s"
@@ -4996,6 +5322,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13059"
@@ -5041,6 +5370,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13058"
                     data-chat-product-name="Флісова куртка uniqlo"
@@ -5085,6 +5417,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13057"
                     data-chat-product-name="Тренч uniqlo"
@@ -5127,6 +5462,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13056"
@@ -5172,6 +5510,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13055"
                     data-chat-product-name="Тренч uniqlo"
@@ -5215,6 +5556,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13054"
@@ -5260,6 +5604,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13053"
                     data-chat-product-name="Пальто double face uniqlo"
@@ -5299,6 +5646,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13052"
@@ -5343,6 +5693,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13051"
                     data-chat-product-name="Куртка pufftech uniqlo"
@@ -5384,6 +5737,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13050"
@@ -5427,6 +5783,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13049"
                     data-chat-product-name="Куртка pufftech uniqlo"
@@ -5467,6 +5826,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13048"
                     data-chat-product-name="Жилет puffertech compact uniqlo"
@@ -5501,6 +5863,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13047"
@@ -5545,6 +5910,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13046"
                     data-chat-product-name="Куртка pufftech uniqlo"
@@ -5582,6 +5950,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13045"
@@ -5627,6 +5998,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13044"
                     data-chat-product-name="Ультралегка куртка-пуховик uniqlo"
@@ -5671,6 +6045,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13043"
                     data-chat-product-name="Тренч uniqlo"
@@ -5708,6 +6085,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13042"
@@ -5750,6 +6130,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13041"
@@ -5795,6 +6178,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13040"
@@ -5843,6 +6229,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13039"
                     data-chat-product-name="Дощовик blocktech uniqlo"
@@ -5880,6 +6269,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13038"
@@ -5923,6 +6315,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13037"
                     data-chat-product-name="Пальто-дощовик blocktech uniqlo"
@@ -5961,6 +6356,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13007"
                     data-chat-product-name="Дощовик uniqlo"
@@ -5998,6 +6396,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13006"
                     data-chat-product-name="Блузон унісекс uniqlo u"
@@ -6034,6 +6435,9 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13005"
@@ -6079,6 +6483,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13003"
                     data-chat-product-name="Вітровка uniqlo"
@@ -6117,6 +6524,9 @@ puffertech - легкий і теплий інноваційний наповн�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13001"
                     data-chat-product-name="Дощовик uniqlo"
@@ -6132,7 +6542,7 @@ puffertech - легкий і теплий інноваційний наповн�
         <div class="show-more-wrap">
                 <button class="show-more-btn product-show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 11:09</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 11:37</div>
 </main>
 </div>
 <script>

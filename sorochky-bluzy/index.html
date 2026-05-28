@@ -59,8 +59,11 @@ background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.04));
 border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:var(--shadow);}
 .promo-badge{width:100px;height:100px;border-radius:50%;background:var(--green);color:white;
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
-.telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
-padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.promo-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+.telegram-btn,.viber-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:white;
+padding:12px 18px;border-radius:14px;font-weight:700;}
+.telegram-btn{background:#229ED9;}
+.viber-btn{background:#7360f2;}
 .filter-panel{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:10px;align-items:end;
 margin:0 0 18px;padding:14px;border:1px solid var(--border);border-radius:20px;background:var(--panel-solid);
 box-shadow:var(--shadow);}
@@ -98,12 +101,13 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
 .product-attrs dt{color:var(--muted);}
 .product-attrs dd{margin:0;color:var(--text);}
-.card-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 16px 16px;}
+.card-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 16px 16px;}
 .card-action-btn{min-height:42px;border:none;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;
 display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
 .card-tg-btn{background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;}
+.card-viber-btn{background:linear-gradient(135deg,#7b6cff,#665cac);color:white;text-align:center;}
 .card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);gap:7px;}
-.card-tg-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
+.card-tg-btn:hover,.card-viber-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
 .chat-icon{width:18px;height:18px;border:2px solid currentColor;border-radius:7px;display:inline-block;position:relative;flex:0 0 18px;}
 .chat-icon::after{content:"";position:absolute;left:2px;bottom:-5px;width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:var(--panel-solid);transform:skew(-18deg);}
 .hidden-card{display:none;}
@@ -155,13 +159,14 @@ body.dark .product-detail-info{background:rgba(17,24,39,.88);}
 .detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
 .detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
 .detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
-.detail-order-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+.detail-order-btn,.detail-viber-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
 text-decoration:none;border-radius:14px;font-weight:800;padding:13px 22px;transition:.18s ease;}
 .detail-order-btn{
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
 box-shadow:0 14px 30px rgba(34,158,217,.24);}
+.detail-viber-btn{background:linear-gradient(135deg,#7b6cff,#665cac);color:white;text-decoration:none;box-shadow:0 14px 30px rgba(115,96,242,.24);}
 .detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);gap:8px;cursor:pointer;}
-.detail-order-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
+.detail-order-btn:hover,.detail-viber-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
 .chat-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.48);backdrop-filter:blur(8px);
 display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
 .chat-overlay.open{display:flex;}
@@ -340,7 +345,7 @@ background:var(--panel-solid);color:var(--muted);}
 .detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
 .detail-section{padding-top:14px;margin-top:14px;}
 .detail-actions{display:grid;grid-template-columns:1fr;}
-.detail-order-btn,.detail-chat-btn{width:100%;}
+.detail-order-btn,.detail-viber-btn,.detail-chat-btn{width:100%;}
 .chat-page-panel{min-height:auto;}
 .chat-page-panel .chat-workspace.active{grid-template-columns:1fr;min-height:auto;}
 .chat-history-panel{border-right:none;border-bottom:1px solid var(--border);}
@@ -396,7 +401,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 28.05.2026 11:09</div>
+    <div class='updated-at'>Оновлено: 28.05.2026 11:37</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -572,6 +577,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13364"
                     data-chat-product-name="Cорочка uniqlo з льону преміум класу"
@@ -603,6 +611,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13363"
@@ -636,6 +647,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13362"
                     data-chat-product-name="Жіноча блузка"
@@ -667,6 +681,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13361"
@@ -700,6 +717,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13360"
                     data-chat-product-name="Жіночий топ з змішаної лляної тканини з коміром-стійкою"
@@ -731,6 +751,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13359"
@@ -764,6 +787,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13358"
                     data-chat-product-name="Жіноча сорочка"
@@ -795,6 +821,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13357"
@@ -828,6 +857,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13356"
                     data-chat-product-name="Uniqlo червона блузка з довгим рукавом з твілу з драпіруванням"
@@ -859,6 +891,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13355"
@@ -892,6 +927,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13354"
                     data-chat-product-name="Жіноча дизайнерська довга сорочка в смужку"
@@ -923,6 +961,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13353"
@@ -966,6 +1007,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13352"
                     data-chat-product-name="Фланелева сорочка uniqlo"
@@ -1001,6 +1045,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13351"
@@ -1041,6 +1088,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13350"
@@ -1085,6 +1135,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13349"
                     data-chat-product-name="Cорочка uniqlo з льону преміум класу"
@@ -1126,6 +1179,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13348"
@@ -1169,6 +1225,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13347"
                     data-chat-product-name="Бавовняна блузка uniqlo"
@@ -1207,6 +1266,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13346"
@@ -1251,6 +1313,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13345"
                     data-chat-product-name="Бавовняна сорочка uniqlo"
@@ -1291,6 +1356,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13344"
@@ -1335,6 +1403,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13343"
                     data-chat-product-name="Об&#x27;ємна напівпрозора блузка uniqlo + jw anderson"
@@ -1371,6 +1442,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13342"
@@ -1409,6 +1483,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13341"
                     data-chat-product-name="Сорочка без рукавів uniqlo"
@@ -1445,6 +1522,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13340"
@@ -1487,6 +1567,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13339"
                     data-chat-product-name="Блузка uniqlo з віскози"
@@ -1528,6 +1611,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13338"
                     data-chat-product-name="Блузка uniqlo з віскози"
@@ -1564,6 +1650,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13337"
@@ -1608,6 +1697,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13336"
                     data-chat-product-name="Блузка uniqlo з віскози"
@@ -1647,6 +1739,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13335"
@@ -1689,6 +1784,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13334"
                     data-chat-product-name="Блузка uniqlo з віскози"
@@ -1725,6 +1823,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13333"
@@ -1763,6 +1864,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13332"
                     data-chat-product-name="Блузка з суміші льону uniqlo"
@@ -1799,6 +1903,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13331"
@@ -1837,6 +1944,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13330"
@@ -1881,6 +1991,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13329"
                     data-chat-product-name="Блузка uniqlo з віскози"
@@ -1922,6 +2035,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13328"
                     data-chat-product-name="Блузка uniqlo з віскози"
@@ -1958,6 +2074,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13327"
@@ -1996,6 +2115,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13326"
                     data-chat-product-name="Блузка uniqlo з сатіну"
@@ -2032,6 +2154,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13325"
@@ -2075,6 +2200,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13324"
                     data-chat-product-name="Сорочка унісекс uniqlo"
@@ -2111,6 +2239,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13323"
@@ -2149,6 +2280,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13322"
                     data-chat-product-name="Бавовняна сорочка-кокон uniqlo"
@@ -2186,6 +2320,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13321"
                     data-chat-product-name="Оксфордська сорочка вільного крою uniqlo"
@@ -2222,6 +2359,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13320"
@@ -2263,6 +2403,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13011"
                     data-chat-product-name="Бавовняна сорочка uniqlo"
@@ -2299,6 +2442,9 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13010"
@@ -2337,6 +2483,9 @@ background:var(--panel-solid);color:var(--muted);}
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13009"
                     data-chat-product-name="Бавовняна сорочка оверсайз uniqlo"
@@ -2352,7 +2501,7 @@ background:var(--panel-solid);color:var(--muted);}
         <div class="show-more-wrap">
                 <button class="show-more-btn product-show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 11:09</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 11:37</div>
 </main>
 </div>
 <script>

@@ -59,8 +59,11 @@ background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.04));
 border:1px solid rgba(34,197,94,.18);border-radius:28px;padding:24px;box-shadow:var(--shadow);}
 .promo-badge{width:100px;height:100px;border-radius:50%;background:var(--green);color:white;
 display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;flex-shrink:0;}
-.telegram-btn{display:inline-block;text-decoration:none;color:white;background:#229ED9;
-padding:12px 18px;border-radius:14px;font-weight:700;margin-top:10px;}
+.promo-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+.telegram-btn,.viber-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:white;
+padding:12px 18px;border-radius:14px;font-weight:700;}
+.telegram-btn{background:#229ED9;}
+.viber-btn{background:#7360f2;}
 .filter-panel{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:10px;align-items:end;
 margin:0 0 18px;padding:14px;border:1px solid var(--border);border-radius:20px;background:var(--panel-solid);
 box-shadow:var(--shadow);}
@@ -98,12 +101,13 @@ box-shadow:0 25px 48px rgba(16,24,40,.14);}
 .product-attrs div{display:grid;grid-template-columns:82px 1fr;gap:8px;border-top:1px solid var(--border);padding-top:7px;}
 .product-attrs dt{color:var(--muted);}
 .product-attrs dd{margin:0;color:var(--text);}
-.card-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 16px 16px;}
+.card-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 16px 16px;}
 .card-action-btn{min-height:42px;border:none;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;
 display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
 .card-tg-btn{background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-align:center;}
+.card-viber-btn{background:linear-gradient(135deg,#7b6cff,#665cac);color:white;text-align:center;}
 .card-chat-btn{background:var(--panel-solid);color:var(--accent);border:1px solid var(--border);gap:7px;}
-.card-tg-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
+.card-tg-btn:hover,.card-viber-btn:hover,.card-chat-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(34,158,217,.22);}
 .chat-icon{width:18px;height:18px;border:2px solid currentColor;border-radius:7px;display:inline-block;position:relative;flex:0 0 18px;}
 .chat-icon::after{content:"";position:absolute;left:2px;bottom:-5px;width:7px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;background:var(--panel-solid);transform:skew(-18deg);}
 .hidden-card{display:none;}
@@ -155,13 +159,14 @@ body.dark .product-detail-info{background:rgba(17,24,39,.88);}
 .detail-meta{color:var(--muted);font-size:15px;margin-bottom:18px;}
 .detail-price{font-size:clamp(30px,3.4vw,44px);font-weight:900;margin:20px 0;}
 .detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
-.detail-order-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
+.detail-order-btn,.detail-viber-btn,.detail-chat-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;
 text-decoration:none;border-radius:14px;font-weight:800;padding:13px 22px;transition:.18s ease;}
 .detail-order-btn{
 background:linear-gradient(135deg,#2AABEE,#229ED9);color:white;text-decoration:none;border-radius:14px;
 box-shadow:0 14px 30px rgba(34,158,217,.24);}
+.detail-viber-btn{background:linear-gradient(135deg,#7b6cff,#665cac);color:white;text-decoration:none;box-shadow:0 14px 30px rgba(115,96,242,.24);}
 .detail-chat-btn{border:1px solid var(--border);background:var(--panel-solid);color:var(--accent);gap:8px;cursor:pointer;}
-.detail-order-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
+.detail-order-btn:hover,.detail-viber-btn:hover,.detail-chat-btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(34,158,217,.24);}
 .chat-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.48);backdrop-filter:blur(8px);
 display:none;align-items:flex-end;justify-content:flex-end;padding:18px;}
 .chat-overlay.open{display:flex;}
@@ -340,7 +345,7 @@ background:var(--panel-solid);color:var(--muted);}
 .detail-price{margin:14px 0;font-size:clamp(28px,9vw,36px);}
 .detail-section{padding-top:14px;margin-top:14px;}
 .detail-actions{display:grid;grid-template-columns:1fr;}
-.detail-order-btn,.detail-chat-btn{width:100%;}
+.detail-order-btn,.detail-viber-btn,.detail-chat-btn{width:100%;}
 .chat-page-panel{min-height:auto;}
 .chat-page-panel .chat-workspace.active{grid-template-columns:1fr;min-height:auto;}
 .chat-history-panel{border-right:none;border-bottom:1px solid var(--border);}
@@ -396,7 +401,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 28.05.2026 11:09</div>
+    <div class='updated-at'>Оновлено: 28.05.2026 11:37</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -573,6 +578,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13911"
                     data-chat-product-name="Кросівки skechers women&#x27;s virtue"
@@ -605,6 +613,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13910"
@@ -650,6 +661,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13909"
                     data-chat-product-name="Кросівки new balance w460lk3, устілка 24 см"
@@ -691,6 +705,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13908"
                     data-chat-product-name="Домашні капці uniqlo, устілка 24см"
@@ -724,6 +741,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13907"
                     data-chat-product-name="Ugg bearpaw emma tall black boots"
@@ -755,6 +775,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13906"
@@ -794,6 +817,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13905"
                     data-chat-product-name="Ugg mini bailey button"
@@ -831,6 +857,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13904"
@@ -878,6 +907,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13903"
                     data-chat-product-name="Кросівки adidas rapidmove adv train"
@@ -917,6 +949,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13902"
@@ -959,6 +994,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13901"
@@ -1016,6 +1054,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13900"
                     data-chat-product-name="Кросівки adidas 4dfwd pulse"
@@ -1057,6 +1098,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13899"
                     data-chat-product-name="Кросівки оригінал adidas grand court platform"
@@ -1096,6 +1140,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13898"
@@ -1141,6 +1188,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13897"
                     data-chat-product-name="Мокасини skechers breathe-easy-opportuknity"
@@ -1175,6 +1225,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13896"
@@ -1215,6 +1268,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13895"
@@ -1260,6 +1316,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13894"
                     data-chat-product-name="Туфлі шкіряні geox cordusio"
@@ -1299,6 +1358,9 @@ us 7 ( довжина устілкм 24 см) новий синій 37 жіно�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13893"
@@ -1340,6 +1402,9 @@ adidas lightstrike забезпечує надлегку амортизацію 
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13892"
                     data-chat-product-name="Кросівки adidas trae young 2"
@@ -1378,6 +1443,9 @@ adidas lightstrike забезпечує надлегку амортизацію 
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13891"
                     data-chat-product-name="Кросівки nike dunk low  royal pulse"
@@ -1414,6 +1482,9 @@ adidas lightstrike забезпечує надлегку амортизацію 
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13890"
@@ -1456,6 +1527,9 @@ adidas lightstrike забезпечує надлегку амортизацію 
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13889"
                     data-chat-product-name="Кросівки  reebok zig dynamica 4"
@@ -1491,6 +1565,9 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13888"
@@ -1529,6 +1606,9 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13887"
                     data-chat-product-name="Кросівки  adidas response super 2.0"
@@ -1561,6 +1641,9 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13886"
@@ -1619,6 +1702,9 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13885"
                     data-chat-product-name="Зимові черевики columbia women&#x27;s moritza™ boot"
@@ -1657,6 +1743,9 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13884"
@@ -1698,6 +1787,9 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13883"
                     data-chat-product-name="Кросівки columbia crestwood"
@@ -1733,6 +1825,9 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13882"
@@ -1772,6 +1867,9 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13881"
@@ -1813,6 +1911,9 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13880"
@@ -1856,6 +1957,9 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13879"
                     data-chat-product-name="Кросівки under armour ace highlight"
@@ -1893,6 +1997,9 @@ adidas us 8.5 ( довжина устілки 25.5см) новий чорний 
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13878"
                     data-chat-product-name="Кросівки adidas exhibit select 2.0"
@@ -1929,6 +2036,9 @@ extra tough poly — це надзвичайно міцна синтетична
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13877"
@@ -1976,6 +2086,9 @@ extra tough poly — це надзвичайно міцна синтетична
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13876"
                     data-chat-product-name="Кросівки  asics netburner ballistic ff 3"
@@ -2015,6 +2128,9 @@ us 8.5 (довжина устілки 25.5 см)
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13875"
@@ -2062,6 +2178,9 @@ us 8.5 (довжина устілки 25.5 см)
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13874"
                     data-chat-product-name="Кросівки adidas ultraboost 5.0 dna, устілка 24 см"
@@ -2100,6 +2219,9 @@ us 8.5 (довжина устілки 25.5 см)
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13873"
                     data-chat-product-name="Кросівки new balance fresh foam roav v2, устілка 24 см"
@@ -2135,6 +2257,9 @@ us 8.5 (довжина устілки 25.5 см)
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13872"
@@ -2177,6 +2302,9 @@ us 8.5 (довжина устілки 25.5 см)
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13871"
                     data-chat-product-name="Крокси crocs crush disco, розмір w9"
@@ -2217,6 +2345,9 @@ us 8.5 (довжина устілки 25.5 см)
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13870"
                     data-chat-product-name="Крокси crocs skyline sandal, розмір w11"
@@ -2255,6 +2386,9 @@ us 8.5 (довжина устілки 25.5 см)
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13869"
@@ -2299,6 +2433,9 @@ us 8.5 (довжина устілки 25.5 см)
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13868"
                     data-chat-product-name="Кросівки для бігу adidas solar control"
@@ -2334,6 +2471,9 @@ us 8.5 (довжина устілки 25.5 см)
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13867"
@@ -2381,6 +2521,9 @@ us 8.5 (довжина устілки 25.5 см)
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13866"
                     data-chat-product-name="Кросівки adidas adizero sl"
@@ -2421,6 +2564,9 @@ us 8.5 (довжина устілки 25.5 см)
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13865"
                     data-chat-product-name="Кросівки saucony cohesion 16"
@@ -2458,6 +2604,9 @@ us 8.5 (довжина устілки 25.5 см)
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13864"
@@ -2504,6 +2653,9 @@ us 8.5 (довжина устілки 25.5 см)
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13863"
                     data-chat-product-name="Кросівки saucony kinvara 14"
@@ -2549,6 +2701,9 @@ us 8.5 (довжина устілки 25.5 см)
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13862"
                     data-chat-product-name="Зимові черевики columbia moritza shorty"
@@ -2582,6 +2737,9 @@ us 8.5 (довжина устілки 25.5 см)
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13861"
@@ -2618,6 +2776,9 @@ us 8.5 (довжина устілки 25.5 см)
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13860"
@@ -2663,6 +2824,9 @@ techlite™ plush забезпечує максимальну амортизац
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13859"
                     data-chat-product-name="Кросівки columbia womens facet 75 outdry"
@@ -2698,6 +2862,9 @@ techlite™ plush забезпечує максимальну амортизац
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13858"
@@ -2742,6 +2909,9 @@ techlite™ plush забезпечує максимальну амортизац
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13857"
@@ -2789,6 +2959,9 @@ techlite™ plush забезпечує максимальну амортизац
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13856"
                     data-chat-product-name="Кросівки columbia redmond waterproof hiking shoe"
@@ -2828,6 +3001,9 @@ techlite™ plush забезпечує максимальну амортизац
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13855"
@@ -2873,6 +3049,9 @@ techlite™ plush забезпечує максимальну амортизац
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13854"
                     data-chat-product-name="Кросівки under armour  ua charged gemini running shoes"
@@ -2906,6 +3085,9 @@ techlite™ plush забезпечує максимальну амортизац
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13853"
@@ -2962,6 +3144,9 @@ floatride fuel – не просто елемент дизайну цієї мо
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13852"
                     data-chat-product-name="Кросівки reebok zig dynamica 5"
@@ -3013,6 +3198,9 @@ nano gym і міцність: це взуття розраховане на те
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13851"
                     data-chat-product-name="Кросівки reebok nano gym"
@@ -3051,6 +3239,9 @@ nano gym і міцність: це взуття розраховане на те
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13850"
@@ -3104,6 +3295,9 @@ techlite+™ забезпечує чутливу амортизацію та с�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13849"
                     data-chat-product-name="Зимові черевики columbia keetley™ shorty boot"
@@ -3155,6 +3349,9 @@ bugaboot™ celsius plus - створені для комфорту та про�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13848"
                     data-chat-product-name="Жіночі черевики columbia bugaboot™ celsius plus"
@@ -3198,6 +3395,9 @@ bugaboot™ celsius plus - створені для комфорту та про�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13847"
@@ -3245,6 +3445,9 @@ bugaboot™ celsius plus - створені для комфорту та про�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13846"
                     data-chat-product-name="Кросівки adidas ultraboost 22 cold.rdy"
@@ -3278,6 +3481,9 @@ bugaboot™ celsius plus - створені для комфорту та про�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13845"
@@ -3319,6 +3525,9 @@ bugaboot™ celsius plus - створені для комфорту та про�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13844"
                     data-chat-product-name="Кросівки adidas women&#x27;s grand court alpha 00s"
@@ -3356,6 +3565,9 @@ bugaboot™ celsius plus - створені для комфорту та про�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13843"
@@ -3408,6 +3620,9 @@ omni-grip® - підошва для ходьби по пересіченій м�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13842"
                     data-chat-product-name="Кросівки columbia vitesse outdry"
@@ -3453,6 +3668,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13841"
@@ -3509,6 +3727,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13840"
                     data-chat-product-name="Зимові черевики columbia women&#x27;s moritza™ boot, устілка 25 см"
@@ -3550,6 +3771,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13839"
@@ -3601,6 +3825,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13838"
                     data-chat-product-name="Зимові черевики columbia newton ridge omni heat"
@@ -3644,6 +3871,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13837"
@@ -3693,6 +3923,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13836"
                     data-chat-product-name="Зимові черевики merrell haven mid lace polar"
@@ -3741,6 +3974,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13835"
                     data-chat-product-name="Черевики sorel  explorer joan"
@@ -3774,6 +4010,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13834"
@@ -3815,6 +4054,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13833"
                     data-chat-product-name="Кросівки ugg goldencush"
@@ -3855,6 +4097,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13832"
                     data-chat-product-name="Черевики koolaburra by ugg advay tall"
@@ -3891,6 +4136,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13831"
@@ -3929,6 +4177,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13830"
@@ -3974,6 +4225,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13829"
                     data-chat-product-name="Кросівки saucony shadow original unisex"
@@ -4014,6 +4268,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13828"
@@ -4058,6 +4315,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13827"
                     data-chat-product-name="Кросівки adidas response"
@@ -4096,6 +4356,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13826"
@@ -4143,6 +4406,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13825"
                     data-chat-product-name="Кросівки ghost max leather"
@@ -4182,6 +4448,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13824"
                     data-chat-product-name="Кросівки sorel out n about™ iv low women&#x27;s waterproof sneaker"
@@ -4219,6 +4488,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13823"
@@ -4258,6 +4530,9 @@ skechers® arya - new rumor, - водовідштовхувальні черев
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13822"
@@ -4304,6 +4579,9 @@ hydro — шкіра з поліуретановим покриттям, що м
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13821"
                     data-chat-product-name="Сандалі dr. martens voss hydro leather strap sandals"
@@ -4336,6 +4614,9 @@ hydro — шкіра з поліуретановим покриттям, що м
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13820"
                     data-chat-product-name="Взуття для бігу nike free run 2 gs"
@@ -4367,6 +4648,9 @@ hydro — шкіра з поліуретановим покриттям, що м
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13819"
@@ -4408,6 +4692,9 @@ hydro — шкіра з поліуретановим покриттям, що м
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13818"
                     data-chat-product-name="Жіночі сандалії merrell terran 3 cush lattice"
@@ -4442,6 +4729,9 @@ hydro — шкіра з поліуретановим покриттям, що м
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13817"
@@ -4478,6 +4768,9 @@ cтворені для  людей , які цінують комфорт і д�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13816"
@@ -4525,6 +4818,9 @@ cтворені для  людей , які цінують комфорт і д�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13815"
                     data-chat-product-name="Балетки crocs alice work"
@@ -4567,6 +4863,9 @@ cтворені для  людей , які цінують комфорт і д�
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13814"
                     data-chat-product-name="Шльопанці  crocs classic platform slide, розмір w8"
@@ -4600,6 +4899,9 @@ cтворені для  людей , які цінують комфорт і д�
         <div class="card-actions">
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13813"
@@ -4643,6 +4945,9 @@ crocs на платформі: підкресліть свій стиль за �
             <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener">
                 Telegram
             </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590">
+                Viber
+            </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     data-chat-product-id="13812"
                     data-chat-product-name="Шльопанці crocs mega crush triple strap"
@@ -4658,7 +4963,7 @@ crocs на платформі: підкресліть свій стиль за �
         <div class="show-more-wrap">
                 <button class="show-more-btn product-show-more-btn" onclick="showMoreProducts(this)">Показати всі товари</button>
             </div>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 11:09</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 11:37</div>
 </main>
 </div>
 <script>
