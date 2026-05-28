@@ -401,7 +401,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 28.05.2026 11:37</div>
+    <div class='updated-at'>Оновлено: 28.05.2026 12:27</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="../assets/icons/theme.png" alt="">
     </button>
@@ -546,7 +546,7 @@ background:var(--panel-solid);color:var(--muted);}
         </div>
     </section>
     </section>
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 11:37</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 12:27</div>
 </main>
 </div>
 <script id="chatConfig" type="application/json">{"ownerEmail": "artur1rabota2@gmail.com", "firebase": {"apiKey": "AIzaSyAKiqA0HJrwF-N29J5MCC2900NA3dWTJEU", "authDomain": "uniq-low-chat.firebaseapp.com", "projectId": "uniq-low-chat", "storageBucket": "uniq-low-chat.firebasestorage.app", "messagingSenderId": "542719779553", "appId": "1:542719779553:web:8f818ac968b5334afb4da0"}, "sdkVersion": "10.12.5"}</script>
@@ -615,10 +615,20 @@ const chatCustomerThreadRepair = () => {
     return {
         ownerEmail: chatOwnerEmail,
         productName: chatClean(source.productName || source.name || '').slice(0, 180),
-        productUrl: chatSitePath(source.productUrl || source.url || location.pathname),
+        productUrl: chatProductUrlPath(source.productUrl || source.url || ''),
         productImage: chatSitePath(source.productImage || source.image || ''),
         productPrice: chatClean(source.productPrice || source.price || '').slice(0, 60),
     };
+};
+const chatProductUrlPath = (value) => {
+    const path = chatSitePath(value || '');
+    if (new RegExp('^/product/[0-9]+/?$').test(path)) return path.endsWith('/') ? path : `${path}/`;
+    const productId = chatClean(chatProduct.id || '');
+    return /^[0-9]+$/.test(productId) ? `/product/${productId}/` : '';
+};
+const chatErrorText = (err) => {
+    const code = err?.code ? `${err.code}: ` : '';
+    return `${code}${err?.message || err || 'невідома помилка'}`;
 };
 
 function setChatProductFromUrl() {
@@ -750,34 +760,36 @@ async function openCustomerThread() {
     if (!chatUser || !firebaseApi) return;
     chatThreadId = chatThreadKey(chatUser.uid, chatProduct.id);
     const threadRef = firebaseApi.doc(chatDb, 'chatThreads', chatThreadId);
-    const existing = await firebaseApi.getDoc(threadRef);
-    let payload = {
+    const updatePayload = {
         ownerEmail: chatOwnerEmail,
-        productName: chatProduct.name || '',
-        productUrl: chatSitePath(chatProduct.url || location.pathname),
+        productName: chatClean(chatProduct.name || '').slice(0, 180),
+        productUrl: chatProductUrlPath(chatProduct.url || ''),
         productImage: chatSitePath(chatProduct.image || ''),
-        productPrice: chatProduct.price || '',
+        productPrice: chatClean(chatProduct.price || '').slice(0, 60),
         updatedAt: firebaseApi.serverTimestamp(),
     };
-    if (!existing.exists()) {
-        payload = {
-            customerUid: chatUser.uid,
-            customerEmail: chatUser.email || '',
-            customerName: chatUser.displayName || chatUser.email || '',
-            ownerEmail: chatOwnerEmail,
-            productId: chatProduct.id || 'general',
-            productName: chatProduct.name || '',
-            productUrl: chatSitePath(chatProduct.url || location.pathname),
-            productImage: chatSitePath(chatProduct.image || ''),
-            productPrice: chatProduct.price || '',
-            createdAt: firebaseApi.serverTimestamp(),
-            updatedAt: firebaseApi.serverTimestamp(),
-        };
+    const createPayload = {
+        customerUid: chatUser.uid,
+        customerEmail: chatUser.email || '',
+        customerName: chatUser.displayName || chatUser.email || 'Покупець',
+        productId: chatClean(chatProduct.id || 'general').slice(0, 100) || 'general',
+        createdAt: firebaseApi.serverTimestamp(),
+        ...updatePayload,
+    };
+    try {
+        await firebaseApi.setDoc(threadRef, createPayload, { merge: true });
+        chatCurrentThread = createPayload;
+    } catch (createErr) {
+        try {
+            await firebaseApi.setDoc(threadRef, updatePayload, { merge: true });
+            chatCurrentThread = hydrateThreadData({ productId: createPayload.productId, ...(chatCurrentThread || {}), ...updatePayload });
+        } catch (updateErr) {
+            chatStatus(`Не вдалося відкрити чат: ${chatErrorText(updateErr)}`);
+            return;
+        }
     }
-    await firebaseApi.setDoc(threadRef, payload, { merge: true });
-    chatCurrentThread = payload;
-    renderThreadProduct(payload);
-    renderSingleThreadButton(chatThreadId, payload);
+    renderThreadProduct(chatCurrentThread);
+    renderSingleThreadButton(chatThreadId, chatCurrentThread);
     listenMessages(chatThreadId);
 }
 
@@ -980,9 +992,10 @@ async function sendChatMessage() {
         return;
     }
     chatEl('chatSendBtn').disabled = true;
+    let msgRef = null;
+    let role = chatIsOwner() ? 'owner' : 'customer';
     try {
-        const role = chatIsOwner() ? 'owner' : 'customer';
-        const msgRef = await firebaseApi.addDoc(firebaseApi.collection(chatDb, 'chatThreads', chatThreadId, 'messages'), {
+        msgRef = await firebaseApi.addDoc(firebaseApi.collection(chatDb, 'chatThreads', chatThreadId, 'messages'), {
             uid: chatUser.uid,
             email: chatUser.email || '',
             name: chatUser.displayName || chatUser.email || '',
@@ -990,6 +1003,13 @@ async function sendChatMessage() {
             text,
             createdAt: firebaseApi.serverTimestamp(),
         });
+    } catch (err) {
+        chatStatus(`Повідомлення не надіслано: ${chatErrorText(err)}`);
+        chatEl('chatSendBtn').disabled = false;
+        return;
+    }
+    input.value = '';
+    try {
         const update = {
             lastMessage: text.slice(0, 180),
             lastSender: role,
@@ -999,9 +1019,8 @@ async function sendChatMessage() {
         if (!chatIsOwner()) Object.assign(update, chatCustomerThreadRepair());
         await firebaseApi.setDoc(firebaseApi.doc(chatDb, 'chatThreads', chatThreadId), update, { merge: true });
         chatCurrentThread = hydrateThreadData({ ...(chatCurrentThread || {}), ...update });
-        input.value = '';
     } catch (err) {
-        chatStatus(`Повідомлення не надіслано: ${err.message || err}`);
+        chatStatus(`Повідомлення надіслано, але список діалогів не оновився: ${chatErrorText(err)}`);
     } finally {
         chatEl('chatSendBtn').disabled = false;
     }
