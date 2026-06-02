@@ -414,7 +414,7 @@ background:var(--panel-solid);color:var(--muted);}
             <div class="brand-sub">Одяг та аксесуари</div>
         </div>
     </a>
-    <div class='updated-at'>Оновлено: 28.05.2026 22:35</div>
+    <div class='updated-at'>Оновлено: 02.06.2026 13:26</div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
         <img src="./assets/icons/theme.png" alt="">
     </button>
@@ -553,7 +553,7 @@ background:var(--panel-solid);color:var(--muted);}
                     <span>Бренд</span>
                     <select id="productBrandFilter" onchange="filterProducts()">
                         <option value="">Всі бренди</option>
-                        <option value="uniqlo">Uniqlo</option>
+                        <option value="adidas">Adidas</option><option value="crocs">Crocs</option><option value="geox">Geox</option><option value="primigi">Primigi</option><option value="uniqlo">Uniqlo</option>
                     </select>
                 </label>
                 <label class="filter-field">
@@ -565,18 +565,18 @@ background:var(--panel-solid);color:var(--muted);}
                     <span>Категорія</span>
                     <select id="productCategoryFilter" onchange="filterProducts()">
                         <option value="">Всі категорії</option>
-                        <option value="golovni-ubory">Головні убори</option><option value="remeni-poyasy">Ремені та пояси</option><option value="sumky-ryukzaky">Сумки та рюкзаки</option>
+                        <option value="vzuttya">Взуття (Ж)</option><option value="dlya-hlopchykiv">Для хлопчиків</option><option value="sportyvnyy-odyag-men">Спортивний одяг (Ч)</option><option value="shtany-shorty">Штани та шорти (Ж)</option>
                     </select>
                 </label>
                 <label class="filter-field filter-field-price">
                     <span>Ціна від</span>
                     <input id="productMinPriceFilter" type="number" min="0" inputmode="numeric"
-                           placeholder="450" oninput="filterProducts()">
+                           placeholder="1100" oninput="filterProducts()">
                 </label>
                 <label class="filter-field filter-field-price">
                     <span>Ціна до</span>
                     <input id="productMaxPriceFilter" type="number" min="0" inputmode="numeric"
-                           placeholder="1800" oninput="filterProducts()">
+                           placeholder="2700" oninput="filterProducts()">
                 </label>
                 <label class="filter-field">
                     <span>Сортування</span>
@@ -593,229 +593,26 @@ background:var(--panel-solid);color:var(--muted);}
                 </div>
             </section>
         <div class="products-grid">
-    <div class="product-card" data-search="шкіряний ремінь uniqlo 750 грн uniqlo 105 см remeni-poyasy ремінь з натуральної шкіри.
-поєднує гладку поверхню та вишуканий дизайн пряжки. форма пряжки дозволяє легко протягувати ремінь.
-колір коричневий
-розмір:  довжина 103 см, ширина 2,2 см
+    <div class="product-card" data-search="джогери dry stretch uniqlo 1100 грн uniqlo s sportyvnyy-odyag-men джогери dry stretch uniqlo
+в наявності розмір с, колір 69 navy
 
-470036 новий коричневий 105 см аксесуари ремені та пояси ремені для жінок шкіра без принту"
+склад
+45% поліестер - перероблене волокно, 29% поліестер, 20% бавовна, 6% еластан
+
+467765 новий синій s 🇺🇦 український: 44; європейський: 36 чоловічий одяг спортивний одяг спортивні штани бавовна, еластан, поліестер джогер"
          data-order=""
-         data-price="750.0"
-         data-brand="uniqlo"
-         data-size="105 см"
-         data-category="remeni-poyasy">
-        <a class="card-main-link" href="./product/14252/">
-            <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/189213676/01-2201436722.jpg" alt="Шкіряний ремінь uniqlo" loading="lazy" decoding="async">
-            </div>
-            <div class="product-info">
-                <div class="product-price">750 грн</div>
-                <div class="product-title">Шкіряний ремінь uniqlo</div>
-                <div class='product-meta'>Uniqlo • 105 см</div>
-            </div>
-        </a>
-        <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
-               aria-label="Замовити в Telegram" title="Telegram">
-                <span class="action-icon icon-telegram" aria-hidden="true"></span>
-                <span class="sr-only">Telegram</span>
-            </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
-               aria-label="Замовити у Viber" title="Viber">
-                <span class="action-icon icon-viber" aria-hidden="true"></span>
-                <span class="sr-only">Viber</span>
-            </a>
-            <button class="card-chat-btn card-action-btn" type="button"
-                    aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14252"
-                    data-chat-product-name="Шкіряний ремінь uniqlo"
-                    data-chat-product-url="./product/14252/"
-                    data-chat-product-image="./assets/products/189213676/01-2201436722.jpg"
-                    data-chat-product-price="750 грн"
-                    onclick="openChatFromButton(this)">
-                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
-                <span class="sr-only">Чат</span>
-            </button>
-        </div>
-    </div>
-    <div class="product-card" data-search="шапка heattech soufflé yarn uniqlo 650 грн uniqlo one size golovni-ubory теплий «heattech» з технологією теплопоглинання
-м‘яка пряжа “суфле” яка не колеться
-модель унісекс
-
-окружність 48см
-висота 21,5см
-
-471144 новий хакі, зелений one size аксесуари головні убори шапки"
-         data-order="1"
-         data-price="650.0"
-         data-brand="uniqlo"
-         data-size="one size"
-         data-category="golovni-ubory">
-        <a class="card-main-link" href="./product/14251/">
-            <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/190018712/01-2206039880.jpg" alt="Шапка heattech soufflé yarn uniqlo" loading="lazy" decoding="async">
-            </div>
-            <div class="product-info">
-                <div class="product-price">650 грн</div>
-                <div class="product-title">Шапка heattech soufflé yarn uniqlo</div>
-                <div class='product-meta'>Uniqlo • One size</div>
-            </div>
-        </a>
-        <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
-               aria-label="Замовити в Telegram" title="Telegram">
-                <span class="action-icon icon-telegram" aria-hidden="true"></span>
-                <span class="sr-only">Telegram</span>
-            </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
-               aria-label="Замовити у Viber" title="Viber">
-                <span class="action-icon icon-viber" aria-hidden="true"></span>
-                <span class="sr-only">Viber</span>
-            </a>
-            <button class="card-chat-btn card-action-btn" type="button"
-                    aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14251"
-                    data-chat-product-name="Шапка heattech soufflé yarn uniqlo"
-                    data-chat-product-url="./product/14251/"
-                    data-chat-product-image="./assets/products/190018712/01-2206039880.jpg"
-                    data-chat-product-price="650 грн"
-                    onclick="openChatFromButton(this)">
-                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
-                <span class="sr-only">Чат</span>
-            </button>
-        </div>
-    </div>
-    <div class="product-card" data-search="шапка uniqlo 100% кашемір 1060 грн uniqlo 46 golovni-ubory шапка uniqlo 100% кашемір
-в наявності колір 42 yellow
-
-тепло і ніжне відчуття 100% найтоншого кашеміру. насолоджуйтеся розкішною текстурою.
-- 100% тонкий кашемір.
-- легкий, теплий і еластичний.
-- високоякісна текстура та чарівні кольори.
-- широкий ребристий край як акцент.
-
-обхват голови: 46 см, висота: 22 см
-
-склад:  кашемір 100%
-
-463423 новий персиковий 46 аксесуари головні убори шапки"
-         data-order="2"
-         data-price="1060.0"
-         data-brand="uniqlo"
-         data-size="46"
-         data-category="golovni-ubory">
-        <a class="card-main-link" href="./product/14250/">
-            <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/193985335/01-2230395040.jpg" alt="Шапка uniqlo 100% кашемір" loading="lazy" decoding="async">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1060 грн</div>
-                <div class="product-title">Шапка uniqlo 100% кашемір</div>
-                <div class='product-meta'>Uniqlo • 46</div>
-            </div>
-        </a>
-        <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
-               aria-label="Замовити в Telegram" title="Telegram">
-                <span class="action-icon icon-telegram" aria-hidden="true"></span>
-                <span class="sr-only">Telegram</span>
-            </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
-               aria-label="Замовити у Viber" title="Viber">
-                <span class="action-icon icon-viber" aria-hidden="true"></span>
-                <span class="sr-only">Viber</span>
-            </a>
-            <button class="card-chat-btn card-action-btn" type="button"
-                    aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14250"
-                    data-chat-product-name="Шапка uniqlo 100% кашемір"
-                    data-chat-product-url="./product/14250/"
-                    data-chat-product-image="./assets/products/193985335/01-2230395040.jpg"
-                    data-chat-product-price="1060 грн"
-                    onclick="openChatFromButton(this)">
-                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
-                <span class="sr-only">Чат</span>
-            </button>
-        </div>
-    </div>
-    <div class="product-card" data-search="шапка uniqlo 100% кашемір 1060 грн uniqlo 46 golovni-ubory шапка uniqlo 100% кашемір
-в наявності колір 11 pink
-
-тепло і ніжне відчуття 100% найтоншого кашеміру. насолоджуйтеся розкішною текстурою.
-- 100% тонкий кашемір.
-- легкий, теплий і еластичний.
-- високоякісна текстура та чарівні кольори.
-- широкий ребристий край як акцент.
-
-обхват голови: 46 см, висота: 22 см
-
-склад: кашемір 100%
-
-463423 новий рожевий 46 аксесуари головні убори шапки"
-         data-order="3"
-         data-price="1060.0"
-         data-brand="uniqlo"
-         data-size="46"
-         data-category="golovni-ubory">
-        <a class="card-main-link" href="./product/14249/">
-            <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/193985383/01-2230395507.jpg" alt="Шапка uniqlo 100% кашемір" loading="lazy" decoding="async">
-            </div>
-            <div class="product-info">
-                <div class="product-price">1060 грн</div>
-                <div class="product-title">Шапка uniqlo 100% кашемір</div>
-                <div class='product-meta'>Uniqlo • 46</div>
-            </div>
-        </a>
-        <div class="card-actions">
-            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
-               aria-label="Замовити в Telegram" title="Telegram">
-                <span class="action-icon icon-telegram" aria-hidden="true"></span>
-                <span class="sr-only">Telegram</span>
-            </a>
-            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
-               aria-label="Замовити у Viber" title="Viber">
-                <span class="action-icon icon-viber" aria-hidden="true"></span>
-                <span class="sr-only">Viber</span>
-            </a>
-            <button class="card-chat-btn card-action-btn" type="button"
-                    aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14249"
-                    data-chat-product-name="Шапка uniqlo 100% кашемір"
-                    data-chat-product-url="./product/14249/"
-                    data-chat-product-image="./assets/products/193985383/01-2230395507.jpg"
-                    data-chat-product-price="1060 грн"
-                    onclick="openChatFromButton(this)">
-                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
-                <span class="sr-only">Чат</span>
-            </button>
-        </div>
-    </div>
-    <div class="product-card" data-search="шапка uniqlo 100% кашемір колекція anya hindmarch 1100 грн uniqlo 46 golovni-ubory шапка uniqlo 100% кашемір колекція anya hindmarch
-в наявності колір 69 navy
-
-тепло і ніжне відчуття 100% найтоншого кашеміру. насолоджуйтеся розкішною текстурою.
-- 100% тонкий кашемір.
-- легкий, теплий і еластичний.
-- високоякісна текстура та чарівні кольори.
-- широкий ребристий край як акцент.
-
-обхват голови: 46 см, висота: 22 см
-
-склад: кашемір 100% новий синій 46 аксесуари головні убори шапки"
-         data-order="4"
          data-price="1100.0"
          data-brand="uniqlo"
-         data-size="46"
-         data-category="golovni-ubory">
-        <a class="card-main-link" href="./product/14248/">
+         data-size="s"
+         data-category="sportyvnyy-odyag-men">
+        <a class="card-main-link" href="./product/16748/">
             <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/193986181/01-2230400467.jpg" alt="Шапка uniqlo 100% кашемір колекція anya hindmarch" loading="lazy" decoding="async">
+                <img class="product-image" src="./assets/products/210018881/01-2302760704.jpg" alt="Джогери dry stretch uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
                 <div class="product-price">1100 грн</div>
-                <div class="product-title">Шапка uniqlo 100% кашемір колекція anya hindmarch</div>
-                <div class='product-meta'>Uniqlo • 46</div>
+                <div class="product-title">Джогери dry stretch uniqlo</div>
+                <div class='product-meta'>Uniqlo • S</div>
             </div>
         </a>
         <div class="card-actions">
@@ -831,10 +628,10 @@ background:var(--panel-solid);color:var(--muted);}
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14248"
-                    data-chat-product-name="Шапка uniqlo 100% кашемір колекція anya hindmarch"
-                    data-chat-product-url="./product/14248/"
-                    data-chat-product-image="./assets/products/193986181/01-2230400467.jpg"
+                    data-chat-product-id="16748"
+                    data-chat-product-name="Джогери dry stretch uniqlo"
+                    data-chat-product-url="./product/16748/"
+                    data-chat-product-image="./assets/products/210018881/01-2302760704.jpg"
                     data-chat-product-price="1100 грн"
                     onclick="openChatFromButton(this)">
                 <span class="action-icon icon-chat-action" aria-hidden="true"></span>
@@ -842,39 +639,208 @@ background:var(--panel-solid);color:var(--muted);}
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="кепка uniqlo 450 грн uniqlo l / 58, 58 golovni-ubory кепка uniqlo
-в наявності колір чорний
+    <div class="product-card" data-search="чоловічі спортивні штани uniqlo з системою dry 1300 грн uniqlo l sportyvnyy-odyag-men чоловічі спортивні штани uniqlo з системою dry
+в наявності розмір л, колір 03 gray
 
-опис:
-- виготовлено з поліестеру та нейлону для м&#x27;якості.
-- термоформована конструкція зберігає форму.
-- можна прати в холодній воді.
-- захист від ультрафіолету (upf50+).
-- з&#x27;єднані шви для елегантного дизайну.
-- легко одягатися або скидати.
-- можна прати вручну.
-- upf50+.
+склад: 78% поліестер, 16% віскоза, 6% спандекс
 
-розмір
+458038 новий сірий l 🇺🇦 український: 48, 48-50; європейський: 40 чоловічий одяг спортивний одяг спортивні штани поліестер"
+         data-order="1"
+         data-price="1300.0"
+         data-brand="uniqlo"
+         data-size="l"
+         data-category="sportyvnyy-odyag-men">
+        <a class="card-main-link" href="./product/16747/">
+            <div class="product-image-wrap">
+                <img class="product-image" src="./assets/products/210015620/01-2302751589.jpg" alt="Чоловічі спортивні штани uniqlo з системою dry" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1300 грн</div>
+                <div class="product-title">Чоловічі спортивні штани uniqlo з системою dry</div>
+                <div class='product-meta'>Uniqlo • L</div>
+            </div>
+        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
+                    data-chat-product-id="16747"
+                    data-chat-product-name="Чоловічі спортивні штани uniqlo з системою dry"
+                    data-chat-product-url="./product/16747/"
+                    data-chat-product-image="./assets/products/210015620/01-2302751589.jpg"
+                    data-chat-product-price="1300 грн"
+                    onclick="openChatFromButton(this)">
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
+            </button>
+        </div>
+    </div>
+    <div class="product-card" data-search="спортивний костюм dry uniqlo, розмір м 2700 грн uniqlo m sportyvnyy-odyag-men спортивний костюм dry uniqlo
+в наявності  розмір м, колір 02 light grey
 
-обхват голови: ~ 58см, козирок: 7,60 см
+склад: 45% поліестер - перероблене волокно, 29% поліестер, 20% бавовна, 6% еластан
 
-склад: 52% нейлон, 48% поліестер
+465202
+477235 новий сірий m 🇺🇦 український: 46, 46-48; європейський: 38 чоловічий одяг спортивний одяг спортивні костюми бавовна, еластан, поліестер"
+         data-order="2"
+         data-price="2700.0"
+         data-brand="uniqlo"
+         data-size="m"
+         data-category="sportyvnyy-odyag-men">
+        <a class="card-main-link" href="./product/16746/">
+            <div class="product-image-wrap">
+                <img class="product-image" src="./assets/products/210028574/01-2302783702.jpg" alt="Спортивний костюм dry uniqlo, розмір м" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">2700 грн</div>
+                <div class="product-title">Спортивний костюм dry uniqlo, розмір м</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
+                    data-chat-product-id="16746"
+                    data-chat-product-name="Спортивний костюм dry uniqlo, розмір м"
+                    data-chat-product-url="./product/16746/"
+                    data-chat-product-image="./assets/products/210028574/01-2302783702.jpg"
+                    data-chat-product-price="2700 грн"
+                    onclick="openChatFromButton(this)">
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
+            </button>
+        </div>
+    </div>
+    <div class="product-card" data-search="джогери uniqlo 1150 грн uniqlo m, l sportyvnyy-odyag-men джогери uniqlo
+в наявності розмір м та л, колір 03  gray
 
-466905 новий чорний l / 58, 58 аксесуари головні убори бейсболки і кепки"
+склад:
+корпус: кишенькова підкладка: 100% бавовна/ ребра: 86% бавовна, 14% поліестер/ стрічка: 100%
+
+458745 новий сірий m, l 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48, 48-50; європейський: 40 чоловічий одяг спортивний одяг спортивні штани бавовна, поліестер з кишенями джогер"
+         data-order="3"
+         data-price="1150.0"
+         data-brand="uniqlo"
+         data-size="m, l"
+         data-category="sportyvnyy-odyag-men">
+        <a class="card-main-link" href="./product/16745/">
+            <div class="product-image-wrap">
+                <img class="product-image" src="./assets/products/210662660/01-2305234935.jpg" alt="Джогери uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1150 грн</div>
+                <div class="product-title">Джогери uniqlo</div>
+                <div class='product-meta'>Uniqlo • M, L</div>
+            </div>
+        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
+                    data-chat-product-id="16745"
+                    data-chat-product-name="Джогери uniqlo"
+                    data-chat-product-url="./product/16745/"
+                    data-chat-product-image="./assets/products/210662660/01-2305234935.jpg"
+                    data-chat-product-price="1150 грн"
+                    onclick="openChatFromButton(this)">
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
+            </button>
+        </div>
+    </div>
+    <div class="product-card" data-search="джогери uniqlo 1150 грн uniqlo m sportyvnyy-odyag-men джогери uniqlo
+в наявності розмір м, колір 02 light gray
+
+склад:
+корпус: кишенькова підкладка: 100% бавовна/ ребра: 86% бавовна, 14% поліестер/ стрічка: 100%
+
+458745 новий білий m 🇺🇦 український: 46, 46-48; європейський: 38 чоловічий одяг спортивний одяг спортивні штани бавовна, поліестер з кишенями джогер"
+         data-order="4"
+         data-price="1150.0"
+         data-brand="uniqlo"
+         data-size="m"
+         data-category="sportyvnyy-odyag-men">
+        <a class="card-main-link" href="./product/16744/">
+            <div class="product-image-wrap">
+                <img class="product-image" src="./assets/products/210663190/01-2305236088.jpg" alt="Джогери uniqlo" loading="lazy" decoding="async">
+            </div>
+            <div class="product-info">
+                <div class="product-price">1150 грн</div>
+                <div class="product-title">Джогери uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
+            </div>
+        </a>
+        <div class="card-actions">
+            <a class="card-tg-btn card-action-btn" href="https://t.me/+380998623590" target="_blank" rel="noopener"
+               aria-label="Замовити в Telegram" title="Telegram">
+                <span class="action-icon icon-telegram" aria-hidden="true"></span>
+                <span class="sr-only">Telegram</span>
+            </a>
+            <a class="card-viber-btn card-action-btn" href="viber://chat?number=380998623590"
+               aria-label="Замовити у Viber" title="Viber">
+                <span class="action-icon icon-viber" aria-hidden="true"></span>
+                <span class="sr-only">Viber</span>
+            </a>
+            <button class="card-chat-btn card-action-btn" type="button"
+                    aria-label="Відкрити чат" title="Чат"
+                    data-chat-product-id="16744"
+                    data-chat-product-name="Джогери uniqlo"
+                    data-chat-product-url="./product/16744/"
+                    data-chat-product-image="./assets/products/210663190/01-2305236088.jpg"
+                    data-chat-product-price="1150 грн"
+                    onclick="openChatFromButton(this)">
+                <span class="action-icon icon-chat-action" aria-hidden="true"></span>
+                <span class="sr-only">Чат</span>
+            </button>
+        </div>
+    </div>
+    <div class="product-card" data-search="широкі спортивні штани унісекс uniqlo 1400 грн uniqlo m sportyvnyy-odyag-men широкі спортивні штани унісекс uniqlo
+в наявності розмір м, колір 34 brown
+
+склад: 67% поліестер, 33% бавовна
+
+479854 новий коричневий m 🇺🇦 український: 46, 46-48; європейський: 38 чоловічий одяг спортивний одяг спортивні штани бавовна, поліестер"
          data-order="5"
-         data-price="450.0"
+         data-price="1400.0"
          data-brand="uniqlo"
-         data-size="l / 58, 58"
-         data-category="golovni-ubory">
-        <a class="card-main-link" href="./product/14247/">
+         data-size="m"
+         data-category="sportyvnyy-odyag-men">
+        <a class="card-main-link" href="./product/16743/">
             <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/186751730/01-2187295341.jpg" alt="Кепка uniqlo" loading="lazy" decoding="async">
+                <img class="product-image" src="./assets/products/210679092/01-2305284247.jpg" alt="Широкі спортивні штани унісекс uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">450 грн</div>
-                <div class="product-title">Кепка uniqlo</div>
-                <div class='product-meta'>Uniqlo • L / 58, 58</div>
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Широкі спортивні штани унісекс uniqlo</div>
+                <div class='product-meta'>Uniqlo • M</div>
             </div>
         </a>
         <div class="card-actions">
@@ -890,41 +856,44 @@ background:var(--panel-solid);color:var(--muted);}
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14247"
-                    data-chat-product-name="Кепка uniqlo"
-                    data-chat-product-url="./product/14247/"
-                    data-chat-product-image="./assets/products/186751730/01-2187295341.jpg"
-                    data-chat-product-price="450 грн"
+                    data-chat-product-id="16743"
+                    data-chat-product-name="Широкі спортивні штани унісекс uniqlo"
+                    data-chat-product-url="./product/16743/"
+                    data-chat-product-image="./assets/products/210679092/01-2305284247.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="action-icon icon-chat-action" aria-hidden="true"></span>
                 <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="велика сумка uniqlo 1300 грн uniqlo  sumky-ryukzaky велика сумка uniqlo
+    <div class="product-card" data-search="дитячі сандалії  crocs classic all-terrain 1350 грн crocs 38 dlya-hlopchykiv дослідіть цей світ у сандалях crocs classic all-terrain sandal k. зовнішній вигляд класичних дитячих всюдихідних сабо crocs тепер у формі сандаль.
 
-опис:
-водостійка застібка. водовідштовхувальне покриття захищає від легкого дощу.
-має дві внутрішні кишені для зберігання дрібних предметів.
-бічна кишеня для легкого доступу до необхідних речей.
+міцний малюнок протектора та гумові накладки забезпечують зчеплення та підтримку, а верхня частина з двома ремінцями та регульовані задні ремінці дозволяють не відставати від активного способу життя. сім отворів у кожній сандалі дозволяють персоналізувати їх за допомогою підвісок jibbitz, а легка конструкція з піноматеріалу croslite робить їх практичним вибором для будь-якої прогулянки.
 
-склад
-100% поліестер; наповнювач: 100% поліестер; підкладка: 100% поліестер
+деталі:
 
-480114 новий чорний аксесуари сумки та рюкзаки сумки поліестер"
+верх із двома лямками
+регульовані ремінці turbo для щільної та зручної посадки
+підошва з міцними виступами та посиленим протектором для збільшення зчеплення та підтримки
+повністю литий верх з піноматеріалу croslite
+легко миються та швидко сохнуть
+отвори для підвісок jibbitz
+
+в наявності розмір crocs j6 ( повна довжина устілки 24,2 см) новий хакі 38 американський: 5.5y дитячий одяг для хлопчиків взуття босоніжки та сандалі з відкритим носком літо 24 см"
          data-order="6"
-         data-price="1300.0"
-         data-brand="uniqlo"
-         data-size=""
-         data-category="sumky-ryukzaky">
-        <a class="card-main-link" href="./product/14246/">
+         data-price="1350.0"
+         data-brand="crocs"
+         data-size="38"
+         data-category="dlya-hlopchykiv">
+        <a class="card-main-link" href="./product/16408/">
             <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/198921589/01-2253392097.jpg" alt="Велика сумка uniqlo" loading="lazy" decoding="async">
+                <img class="product-image" src="./assets/products/210834049/01-2305589652.jpg" alt="Дитячі сандалії  crocs classic all-terrain" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">1300 грн</div>
-                <div class="product-title">Велика сумка uniqlo</div>
-                <div class='product-meta'>Uniqlo</div>
+                <div class="product-price">1350 грн</div>
+                <div class="product-title">Дитячі сандалії  crocs classic all-terrain</div>
+                <div class='product-meta'>Crocs • 38</div>
             </div>
         </a>
         <div class="card-actions">
@@ -940,41 +909,34 @@ background:var(--panel-solid);color:var(--muted);}
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14246"
-                    data-chat-product-name="Велика сумка uniqlo"
-                    data-chat-product-url="./product/14246/"
-                    data-chat-product-image="./assets/products/198921589/01-2253392097.jpg"
-                    data-chat-product-price="1300 грн"
+                    data-chat-product-id="16408"
+                    data-chat-product-name="Дитячі сандалії  crocs classic all-terrain"
+                    data-chat-product-url="./product/16408/"
+                    data-chat-product-image="./assets/products/210834049/01-2305589652.jpg"
+                    data-chat-product-price="1350 грн"
                     onclick="openChatFromButton(this)">
                 <span class="action-icon icon-chat-action" aria-hidden="true"></span>
                 <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="велика сумка uniqlo 1300 грн uniqlo  sumky-ryukzaky велика сумка uniqlo
+    <div class="product-card" data-search="кросівки geox bayonyc 1950 грн geox 38 dlya-hlopchykiv дитячі кросівки geox bayonyc чорного кольору з накладками додадуть веселої естетики повсякденним вбранням.
+ особливості: •• застібка на липучках та шнурівка • текстильна підкладка • шкіряна антибактеріальна устілка, що знімається • запатентована повітропроникна підошва respira захищає від вологи • міцна гумова підошва із вбудованою підсвіткою
 
-опис:
-водостійка застібка. водовідштовхувальне покриття захищає від легкого дощу.
-має дві внутрішні кишені для зберігання дрібних предметів.
-бічна кишеня для легкого доступу до необхідних речей.
-
-склад
-100% поліестер; наповнювач: 100% поліестер; підкладка: 100% поліестер
-
-480114 новий сірий аксесуари сумки та рюкзаки сумки поліестер"
+в наявності розмір geox 38 ( довжина устілки 25,4 см) новий чорний, синій 38 американський: 5.5y дитячий одяг для хлопчиків взуття кросівки повсякденний липучка, шнурівка з підсвіткою 25 см"
          data-order="7"
-         data-price="1300.0"
-         data-brand="uniqlo"
-         data-size=""
-         data-category="sumky-ryukzaky">
-        <a class="card-main-link" href="./product/14245/">
+         data-price="1950.0"
+         data-brand="geox"
+         data-size="38"
+         data-category="dlya-hlopchykiv">
+        <a class="card-main-link" href="./product/16407/">
             <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/198930670/01-2253452956.png" alt="Велика сумка uniqlo" loading="lazy" decoding="async">
+                <img class="product-image" src="./assets/products/210836526/01-2305639866.jpg" alt="Кросівки geox bayonyc" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">1300 грн</div>
-                <div class="product-title">Велика сумка uniqlo</div>
-                <div class='product-meta'>Uniqlo</div>
+                <div class="product-price">1950 грн</div>
+                <div class="product-title">Кросівки geox bayonyc</div>
+                <div class='product-meta'>Geox • 38</div>
             </div>
         </a>
         <div class="card-actions">
@@ -990,38 +952,33 @@ background:var(--panel-solid);color:var(--muted);}
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14245"
-                    data-chat-product-name="Велика сумка uniqlo"
-                    data-chat-product-url="./product/14245/"
-                    data-chat-product-image="./assets/products/198930670/01-2253452956.png"
-                    data-chat-product-price="1300 грн"
+                    data-chat-product-id="16407"
+                    data-chat-product-name="Кросівки geox bayonyc"
+                    data-chat-product-url="./product/16407/"
+                    data-chat-product-image="./assets/products/210836526/01-2305639866.jpg"
+                    data-chat-product-price="1950 грн"
                     onclick="openChatFromButton(this)">
                 <span class="action-icon icon-chat-action" aria-hidden="true"></span>
                 <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="вельветова сумка-бананка uniqlo 799 грн uniqlo  sumky-ryukzaky вельветова сумка-бананка uniqlo, в наявності 28 dark orange
-- вельветова тканина з бавовни.
-- ластовица розширюється, щоб умістити смартфон або довгий гаманець. саме потрібного розміру, з дивовижною кількістю місця всередині.
-- форма, що підходить для активного використання.
-- кант допомагає сумці зберігати форму.
-- зручна внутрішня кишеня для ключів або смартфона.
+    <div class="product-card" data-search="босоніжки primigi avio-bianco 1450 грн primigi 39 dlya-hlopchykiv дитячі сандалі торгової марки primigi — незамінний супутник літніх пригод для кожного хлопчика. виготовлені з високоякісного  матеріалу, вони не лише легкі, а й надзвичайно міцні, що робить їх ідеальним вибором для щоденних ігор на свіжому повітрі. завдяки застосуванню технології shock absorber, підошва ефективно поглинає удари, мінімізуючи навантаження на суглоби та забезпечуючи максимальний комфорт під час ходьби та бігу. крім того, система sky effect гарантує оптимальну підтримку та зручність маленьким стопам, тож кожен крок — це справжнє задоволення. обирай сандалі, які поєднують функціональність із сучасним дизайном і дозволяють  насолоджуватися літом без обмежень!
 
-461934 новий кораловий, коричневий аксесуари сумки та рюкзаки бананки поліестер для хлопчиків, для чоловіків, для жінок замок без принту"
+в наявності розмір primigi 39 (довжина устілки 24,7 см) новий блакитний, білий 39 американський: 6.5y дитячий одяг для хлопчиків взуття босоніжки та сандалі із закритим носком літо 24,5 см"
          data-order="8"
-         data-price="799.0"
-         data-brand="uniqlo"
-         data-size=""
-         data-category="sumky-ryukzaky">
-        <a class="card-main-link" href="./product/14244/">
+         data-price="1450.0"
+         data-brand="primigi"
+         data-size="39"
+         data-category="dlya-hlopchykiv">
+        <a class="card-main-link" href="./product/16406/">
             <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/205575348/01-2282121704.jpg" alt="Вельветова сумка-бананка uniqlo" loading="lazy" decoding="async">
+                <img class="product-image" src="./assets/products/210840311/01-2305645352.webp" alt="Босоніжки primigi avio-bianco" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">799 грн</div>
-                <div class="product-title">Вельветова сумка-бананка uniqlo</div>
-                <div class='product-meta'>Uniqlo</div>
+                <div class="product-price">1450 грн</div>
+                <div class="product-title">Босоніжки primigi avio-bianco</div>
+                <div class='product-meta'>Primigi • 39</div>
             </div>
         </a>
         <div class="card-actions">
@@ -1037,42 +994,39 @@ background:var(--panel-solid);color:var(--muted);}
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14244"
-                    data-chat-product-name="Вельветова сумка-бананка uniqlo"
-                    data-chat-product-url="./product/14244/"
-                    data-chat-product-image="./assets/products/205575348/01-2282121704.jpg"
-                    data-chat-product-price="799 грн"
+                    data-chat-product-id="16406"
+                    data-chat-product-name="Босоніжки primigi avio-bianco"
+                    data-chat-product-url="./product/16406/"
+                    data-chat-product-image="./assets/products/210840311/01-2305645352.webp"
+                    data-chat-product-price="1450 грн"
                     onclick="openChatFromButton(this)">
                 <span class="action-icon icon-chat-action" aria-hidden="true"></span>
                 <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="велика сумка через плече uniqlo 1800 грн uniqlo  sumky-ryukzaky сумка через плече uniqlo
-в наявності колір 19 wine
+    <div class="product-card" data-search="кросівки adidas adistar cs 2.0 1999 грн adidas 36 vzuttya взуття adistar cs 2.0 розроблено, щоб вивести вашу щоденну пробіжку на новий рівень. натхненні ідеєю вічного руху, вони розроблені з урахуванням захисту п’яти від ударів і підтримки верху.
 
-опис:
-- багато місця для зберігання речей для вашої наступної подорожі. шнурок для легкого відкривання та закривання.
-- дві зовнішні бічні кишені та дві внутрішні кишені зручно зберігатимуть ваші речі впорядковано.
-- широкий плечовий ремінь для комфортного перенесення.
-- вставлення кінця ременя в центр регулятора запобігає ослабленню плечового ременя.
+проміжна підошва repetitor і repetitor+ подвійної щільності поєднує в собі легку піну для пружної амортизації з міцною сумішшю, яка тримає п’яту.
 
-ширина (верх): 31 см, ширина (низ): 39 см, висота: 34 см, глибина: 20 см, довжина плечового ременя: 62 см ~ 120 см, місткість сумки: 21 літр
+верх із спеціальної сітки
 
-483802 новий бордовий аксесуари сумки та рюкзаки сумки для дівчаток, для жінок великі"
+гумова підошва continental™
+
+в наявності розмір adidas us 6 (довжиина устілки 23 см) новий сріблястий, сірий 36 жіночий одяг взуття кросівки 23"
          data-order="9"
-         data-price="1800.0"
-         data-brand="uniqlo"
-         data-size=""
-         data-category="sumky-ryukzaky">
-        <a class="card-main-link" href="./product/14243/">
+         data-price="1999.0"
+         data-brand="adidas"
+         data-size="36"
+         data-category="vzuttya">
+        <a class="card-main-link" href="./product/16392/">
             <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/205688453/01-2282533675.jpg" alt="Велика сумка через плече uniqlo" loading="lazy" decoding="async">
+                <img class="product-image" src="./assets/products/190420529/01-2208432049.jpg" alt="Кросівки adidas adistar cs 2.0" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">1800 грн</div>
-                <div class="product-title">Велика сумка через плече uniqlo</div>
-                <div class='product-meta'>Uniqlo</div>
+                <div class="product-price">1999 грн</div>
+                <div class="product-title">Кросівки adidas adistar cs 2.0</div>
+                <div class='product-meta'>Adidas • 36</div>
             </div>
         </a>
         <div class="card-actions">
@@ -1088,46 +1042,36 @@ background:var(--panel-solid);color:var(--muted);}
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14243"
-                    data-chat-product-name="Велика сумка через плече uniqlo"
-                    data-chat-product-url="./product/14243/"
-                    data-chat-product-image="./assets/products/205688453/01-2282533675.jpg"
-                    data-chat-product-price="1800 грн"
+                    data-chat-product-id="16392"
+                    data-chat-product-name="Кросівки adidas adistar cs 2.0"
+                    data-chat-product-url="./product/16392/"
+                    data-chat-product-image="./assets/products/190420529/01-2208432049.jpg"
+                    data-chat-product-price="1999 грн"
                     onclick="openChatFromButton(this)">
                 <span class="action-icon icon-chat-action" aria-hidden="true"></span>
                 <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="сумка бананка uniqlo 780 грн uniqlo  sumky-ryukzaky саме потрібного розміру для всіх необхідних речей. натуральна текстура підходить до будь-якого стилю.
-- брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.
-- водовідштовхувальне покриття. *тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. оздоблення не є постійним.
-- форма, що підходить для активного носіння.
-- зручний розмір, який підходить для вашого смартфона та гаманця.
-- додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.
-- зручна внутрішня кишеня для ключів або смартфона.
-- дизайн унісекс.
+    <div class="product-card" data-search="штани milano uniqlo 1400 грн uniqlo хs, s, m, l, xl shtany-shorty штани milano uniqlo
+в наявності розмір хс, с, м, л та хл, колір 35 brown
 
-розмір:
-ширина (верх): 28 см
-висота: 17 см
-глибина: 10 см
-довжина плечового ременя: 116 см
+склад: 37% бавовна, 36% поліестер, 27% віскоза (36% використовується перероблене поліестерне волокно)
 
-473474 новий рожевий аксесуари сумки та рюкзаки бананки нейлон, текстиль замок для дівчаток, для жінок без принту"
+481109 новий коричневий хs, s, m, l, xl 🇺🇦 український: 42, 42-44; європейський: 34; 🇺🇦 український: 44-46, 44; європейський: 36; 🇺🇦 український: 46, 46-48; європейський: 38; 🇺🇦 український: 48-50, 48; європейський: 40; 🇺🇦 український: 50-52, 50; європейський: 42 жіночий одяг штани та шорти брюки віскоза, поліестер, бавовна"
          data-order="10"
-         data-price="780.0"
+         data-price="1400.0"
          data-brand="uniqlo"
-         data-size=""
-         data-category="sumky-ryukzaky">
-        <a class="card-main-link" href="./product/14242/">
+         data-size="хs, s, m, l, xl"
+         data-category="shtany-shorty">
+        <a class="card-main-link" href="./product/16220/">
             <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/205564300/01-2282064125.jpg" alt="Сумка бананка uniqlo" loading="lazy" decoding="async">
+                <img class="product-image" src="./assets/products/209892380/01-2302278093.jpg" alt="Штани milano uniqlo" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">780 грн</div>
-                <div class="product-title">Сумка бананка uniqlo</div>
-                <div class='product-meta'>Uniqlo</div>
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Штани milano uniqlo</div>
+                <div class='product-meta'>Uniqlo • ХS, S, M, L, XL</div>
             </div>
         </a>
         <div class="card-actions">
@@ -1143,46 +1087,36 @@ background:var(--panel-solid);color:var(--muted);}
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14242"
-                    data-chat-product-name="Сумка бананка uniqlo"
-                    data-chat-product-url="./product/14242/"
-                    data-chat-product-image="./assets/products/205564300/01-2282064125.jpg"
-                    data-chat-product-price="780 грн"
+                    data-chat-product-id="16220"
+                    data-chat-product-name="Штани milano uniqlo"
+                    data-chat-product-url="./product/16220/"
+                    data-chat-product-image="./assets/products/209892380/01-2302278093.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="action-icon icon-chat-action" aria-hidden="true"></span>
                 <span class="sr-only">Чат</span>
             </button>
         </div>
     </div>
-    <div class="product-card" data-search="сумка бананка uniqlo 799 грн uniqlo  sumky-ryukzaky саме потрібного розміру для всіх необхідних речей. натуральна текстура підходить до будь-якого стилю.
-- брудостійка нейлонова тканина з природно м&#x27;ятою текстурою.
-- водовідштовхувальне покриття. *тканина покрита водовідштовхувальним засобом, тому ефект зберігається довше. оздоблення не є постійним.
-- форма, що підходить для активного носіння.
-- зручний розмір, який підходить для вашого смартфона та гаманця.
-- додано кант, щоб він зберігав свою форму навіть із вашими цінностями всередині.
-- зручна внутрішня кишеня для ключів або смартфона.
-- дизайн унісекс.
+    <div class="product-card" data-search="прямі джинси uniqlo та відомого британського дизайнера jw anderson 1400 грн uniqlo 32 shtany-shorty прямі джинси uniqlo та відомого британського дизайнера jw anderson
+в наявності розмір 32/31, колір 63 blau
 
-розмір:
-ширина (верх): 28 см
-висота: 17 см
-глибина: 10 см
-довжина плечового ременя: 116 см
+склад: 100% бавовна
 
-470040 новий синій аксесуари сумки та рюкзаки бананки нейлон, текстиль для дівчаток, для жінок, для чоловіків замок без принту"
+476209 новий блакитний 32 міжнародний: xl; 🇺🇦 український: 48; джинсовий: w32 жіночий одяг штани та шорти джинси середня"
          data-order="11"
-         data-price="799.0"
+         data-price="1400.0"
          data-brand="uniqlo"
-         data-size=""
-         data-category="sumky-ryukzaky">
-        <a class="card-main-link" href="./product/14241/">
+         data-size="32"
+         data-category="shtany-shorty">
+        <a class="card-main-link" href="./product/16219/">
             <div class="product-image-wrap">
-                <img class="product-image" src="./assets/products/205574882/01-2282119287.jpg" alt="Сумка бананка uniqlo" loading="lazy" decoding="async">
+                <img class="product-image" src="./assets/products/210008921/01-2302734650.jpg" alt="Прямі джинси uniqlo та відомого британського дизайнера jw anderson" loading="lazy" decoding="async">
             </div>
             <div class="product-info">
-                <div class="product-price">799 грн</div>
-                <div class="product-title">Сумка бананка uniqlo</div>
-                <div class='product-meta'>Uniqlo</div>
+                <div class="product-price">1400 грн</div>
+                <div class="product-title">Прямі джинси uniqlo та відомого британського дизайнера jw anderson</div>
+                <div class='product-meta'>Uniqlo • 32</div>
             </div>
         </a>
         <div class="card-actions">
@@ -1198,11 +1132,11 @@ background:var(--panel-solid);color:var(--muted);}
             </a>
             <button class="card-chat-btn card-action-btn" type="button"
                     aria-label="Відкрити чат" title="Чат"
-                    data-chat-product-id="14241"
-                    data-chat-product-name="Сумка бананка uniqlo"
-                    data-chat-product-url="./product/14241/"
-                    data-chat-product-image="./assets/products/205574882/01-2282119287.jpg"
-                    data-chat-product-price="799 грн"
+                    data-chat-product-id="16219"
+                    data-chat-product-name="Прямі джинси uniqlo та відомого британського дизайнера jw anderson"
+                    data-chat-product-url="./product/16219/"
+                    data-chat-product-image="./assets/products/210008921/01-2302734650.jpg"
+                    data-chat-product-price="1400 грн"
                     onclick="openChatFromButton(this)">
                 <span class="action-icon icon-chat-action" aria-hidden="true"></span>
                 <span class="sr-only">Чат</span>
@@ -1210,7 +1144,7 @@ background:var(--panel-solid);color:var(--muted);}
         </div>
     </div></div>
         
-    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 28.05.2026 22:35</div>
+    <div class="footer-note">UniqLow • Створено для зручного перегляду товарів • Оновлено: 02.06.2026 13:26</div>
 </main>
 </div>
 <script>
